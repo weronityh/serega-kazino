@@ -1,0 +1,1451 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Серёга и Олямбус казик — Блэкджек, Покер и Рулетка</title>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --accent: #10b981;
+            --accent-hover: #059669;
+            --danger: #ef4444;
+            --text: #f8fafc;
+            --gold: #f59e0b;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+            position: relative;
+            width: 100%;
+            max-width: 650px;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            color: var(--gold);
+            margin: 0;
+            font-size: 1.8rem;
+        }
+
+        .settings-btn {
+            background: var(--card-bg);
+            border: 1px solid #475569;
+            color: var(--text);
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .settings-btn:hover {
+            background: var(--accent);
+            border-color: var(--accent);
+        }
+
+        .balance-box {
+            font-size: 1.2rem;
+            background: var(--card-bg);
+            padding: 10px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            border: 1px solid #334155;
+            display: inline-flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .reset-bal-btn {
+            background: var(--danger);
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85rem;
+        }
+        .reset-bal-btn:hover {
+            background: #dc2626;
+        }
+
+        /* --- Промокоды --- */
+        .promo-box {
+            margin: 15px 0 20px 0;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            width: 100%;
+            max-width: 450px;
+        }
+
+        .promo-input {
+            flex: 1;
+            padding: 10px 14px;
+            border-radius: 8px;
+            border: 1px solid #475569;
+            background: var(--card-bg);
+            color: var(--text);
+            font-size: 0.95rem;
+            outline: none;
+        }
+
+        .promo-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .promo-btn:hover {
+            background: var(--accent-hover);
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .tab-btn {
+            background: var(--card-bg);
+            color: var(--text);
+            border: 1px solid #475569;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: 0.2s;
+        }
+
+        .tab-btn.active, .tab-btn:hover {
+            background: var(--accent);
+            border-color: var(--accent);
+            font-weight: bold;
+        }
+
+        .game-container {
+            display: none;
+            width: 100%;
+            max-width: 650px;
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 10px 15px rgba(0,0,0,0.4);
+            border: 1px solid #334155;
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+        .game-container.active {
+            display: block;
+        }
+
+        .table-area {
+            margin: 20px 0;
+            min-height: 120px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .cards-hand {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .playing-card {
+            width: 60px;
+            height: 90px;
+            background: white;
+            color: #000;
+            border-radius: 6px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 6px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            user-select: none;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .playing-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .playing-card.red {
+            color: #dc2626;
+        }
+
+        .playing-card.hidden {
+            background: #3b82f6;
+            color: #3b82f6;
+        }
+
+        .controls {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        button.action-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        button.action-btn:hover {
+            background: var(--accent-hover);
+        }
+
+        button.action-btn:disabled {
+            background: #475569;
+            cursor: not-allowed;
+        }
+
+        button.danger-btn {
+            background: var(--danger);
+        }
+        button.danger-btn:hover {
+            background: #dc2626;
+        }
+
+        input[type="number"], select {
+            padding: 8px;
+            border-radius: 6px;
+            border: 1px solid #475569;
+            background: #0f172a;
+            color: white;
+            text-align: center;
+            font-size: 1rem;
+        }
+
+        input[type="number"] {
+            width: 90px;
+        }
+
+        .status-msg {
+            font-size: 1.1rem;
+            margin: 15px 0;
+            font-weight: bold;
+            color: var(--gold);
+            min-height: 30px;
+        }
+
+        .card.selected, .playing-card.selected {
+            border: 3px solid var(--gold);
+            transform: translateY(-10px);
+        }
+
+        /* --- РУЛЕТКА С АНИМАЦИЕЙ И ШАРИКОМ --- */
+        .roulette-container {
+            position: relative;
+            width: 240px;
+            height: 240px;
+            margin: 20px auto;
+        }
+
+        .roulette-wheel {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: conic-gradient(
+                #ef4444 0deg 18deg, #1e293b 18deg 36deg, #ef4444 36deg 54deg, #1e293b 54deg 72deg,
+                #ef4444 72deg 90deg, #1e293b 90deg 108deg, #ef4444 108deg 126deg, #1e293b 126deg 144deg,
+                #ef4444 144deg 162deg, #10b981 162deg 180deg, #ef4444 180deg 198deg, #1e293b 198deg 216deg,
+                #ef4444 216deg 234deg, #1e293b 234deg 252deg, #ef4444 252deg 270deg, #1e293b 270deg 288deg,
+                #ef4444 288deg 306deg, #1e293b 306deg 324deg, #ef4444 324deg 342deg, #1e293b 342deg 360deg
+            );
+            border: 8px solid var(--gold);
+            box-shadow: 0 0 25px rgba(245, 158, 11, 0.5), inset 0 0 15px rgba(0,0,0,0.8);
+            position: relative;
+            transition: transform 4s cubic-bezier(0.15, 0.85, 0.35, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .roulette-center {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #334155, #0f172a);
+            border: 4px solid var(--gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--gold);
+            z-index: 2;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+        }
+
+        /* Шарик рулетки */
+        .roulette-ball-track {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            border-radius: 50%;
+            pointer-events: none;
+            transition: transform 4s cubic-bezier(0.1, 0.8, 0.25, 1);
+            z-index: 3;
+        }
+
+        .roulette-ball {
+            position: absolute;
+            top: 14px;
+            left: calc(50% - 7px);
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #ffffff, #94a3b8);
+            box-shadow: 0 0 8px rgba(255,255,255,0.9), inset -1px -1px 2px rgba(0,0,0,0.4);
+        }
+
+        /* Указатель сверху */
+        .roulette-pointer {
+            position: absolute;
+            top: -12px;
+            left: calc(50% - 10px);
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 18px solid var(--gold);
+            z-index: 4;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.6));
+        }
+
+/* --- Модальное окно настроек --- */
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    backdrop-filter: blur(4px);
+}
+.modal-overlay.active { display: flex; }
+
+.modal-content {
+    background: var(--card-bg);
+    border: 2px solid var(--gold);
+    border-radius: 16px;
+    padding: 25px;
+    width: 90%;
+    max-width: 450px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+    position: relative;
+    color: var(--text);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #475569;
+    padding-bottom: 10px;
+}
+.modal-header h2 { margin: 0; color: var(--gold); font-size: 1.4rem; }
+.close-modal {
+    background: none; border: none; color: var(--text); font-size: 1.5rem; cursor: pointer;
+}
+
+.setting-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 18px;
+    gap: 15px;
+}
+.setting-row label { font-weight: 500; }
+.setting-row input[type="range"] { flex: 1; accent-color: var(--accent); }
+
+/* Theme presets */
+.theme-options { display: flex; gap: 10px; }
+.theme-btn {
+    width: 32px; height: 32px; border-radius: 50%; border: 2px solid #fff; cursor: pointer; transition: 0.2s;
+}
+.theme-btn:hover { transform: scale(1.15); }
+
+/* --- Дополнительный дизайн игр --- */
+#blackjack-game {
+    max-width: 900px;
+    background: linear-gradient(145deg, #102b25, #071a17);
+    border: 2px solid #b88932;
+    overflow: hidden;
+}
+#blackjack-game h2 { color: #f8d477; }
+#blackjack-game .table-area {
+    position: relative;
+    width: 100%;
+    box-sizing: border-box;
+    min-height: 155px;
+    margin: 14px 0;
+    padding: 18px 12px;
+    border: 1px solid rgba(255,218,130,.3);
+    border-radius: 18px;
+    background: radial-gradient(ellipse at center, #16805c 0%, #07543e 58%, #063b2d 100%);
+    box-shadow: inset 0 0 25px rgba(0,0,0,.45), 0 5px 14px rgba(0,0,0,.25);
+}
+#blackjack-game .table-area > div:first-child {
+    color: #ffe6a1;
+    font-weight: 700;
+    margin-bottom: 9px;
+}
+#blackjack-game .cards-hand { min-height: 100px; align-items: center; }
+#blackjack-game .playing-card {
+    width: 66px; height: 96px; padding: 7px;
+    border: 1px solid #ddd; border-radius: 9px;
+    box-shadow: 0 7px 12px rgba(0,0,0,.35);
+    animation: cardDeal .28s ease-out both;
+}
+@keyframes cardDeal {
+    from { opacity: 0; transform: translateY(-22px) rotate(-5deg) scale(.85); }
+    to { opacity: 1; transform: translateY(0) rotate(0) scale(1); }
+}
+#blackjack-game .playing-card.hidden {
+    background: repeating-linear-gradient(45deg,#173e78,#173e78 7px,#24549a 7px,#24549a 14px);
+    border: 3px solid #e8c56e;
+    color: white;
+}
+.dealer-avatar {
+    width: 76px; height: 76px; margin: 0 auto 8px;
+    display: grid; place-items: center; border-radius: 50%;
+    background: linear-gradient(#f4d4ad 0 58%, #263b5b 59%);
+    border: 3px solid #e9c36b; font-size: 38px;
+    box-shadow: 0 5px 14px #0008;
+}
+.dealer-caption { color: #ffe6a1; font-weight: 700; margin-bottom: 6px; }
+#slots-game, #toothpick-game { max-width: 760px; }
+.slot-machine {
+    margin: 22px auto; padding: 22px; max-width: 480px;
+    border: 5px solid #d59b32; border-radius: 24px;
+    background: linear-gradient(145deg,#5b174f,#25113c 65%,#130d28);
+    box-shadow: 0 12px 30px #0008, inset 0 0 18px #fff2;
+}
+.slot-reels { display: flex; justify-content: center; gap: 10px; }
+.slot-reel {
+    width: 104px; height: 112px; display: grid; place-items: center;
+    border-radius: 12px; background: linear-gradient(#fff,#dbe4ee);
+    color: #171717; font-size: 54px; border: 3px solid #f6cf67;
+    box-shadow: inset 0 4px 10px #0002; overflow: hidden;
+}
+.slot-reel.spinning { animation: slotShake .12s linear infinite; }
+@keyframes slotShake { 0%{transform:translateY(-3px)} 50%{transform:translateY(3px)} 100%{transform:translateY(-3px)} }
+.slot-payline { color: #ffdc79; margin: 12px; font-weight: bold; }
+.slot-help { color: #cbd5e1; font-size: .92rem; line-height: 1.5; }
+.toothpick-hand {
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 13px;
+    padding: 24px 12px; margin: 18px 0;
+    border-radius: 18px; background: linear-gradient(135deg,#d9a16d,#8b5738);
+    border: 5px solid #6d402a; box-shadow: inset 0 0 18px #3b1d1233;
+}
+.toothpick-choice {
+    width: 76px; height: 92px; border: 1px solid #e6c49a;
+    border-radius: 12px; background: #f4dfc4; cursor: pointer;
+    display: grid; place-items: center; transition: .2s;
+    box-shadow: 0 4px 8px #0003;
+}
+.toothpick-choice:hover:not(:disabled) { transform: translateY(-7px); }
+.toothpick-choice:disabled { cursor: default; opacity: .8; }
+.fake-stick {
+    width: 5px; height: 57px; border-radius: 5px;
+    background: linear-gradient(90deg,#9a5d26,#f4d39a,#a96a31);
+    box-shadow: 1px 1px 2px #58351b; transform: rotate(8deg);
+}
+.toothpick-results { display: flex; flex-direction: column; gap: 9px; margin: 18px auto; max-width: 500px; }
+.toothpick-result {
+    display: grid; grid-template-columns: 100px 1fr 65px; gap: 8px;
+    align-items: center; text-align: left; color: #f8fafc; font-size: .9rem;
+}
+.toothpick-bar-bg { height: 13px; border-radius: 10px; background: #334155; overflow: hidden; }
+.toothpick-bar { height: 100%; border-radius: 10px; background: linear-gradient(90deg,#d69a45,#ffe08a); }
+.toothpick-result.winner { color: #fde68a; font-weight: bold; }
+@media (max-width: 520px) {
+    body { padding: 10px; }
+    .game-container { padding: 15px; }
+    .slot-reel { width: 78px; height: 90px; font-size: 43px; }
+    #blackjack-game .playing-card { width: 52px; height: 80px; }
+    .toothpick-result { grid-template-columns: 76px 1fr 52px; font-size: .8rem; }
+}
+
+/* Таблица выплат сбоку от слотов */
+.slots-layout { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(210px, .9fr); gap: 16px; align-items: stretch; }
+.slots-layout .slot-machine { width: auto; max-width: none; margin: 0; }
+.slot-paytable {
+    padding: 17px; border-radius: 16px; text-align: left;
+    background: linear-gradient(145deg,#17243a,#101827);
+    border: 1px solid #64748b; box-shadow: inset 0 0 16px #0004;
+}
+.slot-paytable h3 { color: #f8d477; margin: 0 0 13px; text-align: center; }
+.paytable-row {
+    display: flex; justify-content: space-between; gap: 8px;
+    padding: 9px 4px; border-bottom: 1px solid #334155;
+    font-size: .92rem;
+}
+.paytable-row b { color: #fbbf24; white-space: nowrap; }
+.paytable-row.no-win { color: #94a3b8; }
+.toothpick-bet-controls { margin: 12px 0 4px; }
+.toothpick-bet-controls .slot-help { max-width: 180px; }
+@media (max-width: 650px) {
+    .slots-layout { grid-template-columns: 1fr; }
+    .slot-paytable { order: 2; }
+}
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-top">
+            <h1>🎰 Серёга и Олямбус казик</h1>
+            <button class="settings-btn" onclick="openSettings()" title="Настройки">⚙️ Настройки</button>
+        </div>
+        <div class="balance-box">
+            Баланс: <span id="balance">1000</span> BYN 💵
+            <button class="reset-bal-btn" onclick="resetBalance()" title="Сбросить / пополнить баланс до 1000 BYN">Сброс</button>
+        </div>
+    </header>
+
+    <!-- Ввод промокода -->
+    <div class="promo-box">
+        <input type="text" id="promo-input" class="promo-input" placeholder="Введите промокод..." autocomplete="off">
+        <button class="promo-btn" onclick="applyPromo()">Активировать</button>
+    </div>
+
+    <div class="nav-tabs">
+        <button class="tab-btn active" onclick="switchGame('blackjack', event)">Блэкджек</button>
+        <button class="tab-btn" onclick="switchGame('poker', event)">Видеопокер</button>
+        <button class="tab-btn" onclick="switchGame('roulette', event)">Рулетка</button>
+        <button class="tab-btn" onclick="switchGame('slots', event)">Слоты</button>
+        <button class="tab-btn" onclick="switchGame('toothpick', event)">Зубочистка</button>
+    </div>
+
+    <!-- БЛЭКДЖЕК -->
+    <div id="blackjack-game" class="game-container active">
+        <h2>Блэкджек против Дилера</h2>
+        <div class="controls" id="bj-bet-area">
+            <label>Ставка: <input type="number" id="bj-bet" value="50" min="10" max="1000"></label>
+            <button class="action-btn" id="bj-start-btn" onclick="startBlackjack()">Сделать ставку</button>
+        </div>
+
+        <div class="dealer-avatar" aria-label="Дилер">🧑🏻‍💼</div>
+        <div class="dealer-caption">ДИЛЕР · <span id="dealer-score">-</span> очков</div>
+        <div class="table-area">
+            <div>Карты дилера</div>
+            <div class="cards-hand" id="dealer-cards"></div>
+        </div>
+
+        <div class="table-area">
+            <div>Ваши карты · <span id="player-score">-</span> очков</div>
+            <div class="cards-hand" id="player-cards"></div>
+        </div>
+
+        <div class="status-msg" id="bj-msg">Сделайте ставку для начала игры</div>
+
+        <div class="controls" id="bj-actions" style="display: none;">
+            <button class="action-btn" onclick="bjHit()">Ещё</button>
+            <button class="action-btn danger-btn" onclick="bjStand()">Хватит</button>
+        </div>
+    </div>
+
+    <!-- ПОКЕР -->
+    <div id="poker-game" class="game-container">
+        <h2>Видеопокер (5 карт)</h2>
+        <div class="controls" id="poker-bet-area">
+            <label>Ставка: <input type="number" id="poker-bet" value="50" min="10" max="1000"></label>
+            <button class="action-btn" id="poker-start-btn" onclick="startPoker()">Раздать карты</button>
+        </div>
+
+        <div class="table-area">
+            <div class="cards-hand" id="poker-cards"></div>
+        </div>
+
+        <div class="status-msg" id="poker-msg">Нажмите «Раздать карты»</div>
+
+        <div class="controls" id="poker-actions" style="display: none;">
+            <button class="action-btn" onclick="pokerExchange()">Обменять выбранные</button>
+        </div>
+    </div>
+
+    <!-- РУЛЕТКА -->
+    <div id="roulette-game" class="game-container">
+        <h2>За Серёгино здоровье</h2>
+        
+        <div class="roulette-container">
+            <div class="roulette-pointer"></div>
+            <div class="roulette-wheel" id="roulette-display">
+                <div class="roulette-center" id="roulette-num-text">?</div>
+            </div>
+            <div class="roulette-ball-track" id="roulette-ball-track">
+                <div class="roulette-ball"></div>
+            </div>
+        </div>
+        <div class="status-msg" id="roulette-msg">Сделайте ставку и запустите рулетку</div>
+
+        <div class="controls">
+            <label>Ставка: <input type="number" id="roulette-bet" value="50" min="10" max="1000"></label>
+            <label>На что: 
+                <select id="roulette-type" onchange="toggleRouletteInput()">
+                    <option value="color-red">Красное (х2)</option>
+                    <option value="color-black">Черное (х2)</option>
+                    <option value="number">Конкретное число (0-36) (х35)</option>
+                </select>
+            </label>
+            <div id="roulette-num-container" style="display: none;">
+                <label>Число: <input type="number" id="roulette-number-choice" value="7" min="0" max="36"></label>
+            </div>
+        </div>
+
+        <div class="controls" style="margin-top: 15px;">
+            <button class="action-btn" id="roulette-spin-btn" onclick="spinRoulette()">Крутить рулетку</button>
+        </div>
+    </div>
+
+    <!-- СЛОТЫ -->
+    <div id="slots-game" class="game-container">
+        <h2>Неоновые слоты</h2>
+        <p>Собери выигрышную комбинацию в линии из трёх барабанов!</p>
+        <div class="slots-layout">
+            <div class="slot-machine">
+                <div class="slot-reels">
+                    <div class="slot-reel" id="slot-0">🍒</div>
+                    <div class="slot-reel" id="slot-1">🍋</div>
+                    <div class="slot-reel" id="slot-2">💎</div>
+                </div>
+                <div class="slot-payline">━━━━━━━━━━ ★ ━━━━━━━━━━</div>
+                <div class="slot-help">Выигрыш рассчитывается от размера ставки.</div>
+                <div class="controls">
+                    <label>Ставка: <input type="number" id="slots-bet" value="50" min="10" max="1000"></label>
+                    <button class="action-btn" id="slots-spin-btn" onclick="spinSlots()">Крутить!</button>
+                </div>
+            </div>
+            <aside class="slot-paytable">
+                <h3>📋 Таблица выплат</h3>
+                <div class="paytable-row"><span>💎 💎 💎</span><b>x15</b></div>
+                <div class="paytable-row"><span>🍒 🍒 🍒</span><b>x8</b></div>
+                <div class="paytable-row"><span>🍋 🍋 🍋</span><b>x8</b></div>
+                <div class="paytable-row"><span>🍇 🍇 🍇</span><b>x8</b></div>
+                <div class="paytable-row"><span>🔔 🔔 🔔</span><b>x8</b></div>
+                <div class="paytable-row"><span>⭐ ⭐ ⭐</span><b>x8</b></div>
+                <div class="paytable-row"><span>Любые 2 одинаковых</span><b>x2</b></div>
+                <div class="paytable-row no-win"><span>Нет совпадений</span><b>x0</b></div>
+                <p class="slot-help">x15 / x8 / x2 — общая выплата, включая возвращённую ставку.</p>
+            </aside>
+        </div>
+        <div class="status-msg" id="slots-msg">Удачи! Сделайте ставку и нажмите «Крутить»</div>
+    </div>
+
+    <!-- ЗУБОЧИСТКА -->
+    <div id="toothpick-game" class="game-container">
+        <h2>Испытание: самая длинная зубочистка</h2>
+        <p>В руке спрятаны зубочистки разной длины. Сделай ставку и выбери одну — длины откроются только после выбора!</p>
+        <div class="controls toothpick-bet-controls">
+            <label>Твоя ставка: <input type="number" id="toothpick-bet" value="50" min="10" max="1000"></label>
+            <span class="slot-help">Угадал самую длинную — выплата x5</span>
+        </div>
+        <div class="toothpick-hand" id="toothpick-hand"></div>
+        <div class="status-msg" id="toothpick-msg">Нажми на одну зубочистку в руке.</div>
+        <div id="toothpick-results" class="toothpick-results"></div>
+        <div class="controls">
+            <button class="action-btn" id="toothpick-again" onclick="newToothpickRound()">Новая попытка</button>
+        </div>
+        <p class="slot-help">Все зубочистки до выбора выглядят одинаково. После выбора показываются их настоящие размеры.</p>
+    </div>
+
+    <!-- МОДАЛЬНОЕ ОКНО НАСТРОЕК -->
+    <div class="modal-overlay" id="settings-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>⚙️ Настройки</h2>
+                <button class="close-modal" onclick="closeSettings()">&times;</button>
+            </div>
+
+            <div class="setting-row">
+                <label>🎵 Фоновая музыка:</label>
+                <button class="action-btn" id="music-toggle-btn" onclick="toggleMusic()">Включить</button>
+            </div>
+
+            <div class="setting-row">
+                <label for="music-volume">🔊 Громкость музыки:</label>
+                <input type="range" id="music-volume" min="0" max="1" step="0.05" value="0.3" oninput="changeVolume(this.value)">
+            </div>
+
+            <div class="setting-row">
+                <label>🎨 Цветовая тема:</label>
+                <div class="theme-options">
+                    <button class="theme-btn" style="background: #0f172a;" onclick="setTheme('default')" title="Тёмная Неоновая"></button>
+                    <button class="theme-btn" style="background: #1e1b4b;" onclick="setTheme('purple')" title="Фиолетовая Ночь"></button>
+                    <button class="theme-btn" style="background: #064e3b;" onclick="setTheme('emerald')" title="Классическое Казино"></button>
+                    <button class="theme-btn" style="background: #450a0a;" onclick="setTheme('ruby')" title="Рубиновый Шик"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Инициализация баланса через localStorage
+        let balance = 1000;
+        if (localStorage.getItem('casino_balance') !== null) {
+            balance = parseInt(localStorage.getItem('casino_balance'), 10);
+        }
+        
+        function updateBalance(amount) {
+            balance += amount;
+            document.getElementById('balance').innerText = balance;
+            localStorage.setItem('casino_balance', balance);
+        }
+
+        function resetBalance() {
+            balance = 1000;
+            document.getElementById('balance').innerText = balance;
+            localStorage.setItem('casino_balance', balance);
+            alert('Баланс восстановлен до 1000 BYN 💵');
+        }
+
+        // --- ЛОГИКА ФОНОВОЙ МУЗЫКИ И СИНТЕЗАТОРА WEB AUDIO ---
+        let audioCtx = null;
+        let isMusicPlaying = false;
+        let musicVolume = 0.3;
+        let musicTimer = null;
+
+        function initAudio() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+        }
+
+        const notes = [261.63, 329.63, 392.00, 523.25, 440.00, 349.23, 392.00, 493.88]; 
+        let noteIndex = 0;
+
+        function playCasinoNote() {
+            if (!isMusicPlaying || !audioCtx) return;
+
+            try {
+                let osc = audioCtx.createOscillator();
+                let gain = audioCtx.createGain();
+
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(notes[noteIndex], audioCtx.currentTime);
+
+                gain.gain.setValueAtTime(musicVolume * 0.15, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.6);
+
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.6);
+
+                noteIndex = (noteIndex + 1) % notes.length;
+            } catch (e) {
+                console.log(e);
+            }
+        }
+
+        function toggleMusic() {
+            initAudio();
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+
+            isMusicPlaying = !isMusicPlaying;
+            const btn = document.getElementById('music-toggle-btn');
+
+            if (isMusicPlaying) {
+                btn.innerText = 'Выключить';
+                btn.classList.add('danger-btn');
+                musicTimer = setInterval(playCasinoNote, 400);
+            } else {
+                btn.innerText = 'Включить';
+                btn.classList.remove('danger-btn');
+                clearInterval(musicTimer);
+            }
+        }
+
+        function changeVolume(val) {
+            musicVolume = parseFloat(val);
+        }
+
+        // --- ЛОГИКА НАСТРОЕК И ТЕМ ---
+        function openSettings() {
+            document.getElementById('settings-modal').classList.add('active');
+        }
+
+        function closeSettings() {
+            document.getElementById('settings-modal').classList.remove('active');
+        }
+
+        function setTheme(theme) {
+            const root = document.documentElement;
+            if (theme === 'default') {
+                root.style.setProperty('--bg-color', '#0f172a');
+                root.style.setProperty('--card-bg', '#1e293b');
+                root.style.setProperty('--accent', '#10b981');
+                root.style.setProperty('--gold', '#f59e0b');
+            } else if (theme === 'purple') {
+                root.style.setProperty('--bg-color', '#1e1b4b');
+                root.style.setProperty('--card-bg', '#312e81');
+                root.style.setProperty('--accent', '#8b5cf6');
+                root.style.setProperty('--gold', '#c084fc');
+            } else if (theme === 'emerald') {
+                root.style.setProperty('--bg-color', '#064e3b');
+                root.style.setProperty('--card-bg', '#065f46');
+                root.style.setProperty('--accent', '#34d399');
+                root.style.setProperty('--gold', '#fbbf24');
+            } else if (theme === 'ruby') {
+                root.style.setProperty('--bg-color', '#450a0a');
+                root.style.setProperty('--card-bg', '#7f1d1d');
+                root.style.setProperty('--accent', '#f43f5e');
+                root.style.setProperty('--gold', '#fde047');
+            }
+        }
+
+        // --- ЛОГИКА ПРОМОКОДОВ И ЧИТ-РЕЖИМА ---
+        let seregaWinsLeft = 0;
+
+        function applyPromo() {
+            const input = document.getElementById('promo-input');
+            const code = input.value.trim().toLowerCase();
+
+            if (code === '200') {
+                updateBalance(400);
+                alert('🎉 Промокод активирован! Начислено 400 BYN 💵!');
+                input.value = '';
+            } else if (code === 'баба') {
+                updateBalance(1488);
+                alert('🎉 Промокод «баба» активирован! Начислено 1488 BYN 💵!');
+                input.value = '';
+            } else if (code === 'коля') {
+                updateBalance(9);
+                alert('🎉 Промокод «Коля» активирован! Начислено 9 BYN 💵!');
+                input.value = '';
+            } else if (code === 'серёга' || code === 'serega') {
+                seregaWinsLeft = 1;
+                alert('🔥 Промокод «серёга» активирован! Следующая 1 игра будет гарантированно победной!');
+                input.value = '';
+            } else if (code === '') {
+                alert('Введите промокод!');
+            } else {
+                alert('Неверный или недействительный промокод!');
+            }
+        }
+
+        function switchGame(game, event) {
+            document.querySelectorAll('.game-container').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+            
+            if(game === 'blackjack') {
+                document.getElementById('blackjack-game').classList.add('active');
+            } else if(game === 'poker') {
+                document.getElementById('poker-game').classList.add('active');
+            } else if(game === 'roulette') {
+                document.getElementById('roulette-game').classList.add('active');
+            } else if(game === 'slots') {
+                document.getElementById('slots-game').classList.add('active');
+            } else if(game === 'toothpick') {
+                document.getElementById('toothpick-game').classList.add('active');
+            }
+            if(event) event.target.classList.add('active');
+        }
+
+        // Общая колода карт
+        const suits = ['♠', '♣', '♥', '♦'];
+        const values = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
+
+        function createDeck() {
+            let deck = [];
+            for(let s of suits) {
+                for(let v of values) {
+                    deck.push({ suit: s, value: v, color: (s === '♥' || s === '♦') ? 'red' : 'black' });
+                }
+            }
+            for (let i = deck.length - 1; i > 0; i--) {
+                let j = Math.floor(Math.random() * (i + 1));
+                [deck[i], deck[j]] = [deck[j], deck[i]];
+            }
+            return deck;
+        }
+
+        function renderCard(card, hidden = false) {
+            if (hidden) {
+                return `<div class="playing-card hidden">?</div>`;
+            }
+            return `<div class="playing-card ${card.color}">
+                <span>${card.value}</span>
+                <span style="font-size: 1.5rem; text-align:center;">${card.suit}</span>
+                <span style="align-self: flex-end; transform: rotate(180deg);">${card.value}</span>
+            </div>`;
+        }
+
+        // --- ЛОГИКА БЛЭКДЖЕКА ---
+        let bjDeck = [], playerBjHand = [], dealerBjHand = [], currentBjBet = 0, isBjActive = false;
+
+        function getBjScore(hand) {
+            let score = 0;
+            let aces = 0;
+            for(let card of hand) {
+                if(card.value === 'A') {
+                    aces++;
+                    score += 11;
+                } else if(['K', 'Q', 'J', '10'].includes(card.value)) {
+                    score += 10;
+                } else {
+                    score += parseInt(card.value);
+                }
+            }
+            while(score > 21 && aces > 0) {
+                score -= 10;
+                aces--;
+            }
+            return score;
+        }
+
+        function startBlackjack() {
+            if(isBjActive) return;
+
+            let betInput = document.getElementById('bj-bet');
+            currentBjBet = parseInt(betInput.value, 10);
+
+            if(isNaN(currentBjBet) || currentBjBet < 10 || currentBjBet > 1000) {
+                alert('Некорректная ставка! Допустимо от 10 до 1000.');
+                return;
+            }
+            if(currentBjBet > balance) {
+                alert('Недостаточно средств на балансе!');
+                return;
+            }
+
+            isBjActive = true;
+            updateBalance(-currentBjBet);
+
+            if (seregaWinsLeft > 0) {
+                playerBjHand = [
+                    { suit: '♠', value: '10', color: 'black' },
+                    { suit: '♥', value: 'A', color: 'red' }
+                ];
+                dealerBjHand = [
+                    { suit: '♣', value: '7', color: 'black' },
+                    { suit: '♦', value: '9', color: 'red' }
+                ];
+                seregaWinsLeft--;
+            } else {
+                bjDeck = createDeck();
+                playerBjHand = [bjDeck.pop(), bjDeck.pop()];
+                dealerBjHand = [bjDeck.pop(), bjDeck.pop()];
+            }
+
+            document.getElementById('bj-bet-area').style.display = 'none';
+            document.getElementById('bj-actions').style.display = 'flex';
+            document.getElementById('bj-msg').innerText = 'Ваш ход: берите ещё или останавливайтесь';
+
+            updateBjView(true);
+
+            let pScore = getBjScore(playerBjHand);
+            if(pScore === 21) {
+                bjStand();
+            }
+        }
+
+        function updateBjView(hideDealerCard) {
+            document.getElementById('player-cards').innerHTML = playerBjHand.map(c => renderCard(c)).join('');
+            document.getElementById('dealer-cards').innerHTML = dealerBjHand.map((c, i) => renderCard(c, hideDealerCard && i === 1)).join('');
+            
+            document.getElementById('player-score').innerText = getBjScore(playerBjHand);
+            document.getElementById('dealer-score').innerText = hideDealerCard ? getBjScore([dealerBjHand[0]]) : getBjScore(dealerBjHand);
+        }
+
+        function bjHit() {
+            if(!isBjActive) return;
+            playerBjHand.push(bjDeck.length > 0 ? bjDeck.pop() : { suit: '♦', value: '2', color: 'red' });
+            updateBjView(true);
+            let score = getBjScore(playerBjHand);
+            if(score > 21) {
+                endBjGame('Перебор! Вы проиграли 😭');
+            } else if(score === 21) {
+                bjStand();
+            }
+        }
+
+        function bjStand() {
+            if(!isBjActive) return;
+            updateBjView(false);
+            
+            let dealerInterval = setInterval(() => {
+                let dealerScore = getBjScore(dealerBjHand);
+                if(dealerScore < 17) {
+                    dealerBjHand.push(bjDeck.length > 0 ? bjDeck.pop() : { suit: '♣', value: '3', color: 'black' });
+                    updateBjView(false);
+                } else {
+                    clearInterval(dealerInterval);
+                    evaluateBjWinner();
+                }
+            }, 500);
+        }
+
+        function evaluateBjWinner() {
+            let pScore = getBjScore(playerBjHand);
+            let dScore = getBjScore(dealerBjHand);
+
+            let isPlayerNatural = (pScore === 21 && playerBjHand.length === 2);
+            let isDealerNatural = (dScore === 21 && dealerBjHand.length === 2);
+
+            if(dScore > 21) {
+                let winAmt = currentBjBet * 2;
+                updateBalance(winAmt);
+                endBjGame(`У дилера перебор! Вы выиграли ${winAmt} BYN 💵 🎉`);
+            } else if(isPlayerNatural && !isDealerNatural) {
+                let winAmt = Math.floor(currentBjBet * 2.5);
+                updateBalance(winAmt);
+                endBjGame(`БЛЭКДЖЕК! (Выплата 3:2). Вы выиграли ${winAmt} BYN 💵 👑`);
+            } else if(pScore > dScore) {
+                let winAmt = currentBjBet * 2;
+                updateBalance(winAmt);
+                endBjGame(`Вы победили! Выигрыш: ${winAmt} BYN 💵 🎉`);
+            } else if(pScore === dScore) {
+                updateBalance(currentBjBet);
+                endBjGame('Ничья! Ставка возвращена 🤝');
+            } else {
+                endBjGame('Дилер выиграл! 😢');
+            }
+        }
+
+        function endBjGame(msg) {
+            isBjActive = false;
+            document.getElementById('bj-msg').innerText = msg;
+            document.getElementById('bj-actions').style.display = 'none';
+            document.getElementById('bj-bet-area').style.display = 'flex';
+        }
+
+
+        // --- ЛОГИКА ВИДЕОПОКЕРА ---
+        let pokerDeck = [], pokerHand = [], currentPokerBet = 0;
+        let holdCards = [false, false, false, false, false];
+
+        function startPoker() {
+            let betInput = document.getElementById('poker-bet');
+            currentPokerBet = parseInt(betInput.value, 10);
+
+            if(isNaN(currentPokerBet) || currentPokerBet < 10 || currentPokerBet > 1000) {
+                alert('Некорректная ставка! Допустимо от 10 до 1000.');
+                return;
+            }
+            if(currentPokerBet > balance) {
+                alert('Недостаточно средств на балансе!');
+                return;
+            }
+
+            holdCards = [false, false, false, false, false];
+            updateBalance(-currentPokerBet);
+
+            if (seregaWinsLeft > 0) {
+                pokerHand = [
+                    { suit: '♠', value: '10', color: 'black' },
+                    { suit: '♠', value: 'J', color: 'black' },
+                    { suit: '♠', value: 'Q', color: 'black' },
+                    { suit: '♠', value: 'K', color: 'black' },
+                    { suit: '♠', value: 'A', color: 'black' }
+                ];
+                seregaWinsLeft--;
+            } else {
+                pokerDeck = createDeck();
+                pokerHand = [pokerDeck.pop(), pokerDeck.pop(), pokerDeck.pop(), pokerDeck.pop(), pokerDeck.pop()];
+            }
+
+            document.getElementById('poker-bet-area').style.display = 'none';
+            document.getElementById('poker-actions').style.display = 'flex';
+            document.getElementById('poker-msg').innerText = 'Выберите карты для обмена (кликните по ним) и нажмите обменять';
+
+            renderPokerHand();
+        }
+
+        function renderPokerHand() {
+            let html = '';
+            pokerHand.forEach((card, index) => {
+                let selectedClass = holdCards[index] ? 'selected' : '';
+                html += `<div onclick="toggleHold(${index})" id="poker-card-${index}" class="playing-card ${card.color} ${selectedClass}">
+                    <span>${card.value}</span>
+                    <span style="font-size: 1.5rem; text-align:center;">${card.suit}</span>
+                    <span style="align-self: flex-end; transform: rotate(180deg);">${card.value}</span>
+                </div>`;
+            });
+            document.getElementById('poker-cards').innerHTML = html;
+        }
+
+        function toggleHold(index) {
+            holdCards[index] = !holdCards[index];
+            let el = document.getElementById(`poker-card-${index}`);
+            if(holdCards[index]) {
+                el.classList.add('selected');
+            } else {
+                el.classList.remove('selected');
+            }
+        }
+
+        function pokerExchange() {
+            for(let i = 0; i < 5; i++) {
+                if(!holdCards[i] && pokerDeck.length > 0) {
+                    pokerHand[i] = pokerDeck.pop();
+                }
+            }
+            renderPokerHand();
+            evaluatePokerHand();
+
+            document.getElementById('poker-actions').style.display = 'none';
+            document.getElementById('poker-bet-area').style.display = 'flex';
+        }
+
+        function evaluatePokerHand() {
+            let valuesCount = {};
+            let suitsCount = {};
+            let numericValues = pokerHand.map(c => {
+                if(c.value === 'J') return 11;
+                if(c.value === 'Q') return 12;
+                if(c.value === 'K') return 13;
+                if(c.value === 'A') return 14;
+                return parseInt(c.value);
+            }).sort((a,b) => a - b);
+
+            pokerHand.forEach(c => {
+                valuesCount[c.value] = (valuesCount[c.value] || 0) + 1;
+                suitsCount[c.suit] = (suitsCount[c.suit] || 0) + 1;
+            });
+
+            let counts = Object.values(valuesCount).sort((a,b) => b - a);
+            let isFlush = Object.values(suitsCount).some(val => val === 5);
+            let isStraight = (numericValues[4] - numericValues[0] === 4 && counts[0] === 1) || 
+                             (numericValues.toString() === "2,3,4,5,14");
+
+            let mult = 0;
+            let comboName = "Пусто (Вы проиграли)";
+
+            if(isFlush && isStraight && numericValues[4] === 14 && numericValues[0] === 10) {
+                mult = 250; comboName = "👑 Флеш-рояль!";
+            } else if(isFlush && isStraight) {
+                mult = 50; comboName = "🌟 Стрит-флеш!";
+            } else if(counts[0] === 4) {
+                mult = 20; comboName = "🔥 Каре!";
+            } else if(counts[0] === 3 && counts[1] === 2) {
+                mult = 10; comboName = "🏠 Фулл-хаус!";
+            } else if(isFlush) {
+                mult = 6; comboName = "🌊 Флеш!";
+            } else if(isStraight) {
+                mult = 4; comboName = "📈 Стрит!";
+            } else if(counts[0] === 3) {
+                mult = 3; comboName = "⚡ Тройка!";
+            } else if(counts[0] === 2 && counts[1] === 2) {
+                mult = 2; comboName = "👥 Две пары!";
+            } else if(counts[0] === 2) {
+                let pairVal = Object.keys(valuesCount).find(k => valuesCount[k] === 2);
+                if(['J', 'Q', 'K', 'A'].includes(pairVal)) {
+                    mult = 1; comboName = "📌 Пара валетов или выше!";
+                }
+            }
+
+            let win = currentPokerBet * mult;
+            if(win > 0) {
+                updateBalance(win);
+                document.getElementById('poker-msg').innerText = `${comboName} Выигрыш: ${win} BYN 💵`;
+            } else {
+                document.getElementById('poker-msg').innerText = `${comboName} 😢`;
+            }
+        }
+
+        // --- ЛОГИКА РУЛЕТКИ С РЕАЛЬНЫМ ВРАЩЕНИЕМ КОЛЕСА И ШАРИКА ---
+        const redNumbers = [1,3,5,7,9,12,14,16,18,19,21,23,25,27,30,32,34,36];
+        let totalWheelRotation = 0;
+        let totalBallRotation = 0;
+
+        function toggleRouletteInput() {
+            let type = document.getElementById('roulette-type').value;
+            let numContainer = document.getElementById('roulette-num-container');
+            if(type === 'number') {
+                numContainer.style.display = 'block';
+            } else {
+                numContainer.style.display = 'none';
+            }
+        }
+
+        function spinRoulette() {
+            let betInput = document.getElementById('roulette-bet');
+            let bet = parseInt(betInput.value, 10);
+
+            if(isNaN(bet) || bet < 10 || bet > 1000) {
+                alert('Некорректная ставка! Допустимо от 10 до 1000.');
+                return;
+            }
+            if(bet > balance) {
+                alert('Недостаточно средств на балансе!');
+                return;
+            }
+
+            let type = document.getElementById('roulette-type').value;
+            let chosenNum = 0;
+
+            if(type === 'number') {
+                let numInput = document.getElementById('roulette-number-choice');
+                chosenNum = parseInt(numInput.value, 10);
+                if(isNaN(chosenNum) || chosenNum < 0 || chosenNum > 36) {
+                    alert('Выберите корректное число от 0 до 36.');
+                    return;
+                }
+            }
+
+            updateBalance(-bet);
+
+            let spinBtn = document.getElementById('roulette-spin-btn');
+            spinBtn.disabled = true;
+            document.getElementById('roulette-msg').innerText = 'Шарик крутится по колесу... 🌀';
+            document.getElementById('roulette-num-text').innerText = '...';
+
+            let winningNumber = Math.floor(Math.random() * 37);
+
+            if (seregaWinsLeft > 0) {
+                if (type === 'color-red') winningNumber = 1;
+                else if (type === 'color-black') winningNumber = 2;
+                else if (type === 'number') winningNumber = chosenNum;
+                seregaWinsLeft--;
+            }
+
+            const targetAngle = (winningNumber * (360 / 37));
+            
+            totalWheelRotation += 1440 + Math.floor(Math.random() * 360);
+            totalBallRotation -= (2160 + (360 - targetAngle));
+
+            const wheelEl = document.getElementById('roulette-display');
+            const ballTrackEl = document.getElementById('roulette-ball-track');
+
+            wheelEl.style.transform = `rotate(${totalWheelRotation}deg)`;
+            ballTrackEl.style.transform = `rotate(${totalBallRotation}deg)`;
+
+            setTimeout(() => {
+                let color = 'green';
+                if(winningNumber !== 0) {
+                    color = redNumbers.includes(winningNumber) ? 'red' : 'black';
+                }
+
+                document.getElementById('roulette-num-text').innerText = winningNumber;
+                document.getElementById('roulette-num-text').style.color = color === 'red' ? '#ef4444' : (color === 'black' ? '#f8fafc' : '#10b981');
+
+                let won = false;
+                let winAmount = 0;
+
+                if(type === 'color-red' && color === 'red') {
+                    won = true;
+                    winAmount = bet * 2;
+                } else if(type === 'color-black' && color === 'black') {
+                    won = true;
+                    winAmount = bet * 2;
+                } else if(type === 'number') {
+                    if(winningNumber === chosenNum) {
+                        won = true;
+                        winAmount = bet * 35;
+                    }
+                }
+
+                if(won) {
+                    updateBalance(winAmount);
+                    document.getElementById('roulette-msg').innerText = `Шарик упал на ${winningNumber} (${color === 'red' ? 'Красное' : (color === 'black' ? 'Чёрное' : 'Зеро')})! Вы выиграли ${winAmount} BYN 💵 🎉`;
+                } else {
+                    document.getElementById('roulette-msg').innerText = `Шарик упал на ${winningNumber} (${color === 'red' ? 'Красное' : (color === 'black' ? 'Чёрное' : 'Зеро')}). Вы проиграли 😢`;
+                }
+
+                spinBtn.disabled = false;
+            }, 4000);
+        }
+
+        // --- ЛОГИКА СЛОТОВ ---
+        const slotSymbols = ['🍒', '🍋', '🍇', '🔔', '⭐', '💎'];
+        let slotsBusy = false;
+
+        function spinSlots() {
+            if (slotsBusy) return;
+            const bet = parseInt(document.getElementById('slots-bet').value, 10);
+            if (!Number.isInteger(bet) || bet < 10 || bet > 1000) {
+                alert('Ставка должна быть от 10 до 1000.');
+                return;
+            }
+            if (bet > balance) {
+                alert('Недостаточно средств на балансе!');
+                return;
+            }
+
+            updateBalance(-bet);
+            slotsBusy = true;
+            const btn = document.getElementById('slots-spin-btn');
+            const reels = [0, 1, 2].map(i => document.getElementById('slot-' + i));
+            btn.disabled = true;
+            reels.forEach(el => el.classList.add('spinning'));
+            document.getElementById('slots-msg').innerText = 'Барабаны вращаются...';
+
+            let ticks = 0;
+            const timer = setInterval(() => {
+                reels.forEach(el => el.textContent = slotSymbols[Math.floor(Math.random() * slotSymbols.length)]);
+                ticks++;
+                if (ticks >= 13) {
+                    clearInterval(timer);
+                    let result = reels.map(() => slotSymbols[Math.floor(Math.random() * slotSymbols.length)]);
+
+                    if (seregaWinsLeft > 0) {
+                        result = ['💎', '💎', '💎'];
+                        seregaWinsLeft--;
+                    }
+
+                    reels.forEach((el, i) => {
+                        el.textContent = result[i];
+                        el.classList.remove('spinning');
+                    });
+
+                    let multiplier = 0;
+                    if (result[0] === result[1] && result[1] === result[2]) {
+                        multiplier = result[0] === '💎' ? 15 : 8;
+                    } else if (result[0] === result[1] || result[1] === result[2] || result[0] === result[2]) {
+                        multiplier = 2;
+                    }
+
+                    if (multiplier > 0) {
+                        const win = bet * multiplier;
+                        updateBalance(win);
+                        document.getElementById('slots-msg').innerText = `Выигрыш! ${result.join(' ')} · x${multiplier} = ${win} BYN 💵`;
+                    } else {
+                        document.getElementById('slots-msg').innerText = `Не повезло: ${result.join(' ')}. Попробуй ещё!`;
+                    }
+                    slotsBusy = false;
+                    btn.disabled = false;
+                }
+            }, 100);
+        }
+
+        // --- ЛОГИКА ИГРЫ С ЗУБОЧИСТКАМИ И СТАВКАМИ ---
+        let toothpickLengths = [];
+        let toothpickChosen = false;
+        let toothpickCurrentBet = 0;
+
+        function newToothpickRound() {
+            toothpickLengths = Array.from({length: 7}, () => Math.floor(Math.random() * 65) + 35);
+            const maxIndex = Math.floor(Math.random() * toothpickLengths.length);
+            toothpickLengths[maxIndex] = 100;
+            toothpickLengths = toothpickLengths.map((v, i) => i === maxIndex ? v : Math.min(v, 99));
+            toothpickChosen = false;
+            toothpickCurrentBet = 0;
+            const hand = document.getElementById('toothpick-hand');
+            hand.innerHTML = toothpickLengths.map((_, i) =>
+                `<button class="toothpick-choice" type="button" aria-label="Выбрать зубочистку ${i + 1}" onclick="chooseToothpick(${i})"><span class="fake-stick"></span></button>`
+            ).join('');
+            document.getElementById('toothpick-msg').innerText = 'Сделай ставку и выбери одну зубочистку.';
+            document.getElementById('toothpick-results').innerHTML = '';
+            document.getElementById('toothpick-again').disabled = true;
+        }
+
+        function chooseToothpick(index) {
+            if (toothpickChosen) return;
+
+            const bet = parseInt(document.getElementById('toothpick-bet').value, 10);
+            if (!Number.isInteger(bet) || bet < 10 || bet > 1000) {
+                alert('Ставка должна быть от 10 до 1000.');
+                return;
+            }
+            if (bet > balance) {
+                alert('Недостаточно средств на балансе!');
+                return;
+            }
+
+            toothpickCurrentBet = bet;
+            updateBalance(-bet);
+            toothpickChosen = true;
+
+            if (seregaWinsLeft > 0) {
+                toothpickLengths[index] = 100;
+                seregaWinsLeft--;
+            }
+
+            const maxLength = Math.max(...toothpickLengths);
+            const chosenLength = toothpickLengths[index];
+            const won = chosenLength === maxLength;
+
+            if (won) {
+                const payout = toothpickCurrentBet * 5;
+                updateBalance(payout);
+                document.getElementById('toothpick-msg').innerText =
+                    `🎉 Победа! Ты выбрал самую длинную (${chosenLength} мм). Выплата x5: ${payout} BYN 💵`;
+            } else {
+                document.getElementById('toothpick-msg').innerText =
+                    `Не угадал! Твоя зубочистка — ${chosenLength} мм, самая длинная — ${maxLength} мм. Ставка ${toothpickCurrentBet} BYN 💵 проиграна.`;
+            }
+
+            document.querySelectorAll('.toothpick-choice').forEach((button, i) => {
+                button.disabled = true;
+                const len = toothpickLengths[i];
+                button.innerHTML = `<span style="display:block;width:8px;height:${Math.round(len * 0.62)}px;max-height:76px;border-radius:5px;background:linear-gradient(90deg,#9a5d26,#f4d39a,#a96a31);box-shadow:1px 1px 2px #58351b"></span>`;
+                button.style.alignItems = 'end';
+                if (i === index) button.style.outline = '3px solid #fbbf24';
+            });
+
+            document.getElementById('toothpick-results').innerHTML = toothpickLengths
+                .map((len, i) => ({len, i}))
+                .sort((a, b) => b.len - a.len)
+                .map(item => {
+                    const isWinner = item.len === maxLength;
+                    return `<div class="toothpick-result ${isWinner ? 'winner' : ''}">
+                        <span>${item.i === index ? 'Твой выбор' : 'Зубочистка ' + (item.i + 1)}</span>
+                        <div class="toothpick-bar-bg"><div class="toothpick-bar" style="width:${item.len}%"></div></div>
+                        <span>${item.len} мм ${isWinner ? '👑' : ''}</span>
+                    </div>`;
+                }).join('');
+            document.getElementById('toothpick-again').disabled = false;
+        }
+
+        newToothpickRound();
+    </script>
+</body>
+</html>
