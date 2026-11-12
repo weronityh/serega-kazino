@@ -131,7 +131,6 @@
         .nav-badge {
             font-size: 0.6rem; font-weight: 900; padding: 3px 5px; border-radius: 5px; text-transform: uppercase; flex-shrink: 0; white-space: nowrap;
         }
-        .badge-hot { background: #ef4444; color: #fff; }
         .badge-vip { background: #f59e0b; color: #000; }
         .badge-pro { background: #1ae83a; color: #041307; }
 
@@ -328,7 +327,6 @@
             flex-direction: column;
             justify-content: space-between;
             box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-            transition: 0.2s;
         }
         .vip-card.lite-vip { border-color: #f59e0b; }
         .vip-card.pro-vip { border-color: var(--neon-green); background: linear-gradient(145deg, #0e2417, #0b1611); }
@@ -428,11 +426,11 @@
             </button>
             <button class="nav-item" id="nav-blackjack" onclick="switchGame('blackjack')">
                 <span class="nav-item-left"><span class="nav-icon">♠️</span> Блэкджек</span>
-                <span class="nav-badge badge-pro" style="background:#3b82f6; color:#fff;">FREE</span>
+                <span class="nav-badge" style="background:#3b82f6; color:#fff;">FREE</span>
             </button>
             <button class="nav-item" id="nav-roulette" onclick="switchGame('roulette')">
                 <span class="nav-item-left"><span class="nav-icon">🎡</span> Колесо</span>
-                <span class="nav-badge badge-pro" style="background:#3b82f6; color:#fff;">FREE</span>
+                <span class="nav-badge" style="background:#3b82f6; color:#fff;">FREE</span>
             </button>
             <button class="nav-item" id="nav-poker" onclick="switchGame('poker')">
                 <span class="nav-item-left"><span class="nav-icon">🃏</span> Покер</span>
@@ -515,7 +513,7 @@
                 </section>
             </div>
 
-            <!-- БЛЭКДЖЕК (БЕЗ ЛИМИТОВ) -->
+            <!-- БЛЭКДЖЕК -->
             <div id="view-blackjack" class="game-view">
                 <div class="game-header">
                     <h2>♠️ Блэкджек (Без лимитов)</h2>
@@ -543,11 +541,176 @@
                 <div class="status-banner" id="bj-status">Сделайте ставку и нажмите «Раздать»</div>
             </div>
 
-            <!-- КОЛЕСО ФОРТУНЫ (БЕЗ ЛИМИТОВ) -->
+            <!-- КОЛЕСО ФОРТУНЫ -->
             <div id="view-roulette" class="game-view">
                 <div class="game-header">
                     <h2>🎡 Колесо фортуны (Без лимитов)</h2>
                     <button class="btn-back" onclick="showLobby()">← В лобби</button>
                 </div>
                 <div class="roulette-container">
-                    <div class="wheel-outer
+                    <div class="wheel-outer-wrap">
+                        <div class="wheel" id="fortune-wheel"></div>
+                        <div class="roulette-ball" id="roulette-ball"></div>
+                    </div>
+                    <div class="controls-bar">
+                        <label>Ставка:</label>
+                        <input type="number" id="roulette-bet" value="200" min="50">
+                        <button class="btn-play" id="roulette-btn" onclick="spinWheel()">КРУТИТЬ КОЛЕСО</button>
+                    </div>
+                    <div class="status-banner" id="roulette-status">Следите за шариком! Куда упадет — тот и результат.</div>
+                </div>
+            </div>
+
+            <!-- ВИДЕОПОКЕР -->
+            <div id="view-poker" class="game-view">
+                <div class="game-header">
+                    <h2>🃏 Видеопокер (Требуется VIP Lite)</h2>
+                    <button class="btn-back" onclick="showLobby()">← В лобби</button>
+                </div>
+                <div class="poker-table">
+                    <div class="cards-row" id="poker-cards"></div>
+                    <div class="controls-bar">
+                        <label>Ставка:</label>
+                        <input type="number" id="poker-bet" value="150" min="50">
+                        <button class="btn-play" id="poker-action-btn" onclick="pokerAction()">РАЗДАТЬ</button>
+                    </div>
+                    <div class="status-banner" id="poker-status">Выберите карты для удержания</div>
+                </div>
+            </div>
+
+            <!-- СЛОТЫ (ТРЕБУЕТСЯ VIP PRO) -->
+            <div id="view-slots" class="game-view">
+                <div class="game-header">
+                    <h2>🍒 Неоновые слоты (Требуется VIP Pro)</h2>
+                    <button class="btn-back" onclick="showLobby()">← В лобби</button>
+                </div>
+                <div class="slots-wrapper">
+                    <div class="slot-cabinet">
+                        <div style="color: var(--neon-green); font-weight: 900;">ЛИНИЯ ВЫПЛАТ</div>
+                        <div class="reels-box">
+                            <div class="reel-cell" id="reel-0">🍒</div>
+                            <div class="reel-cell" id="reel-1">💎</div>
+                            <div class="reel-cell" id="reel-2">7️⃣</div>
+                        </div>
+                        <div class="controls-bar">
+                            <label>Ставка:</label>
+                            <input type="number" id="slots-bet" value="100" min="10" step="10">
+                            <button class="btn-play" id="slots-spin-btn" onclick="spinSlots()">КРУТИТЬ</button>
+                        </div>
+                    </div>
+                    <div class="paytable-box">
+                        <h3 style="color:var(--neon-green); margin-top:0;">Таблица выплат</h3>
+                        <div class="pay-row"><span>7️⃣ 7️⃣ 7️⃣ (Джекпот)</span><b>x25</b></div>
+                        <div class="pay-row"><span>💎 💎 💎 (Алмазы)</span><b>x15</b></div>
+                        <div class="pay-row"><span>🍋 🍋 🍋 / 🍒 🍒 🍒</span><b>x6</b></div>
+                    </div>
+                </div>
+                <div class="status-banner" id="slots-status">Сделай ставку и жми «Крутить»!</div>
+            </div>
+
+            <!-- ИМУЩЕСТВО И ВИП -->
+            <div id="view-property" class="game-view">
+                <div class="game-header">
+                    <h2>👑 Магазин Имущества и VIP-статусов</h2>
+                    <button class="btn-back" onclick="showLobby()">← В лобби</button>
+                </div>
+
+                <div class="vip-shop-grid">
+                    <div class="vip-card lite-vip">
+                        <div>
+                            <span class="nav-badge badge-vip" style="font-size:0.8rem; padding:4px 8px;">VIP LITE</span>
+                            <h3 style="color: #f59e0b; margin-top: 10px;">10 000 BYN</h3>
+                            <ul class="vip-features-list">
+                                <li>🃏 Доступ к режиму <b>Видеопокер</b></li>
+                                <li>🎁 Ежедневный бонус +1 000 BYN</li>
+                                <li>⭐ Золотой значок в профиле</li>
+                            </ul>
+                        </div>
+                        <button class="btn-play" style="background:#f59e0b; color:#000;" onclick="buyVip('lite')">КУПИТЬ VIP LITE</button>
+                    </div>
+
+                    <div class="vip-card pro-vip">
+                        <div>
+                            <span class="nav-badge badge-pro" style="font-size:0.8rem; padding:4px 8px;">VIP PRO</span>
+                            <h3 style="color: var(--neon-green); margin-top: 10px;">50 000 BYN</h3>
+                            <ul class="vip-features-list">
+                                <li>🍒 Доступ к <b>Неоновым слотам</b> (до x25)</li>
+                                <li>👑 Полный доступ к покупке <b>Элитного имущества</b></li>
+                                <li>🚀 Увеличенные множители выигрышей</li>
+                                <li>🎁 Ежедневный бонус +5 000 BYN</li>
+                            </ul>
+                        </div>
+                        <button class="btn-play" onclick="buyVip('pro')">КУПИТЬ VIP PRO</button>
+                    </div>
+                </div>
+
+                <div class="status-banner" id="vip-status-desc" style="margin-bottom: 25px;">У вас нет активного VIP статуса.</div>
+
+                <h3 style="color:var(--neon-green); margin-bottom:15px;">Элитное имущество (требуется VIP PRO)</h3>
+                <div class="property-grid" id="property-grid"></div>
+            </div>
+
+            <footer class="trust-footer">
+                <div>100 000+ ИГРОКОВ</div>
+                <div>МОМЕНТАЛЬНЫЕ ВЫПЛАТЫ</div>
+                <div>ЧЕСТНЫЙ РАНДОМ БЕЗ ЛИМИТОВ</div>
+            </footer>
+        </main>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+        let balance = 1000;
+        let vipLevel = 'none';
+        let ownedProps = [];
+        let guaranteedWin = false;
+
+        try {
+            if (localStorage.getItem('so_kazik_balance') !== null) {
+                balance = parseInt(localStorage.getItem('so_kazik_balance')) || 1000;
+            }
+            if (localStorage.getItem('so_kazik_vip')) {
+                vipLevel = localStorage.getItem('so_kazik_vip');
+            }
+            if (localStorage.getItem('so_kazik_props')) {
+                ownedProps = JSON.parse(localStorage.getItem('so_kazik_props')) || [];
+            }
+        } catch (e) {}
+
+        const PROPERTIES = [
+            { id: 'rolex', icon: '⌚', name: 'Rolex Daytona', desc: 'Золотой хронограф', price: 40000 },
+            { id: 'bmw', icon: '🏎️', name: 'BMW M5 F90', desc: 'Чёрный зверь', price: 200000 },
+            { id: 'penthouse', icon: '🏙️', name: 'Пентхаус', desc: 'Панорамные окна в центре', price: 500000 },
+            { id: 'lambo', icon: '🚀', name: 'Lamborghini', desc: 'Спортивный суперкар', price: 400000 },
+            { id: 'yacht', icon: '🛥️', name: 'Супер-яхта', desc: 'Личный корабль', price: 1000000 },
+            { id: 'island', icon: '🏝️', name: 'Частный остров', desc: 'Райский уголок', price: 3000000 }
+        ];
+
+        function saveData() {
+            try {
+                localStorage.setItem('so_kazik_balance', balance);
+                localStorage.setItem('so_kazik_vip', vipLevel);
+                localStorage.setItem('so_kazik_props', JSON.stringify(ownedProps));
+            } catch (e) {}
+        }
+
+        function updateBalance(delta) {
+            balance += delta;
+            if (balance < 0) balance = 0;
+            saveData();
+            const el = document.getElementById('balance');
+            if (el) el.textContent = balance.toLocaleString('ru-RU');
+        }
+
+        function showToast(msg) {
+            const t = document.getElementById('toast');
+            if (!t) return;
+            t.textContent = msg;
+            t.classList.add('show');
+            setTimeout(() => t.classList.remove('show'), 3000);
+        }
+
+        function showLobby() {
+            document.querySelectorAll('.game-view').forEach(v => {
+                v.classList.remove('active');
