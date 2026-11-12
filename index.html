@@ -195,22 +195,49 @@
             padding: 22px 26px 32px; max-width: 1240px; width: 100%; margin: 0 auto; flex: 1; display: flex; flex-direction: column;
         }
 
-        /* БАННЕР */
+        /* БАННЕР С ФОТОГРАФИЕЙ СПРАВА */
         .hero-banner {
             position: relative; border-radius: 18px; overflow: hidden;
             background: radial-gradient(circle at 78% 45%, rgba(251, 191, 36, 0.28) 0%, transparent 45%),
                         radial-gradient(circle at 20% 50%, rgba(26, 232, 58, 0.22) 0%, transparent 55%),
                         linear-gradient(115deg, #0b1612 0%, #15120c 48%, #22140a 100%);
-            border: 1px solid #26332c; padding: 34px 38px; display: flex; align-items: center; justify-content: space-between; gap: 24px; margin-bottom: 22px;
+            border: 1px solid #26332c; padding: 30px 38px; display: flex; align-items: center; justify-content: space-between; gap: 24px; margin-bottom: 22px;
             box-shadow: 0 16px 40px rgba(0, 0, 0, 0.55);
         }
-        .hero-left { max-width: 600px; z-index: 2; }
+        .hero-left { max-width: 550px; z-index: 2; }
         .hero-title { margin: 0; line-height: 0.95; font-weight: 950; font-style: italic; text-transform: uppercase; }
         .hero-title .line1 { display: block; font-size: 2.1rem; color: #ffffff; letter-spacing: 1px; }
         .hero-title .line2 { display: block; font-size: 2.5rem; color: var(--neon-green); text-shadow: 0 0 28px rgba(26, 232, 58, 0.45); margin-top: 6px; }
         .hero-subtitle { margin: 14px 0 22px; font-size: 0.95rem; font-weight: 800; text-transform: uppercase; color: var(--gold); text-shadow: 0 0 10px rgba(251, 191, 36, 0.3); }
         .hero-cta-btn {
             background: linear-gradient(90deg, #1ce83c, #49ff66); color: #041407; border: none; border-radius: 12px; padding: 14px 28px; font-size: 1rem; font-weight: 900; text-transform: uppercase; cursor: pointer; box-shadow: 0 0 25px rgba(26, 232, 58, 0.45); transition: 0.2s;
+        }
+
+        /* ПРАВАЯ ЧАСТЬ С ФОТО И ПОДПИСЬЮ */
+        .hero-right-photo {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            z-index: 2;
+            flex-shrink: 0;
+        }
+        .hero-right-photo img {
+            width: 220px;
+            height: 160px;
+            object-fit: cover;
+            border-radius: 14px;
+            border: 2px solid var(--neon-green);
+            box-shadow: 0 0 20px rgba(26, 232, 58, 0.4);
+        }
+        .photo-caption {
+            margin-top: 8px;
+            font-size: 0.9rem;
+            font-weight: 900;
+            color: var(--gold);
+            text-transform: uppercase;
+            text-shadow: 0 0 10px rgba(251, 191, 36, 0.4);
+            letter-spacing: 0.5px;
         }
 
         /* КАРТОЧКИ РЕЖИМОВ */
@@ -490,7 +517,7 @@
             color: var(--danger);
         }
 
-        /* МУЗОН (МОРГЕНШТЕРН С YOUTUBE КНОПКАМИ) */
+        /* МУЗОН */
         .music-container {
             max-width: 700px;
             margin: 0 auto;
@@ -725,6 +752,11 @@
                         <p class="hero-subtitle">СЮДА ЗАЛЕТАЙ И БАБКИ ПОЛУЧАЙ!</p>
                         <button class="hero-cta-btn" onclick="switchGame('blackjack')">ИГРАТЬ СЕЙЧАС →</button>
                     </div>
+                    <!-- ПРАВАЯ ПОЛОВИНА БАННЕРА С ФОТО И ПОДПИСЬЮ -->
+                    <div class="hero-right-photo">
+                        <img src="IMG_04991.jpg" alt="Красава">
+                        <div class="photo-caption">ууу это что за красава</div>
+                    </div>
                 </div>
 
                 <section class="modes-grid">
@@ -889,7 +921,7 @@
                 <div class="status-banner" id="slots-status">Зал слотов открыт для просмотра.</div>
             </div>
 
-            <!-- МУЗОН (БЕЗОПАСНЫЕ КНОПКИ YOUTUBE БЕЗ ОШИБОК) -->
+            <!-- МУЗОН -->
             <div id="view-music" class="game-view">
                 <div class="game-header">
                     <h2>🎵 МУЗОН — MORGENSHTERN VIBE</h2>
@@ -900,37 +932,28 @@
                         🔥 Легендарные треки с YouTube для самых чётких игроков!
                     </div>
 
-                    <!-- ТРЕК 1 -->
                     <div class="track-card">
                         <div class="track-info">
                             <div class="track-title">БУДУ ТВОЕЙ ПАЛЬМОЙ / GUERRA</div>
                             <div class="track-artist">MORGENSHTERN</div>
                         </div>
-                        <a href="https://www.youtube.com/watch?v=a4bL6EQTYJw" target="_blank" class="yt-watch-btn">
-                            ▶ Слушать на YouTube
-                        </a>
+                        <a href="https://www.youtube.com/watch?v=a4bL6EQTYJw" target="_blank" class="yt-watch-btn">▶ Слушать на YouTube</a>
                     </div>
 
-                    <!-- ТРЕК 2 -->
                     <div class="track-card">
                         <div class="track-info">
                             <div class="track-title">РАТАТАТАТА</div>
                             <div class="track-artist">MORGENSHTERN & Витя АК</div>
                         </div>
-                        <a href="https://www.youtube.com/watch?v=aS_wdyhu0xQ" target="_blank" class="yt-watch-btn">
-                            ▶ Слушать на YouTube
-                        </a>
+                        <a href="https://www.youtube.com/watch?v=aS_wdyhu0xQ" target="_blank" class="yt-watch-btn">▶ Слушать на YouTube</a>
                     </div>
 
-                    <!-- ТРЕК 3 -->
                     <div class="track-card">
                         <div class="track-info">
                             <div class="track-title">Cadillac</div>
                             <div class="track-artist">MORGENSHTERN & Элджей</div>
                         </div>
-                        <a href="https://www.youtube.com/watch?v=-7n4t0cbVD4" target="_blank" class="yt-watch-btn">
-                            ▶ Слушать на YouTube
-                        </a>
+                        <a href="https://www.youtube.com/watch?v=-7n4t0cbVD4" target="_blank" class="yt-watch-btn">▶ Слушать на YouTube</a>
                     </div>
                 </div>
             </div>
