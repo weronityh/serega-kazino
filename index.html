@@ -276,101 +276,38 @@
         .pay-row { display: flex; justify-content: space-between; padding: 7px 0; border-bottom: 1px solid #1b2533; font-size: 0.92rem; }
         .pay-row b { color: var(--gold); }
 
-        /* КОЛЕСО ФОРТУНЫ И СТАВКИ */
+        /* НОВОЕ КАНВАС-КОЛЕСО ФОРТУНЫ */
         .roulette-container { text-align: center; padding: 10px; position: relative; }
-        .casino-wheel-wrap {
+        .canvas-wheel-wrap {
             position: relative;
-            width: 280px;
-            height: 280px;
-            margin: 0 auto 15px;
-            background: radial-gradient(circle, #b8860b 0%, #daa520 60%, #8b6508 100%);
-            border-radius: 50%;
-            padding: 12px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.6), inset 0 0 15px rgba(0,0,0,0.8);
+            width: 320px;
+            height: 320px;
+            margin: 0 auto 20px;
+            filter: drop-shadow(0 15px 35px rgba(0,0,0,0.6));
         }
-        .casino-wheel {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            position: relative;
-            overflow: hidden;
-            background: #222;
-            box-shadow: inset 0 0 20px rgba(0,0,0,0.9);
-            transition: transform 3.5s cubic-bezier(0.15, 0.85, 0.2, 1);
-        }
-        .wheel-sectors {
+        .wheel-pointer {
             position: absolute;
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            background: conic-gradient(
-                #22c55e 0deg 9.73deg,     #dc2626 9.73deg 19.46deg,  #111111 19.46deg 29.19deg,
-                #dc2626 29.19deg 38.92deg, #111111 38.92deg 48.65deg, #dc2626 48.65deg 58.38deg,
-                #111111 58.38deg 68.11deg, #dc2626 68.11deg 77.84deg, #111111 77.84deg 87.57deg,
-                #dc2626 87.57deg 97.3deg,  #111111 97.3deg 107.03deg, #dc2626 107.03deg 116.76deg,
-                #111111 116.76deg 126.49deg,#dc2626 126.49deg 136.22deg,#111111 136.22deg 145.95deg,
-                #dc2626 145.95deg 155.68deg,#111111 155.68deg 165.41deg,#dc2626 165.41deg 175.14deg,
-                #111111 175.14deg 184.87deg,#dc2626 184.87deg 194.6deg, #111111 194.6deg 204.33deg,
-                #dc2626 204.33deg 214.06deg,#111111 214.06deg 223.79deg,#dc2626 223.79deg 233.52deg,
-                #111111 233.52deg 243.25deg,#dc2626 243.25deg 252.98deg,#111111 252.98deg 262.71deg,
-                #dc2626 262.71deg 272.44deg,#111111 272.44deg 282.17deg,#dc2626 282.17deg 291.9deg,
-                #111111 291.9deg 301.63deg, #dc2626 301.63deg 311.36deg,#111111 311.36deg 321.09deg,
-                #dc2626 321.09deg 330.82deg,#111111 330.82deg 340.55deg,#dc2626 340.55deg 350.28deg,
-                #111111 350.28deg 360deg
-            );
-        }
-        .wheel-number-label {
-            position: absolute;
-            width: 24px;
-            height: 24px;
-            font-size: 9px;
-            font-weight: 900;
-            color: #fff;
-            text-align: center;
-            line-height: 24px;
+            top: -12px;
             left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%) rotate(var(--rot)) translateY(-94px) rotate(calc(-1 * var(--rot)));
-            pointer-events: none;
-            text-shadow: 0 1px 2px #000;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 14px solid transparent;
+            border-right: 14px solid transparent;
+            border-top: 26px solid var(--gold);
+            z-index: 30;
+            filter: drop-shadow(0 3px 5px rgba(0,0,0,0.7));
         }
-        .wheel-center-wood {
-            position: absolute;
-            top: 31%; left: 31%;
-            width: 38%; height: 38%;
-            background: radial-gradient(circle, #b8860b 0%, #8b4513 70%, #5c2c16 100%);
+        #fortune-canvas {
+            width: 100%;
+            height: 100%;
             border-radius: 50%;
-            box-shadow: 0 0 15px rgba(0,0,0,0.8);
-            display: grid;
-            place-items: center;
-            z-index: 5;
-        }
-        .wheel-gold-spinner {
-            width: 32px; height: 32px;
-            background: radial-gradient(circle, #ffd700 0%, #daa520 70%, #b8860b 100%);
-            border-radius: 50%;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-            position: relative;
-        }
-        .wheel-gold-spinner::before, .wheel-gold-spinner::after {
-            content: '';
-            position: absolute;
-            background: linear-gradient(90deg, #daa520, #fff8dc, #daa520);
-        }
-        .wheel-gold-spinner::before { top: 13px; left: -18px; width: 68px; height: 6px; border-radius: 3px; }
-        .wheel-gold-spinner::after { top: -18px; left: 13px; width: 6px; height: 68px; border-radius: 3px; }
-
-        .roulette-ball {
-            position: absolute;
-            width: 14px; height: 14px; background: #fff; border-radius: 50%;
-            box-shadow: 0 0 10px #fff, inset 0 0 3px #000;
-            top: 50%; left: 50%;
-            margin: -7px 0 0 -7px;
-            z-index: 20;
-            transition: all 3.5s cubic-bezier(0.1, 0.8, 0.2, 1);
+            border: 6px solid #daa520;
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.8);
+            background: #111;
         }
 
-        /* ПАНЕЛЬ СТАВОК НА РУЛЕТКУ */
+        /* ПАНЕЛЬ СТАВОК НА КОЛЕСО */
         .roulette-betting-panel {
             background: #0d131a;
             border: 1px solid #233042;
@@ -405,9 +342,42 @@
 
         /* ВИДЕОПОКЕР */
         .poker-table { text-align: center; padding: 10px; }
+        .poker-paytable {
+            background: #0d131a;
+            border: 1px solid #233042;
+            border-radius: 12px;
+            padding: 12px;
+            max-width: 750px;
+            margin: 0 auto 15px;
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+            font-size: 0.75rem;
+            text-align: center;
+        }
+        .poker-pay-item { background: #121a24; padding: 6px; border-radius: 8px; border: 1px solid #1e293b; }
+        .poker-pay-item div:first-child { color: var(--text-muted); font-size: 0.7rem; }
+        .poker-pay-item div:last-child { color: var(--gold); font-weight: 900; margin-top: 2px; }
+        .poker-pay-item.active-hand { border-color: var(--neon-green); background: rgba(26,232,58,0.15); box-shadow: 0 0 10px rgba(26,232,58,0.3); }
+
         .cards-row { display: flex; justify-content: center; gap: 12px; margin: 20px 0; }
-        .poker-card { width: 70px; height: 100px; background: #fff; color: #000; border-radius: 8px; font-size: 1.3rem; font-weight: 900; display: flex; flex-direction: column; justify-content: space-between; padding: 8px; cursor: pointer; border: 3px solid transparent; }
-        .poker-card.held { border-color: var(--neon-green); transform: translateY(-10px); }
+        .poker-card { width: 75px; height: 105px; background: #fff; color: #000; border-radius: 8px; font-size: 1.3rem; font-weight: 900; display: flex; flex-direction: column; justify-content: space-between; padding: 8px; cursor: pointer; border: 3px solid transparent; box-shadow: 0 8px 20px rgba(0,0,0,0.4); position: relative; transition: transform 0.2s; }
+        .poker-card:hover { transform: translateY(-5px); }
+        .poker-card.held { border-color: var(--neon-green); transform: translateY(-12px); }
+        .poker-card.held::after {
+            content: 'HOLD';
+            position: absolute;
+            bottom: -22px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.65rem;
+            background: var(--neon-green);
+            color: #000;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 900;
+        }
+        .poker-card.red { color: #dc2626; }
 
         /* БЛЭКДЖЕК */
         .blackjack-table {
@@ -819,22 +789,16 @@
                 <div class="status-banner" id="bj-status">Сделайте ставку и нажмите «Раздать»</div>
             </div>
 
-            <!-- КОЛЕСО ФОРТУНЫ -->
+            <!-- ИДЕАЛЬНОЕ КОЛЕСО ФОРТУНЫ (CANVAS) -->
             <div id="view-roulette" class="game-view">
                 <div class="game-header">
-                    <h2>🎡 Колесо фортуны (Ставки)</h2>
+                    <h2>🎡 Колесо фортуны (Точный расчет)</h2>
                     <button class="btn-back" onclick="showLobby()">← В лобби</button>
                 </div>
                 <div class="roulette-container">
-                    <div class="casino-wheel-wrap">
-                        <div class="casino-wheel" id="fortune-wheel">
-                            <div class="wheel-sectors"></div>
-                            <div id="wheel-numbers"></div>
-                            <div class="wheel-center-wood">
-                                <div class="wheel-gold-spinner"></div>
-                            </div>
-                        </div>
-                        <div class="roulette-ball" id="roulette-ball"></div>
+                    <div class="canvas-wheel-wrap">
+                        <div class="wheel-pointer"></div>
+                        <canvas id="fortune-canvas" width="320" height="320"></canvas>
                     </div>
 
                     <div class="roulette-betting-panel">
@@ -856,22 +820,37 @@
                     <div class="controls-bar">
                         <label>Сумма ставки:</label>
                         <input type="number" id="roulette-bet" value="200" min="50">
-                        <button class="btn-play" id="roulette-btn" onclick="spinWheel()">КРУТИТЬ КОЛЕСО</button>
+                        <button class="btn-play" id="roulette-btn" onclick="spinWheelCanvas()">КРУТИТЬ КОЛЕСО</button>
                     </div>
-                    <div class="status-banner" id="roulette-status">Выберите тип ставки, введите сумму и запустите колесо!</div>
+                    <div class="status-banner" id="roulette-status">Выберите тип ставки и запустите колесо!</div>
                 </div>
             </div>
 
-            <!-- ВИДЕОПОКЕР -->
+            <!-- НАСТОЯЩИЙ ВИДЕОПОКЕР -->
             <div id="view-poker" class="game-view">
                 <div class="game-header">
-                    <h2>🃏 Видеопокер</h2>
+                    <h2>🃏 Видеопокер (Полная таблица комбинаций)</h2>
                     <button class="btn-back" onclick="showLobby()">← В лобби</button>
                 </div>
                 <div class="poker-table">
                     <div id="poker-lock-banner" class="status-banner" style="background: rgba(245, 158, 11, 0.15); border: 2px dashed #f59e0b; color: #f59e0b; margin-bottom: 20px; display: none;">
                         🔒 Чтобы играть в Видеопокер, обязательно нужно прикупить статус <b>VIP Lite</b>!
                     </div>
+
+                    <!-- Таблица множителей по вашей картинке -->
+                    <div class="poker-paytable" id="poker-paytable-box">
+                        <div class="poker-pay-item" data-hand="royal"><div>Флэш-Рояль</div><div>x250</div></div>
+                        <div class="poker-pay-item" data-hand="straight-flush"><div>Стрит-Флэш</div><div>x50</div></div>
+                        <div class="poker-pay-item" data-hand="four"><div>Каре</div><div>x25</div></div>
+                        <div class="poker-pay-item" data-hand="full-house"><div>Фулл-Хаус</div><div>x9</div></div>
+                        <div class="poker-pay-item" data-hand="flush"><div>Флэш</div><div>x6</div></div>
+                        <div class="poker-pay-item" data-hand="straight"><div>Стрит</div><div>x4</div></div>
+                        <div class="poker-pay-item" data-hand="three"><div>Тройка (Сет)</div><div>x3</div></div>
+                        <div class="poker-pay-item" data-hand="two-pairs"><div>Две пары</div><div>x2</div></div>
+                        <div class="poker-pay-item" data-hand="pair"><div>Пара (J+)</div><div>x1</div></div>
+                        <div class="poker-pay-item" data-hand="high-card"><div>Старшая карта</div><div>x0</div></div>
+                    </div>
+
                     <div class="cards-row" id="poker-cards">
                         <div class="poker-card" style="opacity:0.4;"><div>J</div><div style="font-size:1.8rem; text-align:center;">♠</div><div style="text-align:right;">J</div></div>
                         <div class="poker-card" style="opacity:0.4;"><div>Q</div><div style="font-size:1.8rem; text-align:center;">♥</div><div style="text-align:right;">Q</div></div>
@@ -882,9 +861,9 @@
                     <div class="controls-bar" id="poker-controls-box">
                         <label>Ставка:</label>
                         <input type="number" id="poker-bet" value="150" min="50">
-                        <button class="btn-play" id="poker-action-btn" onclick="pokerAction()">РАЗДАТЬ</button>
+                        <button class="btn-play" id="poker-action-btn" onclick="pokerActionReal()">РАЗДАТЬ</button>
                     </div>
-                    <div class="status-banner" id="poker-status">Зал видеопокера открыт для просмотра.</div>
+                    <div class="status-banner" id="poker-status">Нажмите «Раздать», удерживайте нужные карты и сделайте обмен!</div>
                 </div>
             </div>
 
@@ -1173,7 +1152,7 @@
                 targetView.style.display = 'block';
                 targetView.classList.add('active');
                 if (id === 'roulette') {
-                    buildWheelNumbers();
+                    drawCanvasWheel(0);
                 }
                 if (id === 'poker') {
                     checkPokerAccess();
@@ -1222,71 +1201,326 @@
             if (controls) controls.style.display = hasAccess ? 'flex' : 'none';
         }
 
-        function buildWheelNumbers() {
-            const container = document.getElementById('wheel-numbers');
-            if (!container || container.children.length > 0) return;
-            
-            ROULETTE_NUMBERS.forEach((num, index) => {
-                const angle = index * (360 / ROULETTE_NUMBERS.length);
-                const div = document.createElement('div');
-                div.className = 'wheel-number-label';
-                div.style.setProperty('--rot', angle + 'deg');
-                div.textContent = num;
-                container.appendChild(div);
-            });
+        // --- ИДЕАЛЬНОЕ КОЛЕСО ФОРТУНЫ НА CANVAS ---
+        let currentWheelAngle = 0;
+        function drawCanvasWheel(angleOffset) {
+            const canvas = document.getElementById('fortune-canvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const cx = canvas.width / 2;
+            const cy = canvas.height / 2;
+            const radius = cx - 10;
+            const totalSectors = ROULETTE_NUMBERS.length;
+            const arcSize = (Math.PI * 2) / totalSectors;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.save();
+            ctx.translate(cx, cy);
+            ctx.rotate(angleOffset);
+
+            for (let i = 0; i < totalSectors; i++) {
+                const num = ROULETTE_NUMBERS[i];
+                const startAngle = i * arcSize - Math.PI / 2 - arcSize / 2;
+                const endAngle = startAngle + arcSize;
+
+                // Цвет сектора
+                let color = '#111111';
+                if (num === 0) color = '#22c55e';
+                else if (RED_NUMBERS.includes(num)) color = '#dc2626';
+
+                ctx.beginPath();
+                ctx.moveTo(0, 0);
+                ctx.arc(0, 0, radius, startAngle, endAngle);
+                ctx.closePath();
+                ctx.fillStyle = color;
+                ctx.fill();
+                ctx.strokeStyle = '#283649';
+                ctx.lineWidth = 1;
+                ctx.stroke();
+
+                // Текст цифры
+                ctx.save();
+                const textAngle = startAngle + arcSize / 2;
+                ctx.rotate(textAngle);
+                ctx.textAlign = 'right';
+                ctx.fillStyle = '#ffffff';
+                ctx.font = 'bold 10px sans-serif';
+                ctx.fillText(num, radius - 12, 4);
+                ctx.restore();
+            }
+
+            // Центральная крышка колеса
+            ctx.beginPath();
+            ctx.arc(0, 0, 32, 0, Math.PI * 2);
+            const goldGrad = ctx.createRadialGradient(0, 0, 5, 0, 0, 32);
+            goldGrad.addColorStop(0, '#ffd700');
+            goldGrad.addColorStop(0.7, '#daa520');
+            goldGrad.addColorStop(1, '#8b6508');
+            ctx.fillStyle = goldGrad;
+            ctx.fill();
+            ctx.lineWidth = 3;
+            ctx.strokeStyle = '#fff8dc';
+            ctx.stroke();
+
+            ctx.restore();
         }
 
-        function renderQuiz() {
-            const container = document.getElementById('quiz-container');
-            if (!container) return;
-            container.innerHTML = '';
+        function spinWheelCanvas() {
+            const betInput = document.getElementById('roulette-bet');
+            const bet = parseInt(betInput ? betInput.value : 200);
+            if (isNaN(bet) || bet <= 0 || bet > balance) { showToast('⚠️ Неверная ставка!'); return; }
+            updateBalance(-bet);
 
-            QUIZ_QUESTIONS.forEach(q => {
-                const isAnswered = answeredQuestions[q.id] !== undefined;
-                const userChoice = answeredQuestions[q.id];
+            const btn = document.getElementById('roulette-btn');
+            const statusEl = document.getElementById('roulette-status');
+            if (btn) btn.disabled = true;
 
-                const card = document.createElement('div');
-                card.className = 'quiz-card';
+            let winningIndex;
+            if (guaranteedWin) {
+                winningIndex = 0; // Выпадает 0 (зелёное) или любое нужное
+                guaranteedWin = false;
+            } else {
+                winningIndex = Math.floor(Math.random() * ROULETTE_NUMBERS.length);
+            }
 
-                let html = `
-                    <div class="quiz-question">${q.question} <span style="color:var(--gold); font-size:0.9rem;">(+${q.reward} BYN)</span></div>
-                    <div class="quiz-options">
-                `;
+            const winningNumber = ROULETTE_NUMBERS[winningIndex];
+            const totalSectors = ROULETTE_NUMBERS.length;
+            const arcRad = (Math.PI * 2) / totalSectors;
 
-                q.options.forEach((opt, idx) => {
-                    let btnClass = 'quiz-option-btn';
-                    let disabled = isAnswered ? 'disabled' : '';
-                    if (isAnswered) {
-                        if (idx === q.correct) btnClass += ' correct';
-                        else if (idx === userChoice) btnClass += ' wrong';
+            // Стрелка находится наверху (-PI/2). Рассчитываем точный угол остановки
+            const targetAngleFromTop = -(winningIndex * arcRad) - arcRad / 2;
+            const extraSpins = Math.PI * 2 * 6; // 6 полных оборотов
+            const finalAngle = currentWheelAngle + extraSpins + (targetAngleFromTop - (currentWheelAngle % (Math.PI * 2)));
+
+            const startTime = performance.now();
+            const duration = 3500;
+
+            statusEl.textContent = '🎡 Колесо крутится, шарик выбирает сектор...';
+
+            function animateWheel(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                // Плавная кубическая анимация торможения
+                const easeOut = 1 - Math.pow(1 - progress, 3);
+                
+                const currentDrawAngle = currentWheelAngle + (finalAngle - currentWheelAngle) * easeOut;
+                drawCanvasWheel(currentDrawAngle);
+
+                if (progress < 1) {
+                    requestAnimationFrame(animateWheel);
+                } else {
+                    currentWheelAngle = finalAngle;
+                    if (btn) btn.disabled = false;
+
+                    let isWin = false;
+                    let mult = 0;
+                    const isRed = RED_NUMBERS.includes(winningNumber);
+                    const isGreen = (winningNumber === 0);
+                    const isBlack = !isRed && !isGreen;
+                    const isEven = (winningNumber !== 0 && winningNumber % 2 === 0);
+                    const isOdd = (winningNumber !== 0 && winningNumber % 2 !== 0);
+
+                    if (currentBetType === 'red' && isRed) { isWin = true; mult = 2; }
+                    else if (currentBetType === 'black' && isBlack) { isWin = true; mult = 2; }
+                    else if (currentBetType === 'green' && isGreen) { isWin = true; mult = 14; }
+                    else if (currentBetType === 'even' && isEven) { isWin = true; mult = 2; }
+                    else if (currentBetType === 'odd' && isOdd) { isWin = true; mult = 2; }
+                    else if (currentBetType === 'number') {
+                        const targetNum = parseInt(document.getElementById('target-number').value);
+                        if (winningNumber === targetNum) { isWin = true; mult = 35; }
                     }
-                    html += `<button class="${btnClass}" ${disabled} onclick="answerQuiz(${q.id}, ${idx})">${opt}</button>`;
-                });
 
-                html += `</div>`;
-                if (isAnswered) {
-                    html += `<div style="margin-top:12px; font-weight:800; color:${userChoice === q.correct ? 'var(--neon-green)' : 'var(--danger)'};">${userChoice === q.correct ? '✓ Правильно! Награда зачислена.' : '✕ Неправильно.'}</div>`;
+                    let colorName = isGreen ? 'Зелёный [0] 🟢' : (isRed ? 'Красное 🔴' : 'Чёрное ⚫');
+
+                    if (isWin) {
+                        const win = bet * mult;
+                        updateBalance(win);
+                        statusEl.textContent = `🎉 Выпало: ${winningNumber} (${colorName})! Победа x${mult}: +${win} BYN!`;
+                        showVictoryAnimation('view-roulette', 'ПОБЕДА В КОЛЕСЕ!', `Выпало число ${winningNumber}! Выигрыш: +${win} BYN!`);
+                    } else {
+                        statusEl.textContent = `❌ Выпало: ${winningNumber} (${colorName}). Ставка сгорела.`;
+                    }
+                }
+            }
+
+            requestAnimationFrame(animateWheel);
+        }
+
+        // --- НАСТОЯЩИЙ ПОКЕР С АНАЛИЗОМ 10 КОМБИНАЦИЙ ---
+        let pokerCardsData = [];
+        let pokerStep = 1;
+
+        function getCardNumericValue(char) {
+            if (char === 'J') return 11;
+            if (char === 'Q') return 12;
+            if (char === 'K') return 13;
+            if (char === 'A') return 14;
+            return parseInt(char);
+        }
+
+        function evaluatePokerHand(cards) {
+            // cards: массив объектов { val: number (2-14), suit: string }
+            const values = cards.map(c => c.val).sort((a, b) => b - a);
+            const suits = cards.map(c => c.suit);
+
+            const isFlush = suits.every(s => s === suits[0]);
+            
+            // Проверка стрита
+            let isStraight = false;
+            let uniqueVals = [...new Set(values)];
+            if (uniqueVals.length === 5) {
+                if (uniqueVals[0] - uniqueVals[4] === 4) {
+                    isStraight = true;
+                }
+                // Стрит с тузом (A, 5, 4, 3, 2 -> 14, 5, 4, 3, 2)
+                if (uniqueVals[0] === 14 && uniqueVals[1] === 5 && uniqueVals[2] === 4 && uniqueVals[3] === 3 && uniqueVals[4] === 2) {
+                    isStraight = true;
+                }
+            }
+
+            // Подсчет количества одинаковых рангов
+            const counts = {};
+            values.forEach(v => counts[v] = (counts[v] || 0) + 1);
+            const countVals = Object.values(counts).sort((a, b) => b - a);
+
+            // Определяем комбинацию и множитель
+            // 1. Флэш-Рояль (10, J, Q, K, A одной масти)
+            if (isFlush && isStraight && values[0] === 14 && values[4] === 10) return { name: 'royal', mult: 250, title: 'Флэш-Рояль' };
+            // 2. Стрит-Флэш
+            if (isFlush && isStraight) return { name: 'straight-flush', mult: 50, title: 'Стрит-Флэш' };
+            // 3. Каре (4 одинаковых)
+            if (countVals[0] === 4) return { name: 'four', mult: 25, title: 'Каре' };
+            // 4. Фулл-Хаус (3 + 2)
+            if (countVals[0] === 3 && countVals[1] === 2) return { name: 'full-house', mult: 9, title: 'Фулл-Хаус' };
+            // 5. Флэш (5 карт одной масти)
+            if (isFlush) return { name: 'flush', mult: 6, title: 'Флэш' };
+            // 6. Стрит (5 карт по порядку)
+            if (isStraight) return { name: 'straight', mult: 4, title: 'Стрит' };
+            // 7. Тройка / Сет
+            if (countVals[0] === 3) return { name: 'three', mult: 3, title: 'Тройка "Сет"' };
+            // 8. Две пары
+            if (countVals[0] === 2 && countVals[1] === 2) return { name: 'two-pairs', mult: 2, title: 'Две пары' };
+            // 9. Пара (от Валетов и выше J+)
+            if (countVals[0] === 2) {
+                let pairVal = Object.keys(counts).find(k => counts[k] === 2);
+                if (parseInt(pairVal) >= 11) {
+                    return { name: 'pair', mult: 1, title: 'Пара от Валетов' };
+                }
+            }
+
+            return { name: 'high-card', mult: 0, title: 'Старшая карта' };
+        }
+
+        function pokerActionReal() {
+            if (vipLevel === 'none') {
+                showToast('🔒 Требуется VIP Lite для игры!');
+                return;
+            }
+            const betInput = document.getElementById('poker-bet');
+            const bet = parseInt(betInput ? betInput.value : 150);
+            if (isNaN(bet) || bet <= 0 || bet > balance) { showToast('⚠️ Неверная ставка!'); return; }
+
+            const statusEl = document.getElementById('poker-status');
+            const actionBtn = document.getElementById('poker-action-btn');
+
+            document.querySelectorAll('.poker-pay-item').forEach(el => el.classList.remove('active-hand'));
+
+            if (pokerStep === 1) {
+                updateBalance(-bet);
+                // Создаем полноценную колоду из 52 карт
+                let deck = [];
+                const suits = ['♠', '♥', '♦', '♣'];
+                for (let s of suits) {
+                    for (let v = 2; v <= 14; v++) {
+                        deck.push({ val: v, suit: s, held: false });
+                    }
+                }
+                deck.sort(() => Math.random() - 0.5);
+
+                if (guaranteedWin) {
+                    // Подсовываем каре или стрит-флэш для промокода
+                    pokerCardsData = [
+                        { val: 14, suit: '♥', held: false },
+                        { val: 14, suit: '♠', held: false },
+                        { val: 14, suit: '♦', held: false },
+                        { val: 14, suit: '♣', held: false },
+                        { val: 7, suit: '♥', held: false }
+                    ];
+                    guaranteedWin = false;
+                } else {
+                    pokerCardsData = deck.splice(0, 5);
                 }
 
-                card.innerHTML = html;
-                container.appendChild(card);
-            });
+                renderPokerCardsReal(true);
+                if (actionBtn) actionBtn.textContent = 'ОБМЕНЯТЬ';
+                if (statusEl) statusEl.textContent = 'Кликните на карты, чтобы оставить их (HOLD), затем жмите обмен!';
+                pokerStep = 2;
+            } else {
+                // Достаем новые карты взамен необмененных из свежей колоды
+                let deck = [];
+                const suits = ['♠', '♥', '♦', '♣'];
+                for (let s of suits) {
+                    for (let v = 2; v <= 14; v++) {
+                        // Исключаем те, что уже на руках
+                        if (!pokerCardsData.some(card => card.val === v && card.suit === s)) {
+                            deck.push({ val: v, suit: s, held: false });
+                        }
+                    }
+                }
+                deck.sort(() => Math.random() - 0.5);
+
+                pokerCardsData.forEach(c => {
+                    if (!c.held) {
+                        let newC = deck.pop();
+                        c.val = newC.val;
+                        c.suit = newC.suit;
+                    }
+                });
+
+                renderPokerCardsReal(false);
+
+                // Оцениваем комбинацию
+                const result = evaluatePokerHand(pokerCardsData);
+                
+                // Подсвечиваем в таблице выплат
+                const activeItem = document.querySelector(`.poker-pay-item[data-hand="${result.name}"]`);
+                if (activeItem) activeItem.classList.add('active-hand');
+
+                if (result.mult > 0) {
+                    const win = bet * result.mult;
+                    updateBalance(win);
+                    if (statusEl) statusEl.textContent = `🔥 Собрано: ${result.title}! Выигрыш x${result.mult}: +${win} BYN!`;
+                    showVictoryAnimation('view-poker', `ПОКЕР: ${result.title.toUpperCase()}!`, `Выигрыш составил +${win} BYN!`);
+                } else {
+                    if (statusEl) statusEl.textContent = `❌ Комбинация не собрана (${result.title}). Ставка сгорела.`;
+                }
+
+                if (actionBtn) actionBtn.textContent = 'РАЗДАТЬ';
+                pokerStep = 1;
+            }
         }
 
-        function answerQuiz(qId, optionIdx) {
-            if (answeredQuestions[qId] !== undefined) return;
-            const q = QUIZ_QUESTIONS.find(item => item.id === qId);
-            if (!q) return;
-
-            answeredQuestions[qId] = optionIdx;
-            if (optionIdx === q.correct) {
-                updateBalance(q.reward);
-                showToast(`🎉 Верно! Вы получили +${q.reward} BYN!`);
-            } else {
-                showToast('❌ Неправильный ответ!');
-            }
-            saveData();
-            renderQuiz();
+        function renderPokerCardsReal(interactive) {
+            const row = document.getElementById('poker-cards');
+            if (!row) return;
+            row.innerHTML = '';
+            const names = {11: 'J', 12: 'Q', 13: 'K', 14: 'A'};
+            
+            pokerCardsData.forEach((c) => {
+                const el = document.createElement('div');
+                const isRed = ['♥', '♦'].includes(c.suit);
+                el.className = `poker-card ${c.held ? 'held' : ''} ${isRed ? 'red' : ''}`;
+                const valStr = names[c.val] || c.val;
+                el.innerHTML = `<div>${valStr}</div><div style="font-size:1.8rem; text-align:center;">${c.suit}</div><div style="text-align:right;">${valStr}</div>`;
+                
+                if (interactive) {
+                    el.onclick = () => {
+                        c.held = !c.held;
+                        el.classList.toggle('held');
+                    };
+                }
+                row.appendChild(el);
+            });
         }
 
         function showVictoryAnimation(viewId, titleText, winText) {
@@ -1398,152 +1632,6 @@
             } catch (err) {
                 showToast('❌ Ошибка при вращении слотов');
             }
-        }
-
-        function spinWheel() {
-            const betInput = document.getElementById('roulette-bet');
-            const bet = parseInt(betInput ? betInput.value : 200);
-            if (isNaN(bet) || bet <= 0 || bet > balance) { showToast('⚠️ Неверная ставка!'); return; }
-            updateBalance(-bet);
-
-            const wheel = document.getElementById('fortune-wheel');
-            const ball = document.getElementById('roulette-ball');
-            const statusEl = document.getElementById('roulette-status');
-            const btn = document.getElementById('roulette-btn');
-            if(btn) btn.disabled = true;
-
-            let winningIndex;
-            if (guaranteedWin) {
-                winningIndex = 0;
-                guaranteedWin = false;
-            } else {
-                winningIndex = Math.floor(Math.random() * ROULETTE_NUMBERS.length);
-            }
-
-            const winningNumber = ROULETTE_NUMBERS[winningIndex];
-            const sectorAngle = 360 / ROULETTE_NUMBERS.length;
-            const targetAngle = winningIndex * sectorAngle;
-
-            const wheelSpins = 360 * 6;
-            const ballSpins = 360 * 10;
-            const finalWheelDeg = wheelSpins + Math.floor(Math.random() * 360);
-            const finalBallDeg = ballSpins + targetAngle;
-
-            wheel.style.transition = 'transform 3.5s cubic-bezier(0.15, 0.85, 0.2, 1)';
-            ball.style.transition = 'all 3.5s cubic-bezier(0.1, 0.8, 0.2, 1)';
-
-            wheel.style.transform = `rotate(${finalWheelDeg}deg)`;
-            
-            const rad = 84;
-            const angleRad = (finalBallDeg * Math.PI) / 180;
-            const ballX = Math.cos(angleRad) * rad;
-            const ballY = Math.sin(angleRad) * rad;
-            ball.style.transform = `translate(${ballX}px, ${ballY}px) scale(1.2)`;
-
-            statusEl.textContent = '🎡 Шарик стремительно катится по рулетке...';
-
-            setTimeout(() => {
-                if(btn) btn.disabled = false;
-                ball.style.transform = `translate(${ballX}px, ${ballY}px) scale(1)`;
-
-                let isWin = false;
-                let mult = 0;
-
-                const isRed = RED_NUMBERS.includes(winningNumber);
-                const isGreen = (winningNumber === 0);
-                const isBlack = !isRed && !isGreen;
-                const isEven = (winningNumber !== 0 && winningNumber % 2 === 0);
-                const isOdd = (winningNumber !== 0 && winningNumber % 2 !== 0);
-
-                if (currentBetType === 'red' && isRed) { isWin = true; mult = 2; }
-                else if (currentBetType === 'black' && isBlack) { isWin = true; mult = 2; }
-                else if (currentBetType === 'green' && isGreen) { isWin = true; mult = 14; }
-                else if (currentBetType === 'even' && isEven) { isWin = true; mult = 2; }
-                else if (currentBetType === 'odd' && isOdd) { isWin = true; mult = 2; }
-                else if (currentBetType === 'number') {
-                    const targetNum = parseInt(document.getElementById('target-number').value);
-                    if (winningNumber === targetNum) { isWin = true; mult = 35; }
-                }
-
-                let colorName = isGreen ? 'Зелёный [0] 🟢' : (isRed ? 'Красное 🔴' : 'Чёрное ⚫');
-
-                if (isWin) {
-                    const win = bet * mult;
-                    updateBalance(win);
-                    statusEl.textContent = `🎉 Выпало: ${winningNumber} (${colorName})! Победа x${mult}: +${win} BYN!`;
-                    showVictoryAnimation('view-roulette', 'ПОБЕДА В РУЛЕТКЕ!', `Выпало число ${winningNumber}! Выигрыш: +${win} BYN!`);
-                } else {
-                    statusEl.textContent = `❌ Выпало: ${winningNumber} (${colorName}). Вы проиграли ставку.`;
-                }
-            }, 3500);
-        }
-
-        let pokerCardsData = [];
-        let pokerStep = 1;
-        function pokerAction() {
-            if (vipLevel === 'none') {
-                showToast('🔒 Требуется VIP Lite для игры!');
-                return;
-            }
-            const betInput = document.getElementById('poker-bet');
-            const bet = parseInt(betInput ? betInput.value : 150);
-            if (isNaN(bet) || bet <= 0 || bet > balance) { showToast('⚠️ Неверная ставка!'); return; }
-
-            const statusEl = document.getElementById('poker-status');
-            const actionBtn = document.getElementById('poker-action-btn');
-
-            if (pokerStep === 1) {
-                updateBalance(-bet);
-                pokerCardsData = Array.from({length: 5}, () => ({
-                    val: Math.floor(Math.random() * 13) + 2,
-                    suit: ['♠', '♥', '♦', '♣'][Math.floor(Math.random()*4)],
-                    held: false
-                }));
-                renderPokerCards(true);
-                if(actionBtn) actionBtn.textContent = 'ОБМЕНЯТЬ';
-                if(statusEl) statusEl.textContent = 'Кликните на карты, чтобы оставить их (HOLD)';
-                pokerStep = 2;
-            } else {
-                pokerCardsData.forEach(c => {
-                    if (!c.held) {
-                        c.val = Math.floor(Math.random() * 13) + 2;
-                        c.suit = ['♠', '♥', '♦', '♣'][Math.floor(Math.random()*4)];
-                    }
-                });
-                renderPokerCards(false);
-
-                let win = guaranteedWin ? 500 : (Math.random() > 0.4 ? bet * 3 : 0);
-                guaranteedWin = false;
-                if (win > 0) {
-                    updateBalance(win);
-                    if(statusEl) statusEl.textContent = `🎉 Победа в покере: +${win} BYN!`;
-                    showVictoryAnimation('view-poker', 'УСПЕХ В ПОКЕРЕ!', `Комбинация принесла +${win} BYN!`);
-                } else {
-                    if(statusEl) statusEl.textContent = 'Карты не сыграли.';
-                }
-                if(actionBtn) actionBtn.textContent = 'РАЗДАТЬ';
-                pokerStep = 1;
-            }
-        }
-
-        function renderPokerCards(interactive) {
-            const row = document.getElementById('poker-cards');
-            if(!row) return;
-            row.innerHTML = '';
-            const names = {11: 'J', 12: 'Q', 13: 'K', 14: 'A'};
-            pokerCardsData.forEach((c) => {
-                const el = document.createElement('div');
-                el.className = `poker-card ${c.held ? 'held' : ''} ${['♥', '♦'].includes(c.suit) ? 'red' : ''}`;
-                const valStr = names[c.val] || c.val;
-                el.innerHTML = `<div>${valStr}</div><div style="font-size:1.8rem; text-align:center;">${c.suit}</div><div style="text-align:right;">${valStr}</div>`;
-                if (interactive) {
-                    el.onclick = () => {
-                        c.held = !c.held;
-                        el.classList.toggle('held');
-                    };
-                }
-                row.appendChild(el);
-            });
         }
 
         let bjDeck = [];
@@ -1798,6 +1886,59 @@
             renderProperties();
             showToast('🎉 Покупка успешно совершена!');
             showVictoryAnimation('view-property', 'ЭЛИТНАЯ ПОКУПКА!', 'Вы пополнили свою коллекцию роскоши!');
+        }
+
+        function renderQuiz() {
+            const container = document.getElementById('quiz-container');
+            if (!container) return;
+            container.innerHTML = '';
+
+            QUIZ_QUESTIONS.forEach(q => {
+                const isAnswered = answeredQuestions[q.id] !== undefined;
+                const userChoice = answeredQuestions[q.id];
+
+                const card = document.createElement('div');
+                card.className = 'quiz-card';
+
+                let html = `
+                    <div class="quiz-question">${q.question} <span style="color:var(--gold); font-size:0.9rem;">(+${q.reward} BYN)</span></div>
+                    <div class="quiz-options">
+                `;
+
+                q.options.forEach((opt, idx) => {
+                    let btnClass = 'quiz-option-btn';
+                    let disabled = isAnswered ? 'disabled' : '';
+                    if (isAnswered) {
+                        if (idx === q.correct) btnClass += ' correct';
+                        else if (idx === userChoice) btnClass += ' wrong';
+                    }
+                    html += `<button class="${btnClass}" ${disabled} onclick="answerQuiz(${q.id}, ${idx})">${opt}</button>`;
+                });
+
+                html += `</div>`;
+                if (isAnswered) {
+                    html += `<div style="margin-top:12px; font-weight:800; color:${userChoice === q.correct ? 'var(--neon-green)' : 'var(--danger)'};">${userChoice === q.correct ? '✓ Правильно! Награда зачислена.' : '✕ Неправильно.'}</div>`;
+                }
+
+                card.innerHTML = html;
+                container.appendChild(card);
+            });
+        }
+
+        function answerQuiz(qId, optionIdx) {
+            if (answeredQuestions[qId] !== undefined) return;
+            const q = QUIZ_QUESTIONS.find(item => item.id === qId);
+            if (!q) return;
+
+            answeredQuestions[qId] = optionIdx;
+            if (optionIdx === q.correct) {
+                updateBalance(q.reward);
+                showToast(`🎉 Верно! Вы получили +${q.reward} BYN!`);
+            } else {
+                showToast('❌ Неправильный ответ!');
+            }
+            saveData();
+            renderQuiz();
         }
 
         window.addEventListener('DOMContentLoaded', () => {
