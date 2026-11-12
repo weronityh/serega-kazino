@@ -885,8 +885,8 @@
         </div>
 
         <nav class="sidebar-menu">
-            <button class="nav-item active" id="nav-lobby" onclick="showLobby()">
-                <span>🎮 Все режимы</span>
+            <button class="nav-item active" id="nav-property" onclick="showProperty()">
+                <span>🏠 Имущество</span>
             </button>
             <button class="nav-item" id="nav-blackjack" onclick="switchGame('blackjack')">
                 <span>🃏 Блэкджек</span>
@@ -938,7 +938,56 @@
 
         <main class="content-area">
             <!-- ЛОББИ С КАРТОЧКАМИ РЕЖИМОВ (КАК НА СКРИНШОТЕ) -->
-            <div id="lobby-view" style="width: 100%; display: flex; flex-direction: column; align-items: center;">
+            
+            <!-- ИМУЩЕСТВО -->
+            <div id="property-view" class="game-container" style="display: none;">
+                <div class="game-top_bar" style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--border-color);">
+                    <h2 style="margin: 0; color: var(--gold); font-size: 1.35rem;">🏠 Ваш гараж и недвижимость</h2>
+                    <button class="back-lobby-btn" onclick="showLobby()">← К играм</button>
+                </div>
+                <p style="color: var(--muted); margin-top: 0; text-align: left;">Покупайте крутые гаджеты, тачки и элитную недвижимость на заработанные в казино деньги!</p>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin: 20px 0;">
+                    <div style="background: linear-gradient(145deg, #18253c, #0f1727); border: 1px solid var(--border-color); border-radius: 14px; padding: 18px; text-align: left; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <div style="font-size: 2.5rem; margin-bottom: 10px;">📱</div>
+                            <div style="font-size: 1.15rem; font-weight: 800; color: #fff;">Iphone duo</div>
+                            <div style="font-size: 0.88rem; color: var(--muted); margin-top: 4px;">Двойной флагманский смартфон с нейросетями</div>
+                        </div>
+                        <div style="margin-top: 18px; display: flex; align-items: center; justify-content: space-between;">
+                            <span style="font-weight: 800; color: var(--gold); font-size: 1.05rem;">10 000 BYN</span>
+                            <button class="action-btn" id="buy-item-0" onclick="buyProperty(0, 'Iphone duo', 10000)">Купить</button>
+                        </div>
+                    </div>
+
+                    <div style="background: linear-gradient(145deg, #18253c, #0f1727); border: 1px solid var(--border-color); border-radius: 14px; padding: 18px; text-align: left; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <div style="font-size: 2.5rem; margin-bottom: 10px;">🏎️</div>
+                            <div style="font-size: 1.15rem; font-weight: 800; color: #fff;">BMW M5 F90</div>
+                            <div style="font-size: 0.88rem; color: var(--muted); margin-top: 4px;">Легендарный немецкий спортдан на полном приводе</div>
+                        </div>
+                        <div style="margin-top: 18px; display: flex; align-items: center; justify-content: space-between;">
+                            <span style="font-weight: 800; color: var(--gold); font-size: 1.05rem;">250 000 BYN</span>
+                            <button class="action-btn" id="buy-item-1" onclick="buyProperty(1, 'BMW M5 F90', 250000)">Купить</button>
+                        </div>
+                    </div>
+
+                    <div style="background: linear-gradient(145deg, #18253c, #0f1727); border: 1px solid var(--border-color); border-radius: 14px; padding: 18px; text-align: left; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <div style="font-size: 2.5rem; margin-bottom: 10px;">🌆</div>
+                            <div style="font-size: 1.15rem; font-weight: 800; color: #fff;">Квартира В Moscow city</div>
+                            <div style="font-size: 0.88rem; color: var(--muted); margin-top: 4px;">Элитные апартаменты на 75 этаже с панорамным видом</div>
+                        </div>
+                        <div style="margin-top: 18px; display: flex; align-items: center; justify-content: space-between;">
+                            <span style="font-weight: 800; color: var(--gold); font-size: 1.05rem;">550 000 BYN</span>
+                            <button class="action-btn" id="buy-item-2" onclick="buyProperty(2, 'Квартира В Moscow city', 550000)">Купить</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+<div id="lobby-view" style="width: 100%; display: flex; flex-direction: column; align-items: center;">
                 <div class="section-heading">
                     <h2>🎮 Выбери свой режим</h2>
                 </div>
@@ -1947,6 +1996,62 @@
                     </div>`;
                 }).join('');
             document.getElementById('toothpick-again').disabled = false;
+        }
+
+        
+        // --- ИМУЩЕСТВО ---
+        let ownedProperties = [];
+        if (localStorage.getItem('casino_properties') !== null) {
+            try { ownedProperties = JSON.parse(localStorage.getItem('casino_properties')); } catch(e) {}
+        }
+
+        function showProperty() {
+            document.getElementById('lobby-view').style.display = 'none';
+            document.querySelectorAll('.game-container').forEach(el => el.classList.remove('active'));
+            document.getElementById('property-view').classList.add('active');
+            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+            document.getElementById('nav-property').classList.add('active');
+            updatePropertyButtons();
+        }
+
+        // Переопределим showLobby чтобы скрывать property-view
+        const oldShowLobby = showLobby;
+        showLobby = function() {
+            document.getElementById('property-view').classList.remove('active');
+            oldShowLobby();
+        }
+
+        function buyProperty(index, name, price) {
+            if (ownedProperties.includes(index)) {
+                alert('У вас уже есть ' + name + '!');
+                return;
+            }
+            if (balance < price) {
+                alert('Недостаточно средств на балансе! Нужно ' + price + ' BYN.');
+                return;
+            }
+            updateBalance(-price);
+            ownedProperties.push(index);
+            localStorage.setItem('casino_properties', JSON.stringify(ownedProperties));
+            addChatLog('Имущество', `Успешно куплено: ${name} за ${price} BYN! 🏆`, true);
+            alert('🎉 Поздравляем с покупкой! Вы стали владельцем: ' + name);
+            updatePropertyButtons();
+        }
+
+        function updatePropertyButtons() {
+            for (let i = 0; i < 3; i++) {
+                const btn = document.getElementById('buy-item-' + i);
+                if (!btn) continue;
+                if (ownedProperties.includes(i)) {
+                    btn.innerText = 'Куплено ✓';
+                    btn.style.background = '#10b981';
+                    btn.disabled = true;
+                } else {
+                    btn.innerText = 'Купить';
+                    btn.style.background = 'var(--accent)';
+                    btn.disabled = false;
+                }
+            }
         }
 
         // Инициализация при загрузке
