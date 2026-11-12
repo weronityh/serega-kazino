@@ -535,7 +535,7 @@
         .poker-pay-item.active-hand { border-color: var(--neon-green); background: rgba(26,232,58,0.15); box-shadow: 0 0 10px rgba(26,232,58,0.3); }
 
         .cards-row { display: flex; justify-content: center; gap: 12px; margin: 20px 0; }
-        .poker-card { width: 75px; height: 105px; background: #fff; color: #000; border-radius: 8px; font-size: 1.3rem; font-weight: 900; display: flex; flex-direction: column; justify-content: space-between; padding: 8px; cursor: pointer; border: 3px solid transparent; box-shadow: 0 8px 20px rgba(0,0,0,0.4); position: relative; transition: transform 0.2s; }
+        .poker-card { width: 75px; height: 105px; background: #fff; color: #000; border-radius: 8px; font-size: 1.3rem; font-weight: 900; display: flex; flex-direction: column; justify-content: space-between; padding: 8px; cursor: pointer; border: 3px solid transparent; box-shadow: 0 8px 20px rgba(0,0,0,0.4); position: relative; transition: transform 0.2s; user-select: none; }
         .poker-card:hover { transform: translateY(-5px); }
         .poker-card.held { border-color: var(--neon-green); transform: translateY(-12px); }
         .poker-card.held::after {
@@ -1999,7 +1999,7 @@
         let playerHand = [];
         let dealerHand = [];
         let pokerPot = 0;
-        let pokerStage = 0;
+        let pokerStage = 0; // 0: ожидание ставки, 1: карты разданы (можно кликать и менять), 2: вскрытие/итоги
         let currentAnte = 100;
 
         function createDeck() {
@@ -2073,6 +2073,7 @@
             document.querySelectorAll('.poker-pay-item').forEach(el => el.classList.remove('active-hand'));
 
             if (pokerStage === 0) {
+                // Этап 1: Ставка сделана, карты разданы. Игрок может выбирать карты для обмена (HOLD).
                 if (bet > balance) { showToast('⚠️ Недостаточно средств!'); return; }
                 updateBalance(-bet);
                 recordBet(bet);
@@ -2095,18 +2096,14 @@
                     guaranteedWin = false;
                 }
 
+                pokerStage = 1;
                 renderPokerTable(true, false);
                 dealerInfo.textContent = 'Бот-соперник: оценил карты в темную';
-                statusEl.textContent = 'Раунд 1: Оцените свои 5 карт. Сделайте колл для продолжения торговли.';
-                actionBtn.textContent = 'КОЛЛ / УРАВНЯТЬ (К ОБМЕНУ)';
-                pokerStage = 1;
+                statusEl.textContent = 'Кликните на ненужные карты, чтобы зафиксировать (HOLD), затем нажмите «Обменять карты».';
+                actionBtn.textContent = 'ОБМЕНЯТЬ КАРТЫ И ВСКРЫТЬСЯ';
 
             } else if (pokerStage === 1) {
-                statusEl.textContent = 'Этап Дро: Кликните на карты, которые хотите оставить (HOLD), затем нажмите обмен.';
-                actionBtn.textContent = 'СДЕЛАТЬ ОБМЕН КАРТ';
-                pokerStage = 2;
-
-            } else if (pokerStage === 2) {
+                // Этап 2: Производим обмен непомеченных карт и сразу переходим к вскрытию и сравнению рук
                 playerHand.forEach(c => {
                     if (!c.held && pokerDeck.length > 0) {
                         let newC = pokerDeck.pop();
@@ -2121,19 +2118,7 @@
                     dealerHand[4] = pokerDeck.pop();
                 }
 
-                renderPokerTable(true, false);
-                statusEl.textContent = 'Раунд 2: Обмен завершен! Сделайте финальный круг ставок перед шоудауном.';
-                actionBtn.textContent = 'ФИНАЛЬНЫЙ КОЛЛ И ВСКРЫТИЕ';
-                pokerStage = 3;
-
-            } else if (pokerStage === 3) {
-                if (bet > balance) { showToast('⚠️ Недостаточно средств!'); return; }
-                updateBalance(-bet);
-                recordBet(bet);
-                pokerPot += bet * 2;
-                potInfo.textContent = `Банк игры: ${pokerPot} BYN`;
-
-                pokerStage = 4;
+                pokerStage = 2;
                 actionBtn.textContent = 'НОВАЯ РАЗДАЧА';
                 
                 renderPokerTable(true, true);
@@ -2169,7 +2154,21 @@
                     statusEl.textContent = `❌ Бот выиграл с комбинацией "${dRes.title}". Банк утерян.`;
                 }
 
+            } else if (pokerStage === 2) {
+                // Сброс для новой раздачи
                 pokerStage = 0;
+                actionBtn.textContent = 'НАЧАТЬ РАЗДАЧУ';
+                statusEl.textContent = 'Добро пожаловать в 5-Card Draw покер! Сделайте ставку и начните раздачу.';
+                potInfo.textContent = 'Банк игры: 0 BYN';
+                dealerInfo.textContent = 'Бот-соперник: ожидает раздачи';
+                document.getElementById('dealer-poker-cards').innerHTML = '';
+                document.getElementById('poker-cards').innerHTML = `
+                    <div class="poker-card" style="opacity:0.4;"><div>J</div><div style="font-size:1.8rem; text-align:center;">♠</div><div style="text-align:right;">J</div></div>
+                    <div class="poker-card" style="opacity:0.4;"><div>Q</div><div style="font-size:1.8rem; text-align:center;">♥</div><div style="text-align:right;">Q</div></div>
+                    <div class="poker-card" style="opacity:0.4;"><div>K</div><div style="font-size:1.8rem; text-align:center;">♦</div><div style="text-align:right;">K</div></div>
+                    <div class="poker-card" style="opacity:0.4;"><div>A</div><div style="font-size:1.8rem; text-align:center;">♣</div><div style="text-align:right;">A</div></div>
+                    <div class="poker-card" style="opacity:0.4;"><div>10</div><div style="font-size:1.8rem; text-align:center;">♠</div><div style="text-align:right;">10</div></div>
+                `;
             }
         }
 
@@ -2190,7 +2189,8 @@
                 const valStr = names[c.val] || c.val;
                 el.innerHTML = `<div>${valStr}</div><div style="font-size:1.8rem; text-align:center;">${c.suit}</div><div style="text-align:right;">${valStr}</div>`;
                 
-                if (playerInteractive && pokerStage === 2) {
+                // Клик по карте работает именно на этапе обмена (pokerStage === 1)
+                if (playerInteractive && pokerStage === 1) {
                     el.onclick = () => {
                         c.held = !c.held;
                         el.classList.toggle('held');
