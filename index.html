@@ -163,7 +163,7 @@
             padding: 0 26px; display: flex; align-items: center; justify-content: space-between; gap: 16px; position: sticky; top: 0; z-index: 25;
         }
 
-        /* СИНЯЯ КНОПКА TG БОСС ВМЕСТО ПОИСКА */
+        /* СИНЯЯ КНОПКА TG БОСС */
         .tg-boss-btn {
             display: flex;
             align-items: center;
@@ -490,6 +490,58 @@
             color: var(--danger);
         }
 
+        /* МУЗОН (МОРГЕНШТЕРН С YOUTUBE КНОПКАМИ) */
+        .music-container {
+            max-width: 700px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .track-card {
+            background: #0d131a;
+            border: 1px solid #233042;
+            border-radius: 14px;
+            padding: 20px;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+        }
+        .track-info {
+            text-align: left;
+        }
+        .track-title {
+            font-weight: 900;
+            font-size: 1.05rem;
+            color: #fff;
+        }
+        .track-artist {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 3px;
+        }
+        .yt-watch-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #ff0000;
+            color: #fff;
+            padding: 10px 18px;
+            border-radius: 10px;
+            font-weight: 900;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.35);
+            transition: 0.2s;
+            flex-shrink: 0;
+        }
+        .yt-watch-btn:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.15);
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.6);
+        }
+
         /* МАГАЗИН VIP СТАТУСОВ */
         .vip-shop-grid {
             display: grid;
@@ -620,6 +672,11 @@
                 <span class="nav-item-left"><span class="nav-icon">🍒</span> Слоты</span>
                 <span class="nav-badge badge-pro">VIP PRO</span>
             </button>
+            <!-- ВКЛАДКА МУЗОН ПОД СЛОТАМИ -->
+            <button class="nav-item" id="nav-music" onclick="switchGame('music')" style="display: none; border-color: #ec4899;">
+                <span class="nav-item-left"><span class="nav-icon">🎵</span> МУЗОН</span>
+                <span class="nav-badge" style="background:#ec4899; color:#fff;">MORGEN</span>
+            </button>
             <button class="nav-item" id="nav-vip-shop" onclick="switchGame('vip-shop')">
                 <span class="nav-item-left"><span class="nav-icon">⭐</span> VIP Статусы</span>
                 <span class="nav-badge badge-vip">SHOP</span>
@@ -645,17 +702,15 @@
 
     <div class="main-wrapper">
         <header class="topbar">
-            <!-- СИНЯЯ КНОПКА TG БОСС ВМЕСТО ПОИСКА -->
             <a href="https://t.me/Seregablatnou" target="_blank" class="tg-boss-btn">
                 <span>✈️</span> TG БОСС
             </a>
 
-            <!-- БАЛАНС С ПАЧКОЙ ДОЛЛАРОВ ПО СЕРЕДИНЕ КРУПНЫМ ШРИФТОМ -->
             <div class="balance-center-box">
                 <span>💵</span><span id="balance">1000</span> <span style="font-size:0.9rem; color:#fff;">BYN</span>
             </div>
 
-            <div style="width: 130px;"></div> <!-- Пустой блок для идеального центрирования баланса -->
+            <div style="width: 130px;"></div>
         </header>
 
         <main class="content-area">
@@ -732,7 +787,7 @@
                 <div class="status-banner" id="bj-status">Сделайте ставку и нажмите «Раздать»</div>
             </div>
 
-            <!-- КОЛЕСО ФОРТУНЫ С ВЫБОРОМ СТАВОК -->
+            <!-- КОЛЕСО ФОРТУНЫ -->
             <div id="view-roulette" class="game-view">
                 <div class="game-header">
                     <h2>🎡 Колесо фортуны (Ставки)</h2>
@@ -750,7 +805,6 @@
                         <div class="roulette-ball" id="roulette-ball"></div>
                     </div>
 
-                    <!-- ПАНЕЛЬ ВЫБОРА ТИПА СТАВКИ -->
                     <div class="roulette-betting-panel">
                         <div style="font-weight: 800; margin-bottom: 10px; color: var(--gold);">Выберите на что ставите:</div>
                         <div class="roulette-bet-grid">
@@ -835,6 +889,52 @@
                 <div class="status-banner" id="slots-status">Зал слотов открыт для просмотра.</div>
             </div>
 
+            <!-- МУЗОН (БЕЗОПАСНЫЕ КНОПКИ YOUTUBE БЕЗ ОШИБОК) -->
+            <div id="view-music" class="game-view">
+                <div class="game-header">
+                    <h2>🎵 МУЗОН — MORGENSHTERN VIBE</h2>
+                    <button class="btn-back" onclick="showLobby()">← В лобби</button>
+                </div>
+                <div class="music-container">
+                    <div class="status-banner" style="margin-bottom: 20px; color: #ec4899; background: rgba(236, 72, 153, 0.1); border: 1px solid rgba(236, 72, 153, 0.3);">
+                        🔥 Легендарные треки с YouTube для самых чётких игроков!
+                    </div>
+
+                    <!-- ТРЕК 1 -->
+                    <div class="track-card">
+                        <div class="track-info">
+                            <div class="track-title">БУДУ ТВОЕЙ ПАЛЬМОЙ / GUERRA</div>
+                            <div class="track-artist">MORGENSHTERN</div>
+                        </div>
+                        <a href="https://www.youtube.com/watch?v=a4bL6EQTYJw" target="_blank" class="yt-watch-btn">
+                            ▶ Слушать на YouTube
+                        </a>
+                    </div>
+
+                    <!-- ТРЕК 2 -->
+                    <div class="track-card">
+                        <div class="track-info">
+                            <div class="track-title">РАТАТАТАТА</div>
+                            <div class="track-artist">MORGENSHTERN & Витя АК</div>
+                        </div>
+                        <a href="https://www.youtube.com/watch?v=aS_wdyhu0xQ" target="_blank" class="yt-watch-btn">
+                            ▶ Слушать на YouTube
+                        </a>
+                    </div>
+
+                    <!-- ТРЕК 3 -->
+                    <div class="track-card">
+                        <div class="track-info">
+                            <div class="track-title">Cadillac</div>
+                            <div class="track-artist">MORGENSHTERN & Элджей</div>
+                        </div>
+                        <a href="https://www.youtube.com/watch?v=-7n4t0cbVD4" target="_blank" class="yt-watch-btn">
+                            ▶ Слушать на YouTube
+                        </a>
+                    </div>
+                </div>
+            </div>
+
             <!-- МАГАЗИН VIP СТАТУСОВ -->
             <div id="view-vip-shop" class="game-view">
                 <div class="game-header">
@@ -913,6 +1013,7 @@
         let vipLevel = 'none';
         let ownedProps = [];
         let guaranteedWin = false;
+        let musicUnlocked = false;
         let answeredQuestions = {};
         let currentBetType = 'red';
 
@@ -931,6 +1032,11 @@
             }
             if (localStorage.getItem('so_kazik_quiz')) {
                 answeredQuestions = JSON.parse(localStorage.getItem('so_kazik_quiz')) || {};
+            }
+            if (localStorage.getItem('so_kazik_music') === 'true') {
+                musicUnlocked = true;
+                const musicBtn = document.getElementById('nav-music');
+                if (musicBtn) musicBtn.style.display = 'flex';
             }
         } catch (e) {}
 
@@ -987,6 +1093,7 @@
                 localStorage.setItem('so_kazik_vip', vipLevel);
                 localStorage.setItem('so_kazik_props', JSON.stringify(ownedProps));
                 localStorage.setItem('so_kazik_quiz', JSON.stringify(answeredQuestions));
+                localStorage.setItem('so_kazik_music', musicUnlocked);
             } catch (e) {}
         }
 
@@ -1183,12 +1290,19 @@
             const input = document.getElementById('promo-input');
             if (!input) return;
             const code = input.value.trim().toLowerCase();
-            if (code === 'алина лох') {
-                updateBalance(15000);
-                showToast('🎉 Промокод активирован: +15 000 BYN!');
-            } else if (code === 'serega') {
+            
+            if (code === 'seregaa') {
                 guaranteedWin = true;
-                showToast('🔥 Промокод активирован: следующая игра будет победной!');
+                showToast('🔥 Промокод активирован: следующая игра принесет победу!');
+            } else if (code === 'салфетка') {
+                updateBalance(4000);
+                showToast('🎁 Промокод активирован: +4 000 BYN на баланс!');
+            } else if (code === 'моргенштерн') {
+                musicUnlocked = true;
+                saveData();
+                const musicBtn = document.getElementById('nav-music');
+                if (musicBtn) musicBtn.style.display = 'flex';
+                showToast('🎵 Режим МУЗОН разблокирован в меню!');
             } else {
                 showToast('❌ Неверный промокод');
             }
@@ -1277,7 +1391,7 @@
 
             let winningIndex;
             if (guaranteedWin) {
-                winningIndex = 0; // Выпадет 0 (Зеленое)
+                winningIndex = 0;
                 guaranteedWin = false;
             } else {
                 winningIndex = Math.floor(Math.random() * ROULETTE_NUMBERS.length);
