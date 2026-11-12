@@ -217,4 +217,1178 @@
         .btn-back { background: #18222f; border: 1px solid #283649; color: #fff; padding: 8px 16px; border-radius: 10px; cursor: pointer; font-weight: 700; }
 
         .controls-bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 12px; margin-top: 20px; }
-        .controls-bar input, .controls-bar select { background: #0d131a; border: 1px solid #283649; color: #fff; padding: 10px 14px; border-radius: 10px; font-weight: 700; text-align: center;
+        .controls-bar input, .controls-bar select { background: #0d131a; border: 1px solid #283649; color: #fff; padding: 10px 14px; border-radius: 10px; font-weight: 700; text-align: center; outline: none; }
+        .btn-play { background: var(--neon-green); color: #031406; border: none; padding: 11px 22px; border-radius: 10px; font-weight: 900; cursor: pointer; text-transform: uppercase; transition: 0.2s; }
+        .btn-play:hover { filter: brightness(1.1); transform: scale(1.02); }
+        .status-banner { margin: 16px auto 0; padding: 12px; border-radius: 10px; background: rgba(255,255,255,0.04); font-weight: 800; color: var(--gold); text-align: center; font-size: 1.05rem; }
+
+        /* СЛОТЫ */
+        .slots-wrapper { display: grid; grid-template-columns: 1.4fr 1fr; gap: 20px; }
+        .slot-cabinet { background: #110e18; border: 3px solid var(--neon-green); border-radius: 18px; padding: 24px; text-align: center; }
+        .reels-box { display: flex; justify-content: center; gap: 12px; margin: 14px 0; }
+        .reel-cell { width: 96px; height: 106px; background: #0d131a; border: 2px solid #2e3e52; border-radius: 14px; display: grid; place-items: center; font-size: 3.2rem; }
+        .paytable-box { background: #0e141c; border: 1px solid #233042; border-radius: 14px; padding: 16px; }
+        .pay-row { display: flex; justify-content: space-between; padding: 7px 0; border-bottom: 1px solid #1b2533; font-size: 0.92rem; }
+        .pay-row b { color: var(--gold); }
+
+        /* КОЛЕСО ФОРТУНЫ С ШАРИКОМ */
+        .roulette-container { text-align: center; padding: 20px; position: relative; }
+        .wheel-outer-wrap { position: relative; width: 260px; height: 260px; margin: 0 auto 20px; }
+        .wheel {
+            width: 260px; height: 260px; border-radius: 50%; border: 6px solid var(--gold);
+            position: absolute; top: 0; left: 0;
+            display: grid; place-items: center; font-size: 1.5rem; font-weight: 900;
+            background: conic-gradient(#ef4444 0deg 90deg, #3b82f6 90deg 180deg, #10b981 180deg 270deg, #f59e0b 270deg 360deg);
+        }
+        .roulette-ball {
+            position: absolute;
+            width: 18px; height: 18px; background: #fff; border-radius: 50%;
+            box-shadow: 0 0 10px #fff, inset 0 0 3px #000;
+            top: 50%; left: 50%;
+            margin: -9px 0 0 -9px;
+            z-index: 10;
+            transition: all 3.5s cubic-bezier(0.1, 0.8, 0.2, 1);
+        }
+
+        /* ВИДЕОПОКЕР */
+        .poker-table { text-align: center; padding: 10px; }
+        .cards-row { display: flex; justify-content: center; gap: 12px; margin: 20px 0; }
+        .poker-card { width: 70px; height: 100px; background: #fff; color: #000; border-radius: 8px; font-size: 1.3rem; font-weight: 900; display: flex; flex-direction: column; justify-content: space-between; padding: 8px; cursor: pointer; border: 3px solid transparent; }
+        .poker-card.held { border-color: var(--neon-green); transform: translateY(-10px); }
+
+        /* БЛЭКДЖЕК */
+        .blackjack-table {
+            background: radial-gradient(circle, #0e4c27 0%, #062b16 100%);
+            border: 6px solid #205c36;
+            border-radius: 20px;
+            padding: 24px;
+            text-align: center;
+            box-shadow: inset 0 0 30px rgba(0,0,0,0.7);
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .bj-section-title { font-size: 0.85rem; font-weight: 900; color: #a3e635; text-transform: uppercase; margin-bottom: 6px; letter-spacing: 1px; }
+        .bj-cards-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            min-height: 115px;
+            perspective: 1000px;
+        }
+        .bj-card {
+            width: 75px;
+            height: 105px;
+            background: #ffffff;
+            color: #111;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 8px;
+            font-weight: 900;
+            font-size: 1.2rem;
+            box-shadow: 0 12px 25px rgba(0,0,0,0.5);
+            border: 2px solid #ccc;
+            transform-origin: top center;
+            animation: slowDealToTable 0.9s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+        }
+        .bj-card.red { color: #dc2626; }
+        @keyframes slowDealToTable {
+            0% { transform: translateY(-200px) translateX(-50px) scale(0.4) rotate(45deg); opacity: 0; }
+            60% { transform: translateY(15px) translateX(5px) scale(1.08) rotate(-5deg); opacity: 1; }
+            85% { transform: translateY(-5px) translateX(-2deg) scale(0.97) rotate(2deg); opacity: 1; }
+            100% { transform: translateY(0) translateX(0) scale(1) rotate(0deg); opacity: 1; }
+        }
+        .bj-info-panel {
+            background: rgba(0,0,0,0.3);
+            border-radius: 12px;
+            padding: 10px;
+            display: flex;
+            justify-content: space-around;
+            font-weight: 800;
+        }
+
+        /* НАСТРОЙКИ И ВИКТОРИНА ЗА BYN */
+        .settings-container {
+            max-width: 700px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .quiz-card {
+            background: #121922;
+            border: 2px solid #233042;
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+        }
+        .quiz-question {
+            font-size: 1.15rem;
+            font-weight: 900;
+            color: #fff;
+            margin-bottom: 18px;
+        }
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .quiz-option-btn {
+            background: #0d131a;
+            border: 1px solid #2c3e50;
+            color: #fff;
+            padding: 12px 18px;
+            border-radius: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            text-align: left;
+            transition: 0.2s;
+        }
+        .quiz-option-btn:hover {
+            border-color: var(--neon-green);
+            background: rgba(26, 232, 58, 0.08);
+        }
+        .quiz-option-btn.correct {
+            background: rgba(26, 232, 58, 0.25);
+            border-color: var(--neon-green);
+            color: var(--neon-green);
+        }
+        .quiz-option-btn.wrong {
+            background: rgba(239, 68, 68, 0.25);
+            border-color: var(--danger);
+            color: var(--danger);
+        }
+
+        /* МАГАЗИН И ПРЕИМУЩЕСТВА ВИП */
+        .vip-shop-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 24px;
+        }
+        .vip-card {
+            background: linear-gradient(145deg, #131b24, #0d131a);
+            border: 2px solid #2c3e50;
+            border-radius: 16px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+        }
+        .vip-card.lite-vip { border-color: #f59e0b; }
+        .vip-card.pro-vip { border-color: var(--neon-green); background: linear-gradient(145deg, #0e2417, #0b1611); }
+        .vip-card h3 { margin-top: 0; font-size: 1.4rem; }
+        .vip-features-list {
+            list-style: none;
+            padding: 0;
+            margin: 15px 0 20px 0;
+            text-align: left;
+        }
+        .vip-features-list li {
+            padding: 6px 0;
+            font-size: 0.9rem;
+            color: #d1d9e4;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .property-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+        .prop-card { background: #0e141c; border: 1px solid #243142; border-radius: 14px; padding: 18px; display: flex; flex-direction: column; justify-content: space-between; }
+        .prop-card.owned { border-color: var(--neon-green); background: linear-gradient(160deg, rgba(26,232,58,0.08), #0e141c); }
+        .prop-emoji { font-size: 2.6rem; margin-bottom: 10px; }
+        .prop-name { font-size: 1.1rem; font-weight: 800; color: #fff; }
+        .prop-desc { font-size: 0.84rem; color: var(--text-muted); margin-top: 4px; }
+        .prop-bottom { margin-top: 16px; display: flex; align-items: center; justify-content: space-between; }
+        .prop-price { font-weight: 900; color: var(--gold); }
+
+        .trust-footer { margin-top: auto; padding-top: 18px; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-muted); }
+        .toast { position: fixed; bottom: 22px; right: 22px; background: #121a24; border: 1.5px solid var(--neon-green); color: #fff; padding: 12px 18px; border-radius: 12px; font-weight: 700; transform: translateY(150%); opacity: 0; transition: 0.3s; z-index: 200; }
+        .toast.show { transform: translateY(0); opacity: 1; }
+
+        /* ВЕСЁЛЫЕ АНИМАЦИИ ПОБЕДЫ */
+        @keyframes victoryPop {
+            0% { transform: scale(0.3) rotate(-10deg); opacity: 0; }
+            50% { transform: scale(1.2) rotate(10deg); opacity: 1; }
+            70% { transform: scale(0.9) rotate(-5deg); }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; }
+        }
+        @keyframes coinRain {
+            0% { transform: translateY(-50px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(200px) rotate(360deg); opacity: 0; }
+        }
+        .win-popup-overlay {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            border-radius: 18px;
+            animation: victoryPop 0.4s ease-out forwards;
+        }
+        .win-popup-content {
+            text-align: center;
+            padding: 30px;
+            background: linear-gradient(135deg, #112b1a, #0b1610);
+            border: 3px solid var(--neon-green);
+            border-radius: 20px;
+            box-shadow: 0 0 50px rgba(26, 232, 58, 0.6);
+        }
+        .win-popup-content h2 {
+            font-size: 2.5rem;
+            color: var(--gold);
+            margin: 0 0 10px 0;
+            text-transform: uppercase;
+            text-shadow: 0 0 15px rgba(251, 191, 36, 0.6);
+        }
+        .win-popup-content p {
+            font-size: 1.2rem;
+            color: #fff;
+            margin-bottom: 20px;
+            font-weight: 800;
+        }
+        .confetti-coin {
+            position: absolute;
+            font-size: 2rem;
+            animation: coinRain 1.5s linear infinite;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ЛЕВАЯ ПАНЕЛЬ -->
+    <aside class="left-sidebar">
+        <div class="brand-logo" onclick="showLobby()">
+            <div class="brand-crown">👑</div>
+            <div class="brand-title-top">СЕРЁГА И<br>ОЛЯМБУС</div>
+            <div class="brand-title-bottom">КАЗИК</div>
+        </div>
+
+        <nav class="sidebar-menu">
+            <button class="nav-item active" id="nav-lobby" onclick="showLobby()">
+                <span class="nav-item-left"><span class="nav-icon">🏠</span> Главная</span>
+            </button>
+            <button class="nav-item" id="nav-blackjack" onclick="switchGame('blackjack')">
+                <span class="nav-item-left"><span class="nav-icon">♠️</span> Блэкджек</span>
+                <span class="nav-badge" style="background:#3b82f6; color:#fff;">FREE</span>
+            </button>
+            <button class="nav-item" id="nav-roulette" onclick="switchGame('roulette')">
+                <span class="nav-item-left"><span class="nav-icon">🎡</span> Колесо</span>
+                <span class="nav-badge" style="background:#3b82f6; color:#fff;">FREE</span>
+            </button>
+            <button class="nav-item" id="nav-poker" onclick="switchGame('poker')">
+                <span class="nav-item-left"><span class="nav-icon">🃏</span> Покер</span>
+                <span class="nav-badge badge-vip">VIP LITE</span>
+            </button>
+            <button class="nav-item" id="nav-slots" onclick="switchGame('slots')">
+                <span class="nav-item-left"><span class="nav-icon">🍒</span> Слоты</span>
+                <span class="nav-badge badge-pro">VIP PRO</span>
+            </button>
+            <button class="nav-item" id="nav-property" onclick="switchGame('property')">
+                <span class="nav-item-left"><span class="nav-icon">👑</span> Имущество</span>
+                <span class="nav-badge badge-pro">VIP PRO</span>
+            </button>
+            <!-- КНОПКА НАСТРОЙКИ С ВИКТОРИНОЙ ЗА BYN -->
+            <button class="nav-item" id="nav-settings" onclick="switchGame('settings')">
+                <span class="nav-item-left"><span class="nav-icon">⚙️</span> Настройки (Викторина)</span>
+                <span class="nav-badge" style="background:var(--gold); color:#000;">+BYN</span>
+            </button>
+        </nav>
+
+        <div class="sidebar-promo">
+            <div class="promo-header"><span>🎁</span> Промокод</div>
+            <div class="promo-input-group">
+                <input type="text" id="promo-input" placeholder="Введите код">
+                <button onclick="applyPromo()">OK</button>
+            </div>
+        </div>
+    </aside>
+
+    <div class="main-wrapper">
+        <header class="topbar">
+            <div class="search-box">
+                <span>🔍</span>
+                <input type="text" placeholder="Поиск режимов...">
+            </div>
+            <div class="topbar-right">
+                <div class="online-indicator"><span class="online-dot"></span><span><b>624</b> онлайн</span></div>
+                <div class="balance-box"><span>💼</span><span id="balance">1000</span> BYN</div>
+            </div>
+        </header>
+
+        <main class="content-area">
+            <!-- ГЛАВНОЕ ЛОББИ -->
+            <div id="lobby-view" class="game-view">
+                <div class="hero-banner">
+                    <div class="hero-left">
+                        <h1 class="hero-title">
+                            <span class="line1">СЕРЁГА ПУШКА</span>
+                            <span class="line2">МЕССИ ИГРУШКА</span>
+                        </h1>
+                        <p class="hero-subtitle">СЮДА ЗАЛЕТАЙ И БАБКИ ПОЛУЧАЙ!</p>
+                        <button class="hero-cta-btn" onclick="switchGame('blackjack')">ИГРАТЬ СЕЙЧАС →</button>
+                    </div>
+                </div>
+
+                <section class="modes-grid">
+                    <div class="mode-card" onclick="switchGame('blackjack')">
+                        <div class="mode-card-visual"><div class="mode-big-emoji">♠️</div><span class="mode-tag-pill" style="background:#3b82f6; color:#fff;">БЕЗ ЛИМИТОВ</span></div>
+                        <div class="mode-card-footer">
+                            <div><div class="mode-card-title">Блэкджек</div><div class="mode-card-desc">Обыграй дилера</div></div>
+                            <div class="mode-arrow-btn">›</div>
+                        </div>
+                    </div>
+                    <div class="mode-card" onclick="switchGame('roulette')">
+                        <div class="mode-card-visual"><div class="mode-big-emoji">🎡</div><span class="mode-tag-pill" style="background:#3b82f6; color:#fff;">БЕЗ ЛИМИТОВ</span></div>
+                        <div class="mode-card-footer">
+                            <div><div class="mode-card-title">Колесо фортуны</div><div class="mode-card-desc">Испытай удачу с шариком</div></div>
+                            <div class="mode-arrow-btn">›</div>
+                        </div>
+                    </div>
+                    <div class="mode-card" onclick="switchGame('poker')">
+                        <div class="mode-card-visual"><div class="mode-big-emoji">🃏</div><span class="mode-tag-pill">VIP LITE</span></div>
+                        <div class="mode-card-footer">
+                            <div><div class="mode-card-title">Видеопокер</div><div class="mode-card-desc">Собери комбинацию</div></div>
+                            <div class="mode-arrow-btn">›</div>
+                        </div>
+                    </div>
+                    <div class="mode-card" onclick="switchGame('slots')">
+                        <div class="mode-card-visual"><div class="mode-big-emoji">🍒</div><span class="mode-tag-pill" style="background:var(--neon-green); color:#000;">VIP PRO</span></div>
+                        <div class="mode-card-footer">
+                            <div><div class="mode-card-title">Неоновые слоты</div><div class="mode-card-desc">Крути барабаны до x25</div></div>
+                            <div class="mode-arrow-btn">›</div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- БЛЭКДЖЕК -->
+            <div id="view-blackjack" class="game-view">
+                <div class="game-header">
+                    <h2>♠️ Блэкджек (Без лимитов)</h2>
+                    <button class="btn-back" onclick="showLobby()">← В лобби</button>
+                </div>
+                <div class="blackjack-table">
+                    <div>
+                        <div class="bj-section-title">Карты дилера</div>
+                        <div class="bj-cards-container" id="dealer-cards"></div>
+                    </div>
+                    <div class="bj-info-panel">
+                        <span id="dealer-score">Дилер: ?</span>
+                        <span id="player-score" style="color:var(--gold);">Ваш счет: 0</span>
+                    </div>
+                    <div>
+                        <div class="bj-section-title">Ваши карты на столе</div>
+                        <div class="bj-cards-container" id="player-cards"></div>
+                    </div>
+                </div>
+                <div class="controls-bar" id="bj-controls">
+                    <label>Ставка:</label>
+                    <input type="number" id="bj-bet" value="100" min="50">
+                    <button class="btn-play" onclick="startBlackjack()">РАЗДАТЬ</button>
+                </div>
+                <div class="status-banner" id="bj-status">Сделайте ставку и нажмите «Раздать»</div>
+            </div>
+
+            <!-- КОЛЕСО ФОРТУНЫ -->
+            <div id="view-roulette" class="game-view">
+                <div class="game-header">
+                    <h2>🎡 Колесо фортуны (Без лимитов)</h2>
+                    <button class="btn-back" onclick="showLobby()">← В лобби</button>
+                </div>
+                <div class="roulette-container">
+                    <div class="wheel-outer-wrap">
+                        <div class="wheel" id="fortune-wheel"></div>
+                        <div class="roulette-ball" id="roulette-ball"></div>
+                    </div>
+                    <div class="controls-bar">
+                        <label>Ставка:</label>
+                        <input type="number" id="roulette-bet" value="200" min="50">
+                        <button class="btn-play" id="roulette-btn" onclick="spinWheel()">КРУТИТЬ КОЛЕСО</button>
+                    </div>
+                    <div class="status-banner" id="roulette-status">Следите за шариком! Куда упадет — тот и результат.</div>
+                </div>
+            </div>
+
+            <!-- ВИДЕОПОКЕР -->
+            <div id="view-poker" class="game-view">
+                <div class="game-header">
+                    <h2>🃏 Видеопокер (Требуется VIP Lite)</h2>
+                    <button class="btn-back" onclick="showLobby()">← В лобби</button>
+                </div>
+                <div class="poker-table">
+                    <div class="cards-row" id="poker-cards"></div>
+                    <div class="controls-bar">
+                        <label>Ставка:</label>
+                        <input type="number" id="poker-bet" value="150" min="50">
+                        <button class="btn-play" id="poker-action-btn" onclick="pokerAction()">РАЗДАТЬ</button>
+                    </div>
+                    <div class="status-banner" id="poker-status">Выберите карты для удержания</div>
+                </div>
+            </div>
+
+            <!-- СЛОТЫ -->
+            <div id="view-slots" class="game-view">
+                <div class="game-header">
+                    <h2>🍒 Неоновые слоты (Требуется VIP Pro)</h2>
+                    <button class="btn-back" onclick="showLobby()">← В лобби</button>
+                </div>
+                <div class="slots-wrapper">
+                    <div class="slot-cabinet">
+                        <div style="color: var(--neon-green); font-weight: 900;">ЛИНИЯ ВЫПЛАТ</div>
+                        <div class="reels-box">
+                            <div class="reel-cell" id="reel-0">🍒</div>
+                            <div class="reel-cell" id="reel-1">💎</div>
+                            <div class="reel-cell" id="reel-2">7️⃣</div>
+                        </div>
+                        <div class="controls-bar">
+                            <label>Ставка:</label>
+                            <input type="number" id="slots-bet" value="100" min="10" step="10">
+                            <button class="btn-play" id="slots-spin-btn" onclick="spinSlots()">КРУТИТЬ</button>
+                        </div>
+                    </div>
+                    <div class="paytable-box">
+                        <h3 style="color:var(--neon-green); margin-top:0;">Таблица выплат</h3>
+                        <div class="pay-row"><span>7️⃣ 7️⃣ 7️⃣ (Джекпот)</span><b>x25</b></div>
+                        <div class="pay-row"><span>💎 💎 💎 (Алмазы)</span><b>x15</b></div>
+                        <div class="pay-row"><span>🍋 🍋 🍋 / 🍒 🍒 🍒</span><b>x6</b></div>
+                    </div>
+                </div>
+                <div class="status-banner" id="slots-status">Сделай ставку и жми «Крутить»!</div>
+            </div>
+
+            <!-- НАСТРОЙКИ И ВИКТОРИНА ЗА BYN -->
+            <div id="view-settings" class="game-view">
+                <div class="game-header">
+                    <h2>⚙️ Настройки и Викторина за BYN</h2>
+                    <button class="btn-back" onclick="showLobby()">← В лобби</button>
+                </div>
+                <div class="settings-container">
+                    <div class="status-banner" style="margin-bottom:20px;">Отвечай на вопросы и зарабатывай BYN на баланс!</div>
+                    <div id="quiz-container"></div>
+                </div>
+            </div>
+
+            <!-- ИМУЩЕСТВО И ВИП -->
+            <div id="view-property" class="game-view">
+                <div class="game-header">
+                    <h2>👑 Магазин Имущества и VIP-статусов</h2>
+                    <button class="btn-back" onclick="showLobby()">← В лобби</button>
+                </div>
+
+                <div class="vip-shop-grid">
+                    <div class="vip-card lite-vip">
+                        <div>
+                            <span class="nav-badge badge-vip" style="font-size:0.8rem; padding:4px 8px;">VIP LITE</span>
+                            <h3 style="color: #f59e0b; margin-top: 10px;">10 000 BYN</h3>
+                            <ul class="vip-features-list">
+                                <li>🃏 Доступ к режиму <b>Видеопокер</b></li>
+                                <li>🎁 Ежедневный бонус +1 000 BYN</li>
+                                <li>⭐ Золотой значок в профиле</li>
+                            </ul>
+                        </div>
+                        <button class="btn-play" style="background:#f59e0b; color:#000;" onclick="buyVip('lite')">КУПИТЬ VIP LITE</button>
+                    </div>
+
+                    <div class="vip-card pro-vip">
+                        <div>
+                            <span class="nav-badge badge-pro" style="font-size:0.8rem; padding:4px 8px;">VIP PRO</span>
+                            <h3 style="color: var(--neon-green); margin-top: 10px;">50 000 BYN</h3>
+                            <ul class="vip-features-list">
+                                <li>🍒 Доступ к <b>Неоновым слотам</b> (до x25)</li>
+                                <li>👑 Полный доступ к покупке <b>Элитного имущества</b></li>
+                                <li>🚀 Увеличенные множители выигрышей</li>
+                                <li>🎁 Ежедневный бонус +5 000 BYN</li>
+                            </ul>
+                        </div>
+                        <button class="btn-play" onclick="buyVip('pro')">КУПИТЬ VIP PRO</button>
+                    </div>
+                </div>
+
+                <div class="status-banner" id="vip-status-desc" style="margin-bottom: 25px;">У вас нет активного VIP статуса.</div>
+
+                <h3 style="color:var(--neon-green); margin-bottom:15px;">Элитное имущество (требуется VIP PRO)</h3>
+                <div class="property-grid" id="property-grid"></div>
+            </div>
+
+            <footer class="trust-footer">
+                <div>100 000+ ИГРОКОВ</div>
+                <div>МОМЕНТАЛЬНЫЕ ВЫПЛАТЫ</div>
+                <div>ЧЕСТНЫЙ РАНДОМ БЕЗ ЛИМИТОВ</div>
+            </footer>
+        </main>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+        let balance = 1000;
+        let vipLevel = 'none';
+        let ownedProps = [];
+        let guaranteedWin = false;
+        let answeredQuestions = {};
+
+        try {
+            if (localStorage.getItem('so_kazik_balance') !== null) {
+                balance = parseInt(localStorage.getItem('so_kazik_balance')) || 1000;
+            }
+            if (localStorage.getItem('so_kazik_vip')) {
+                vipLevel = localStorage.getItem('so_kazik_vip');
+            }
+            if (localStorage.getItem('so_kazik_props')) {
+                ownedProps = JSON.parse(localStorage.getItem('so_kazik_props')) || [];
+            }
+            if (localStorage.getItem('so_kazik_quiz')) {
+                answeredQuestions = JSON.parse(localStorage.getItem('so_kazik_quiz')) || {};
+            }
+        } catch (e) {}
+
+        const PROPERTIES = [
+            { id: 'rolex', icon: '⌚', name: 'Rolex Daytona', desc: 'Золотой хронограф', price: 40000 },
+            { id: 'bmw', icon: '🏎️', name: 'BMW M5 F90', desc: 'Чёрный зверь', price: 200000 },
+            { id: 'penthouse', icon: '🏙️', name: 'Пентхаус', desc: 'Панорамные окна в центре', price: 500000 },
+            { id: 'lambo', icon: '🚀', name: 'Lamborghini', desc: 'Спортивный суперкар', price: 400000 },
+            { id: 'yacht', icon: '🛥️', name: 'Супер-яхта', desc: 'Личный корабль', price: 1000000 },
+            { id: 'island', icon: '🏝️', name: 'Частный остров', desc: 'Райский уголок', price: 3000000 }
+        ];
+
+        const QUIZ_QUESTIONS = [
+            {
+                id: 0,
+                question: "Вопрос 1: Азарт — это круто?",
+                options: [
+                    "Чуть-чуть",
+                    "Нет, это полная шляпа",
+                    "Да, если в меру и не как способ заработать монету"
+                ],
+                correct: 2,
+                reward: 2500
+            },
+            {
+                id: 1,
+                question: "Вопрос 2: Кто главный создатель этого казино?",
+                options: [
+                    "Серёга и Олямбус",
+                    "Рандомный бот",
+                    "Илон Маск"
+                ],
+                correct: 0,
+                reward: 2000
+            },
+            {
+                id: 2,
+                question: "Вопрос 3: Какая валюта используется для ставок в нашем казике?",
+                options: [
+                    "Доллары США",
+                    "BYN (Белорусские рубли)",
+                    "Евро"
+                ],
+                correct: 1,
+                reward: 2000
+            },
+            {
+                id: 3,
+                question: "Вопрос 4: Какой режим открывается с VIP PRO статусом?",
+                options: [
+                    "Только Блэкджек",
+                    "Неоновые слоты и элитное имущество",
+                    "Ничего нового"
+                ],
+                correct: 1,
+                reward: 3000
+            },
+            {
+                id: 4,
+                question: "Вопрос 5: Какая фраза написана на главном баннере сайта?",
+                options: [
+                    "Удачи в игре",
+                    "Серёга пушка Месси игрушка сюда залетай и бабки получай",
+                    "Казино всегда в плюсе"
+                ],
+                correct: 1,
+                reward: 5000
+            }
+        ];
+
+        function saveData() {
+            try {
+                localStorage.setItem('so_kazik_balance', balance);
+                localStorage.setItem('so_kazik_vip', vipLevel);
+                localStorage.setItem('so_kazik_props', JSON.stringify(ownedProps));
+                localStorage.setItem('so_kazik_quiz', JSON.stringify(answeredQuestions));
+            } catch (e) {}
+        }
+
+        function updateBalance(delta) {
+            balance += delta;
+            if (balance < 0) balance = 0;
+            saveData();
+            const el = document.getElementById('balance');
+            if (el) el.textContent = balance.toLocaleString('ru-RU');
+        }
+
+        function showToast(msg) {
+            const t = document.getElementById('toast');
+            if (!t) return;
+            t.textContent = msg;
+            t.classList.add('show');
+            setTimeout(() => t.classList.remove('show'), 3000);
+        }
+
+        function showLobby() {
+            document.querySelectorAll('.game-view').forEach(v => {
+                v.classList.remove('active');
+                v.style.display = 'none';
+            });
+            const lobby = document.getElementById('lobby-view');
+            if (lobby) {
+                lobby.style.display = 'block';
+                lobby.classList.add('active');
+            }
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            const navLobby = document.getElementById('nav-lobby');
+            if (navLobby) navLobby.classList.add('active');
+        }
+
+        function switchGame(id) {
+            if (id === 'poker' && vipLevel === 'none') {
+                showToast('🔒 Для видеопокера нужен статус VIP Lite!');
+                switchGame('property');
+                return;
+            }
+            if (id === 'slots' && vipLevel !== 'pro') {
+                showToast('🔒 Для неоновых слотов необходим VIP Pro!');
+                switchGame('property');
+                return;
+            }
+            if (id === 'property') {
+                renderProperties();
+            }
+            if (id === 'settings') {
+                renderQuiz();
+            }
+
+            document.querySelectorAll('.game-view').forEach(v => {
+                v.classList.remove('active');
+                v.style.display = 'none';
+            });
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            
+            const targetView = document.getElementById('view-' + id);
+            if (targetView) {
+                targetView.style.display = 'block';
+                targetView.classList.add('active');
+            }
+            
+            const navBtn = document.getElementById('nav-' + id);
+            if (navBtn) navBtn.classList.add('active');
+        }
+
+        function renderQuiz() {
+            const container = document.getElementById('quiz-container');
+            if (!container) return;
+            container.innerHTML = '';
+
+            QUIZ_QUESTIONS.forEach(q => {
+                const isAnswered = answeredQuestions[q.id] !== undefined;
+                const userChoice = answeredQuestions[q.id];
+
+                const card = document.createElement('div');
+                card.className = 'quiz-card';
+
+                let html = `
+                    <div class="quiz-question">${q.question} <span style="color:var(--gold); font-size:0.9rem;">(+${q.reward} BYN)</span></div>
+                    <div class="quiz-options">
+                `;
+
+                q.options.forEach((opt, idx) => {
+                    let btnClass = 'quiz-option-btn';
+                    let disabled = isAnswered ? 'disabled' : '';
+                    if (isAnswered) {
+                        if (idx === q.correct) btnClass += ' correct';
+                        else if (idx === userChoice) btnClass += ' wrong';
+                    }
+                    html += `<button class="${btnClass}" ${disabled} onclick="answerQuiz(${q.id}, ${idx})">${opt}</button>`;
+                });
+
+                html += `</div>`;
+                if (isAnswered) {
+                    html += `<div style="margin-top:12px; font-weight:800; color:${userChoice === q.correct ? 'var(--neon-green)' : 'var(--danger)'};">${userChoice === q.correct ? '✓ Правильно! Награда зачислена.' : '✕ Неправильно.'}</div>`;
+                }
+
+                card.innerHTML = html;
+                container.appendChild(card);
+            });
+        }
+
+        function answerQuiz(qId, optionIdx) {
+            if (answeredQuestions[qId] !== undefined) return;
+            const q = QUIZ_QUESTIONS.find(item => item.id === qId);
+            if (!q) return;
+
+            answeredQuestions[qId] = optionIdx;
+            if (optionIdx === q.correct) {
+                updateBalance(q.reward);
+                showToast(`🎉 Верно! Вы получили +${q.reward} BYN!`);
+            } else {
+                showToast('❌ Неправильный ответ!');
+            }
+            saveData();
+            renderQuiz();
+        }
+
+        function showVictoryAnimation(viewId, titleText, winText) {
+            const view = document.getElementById(viewId);
+            if (!view) return;
+            const popup = document.createElement('div');
+            popup.className = 'win-popup-overlay';
+            popup.innerHTML = `
+                <div class="confetti-coin" style="left: 10%; top: 20%; animation-delay: 0s;">🪙</div>
+                <div class="confetti-coin" style="left: 80%; top: 15%; animation-delay: 0.3s;">🎉</div>
+                <div class="confetti-coin" style="left: 30%; top: 70%; animation-delay: 0.6s;">💰</div>
+                <div class="confetti-coin" style="left: 70%; top: 60%; animation-delay: 0.2s;">✨</div>
+                <div class="win-popup-content">
+                    <h2>🎉 ${titleText} 🎉</h2>
+                    <p>${winText}</p>
+                    <button class="btn-play" onclick="this.closest('.win-popup-overlay').remove()">КРУТО!</button>
+                </div>
+            `;
+            view.appendChild(popup);
+            setTimeout(() => { if(popup.parentNode) popup.remove(); }, 3500);
+        }
+
+        function applyPromo() {
+            const input = document.getElementById('promo-input');
+            if (!input) return;
+            const code = input.value.trim().toLowerCase();
+            if (code === 'алина лох') {
+                updateBalance(15000);
+                showToast('🎉 Промокод активирован: +15 000 BYN!');
+            } else if (code === 'serega') {
+                guaranteedWin = true;
+                showToast('🔥 Промокод активирован: следующая игра будет победной!');
+            } else {
+                showToast('❌ Неверный промокод');
+            }
+            input.value = '';
+        }
+
+        function buyVip(tier) {
+            if (tier === 'lite') {
+                if (vipLevel !== 'none') { showToast('Уже есть VIP статус!'); return; }
+                if (balance < 10000) { showToast('Недостаточно средств!'); return; }
+                updateBalance(-10000);
+                vipLevel = 'lite';
+                showToast('⭐ VIP LITE успешно активирован!');
+            } else if (tier === 'pro') {
+                if (vipLevel === 'pro') { showToast('Уже максимальный VIP PRO!'); return; }
+                if (balance < 50000) { showToast('Недостаточно средств!'); return; }
+                updateBalance(-50000);
+                vipLevel = 'pro';
+                showToast('👑 VIP PRO активирован!');
+            }
+            saveData();
+            renderProperties();
+        }
+
+        const SLOT_SYMBOLS = ['🍒', '🍋', '🔔', '💎', '7️⃣'];
+        function spinSlots() {
+            try {
+                const betInput = document.getElementById('slots-bet');
+                const bet = parseInt(betInput ? betInput.value : 100);
+                
+                if (isNaN(bet) || bet <= 0) { showToast('⚠️ Укажите корректную ставку!'); return; }
+                if (bet > balance) { showToast('⚠️ Недостаточно средств на балансе!'); return; }
+
+                updateBalance(-bet);
+
+                const reels = [document.getElementById('reel-0'), document.getElementById('reel-1'), document.getElementById('reel-2')];
+                let res = [];
+                if (guaranteedWin) {
+                    res = ['7️⃣', '7️⃣', '7️⃣'];
+                    guaranteedWin = false;
+                } else {
+                    res = [
+                        SLOT_SYMBOLS[Math.floor(Math.random() * SLOT_SYMBOLS.length)],
+                        SLOT_SYMBOLS[Math.floor(Math.random() * SLOT_SYMBOLS.length)],
+                        SLOT_SYMBOLS[Math.floor(Math.random() * SLOT_SYMBOLS.length)]
+                    ];
+                }
+
+                reels.forEach((r, i) => { if (r) r.textContent = res[i]; });
+
+                let mult = 0;
+                if (res[0] === res[1] && res[1] === res[2]) mult = 25;
+                else if (res[0] === res[1] || res[1] === res[2] || res[0] === res[2]) mult = 3;
+
+                const statusEl = document.getElementById('slots-status');
+                if (mult > 0) {
+                    const win = bet * mult;
+                    updateBalance(win);
+                    if (statusEl) statusEl.textContent = `🔥 ВЫИГРЫШ x${mult} — +${win} BYN!`;
+                    showVictoryAnimation('view-slots', 'ДЖЕКПОТ В СЛОТАХ!', `Вы выиграли +${win} BYN!`);
+                } else {
+                    if (statusEl) statusEl.textContent = 'Пусто! Попробуй еще.';
+                }
+            } catch (err) {
+                showToast('❌ Ошибка при вращении слотов');
+            }
+        }
+
+        function spinWheel() {
+            const betInput = document.getElementById('roulette-bet');
+            const bet = parseInt(betInput ? betInput.value : 200);
+            if (isNaN(bet) || bet <= 0 || bet > balance) { showToast('⚠️ Неверная ставка!'); return; }
+            updateBalance(-bet);
+
+            const wheel = document.getElementById('fortune-wheel');
+            const ball = document.getElementById('roulette-ball');
+            const statusEl = document.getElementById('roulette-status');
+            const btn = document.getElementById('roulette-btn');
+            if(btn) btn.disabled = true;
+
+            let targetSectorAngle;
+            let mult = 0;
+
+            if (guaranteedWin) {
+                targetSectorAngle = 225;
+                mult = 5;
+                guaranteedWin = false;
+            } else {
+                const rand = Math.random();
+                if (rand < 0.45) { targetSectorAngle = 45; mult = 2; }
+                else if (rand < 0.75) { targetSectorAngle = 135; mult = 0; }
+                else if (rand < 0.90) { targetSectorAngle = 225; mult = 5; }
+                else { targetSectorAngle = 315; mult = 2; }
+            }
+
+            const wheelSpins = 360 * 5;
+            const ballSpins = 360 * 8;
+            const finalWheelDeg = wheelSpins + Math.floor(Math.random() * 360);
+            const finalBallDeg = ballSpins + (360 - targetSectorAngle);
+
+            wheel.style.transition = 'transform 3.5s cubic-bezier(0.15, 0.85, 0.2, 1)';
+            ball.style.transition = 'all 3.5s cubic-bezier(0.15, 0.85, 0.2, 1)';
+
+            wheel.style.transform = `rotate(${finalWheelDeg}deg)`;
+            
+            const rad = 90;
+            const angleRad = (finalBallDeg * Math.PI) / 180;
+            const ballX = Math.cos(angleRad) * rad;
+            const ballY = Math.sin(angleRad) * rad;
+            ball.style.transform = `translate(${ballX}px, ${ballY}px) scale(1.2)`;
+
+            statusEl.textContent = '🎡 Шарик катится по колесу... Удача близко!';
+
+            setTimeout(() => {
+                if(btn) btn.disabled = false;
+                ball.style.transform = `translate(${ballX}px, ${ballY}px) scale(1)`;
+                if (mult > 0) {
+                    const win = bet * mult;
+                    updateBalance(win);
+                    statusEl.textContent = `🎉 Шарик упал в победный сектор! Выигрыш x${mult}: +${win} BYN!`;
+                    showVictoryAnimation('view-roulette', 'ПОБЕДА НА КОЛЕСЕ!', `Шарик принес +${win} BYN!`);
+                } else {
+                    statusEl.textContent = '❌ Шарик остановился в пустом секторе. Попробуйте еще раз!';
+                }
+            }, 3500);
+        }
+
+        let pokerCardsData = [];
+        let pokerStep = 1;
+        function pokerAction() {
+            const betInput = document.getElementById('poker-bet');
+            const bet = parseInt(betInput ? betInput.value : 150);
+            if (isNaN(bet) || bet <= 0 || bet > balance) { showToast('⚠️ Неверная ставка!'); return; }
+
+            const statusEl = document.getElementById('poker-status');
+            const actionBtn = document.getElementById('poker-action-btn');
+
+            if (pokerStep === 1) {
+                updateBalance(-bet);
+                pokerCardsData = Array.from({length: 5}, () => ({
+                    val: Math.floor(Math.random() * 13) + 2,
+                    suit: ['♠', '♥', '♦', '♣'][Math.floor(Math.random()*4)],
+                    held: false
+                }));
+                renderPokerCards(true);
+                if(actionBtn) actionBtn.textContent = 'ОБМЕНЯТЬ';
+                if(statusEl) statusEl.textContent = 'Кликните на карты, чтобы оставить их (HOLD)';
+                pokerStep = 2;
+            } else {
+                pokerCardsData.forEach(c => {
+                    if (!c.held) {
+                        c.val = Math.floor(Math.random() * 13) + 2;
+                        c.suit = ['♠', '♥', '♦', '♣'][Math.floor(Math.random()*4)];
+                    }
+                });
+                renderPokerCards(false);
+
+                let win = guaranteedWin ? 500 : (Math.random() > 0.4 ? bet * 3 : 0);
+                guaranteedWin = false;
+                if (win > 0) {
+                    updateBalance(win);
+                    if(statusEl) statusEl.textContent = `🎉 Победа в покере: +${win} BYN!`;
+                    showVictoryAnimation('view-poker', 'УСПЕХ В ПОКЕРЕ!', `Комбинация принесла +${win} BYN!`);
+                } else {
+                    if(statusEl) statusEl.textContent = 'Карты не сыграли.';
+                }
+                if(actionBtn) actionBtn.textContent = 'РАЗДАТЬ';
+                pokerStep = 1;
+            }
+        }
+
+        function renderPokerCards(interactive) {
+            const row = document.getElementById('poker-cards');
+            if(!row) return;
+            row.innerHTML = '';
+            const names = {11: 'J', 12: 'Q', 13: 'K', 14: 'A'};
+            pokerCardsData.forEach((c) => {
+                const el = document.createElement('div');
+                el.className = `poker-card ${c.held ? 'held' : ''} ${['♥', '♦'].includes(c.suit) ? 'red' : ''}`;
+                const valStr = names[c.val] || c.val;
+                el.innerHTML = `<div>${valStr}</div><div style="font-size:1.8rem; text-align:center;">${c.suit}</div><div style="text-align:right;">${valStr}</div>`;
+                if (interactive) {
+                    el.onclick = () => {
+                        c.held = !c.held;
+                        el.classList.toggle('held');
+                    };
+                }
+                row.appendChild(el);
+            });
+        }
+
+        let bjDeck = [];
+        let bjPlayerHand = [];
+        let bjDealerHand = [];
+        let bjActive = false;
+
+        function getCardValStr(val) {
+            if (val === 11) return 'J';
+            if (val === 12) return 'Q';
+            if (val === 13) return 'K';
+            if (val === 14) return 'A';
+            return val;
+        }
+
+        function calcScore(hand) {
+            let score = 0;
+            let aces = 0;
+            hand.forEach(c => {
+                let v = c.val;
+                if (v >= 11 && v <= 13) score += 10;
+                else if (v === 14) { score += 11; aces++; }
+                else score += v;
+            });
+            while (score > 21 && aces > 0) {
+                score -= 10;
+                aces--;
+            }
+            return score;
+        }
+
+        function startBlackjack() {
+            const betInput = document.getElementById('bj-bet');
+            const bet = parseInt(betInput ? betInput.value : 100);
+            if (isNaN(bet) || bet <= 0 || bet > balance) { showToast('⚠️ Неверная ставка!'); return; }
+            updateBalance(-bet);
+
+            bjPlayerHand = [];
+            bjDealerHand = [];
+            bjActive = false;
+
+            bjDeck = [];
+            const suits = ['♠', '♥', '♦', '♣'];
+            for (let s of suits) {
+                for (let v = 2; v <= 14; v++) {
+                    bjDeck.push({ val: v, suit: s });
+                }
+            }
+            bjDeck.sort(() => Math.random() - 0.5);
+
+            let p1, p2, d1, d2;
+            if (guaranteedWin) {
+                p1 = { val: 14, suit: '♠' };
+                p2 = { val: 13, suit: '♥' };
+                guaranteedWin = false;
+            } else {
+                p1 = bjDeck.pop();
+                p2 = bjDeck.pop();
+            }
+            d1 = bjDeck.pop();
+            d2 = bjDeck.pop();
+
+            const statusEl = document.getElementById('bj-status');
+            if(statusEl) statusEl.textContent = '🃏 Дилер раздает карты с замедлением...';
+            const controls = document.getElementById('bj-controls');
+            if(controls) controls.innerHTML = '';
+
+            setTimeout(() => { bjPlayerHand.push(p1); renderBjTable(false); }, 200);
+            setTimeout(() => { bjDealerHand.push(d1); renderBjTable(false); }, 600);
+            setTimeout(() => { bjPlayerHand.push(p2); renderBjTable(false); }, 1000);
+            setTimeout(() => { 
+                bjDealerHand.push(d2); 
+                renderBjTable(false); 
+                bjActive = true;
+                if(statusEl) statusEl.textContent = 'Ваш ход: выберите действие';
+                if(controls) {
+                    controls.innerHTML = `
+                        <button class="btn-play" onclick="bjHit()">ЕЩЁ</button>
+                        <button class="btn-play" style="background:#ef4444;" onclick="bjStand()">ХВАТИТ</button>
+                    `;
+                }
+            }, 1400);
+        }
+
+        function renderBjTable(revealDealer) {
+            const pCont = document.getElementById('player-cards');
+            const dCont = document.getElementById('dealer-cards');
+            if(!pCont || !dCont) return;
+            pCont.innerHTML = '';
+            dCont.innerHTML = '';
+
+            bjPlayerHand.forEach((c) => {
+                const el = document.createElement('div');
+                const isRed = ['♥', '♦'].includes(c.suit);
+                el.className = `bj-card ${isRed ? 'red' : ''}`;
+                const vs = getCardValStr(c.val);
+                el.innerHTML = `<div>${vs}</div><div style="font-size:1.5rem; text-align:center;">${c.suit}</div><div style="text-align:right;">${vs}</div>`;
+                pCont.appendChild(el);
+            });
+
+            bjDealerHand.forEach((c, idx) => {
+                const el = document.createElement('div');
+                const isRed = ['♥', '♦'].includes(c.suit);
+                el.className = `bj-card ${isRed ? 'red' : ''}`;
+                if (idx === 1 && !revealDealer) {
+                    el.innerHTML = `<div style="font-size:1.5rem; text-align:center; margin:auto;">🔒</div>`;
+                } else {
+                    const vs = getCardValStr(c.val);
+                    el.innerHTML = `<div>${vs}</div><div style="font-size:1.5rem; text-align:center;">${c.suit}</div><div style="text-align:right;">${vs}</div>`;
+                }
+                dCont.appendChild(el);
+            });
+
+            const pScoreEl = document.getElementById('player-score');
+            const dScoreEl = document.getElementById('dealer-score');
+            if(pScoreEl) pScoreEl.textContent = `Ваш счет: ${calcScore(bjPlayerHand)}`;
+            if(dScoreEl) dScoreEl.textContent = revealDealer ? `Дилер: ${calcScore(bjDealerHand)}` : `Дилер: ?`;
+        }
+
+        function bjHit() {
+            if (!bjActive) return;
+            bjPlayerHand.push(bjDeck.pop());
+            renderBjTable(false);
+            const pScore = calcScore(bjPlayerHand);
+            if (pScore > 21) {
+                bjActive = false;
+                const statusEl = document.getElementById('bj-status');
+                if(statusEl) statusEl.textContent = '💥 Перебор! Вы проиграли ставку.';
+                resetBjControls();
+            }
+        }
+
+        function bjStand() {
+            if (!bjActive) return;
+            bjActive = false;
+            renderBjTable(true);
+
+            let dScore = calcScore(bjDealerHand);
+            while (dScore < 17 && bjDeck.length > 0) {
+                bjDealerHand.push(bjDeck.pop());
+                dScore = calcScore(bjDealerHand);
+                renderBjTable(true);
+            }
+
+            const pScore = calcScore(bjPlayerHand);
+            const betInput = document.getElementById('bj-bet');
+            const bet = parseInt(betInput ? betInput.value : 100);
+            const statusEl = document.getElementById('bj-status');
+
+            if (dScore > 21 || pScore > dScore) {
+                const win = bet * 2;
+                updateBalance(win);
+                if(statusEl) statusEl.textContent = `🎉 Вы победили дилера! Выигрыш: +${win} BYN`;
+                showVictoryAnimation('view-blackjack', 'ПОБЕДА В БЛЭКДЖЕКЕ!', `Вы обыграли дилера и получили +${win} BYN!`);
+            } else if (pScore === dScore) {
+                updateBalance(bet);
+                if(statusEl) statusEl.textContent = '🤝 Ничья! Ставка возвращена.';
+            } else {
+                if(statusEl) statusEl.textContent = '❌ Дилер выиграл эту раздачу.';
+            }
+            resetBjControls();
+        }
+
+        function resetBjControls() {
+            const controls = document.getElementById('bj-controls');
+            if(controls) {
+                controls.innerHTML = `
+                    <label>Ставка:</label>
+                    <input type="number" id="bj-bet" value="100" min="50">
+                    <button class="btn-play" onclick="startBlackjack()">РАЗДАТЬ</button>
+                `;
+            }
+        }
+
+        function renderProperties() {
+            const grid = document.getElementById('property-grid');
+            if(!grid) return;
+            grid.innerHTML = '';
+            const vipDesc = document.getElementById('vip-status-desc');
+            if(vipDesc) {
+                vipDesc.textContent = 
+                    vipLevel === 'pro' ? '👑 У вас активирован максимальный VIP PRO статус!' :
+                    (vipLevel === 'lite' ? '⭐ У вас активирован VIP LITE статус (Купите PRO для слотов и имущества).' : 'У вас нет активного VIP статуса.');
+            }
+
+            PROPERTIES.forEach(p => {
+                const owned = ownedProps.includes(p.id);
+                const card = document.createElement('div');
+                card.className = `prop-card ${owned ? 'owned' : ''}`;
+                card.innerHTML = `
+                    <div>
+                        <div class="prop-emoji">${p.icon}</div>
+                        <div class="prop-name">${p.name}</div>
+                        <div class="prop-desc">${p.desc}</div>
+                    </div>
+                    <div class="prop-bottom">
+                        <span class="prop-price">${p.price.toLocaleString('ru-RU')} BYN</span>
+                        ${owned ? '<span style="color:var(--neon-green); font-weight:900;">КУПЛЕНО ✓</span>' : `<button class="btn-play" onclick="buyProperty('${p.id}', ${p.price})">КУПИТЬ</button>`}
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function buyProperty(id, price) {
+            if (vipLevel !== 'pro') {
+                showToast('🔒 Для покупки имущества нужен VIP PRO!');
+                return;
+            }
+            if (balance < price) {
+                showToast('Недостаточно средств!');
+                return;
+            }
+            updateBalance(-price);
+            ownedProps.push(id);
+            saveData();
+            renderProperties();
+            showToast('🎉 Покупка успешно совершена!');
+            showVictoryAnimation('view-property', 'ЭЛИТНАЯ ПОКУПКА!', 'Вы пополнили свою коллекцию роскоши!');
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const balEl = document.getElementById('balance');
+            if(balEl) balEl.textContent = balance.toLocaleString('ru-RU');
+            showLobby();
+        });
+    </script>
+</body>
+</html>
