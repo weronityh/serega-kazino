@@ -17,9 +17,6 @@
             --text-muted: #7d8b9e;
             --gold: #fbbf24;
             --danger: #ef4444;
-            --roulette-red: #dc2626;
-            --roulette-green: #22c55e;
-            --roulette-black: #111111;
         }
 
         * { box-sizing: border-box; }
@@ -163,7 +160,6 @@
             padding: 0 26px; display: flex; align-items: center; justify-content: space-between; gap: 16px; position: sticky; top: 0; z-index: 25;
         }
 
-        /* СИНЯЯ КНОПКА TG БОСС */
         .tg-boss-btn {
             display: flex;
             align-items: center;
@@ -186,9 +182,34 @@
             box-shadow: 0 0 22px rgba(34, 158, 217, 0.6);
         }
 
-        /* БАЛАНС ПО СЕРЕДИНЕ И КРУПНЫЙ */
         .balance-center-box {
             display: flex; align-items: center; gap: 12px; background: #121922; border: 2px solid #283648; padding: 10px 24px; border-radius: 14px; font-weight: 900; font-size: 1.35rem; color: var(--gold); box-shadow: 0 0 20px rgba(251, 191, 36, 0.15);
+        }
+
+        .topbar-profile-pill {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #131b24;
+            border: 1px solid #283648;
+            padding: 6px 14px 6px 8px;
+            border-radius: 999px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .topbar-profile-pill:hover {
+            border-color: var(--neon-green);
+            background: #182330;
+        }
+        .topbar-avatar-mini {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: #1c2633;
+            display: grid;
+            place-items: center;
+            font-size: 1.2rem;
+            border: 2px solid var(--neon-green);
         }
 
         .content-area {
@@ -213,7 +234,6 @@
             background: linear-gradient(90deg, #1ce83c, #49ff66); color: #041407; border: none; border-radius: 12px; padding: 14px 28px; font-size: 1rem; font-weight: 900; text-transform: uppercase; cursor: pointer; box-shadow: 0 0 25px rgba(26, 232, 58, 0.45); transition: 0.2s;
         }
 
-        /* ПРАВАЯ ЧАСТЬ С ФОТО И ПОДПИСЬЮ */
         .hero-right-photo {
             display: flex;
             flex-direction: column;
@@ -267,6 +287,176 @@
         .btn-play:hover { filter: brightness(1.1); transform: scale(1.02); }
         .status-banner { margin: 16px auto 0; padding: 12px; border-radius: 10px; background: rgba(255,255,255,0.04); font-weight: 800; color: var(--gold); text-align: center; font-size: 1.05rem; }
 
+        /* ================= ПРОФИЛЬ ИгРОКА ================= */
+        .profile-banner-card {
+            position: relative;
+            border-radius: 18px;
+            padding: 28px;
+            border: 2px solid #283649;
+            background: linear-gradient(120deg, #101720 0%, #162231 100%);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 24px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        /* Стили купленных фонов профиля */
+        .profile-banner-card.bg-cyber {
+            background: radial-gradient(circle at 80% 20%, rgba(236, 72, 153, 0.35), transparent 50%),
+                        linear-gradient(125deg, #160c24 0%, #09192b 100%);
+            border-color: #ec4899;
+            box-shadow: 0 0 30px rgba(236, 72, 153, 0.25);
+        }
+        .profile-banner-card.bg-gold {
+            background: radial-gradient(circle at 75% 30%, rgba(251, 191, 36, 0.38), transparent 55%),
+                        linear-gradient(125deg, #241907 0%, #141008 100%);
+            border-color: var(--gold);
+            box-shadow: 0 0 35px rgba(251, 191, 36, 0.3);
+        }
+        .profile-banner-card.bg-matrix {
+            background: radial-gradient(circle at 20% 50%, rgba(26, 232, 58, 0.32), transparent 60%),
+                        linear-gradient(125deg, #071d0e 0%, #0a120d 100%);
+            border-color: var(--neon-green);
+            box-shadow: 0 0 35px rgba(26, 232, 58, 0.3);
+        }
+
+        .profile-identity {
+            display: flex;
+            align-items: center;
+            gap: 22px;
+            z-index: 2;
+        }
+
+        .profile-avatar-box {
+            width: 96px;
+            height: 96px;
+            border-radius: 50%;
+            background: #0d131a;
+            display: grid;
+            place-items: center;
+            font-size: 3.2rem;
+            border: 3px solid #334155;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        /* Стили купленных рамок аватара */
+        .profile-avatar-box.frame-neon {
+            border: 4px solid var(--neon-green);
+            box-shadow: 0 0 22px var(--neon-green), inset 0 0 12px var(--neon-green);
+        }
+        .profile-avatar-box.frame-fire {
+            border: 4px solid #f97316;
+            box-shadow: 0 0 25px #ef4444, inset 0 0 14px #f59e0b;
+            animation: pulseFire 1.8s infinite alternate;
+        }
+        .profile-avatar-box.frame-crown {
+            border: 4px solid var(--gold);
+            box-shadow: 0 0 28px var(--gold);
+        }
+        .profile-avatar-box.frame-crown::before {
+            content: '👑';
+            position: absolute;
+            top: -22px;
+            font-size: 1.8rem;
+            filter: drop-shadow(0 0 8px var(--gold));
+        }
+
+        @keyframes pulseFire {
+            0% { box-shadow: 0 0 15px #ef4444; }
+            100% { box-shadow: 0 0 32px #f59e0b; }
+        }
+
+        .profile-name-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .profile-name-input {
+            background: rgba(0,0,0,0.35);
+            border: 1px solid rgba(255,255,255,0.15);
+            color: #fff;
+            font-size: 1.45rem;
+            font-weight: 900;
+            padding: 4px 10px;
+            border-radius: 8px;
+            width: 230px;
+            outline: none;
+        }
+        .profile-name-input:focus { border-color: var(--neon-green); }
+
+        .profile-title-badge {
+            display: inline-block;
+            margin-top: 8px;
+            padding: 4px 12px;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            background: rgba(255,255,255,0.08);
+            color: var(--text-muted);
+        }
+        .profile-title-badge.title-ludoman { background: rgba(59, 130, 246, 0.2); color: #60a5fa; border: 1px solid #3b82f6; }
+        .profile-title-badge.title-shark { background: rgba(236, 72, 153, 0.2); color: #f472b6; border: 1px solid #ec4899; }
+        .profile-title-badge.title-oligarch { background: rgba(251, 191, 36, 0.22); color: var(--gold); border: 1px solid var(--gold); text-shadow: 0 0 8px rgba(251,191,36,0.5); }
+
+        .profile-vip-box {
+            background: rgba(0, 0, 0, 0.45);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 14px;
+            padding: 14px 20px;
+            text-align: right;
+            z-index: 2;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 14px;
+            margin-bottom: 24px;
+        }
+        .stat-card {
+            background: #0d131a;
+            border: 1px solid #222e3d;
+            border-radius: 14px;
+            padding: 16px;
+            text-align: center;
+        }
+        .stat-card-label { font-size: 0.78rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700; }
+        .stat-card-value { font-size: 1.45rem; font-weight: 950; color: #fff; margin-top: 6px; }
+
+        .cosmetics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(235px, 1fr));
+            gap: 14px;
+            margin-bottom: 24px;
+        }
+        .cosmetic-card {
+            background: #0e141c;
+            border: 1px solid #243142;
+            border-radius: 14px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .cosmetic-card.equipped {
+            border-color: var(--neon-green);
+            background: linear-gradient(160deg, rgba(26,232,58,0.12), #0e141c);
+        }
+        .cosmetic-tag {
+            font-size: 0.68rem;
+            text-transform: uppercase;
+            font-weight: 900;
+            color: var(--neon-green);
+            margin-bottom: 6px;
+        }
+
         /* СЛОТЫ */
         .slots-wrapper { display: grid; grid-template-columns: 1.4fr 1fr; gap: 20px; }
         .slot-cabinet { background: #110e18; border: 3px solid var(--neon-green); border-radius: 18px; padding: 24px; text-align: center; }
@@ -276,7 +466,7 @@
         .pay-row { display: flex; justify-content: space-between; padding: 7px 0; border-bottom: 1px solid #1b2533; font-size: 0.92rem; }
         .pay-row b { color: var(--gold); }
 
-        /* НОВОЕ КАНВАС-КОЛЕСО ФОРТУНЫ */
+        /* КАНВАС-КОЛЕСО ФОРТУНЫ */
         .roulette-container { text-align: center; padding: 10px; position: relative; }
         .canvas-wheel-wrap {
             position: relative;
@@ -307,7 +497,6 @@
             background: #111;
         }
 
-        /* ПАНЕЛЬ СТАВОК НА КОЛЕСО */
         .roulette-betting-panel {
             background: #0d131a;
             border: 1px solid #233042;
@@ -340,7 +529,7 @@
         .bet-type-green { color: #4ade80; }
         .bet-type-black { color: #cbd5e1; }
 
-        /* ВИДЕОПОКЕР */
+        /* 5-CARD DRAW ПОКЕР СТОЛ */
         .poker-table { text-align: center; padding: 10px; }
         .poker-paytable {
             background: #0d131a;
@@ -504,19 +693,9 @@
             justify-content: space-between;
             gap: 15px;
         }
-        .track-info {
-            text-align: left;
-        }
-        .track-title {
-            font-weight: 900;
-            font-size: 1.05rem;
-            color: #fff;
-        }
-        .track-artist {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            margin-top: 3px;
-        }
+        .track-info { text-align: left; }
+        .track-title { font-weight: 900; font-size: 1.05rem; color: #fff; }
+        .track-artist { font-size: 0.85rem; color: var(--text-muted); margin-top: 3px; }
         .yt-watch-btn {
             display: inline-flex;
             align-items: center;
@@ -653,6 +832,10 @@
             <button class="nav-item active" id="nav-lobby" onclick="showLobby()">
                 <span class="nav-item-left"><span class="nav-icon">🏠</span> Главная</span>
             </button>
+            <button class="nav-item" id="nav-profile" onclick="switchGame('profile')">
+                <span class="nav-item-left"><span class="nav-icon">👤</span> Профиль</span>
+                <span class="nav-badge" style="background:#a855f7; color:#fff;">STATS</span>
+            </button>
             <button class="nav-item" id="nav-blackjack" onclick="switchGame('blackjack')">
                 <span class="nav-item-left"><span class="nav-icon">♠️</span> Блэкджек</span>
                 <span class="nav-badge" style="background:#3b82f6; color:#fff;">FREE</span>
@@ -669,7 +852,6 @@
                 <span class="nav-item-left"><span class="nav-icon">🍒</span> Слоты</span>
                 <span class="nav-badge badge-pro">VIP PRO</span>
             </button>
-            <!-- ВКЛАДКА МУЗОН ПОД СЛОТАМИ -->
             <button class="nav-item" id="nav-music" onclick="switchGame('music')" style="display: none; border-color: #ec4899;">
                 <span class="nav-item-left"><span class="nav-icon">🎵</span> МУЗОН</span>
                 <span class="nav-badge" style="background:#ec4899; color:#fff;">MORGEN</span>
@@ -707,7 +889,13 @@
                 <span>💵</span><span id="balance">1000</span> <span style="font-size:0.9rem; color:#fff;">BYN</span>
             </div>
 
-            <div style="width: 130px;"></div>
+            <div class="topbar-profile-pill" onclick="switchGame('profile')" title="Открыть профиль">
+                <div class="topbar-avatar-mini" id="topbar-avatar-emoji">😎</div>
+                <div style="text-align: left;">
+                    <div id="topbar-username" style="font-weight: 800; font-size: 0.85rem; color: #fff;">Игрок #777</div>
+                    <div id="topbar-vip-label" style="font-size: 0.68rem; font-weight: 900; color: var(--text-muted);">БЕЗ VIP</div>
+                </div>
+            </div>
         </header>
 
         <main class="content-area">
@@ -722,7 +910,6 @@
                         <p class="hero-subtitle">СЮДА ЗАЛЕТАЙ И БАБ ЗАБИРАЙ!</p>
                         <button class="hero-cta-btn" onclick="switchGame('blackjack')">ИГРАТЬ СЕЙЧАС →</button>
                     </div>
-                    <!-- ПРАВАЯ ПОЛОВИНА БАННЕРА С ФОТО И ПОДПИСЬЮ -->
                     <div class="hero-right-photo">
                         <img src="IMG_04991.png" alt="Красава">
                         <div class="photo-caption">ууу это что за красава</div>
@@ -747,7 +934,7 @@
                     <div class="mode-card" onclick="switchGame('poker')">
                         <div class="mode-card-visual"><div class="mode-big-emoji">🃏</div><span class="mode-tag-pill">VIP LITE</span></div>
                         <div class="mode-card-footer">
-                            <div><div class="mode-card-title">Видеопокер</div><div class="mode-card-desc">Собери комбинацию</div></div>
+                            <div><div class="mode-card-title">Видеопокер</div><div class="mode-card-desc">5-Card Draw Покер</div></div>
                             <div class="mode-arrow-btn">›</div>
                         </div>
                     </div>
@@ -759,6 +946,83 @@
                         </div>
                     </div>
                 </section>
+            </div>
+
+            <!-- ================= ПРОФИЛЬ И СТАТИСТИКА ================= -->
+            <div id="view-profile" class="game-view">
+                <div class="game-header">
+                    <h2>👤 Личный кабинет и Кастомизация</h2>
+                    <button class="btn-back" onclick="showLobby()">← В лобби</button>
+                </div>
+
+                <!-- КАРТОЧКА ПРОФИЛЯ С УКРАШЕНИЯМИ -->
+                <div class="profile-banner-card" id="profile-banner-card">
+                    <div class="profile-identity">
+                        <div class="profile-avatar-box" id="profile-avatar-box">😎</div>
+                        <div>
+                            <div class="profile-name-row">
+                                <input type="text" id="profile-name-input" class="profile-name-input" maxlength="18" value="Игрок #777" onchange="changeUsername(this.value)" title="Нажмите, чтобы изменить никнейм">
+                                <span style="font-size: 0.75rem; color: var(--text-muted);">✏️ ник</span>
+                            </div>
+                            <div id="profile-title-badge" class="profile-title-badge">Новичок казика</div>
+                            <div style="margin-top: 10px; display: flex; gap: 6px; flex-wrap: wrap;" id="avatar-emoji-picker">
+                                <!-- Кнопки выбора аватарки рендерятся из JS -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="profile-vip-box">
+                        <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; font-weight: 800;">Текущий VIP Статус</div>
+                        <div id="profile-vip-status-display" style="font-size: 1.35rem; font-weight: 950; margin-top: 4px; color: #fff;">СТАНДАРТ (БЕЗ VIP)</div>
+                        <button class="btn-play" style="margin-top: 10px; padding: 7px 14px; font-size: 0.78rem;" onclick="switchGame('vip-shop')">Улучшить статус →</button>
+                    </div>
+                </div>
+
+                <!-- СТАТИСТИКА ИГРОКА -->
+                <h3 style="color: var(--neon-green); text-transform: uppercase; margin: 0 0 12px 0; font-size: 1rem;">📊 Боевая статистика</h3>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-card-label">Всего сыграно игр</div>
+                        <div class="stat-card-value" id="stat-games">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card-label">Побед / Поражений</div>
+                        <div class="stat-card-value"><span id="stat-wins" style="color:var(--neon-green);">0</span> / <span id="stat-losses" style="color:var(--danger);">0</span></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card-label">Винрейт</div>
+                        <div class="stat-card-value" id="stat-winrate" style="color: #60a5fa;">0%</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card-label">Всего выиграно BYN</div>
+                        <div class="stat-card-value" id="stat-total-won" style="color: var(--gold);">0 BYN</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card-label">Максимальный занос</div>
+                        <div class="stat-card-value" id="stat-biggest-win" style="color: var(--neon-green);">0 BYN</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card-label">Всего поставлено</div>
+                        <div class="stat-card-value" id="stat-wagered">0 BYN</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card-label">Куплено имущества</div>
+                        <div class="stat-card-value" id="stat-props-count">0 / 6</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card-label">Куплено украшений</div>
+                        <div class="stat-card-value" id="stat-cosmetics-count">0 / 9</div>
+                    </div>
+                </div>
+
+                <!-- МАГАЗИН УКРАШЕНИЙ ДЛЯ ПРОФИЛЯ ЗА BYN -->
+                <h3 style="color: var(--gold); text-transform: uppercase; margin: 10px 0 6px 0; font-size: 1.05rem;">✨ Магазин украшений профиля за BYN</h3>
+                <p style="color: var(--text-muted); font-size: 0.85rem; margin: 0 0 14px 0;">Копи валюту в играх и прокачивай внешний вид своего профиля: эксклюзивные рамки, фоны и титулы!</p>
+                <div class="cosmetics-grid" id="cosmetics-shop-grid"></div>
+
+                <!-- ВИТРИНА ИМУЩЕСТВА В ПРОФИЛЕ -->
+                <h3 style="color: #fff; text-transform: uppercase; margin: 10px 0 12px 0; font-size: 1rem;">🏆 Моя коллекция элитного имущества</h3>
+                <div id="profile-owned-props" style="display: flex; gap: 12px; flex-wrap: wrap;"></div>
             </div>
 
             <!-- БЛЭКДЖЕК -->
@@ -789,7 +1053,7 @@
                 <div class="status-banner" id="bj-status">Сделайте ставку и нажмите «Раздать»</div>
             </div>
 
-            <!-- ИДЕАЛЬНОЕ КОЛЕСО ФОРТУНЫ (CANVAS) -->
+            <!-- КОЛЕСО ФОРТУНЫ -->
             <div id="view-roulette" class="game-view">
                 <div class="game-header">
                     <h2>🎡 Колесо фортуны (Точный расчет)</h2>
@@ -826,18 +1090,17 @@
                 </div>
             </div>
 
-            <!-- НАСТОЯЩИЙ ВИДЕОПОКЕР -->
+            <!-- 5-CARD DRAW ПОКЕР -->
             <div id="view-poker" class="game-view">
                 <div class="game-header">
-                    <h2>🃏 Видеопокер (Полная таблица комбинаций)</h2>
+                    <h2>🃏 Покер: 5-Card Draw (Классика против бота)</h2>
                     <button class="btn-back" onclick="showLobby()">← В лобби</button>
                 </div>
                 <div class="poker-table">
                     <div id="poker-lock-banner" class="status-banner" style="background: rgba(245, 158, 11, 0.15); border: 2px dashed #f59e0b; color: #f59e0b; margin-bottom: 20px; display: none;">
-                        🔒 Чтобы играть в Видеопокер, обязательно нужно прикупить статус <b>VIP Lite</b>!
+                        🔒 Чтобы играть в Покер, обязательно нужно прикупить статус <b>VIP Lite</b>!
                     </div>
 
-                    <!-- Таблица множителей по вашей картинке -->
                     <div class="poker-paytable" id="poker-paytable-box">
                         <div class="poker-pay-item" data-hand="royal"><div>Флэш-Рояль</div><div>x250</div></div>
                         <div class="poker-pay-item" data-hand="straight-flush"><div>Стрит-Флэш</div><div>x50</div></div>
@@ -851,6 +1114,11 @@
                         <div class="poker-pay-item" data-hand="high-card"><div>Старшая карта</div><div>x0</div></div>
                     </div>
 
+                    <div style="font-weight: 800; color: var(--text-muted); margin-bottom: 4px;" id="dealer-poker-info">Бот-соперник: ожидает раздачи</div>
+                    <div class="cards-row" id="dealer-poker-cards" style="transform: scale(0.85); margin: 5px 0;"></div>
+
+                    <div style="font-weight: 800; color: var(--gold); margin-top: 10px;" id="pot-info">Банк игры: 0 BYN</div>
+
                     <div class="cards-row" id="poker-cards">
                         <div class="poker-card" style="opacity:0.4;"><div>J</div><div style="font-size:1.8rem; text-align:center;">♠</div><div style="text-align:right;">J</div></div>
                         <div class="poker-card" style="opacity:0.4;"><div>Q</div><div style="font-size:1.8rem; text-align:center;">♥</div><div style="text-align:right;">Q</div></div>
@@ -858,12 +1126,13 @@
                         <div class="poker-card" style="opacity:0.4;"><div>A</div><div style="font-size:1.8rem; text-align:center;">♣</div><div style="text-align:right;">A</div></div>
                         <div class="poker-card" style="opacity:0.4;"><div>10</div><div style="font-size:1.8rem; text-align:center;">♠</div><div style="text-align:right;">10</div></div>
                     </div>
+
                     <div class="controls-bar" id="poker-controls-box">
-                        <label>Ставка:</label>
-                        <input type="number" id="poker-bet" value="150" min="50">
-                        <button class="btn-play" id="poker-action-btn" onclick="pokerActionReal()">РАЗДАТЬ</button>
+                        <label>Блайнд / Анте:</label>
+                        <input type="number" id="poker-bet" value="100" min="50">
+                        <button class="btn-play" id="poker-action-btn" onclick="pokerActionReal()">НАЧАТЬ РАЗДАЧУ</button>
                     </div>
-                    <div class="status-banner" id="poker-status">Нажмите «Раздать», удерживайте нужные карты и сделайте обмен!</div>
+                    <div class="status-banner" id="poker-status">Добро пожаловать в 5-Card Draw покер! Сделайте ставку и начните раздачу.</div>
                 </div>
             </div>
 
@@ -950,7 +1219,7 @@
                             <span class="nav-badge badge-vip" style="font-size:0.8rem; padding:4px 8px;">VIP LITE</span>
                             <h3 style="color: #f59e0b; margin-top: 10px;">10 000 BYN</h3>
                             <ul class="vip-features-list">
-                                <li>🃏 Доступ к игре в <b>Видеопокер</b></li>
+                                <li>🃏 Доступ к игре в <b>Покер (5-Card Draw)</b></li>
                                 <li>🎁 Ежедневный бонус +1 000 BYN</li>
                                 <li>⭐ Золотой значок в профиле</li>
                             </ul>
@@ -1011,6 +1280,7 @@
     <div class="toast" id="toast"></div>
 
     <script>
+        // ================= ПОЛНОЕ СОХРАНЕНИЕ СОСТОЯНИЯ =================
         let balance = 1000;
         let vipLevel = 'none';
         let ownedProps = [];
@@ -1019,28 +1289,118 @@
         let answeredQuestions = {};
         let currentBetType = 'red';
 
+        // Профиль и статистика
+        let userProfile = {
+            username: 'Игрок #777',
+            avatar: '😎',
+            equippedFrame: 'none',
+            equippedBg: 'none',
+            equippedTitle: 'none',
+            ownedCosmetics: []
+        };
+
+        let userStats = {
+            gamesPlayed: 0,
+            wins: 0,
+            losses: 0,
+            totalWon: 0,
+            biggestWin: 0,
+            totalWagered: 0
+        };
+
+        const AVATAR_EMOJIS = ['😎', '🦁', '🐺', '🤑', '👑', '🦊', '👽', '🔥'];
+
+        const COSMETICS_SHOP = [
+            // Рамки аватара
+            { id: 'frame-neon', type: 'frame', cssClass: 'frame-neon', icon: '🟢', name: 'Неоновое кольцо', desc: 'Яркая зеленая подсветка аватара', price: 3000 },
+            { id: 'frame-fire', type: 'frame', cssClass: 'frame-fire', icon: '🔥', name: 'Огненная аура', desc: 'Пульсирующее пламя вокруг аватара', price: 12000 },
+            { id: 'frame-crown', type: 'frame', cssClass: 'frame-crown', icon: '👑', name: 'Корона Императора', desc: 'Золотая рамка + корона над головой', price: 35000 },
+
+            // Фоны баннера профиля
+            { id: 'bg-cyber', type: 'bg', cssClass: 'bg-cyber', icon: '🌌', name: 'Фон: Киберпанк', desc: 'Неоново-розовый градиент профиля', price: 8000 },
+            { id: 'bg-matrix', type: 'bg', cssClass: 'bg-matrix', icon: '📟', name: 'Фон: Хакер Казика', desc: 'Изумрудное сияние в стиле Матрицы', price: 20000 },
+            { id: 'bg-gold', type: 'bg', cssClass: 'bg-gold', icon: '💰', name: 'Фон: Золотой Слиток', desc: 'Роскошный золотой фон для миллионеров', price: 60000 },
+
+            // Титулы
+            { id: 'title-ludoman', type: 'title', cssClass: 'title-ludoman', titleText: '⚡ Опытный Лудоман', icon: '🎲', name: 'Титул: Опытный Лудоман', desc: 'Синий значок под твоим никнеймом', price: 2500 },
+            { id: 'title-shark', type: 'title', cssClass: 'title-shark', titleText: '🦈 Акула Казика', icon: '🦈', name: 'Титул: Акула Казика', desc: 'Розовый хищный титул в профиле', price: 15000 },
+            { id: 'title-oligarch', type: 'title', cssClass: 'title-oligarch', titleText: '💎 Олигарх BYN', icon: '💎', name: 'Титул: Олигарх BYN', desc: 'Легендарный золотой титул элиты', price: 45000 }
+        ];
+
         const ROULETTE_NUMBERS = [0,32,15,19,4,21,2,25,17,34,6,27,13,36,11,30,8,23,10,5,24,16,33,1,20,14,31,9,22,18,29,7,28,12,35,3,26];
         const RED_NUMBERS = [32, 19, 21, 25, 34, 27, 36, 30, 23, 5, 16, 1, 14, 9, 18, 7, 12, 3];
 
-        try {
-            if (localStorage.getItem('so_kazik_balance') !== null) {
-                balance = parseInt(localStorage.getItem('so_kazik_balance')) || 1000;
+        // Загрузка всех сохраненных данных при запуске
+        function loadSavedData() {
+            try {
+                const savedBal = localStorage.getItem('so_kazik_balance');
+                if (savedBal !== null && !isNaN(parseInt(savedBal))) {
+                    balance = parseInt(savedBal);
+                }
+                const savedVip = localStorage.getItem('so_kazik_vip');
+                if (savedVip) {
+                    vipLevel = savedVip;
+                }
+                const savedProps = localStorage.getItem('so_kazik_props');
+                if (savedProps) {
+                    ownedProps = JSON.parse(savedProps) || [];
+                }
+                const savedQuiz = localStorage.getItem('so_kazik_quiz');
+                if (savedQuiz) {
+                    answeredQuestions = JSON.parse(savedQuiz) || {};
+                }
+                if (localStorage.getItem('so_kazik_music') === 'true') {
+                    musicUnlocked = true;
+                    const musicBtn = document.getElementById('nav-music');
+                    if (musicBtn) musicBtn.style.display = 'flex';
+                }
+                const savedProfile = localStorage.getItem('so_kazik_profile');
+                if (savedProfile) {
+                    userProfile = { ...userProfile, ...JSON.parse(savedProfile) };
+                }
+                const savedStats = localStorage.getItem('so_kazik_stats');
+                if (savedStats) {
+                    userStats = { ...userStats, ...JSON.parse(savedStats) };
+                }
+            } catch (e) {}
+        }
+
+        function saveData() {
+            try {
+                localStorage.setItem('so_kazik_balance', String(balance));
+                localStorage.setItem('so_kazik_vip', vipLevel);
+                localStorage.setItem('so_kazik_props', JSON.stringify(ownedProps));
+                localStorage.setItem('so_kazik_quiz', JSON.stringify(answeredQuestions));
+                localStorage.setItem('so_kazik_music', String(musicUnlocked));
+                localStorage.setItem('so_kazik_profile', JSON.stringify(userProfile));
+                localStorage.setItem('so_kazik_stats', JSON.stringify(userStats));
+            } catch (e) {}
+        }
+
+        // Гарантированное сохранение перед закрытием или обновлением страницы
+        window.addEventListener('beforeunload', saveData);
+        window.addEventListener('pagehide', saveData);
+
+        // Учет статистики игр
+        function recordBet(amount) {
+            userStats.totalWagered += amount;
+            saveData();
+        }
+
+        function recordGameResult(isWin, winAmount = 0) {
+            userStats.gamesPlayed += 1;
+            if (isWin) {
+                userStats.wins += 1;
+                userStats.totalWon += winAmount;
+                if (winAmount > userStats.biggestWin) {
+                    userStats.biggestWin = winAmount;
+                }
+            } else {
+                userStats.losses += 1;
             }
-            if (localStorage.getItem('so_kazik_vip')) {
-                vipLevel = localStorage.getItem('so_kazik_vip');
-            }
-            if (localStorage.getItem('so_kazik_props')) {
-                ownedProps = JSON.parse(localStorage.getItem('so_kazik_props')) || [];
-            }
-            if (localStorage.getItem('so_kazik_quiz')) {
-                answeredQuestions = JSON.parse(localStorage.getItem('so_kazik_quiz')) || {};
-            }
-            if (localStorage.getItem('so_kazik_music') === 'true') {
-                musicUnlocked = true;
-                const musicBtn = document.getElementById('nav-music');
-                if (musicBtn) musicBtn.style.display = 'flex';
-            }
-        } catch (e) {}
+            saveData();
+            syncHeaderProfile();
+        }
 
         const PROPERTIES = [
             { id: 'rolex', icon: '⌚', name: 'Rolex Daytona', desc: 'Золотой хронограф', price: 40000 },
@@ -1089,16 +1449,6 @@
             }
         ];
 
-        function saveData() {
-            try {
-                localStorage.setItem('so_kazik_balance', balance);
-                localStorage.setItem('so_kazik_vip', vipLevel);
-                localStorage.setItem('so_kazik_props', JSON.stringify(ownedProps));
-                localStorage.setItem('so_kazik_quiz', JSON.stringify(answeredQuestions));
-                localStorage.setItem('so_kazik_music', musicUnlocked);
-            } catch (e) {}
-        }
-
         function updateBalance(delta) {
             balance += delta;
             if (balance < 0) balance = 0;
@@ -1131,15 +1481,10 @@
         }
 
         function switchGame(id) {
-            if (id === 'property') {
-                renderProperties();
-            }
-            if (id === 'vip-shop') {
-                updateVipShopStatus();
-            }
-            if (id === 'settings') {
-                renderQuiz();
-            }
+            if (id === 'profile') renderProfile();
+            if (id === 'property') renderProperties();
+            if (id === 'vip-shop') updateVipShopStatus();
+            if (id === 'settings') renderQuiz();
 
             document.querySelectorAll('.game-view').forEach(v => {
                 v.classList.remove('active');
@@ -1151,19 +1496,222 @@
             if (targetView) {
                 targetView.style.display = 'block';
                 targetView.classList.add('active');
-                if (id === 'roulette') {
-                    drawCanvasWheel(0);
-                }
-                if (id === 'poker') {
-                    checkPokerAccess();
-                }
-                if (id === 'slots') {
-                    checkSlotsAccess();
-                }
+                if (id === 'roulette') drawCanvasWheel(0);
+                if (id === 'poker') checkPokerAccess();
+                if (id === 'slots') checkSlotsAccess();
             }
             
             const navBtn = document.getElementById('nav-' + id);
             if (navBtn) navBtn.classList.add('active');
+        }
+
+        // ================= ЛОГИКА ПРОФИЛЯ И УКРАШЕНИЙ =================
+        function syncHeaderProfile() {
+            const topName = document.getElementById('topbar-username');
+            const topAva = document.getElementById('topbar-avatar-emoji');
+            const topVip = document.getElementById('topbar-vip-label');
+
+            if (topName) topName.textContent = userProfile.username;
+            if (topAva) topAva.textContent = userProfile.avatar;
+            if (topVip) {
+                if (vipLevel === 'pro') {
+                    topVip.textContent = '👑 VIP PRO';
+                    topVip.style.color = 'var(--neon-green)';
+                } else if (vipLevel === 'lite') {
+                    topVip.textContent = '⭐ VIP LITE';
+                    topVip.style.color = '#f59e0b';
+                } else {
+                    topVip.textContent = 'СТАНДАРТ';
+                    topVip.style.color = 'var(--text-muted)';
+                }
+            }
+        }
+
+        function changeUsername(newName) {
+            const clean = newName.trim();
+            if (clean.length > 0) {
+                userProfile.username = clean;
+                saveData();
+                syncHeaderProfile();
+                showToast('✅ Никнейм сохранен!');
+            }
+        }
+
+        function setAvatarEmoji(emoji) {
+            userProfile.avatar = emoji;
+            saveData();
+            syncHeaderProfile();
+            renderProfile();
+        }
+
+        function renderProfile() {
+            syncHeaderProfile();
+
+            const nameInput = document.getElementById('profile-name-input');
+            if (nameInput) nameInput.value = userProfile.username;
+
+            const avaBox = document.getElementById('profile-avatar-box');
+            if (avaBox) {
+                avaBox.textContent = userProfile.avatar;
+                avaBox.className = 'profile-avatar-box';
+                if (userProfile.equippedFrame !== 'none') {
+                    avaBox.classList.add(userProfile.equippedFrame);
+                }
+            }
+
+            const bannerCard = document.getElementById('profile-banner-card');
+            if (bannerCard) {
+                bannerCard.className = 'profile-banner-card';
+                if (userProfile.equippedBg !== 'none') {
+                    bannerCard.classList.add(userProfile.equippedBg);
+                }
+            }
+
+            const titleBadge = document.getElementById('profile-title-badge');
+            if (titleBadge) {
+                titleBadge.className = 'profile-title-badge';
+                if (userProfile.equippedTitle === 'none') {
+                    titleBadge.textContent = 'Новичок казика';
+                } else {
+                    const item = COSMETICS_SHOP.find(c => c.cssClass === userProfile.equippedTitle);
+                    if (item) {
+                        titleBadge.textContent = item.titleText;
+                        titleBadge.classList.add(item.cssClass);
+                    }
+                }
+            }
+
+            // Выбор эмодзи аватара
+            const picker = document.getElementById('avatar-emoji-picker');
+            if (picker) {
+                picker.innerHTML = '';
+                AVATAR_EMOJIS.forEach(em => {
+                    const b = document.createElement('button');
+                    b.textContent = em;
+                    b.style.cssText = `background:${userProfile.avatar === em ? 'var(--neon-green)' : '#131b24'}; border:1px solid #2c3e50; border-radius:8px; padding:4px 8px; cursor:pointer; font-size:1.05rem;`;
+                    b.onclick = () => setAvatarEmoji(em);
+                    picker.appendChild(b);
+                });
+            }
+
+            // VIP статус в профиле
+            const vipDisplay = document.getElementById('profile-vip-status-display');
+            if (vipDisplay) {
+                if (vipLevel === 'pro') {
+                    vipDisplay.innerHTML = '<span style="color:var(--neon-green);">👑 VIP PRO (МАКСИМУМ)</span>';
+                } else if (vipLevel === 'lite') {
+                    vipDisplay.innerHTML = '<span style="color:#f59e0b;">⭐ VIP LITE АКТИВЕН</span>';
+                } else {
+                    vipDisplay.innerHTML = '<span style="color:var(--text-muted);">СТАНДАРТ (БЕЗ VIP)</span>';
+                }
+            }
+
+            // Статистики
+            document.getElementById('stat-games').textContent = userStats.gamesPlayed;
+            document.getElementById('stat-wins').textContent = userStats.wins;
+            document.getElementById('stat-losses').textContent = userStats.losses;
+            const wr = userStats.gamesPlayed > 0 ? Math.round((userStats.wins / userStats.gamesPlayed) * 100) : 0;
+            document.getElementById('stat-winrate').textContent = wr + '%';
+            document.getElementById('stat-total-won').textContent = userStats.totalWon.toLocaleString('ru-RU') + ' BYN';
+            document.getElementById('stat-biggest-win').textContent = userStats.biggestWin.toLocaleString('ru-RU') + ' BYN';
+            document.getElementById('stat-wagered').textContent = userStats.totalWagered.toLocaleString('ru-RU') + ' BYN';
+            document.getElementById('stat-props-count').textContent = `${ownedProps.length} / ${PROPERTIES.length}`;
+            document.getElementById('stat-cosmetics-count').textContent = `${userProfile.ownedCosmetics.length} / ${COSMETICS_SHOP.length}`;
+
+            // Рендер магазина украшений
+            const shopGrid = document.getElementById('cosmetics-shop-grid');
+            if (shopGrid) {
+                shopGrid.innerHTML = '';
+                const typeNames = { frame: 'Рамка аватара', bg: 'Фон профиля', title: 'Титул' };
+
+                COSMETICS_SHOP.forEach(item => {
+                    const isOwned = userProfile.ownedCosmetics.includes(item.id);
+                    const isEquipped =
+                        (item.type === 'frame' && userProfile.equippedFrame === item.cssClass) ||
+                        (item.type === 'bg' && userProfile.equippedBg === item.cssClass) ||
+                        (item.type === 'title' && userProfile.equippedTitle === item.cssClass);
+
+                    const card = document.createElement('div');
+                    card.className = `cosmetic-card ${isEquipped ? 'equipped' : ''}`;
+
+                    let actionHtml = '';
+                    if (!isOwned) {
+                        actionHtml = `<button class="btn-play" style="padding:7px 14px; font-size:0.8rem;" onclick="buyCosmetic('${item.id}')">КУПИТЬ</button>`;
+                    } else if (isEquipped) {
+                        actionHtml = `<button class="btn-back" style="padding:7px 12px; font-size:0.8rem; border-color:var(--neon-green); color:var(--neon-green);" onclick="toggleCosmetic('${item.id}')">НАДЕТО ✓</button>`;
+                    } else {
+                        actionHtml = `<button class="btn-play" style="background:#3b82f6; color:#fff; padding:7px 14px; font-size:0.8rem;" onclick="toggleCosmetic('${item.id}')">НАДЕТЬ</button>`;
+                    }
+
+                    card.innerHTML = `
+                        <div>
+                            <div class="cosmetic-tag">${typeNames[item.type]}</div>
+                            <div style="font-size:2rem; margin-bottom:6px;">${item.icon}</div>
+                            <div style="font-weight:800; color:#fff; font-size:1rem;">${item.name}</div>
+                            <div style="font-size:0.8rem; color:var(--text-muted); margin-top:4px;">${item.desc}</div>
+                        </div>
+                        <div style="margin-top:14px; display:flex; align-items:center; justify-content:space-between;">
+                            <span style="font-weight:900; color:var(--gold);">${isOwned ? 'В наличии' : item.price.toLocaleString('ru-RU') + ' BYN'}</span>
+                            ${actionHtml}
+                        </div>
+                    `;
+                    shopGrid.appendChild(card);
+                });
+            }
+
+            // Витрина купленного имущества
+            const ownedContainer = document.getElementById('profile-owned-props');
+            if (ownedContainer) {
+                ownedContainer.innerHTML = '';
+                if (ownedProps.length === 0) {
+                    ownedContainer.innerHTML = '<div style="color:var(--text-muted); font-size:0.9rem;">Пока нет купленного имущества. Загляните во вкладку «Имущество»!</div>';
+                } else {
+                    ownedProps.forEach(pid => {
+                        const prop = PROPERTIES.find(p => p.id === pid);
+                        if (prop) {
+                            const badge = document.createElement('div');
+                            badge.style.cssText = 'background:#0e141c; border:1px solid var(--neon-green); border-radius:12px; padding:10px 16px; display:flex; align-items:center; gap:10px;';
+                            badge.innerHTML = `<span style="font-size:1.6rem;">${prop.icon}</span><div><div style="font-weight:800; font-size:0.9rem;">${prop.name}</div><div style="font-size:0.75rem; color:var(--gold);">${prop.price.toLocaleString('ru-RU')} BYN</div></div>`;
+                            ownedContainer.appendChild(badge);
+                        }
+                    });
+                }
+            }
+        }
+
+        function buyCosmetic(id) {
+            const item = COSMETICS_SHOP.find(c => c.id === id);
+            if (!item) return;
+            if (userProfile.ownedCosmetics.includes(id)) return;
+            if (balance < item.price) {
+                showToast('⚠️ Недостаточно BYN! Копите валюту в играх.');
+                return;
+            }
+            updateBalance(-item.price);
+            userProfile.ownedCosmetics.push(id);
+            // Автоматически надеваем купленное украшение
+            if (item.type === 'frame') userProfile.equippedFrame = item.cssClass;
+            if (item.type === 'bg') userProfile.equippedBg = item.cssClass;
+            if (item.type === 'title') userProfile.equippedTitle = item.cssClass;
+
+            saveData();
+            renderProfile();
+            showToast(`✨ Украшение «${item.name}» куплено и надето!`);
+        }
+
+        function toggleCosmetic(id) {
+            const item = COSMETICS_SHOP.find(c => c.id === id);
+            if (!item || !userProfile.ownedCosmetics.includes(id)) return;
+
+            if (item.type === 'frame') {
+                userProfile.equippedFrame = (userProfile.equippedFrame === item.cssClass) ? 'none' : item.cssClass;
+            } else if (item.type === 'bg') {
+                userProfile.equippedBg = (userProfile.equippedBg === item.cssClass) ? 'none' : item.cssClass;
+            } else if (item.type === 'title') {
+                userProfile.equippedTitle = (userProfile.equippedTitle === item.cssClass) ? 'none' : item.cssClass;
+            }
+            saveData();
+            renderProfile();
         }
 
         function selectBetType(type, btn) {
@@ -1201,7 +1749,7 @@
             if (controls) controls.style.display = hasAccess ? 'flex' : 'none';
         }
 
-        // --- ИДЕАЛЬНОЕ КОЛЕСО ФОРТУНЫ НА CANVAS ---
+        // --- КАНВАС-КОЛЕСО ФОРТУНЫ ---
         let currentWheelAngle = 0;
         function drawCanvasWheel(angleOffset) {
             const canvas = document.getElementById('fortune-canvas');
@@ -1223,7 +1771,6 @@
                 const startAngle = i * arcSize - Math.PI / 2 - arcSize / 2;
                 const endAngle = startAngle + arcSize;
 
-                // Цвет сектора
                 let color = '#111111';
                 if (num === 0) color = '#22c55e';
                 else if (RED_NUMBERS.includes(num)) color = '#dc2626';
@@ -1238,7 +1785,6 @@
                 ctx.lineWidth = 1;
                 ctx.stroke();
 
-                // Текст цифры
                 ctx.save();
                 const textAngle = startAngle + arcSize / 2;
                 ctx.rotate(textAngle);
@@ -1249,7 +1795,6 @@
                 ctx.restore();
             }
 
-            // Центральная крышка колеса
             ctx.beginPath();
             ctx.arc(0, 0, 32, 0, Math.PI * 2);
             const goldGrad = ctx.createRadialGradient(0, 0, 5, 0, 0, 32);
@@ -1270,6 +1815,7 @@
             const bet = parseInt(betInput ? betInput.value : 200);
             if (isNaN(bet) || bet <= 0 || bet > balance) { showToast('⚠️ Неверная ставка!'); return; }
             updateBalance(-bet);
+            recordBet(bet);
 
             const btn = document.getElementById('roulette-btn');
             const statusEl = document.getElementById('roulette-status');
@@ -1277,7 +1823,7 @@
 
             let winningIndex;
             if (guaranteedWin) {
-                winningIndex = 0; // Выпадает 0 (зелёное) или любое нужное
+                winningIndex = 0;
                 guaranteedWin = false;
             } else {
                 winningIndex = Math.floor(Math.random() * ROULETTE_NUMBERS.length);
@@ -1287,9 +1833,8 @@
             const totalSectors = ROULETTE_NUMBERS.length;
             const arcRad = (Math.PI * 2) / totalSectors;
 
-            // Стрелка находится наверху (-PI/2). Рассчитываем точный угол остановки
             const targetAngleFromTop = -(winningIndex * arcRad) - arcRad / 2;
-            const extraSpins = Math.PI * 2 * 6; // 6 полных оборотов
+            const extraSpins = Math.PI * 2 * 6;
             const finalAngle = currentWheelAngle + extraSpins + (targetAngleFromTop - (currentWheelAngle % (Math.PI * 2)));
 
             const startTime = performance.now();
@@ -1300,7 +1845,6 @@
             function animateWheel(currentTime) {
                 const elapsed = currentTime - startTime;
                 const progress = Math.min(elapsed / duration, 1);
-                // Плавная кубическая анимация торможения
                 const easeOut = 1 - Math.pow(1 - progress, 3);
                 
                 const currentDrawAngle = currentWheelAngle + (finalAngle - currentWheelAngle) * easeOut;
@@ -1335,9 +1879,11 @@
                     if (isWin) {
                         const win = bet * mult;
                         updateBalance(win);
+                        recordGameResult(true, win);
                         statusEl.textContent = `🎉 Выпало: ${winningNumber} (${colorName})! Победа x${mult}: +${win} BYN!`;
                         showVictoryAnimation('view-roulette', 'ПОБЕДА В КОЛЕСЕ!', `Выпало число ${winningNumber}! Выигрыш: +${win} BYN!`);
                     } else {
+                        recordGameResult(false, 0);
                         statusEl.textContent = `❌ Выпало: ${winningNumber} (${colorName}). Ставка сгорела.`;
                     }
                 }
@@ -1346,69 +1892,65 @@
             requestAnimationFrame(animateWheel);
         }
 
-        // --- НАСТОЯЩИЙ ПОКЕР С АНАЛИЗОМ 10 КОМБИНАЦИЙ ---
-        let pokerCardsData = [];
-        let pokerStep = 1;
+        // --- КЛАССИЧЕСКИЙ ПОКЕР (5-Card Draw) ---
+        let pokerDeck = [];
+        let playerHand = [];
+        let dealerHand = [];
+        let pokerPot = 0;
+        let pokerStage = 0;
+        let currentAnte = 100;
 
-        function getCardNumericValue(char) {
-            if (char === 'J') return 11;
-            if (char === 'Q') return 12;
-            if (char === 'K') return 13;
-            if (char === 'A') return 14;
-            return parseInt(char);
+        function createDeck() {
+            let deck = [];
+            const suits = ['♠', '♥', '♦', '♣'];
+            for (let s of suits) {
+                for (let v = 2; v <= 14; v++) {
+                    deck.push({ val: v, suit: s, held: false });
+                }
+            }
+            return deck.sort(() => Math.random() - 0.5);
         }
 
         function evaluatePokerHand(cards) {
-            // cards: массив объектов { val: number (2-14), suit: string }
             const values = cards.map(c => c.val).sort((a, b) => b - a);
             const suits = cards.map(c => c.suit);
 
             const isFlush = suits.every(s => s === suits[0]);
             
-            // Проверка стрита
             let isStraight = false;
             let uniqueVals = [...new Set(values)];
             if (uniqueVals.length === 5) {
                 if (uniqueVals[0] - uniqueVals[4] === 4) {
                     isStraight = true;
                 }
-                // Стрит с тузом (A, 5, 4, 3, 2 -> 14, 5, 4, 3, 2)
                 if (uniqueVals[0] === 14 && uniqueVals[1] === 5 && uniqueVals[2] === 4 && uniqueVals[3] === 3 && uniqueVals[4] === 2) {
                     isStraight = true;
                 }
             }
 
-            // Подсчет количества одинаковых рангов
             const counts = {};
             values.forEach(v => counts[v] = (counts[v] || 0) + 1);
             const countVals = Object.values(counts).sort((a, b) => b - a);
 
-            // Определяем комбинацию и множитель
-            // 1. Флэш-Рояль (10, J, Q, K, A одной масти)
-            if (isFlush && isStraight && values[0] === 14 && values[4] === 10) return { name: 'royal', mult: 250, title: 'Флэш-Рояль' };
-            // 2. Стрит-Флэш
-            if (isFlush && isStraight) return { name: 'straight-flush', mult: 50, title: 'Стрит-Флэш' };
-            // 3. Каре (4 одинаковых)
-            if (countVals[0] === 4) return { name: 'four', mult: 25, title: 'Каре' };
-            // 4. Фулл-Хаус (3 + 2)
-            if (countVals[0] === 3 && countVals[1] === 2) return { name: 'full-house', mult: 9, title: 'Фулл-Хаус' };
-            // 5. Флэш (5 карт одной масти)
-            if (isFlush) return { name: 'flush', mult: 6, title: 'Флэш' };
-            // 6. Стрит (5 карт по порядку)
-            if (isStraight) return { name: 'straight', mult: 4, title: 'Стрит' };
-            // 7. Тройка / Сет
-            if (countVals[0] === 3) return { name: 'three', mult: 3, title: 'Тройка "Сет"' };
-            // 8. Две пары
-            if (countVals[0] === 2 && countVals[1] === 2) return { name: 'two-pairs', mult: 2, title: 'Две пары' };
-            // 9. Пара (от Валетов и выше J+)
+            if (isFlush && isStraight && values[0] === 14 && values[4] === 10) return { rank: 10, score: 14, name: 'royal', title: 'Флэш-Рояль', mult: 250 };
+            if (isFlush && isStraight) return { rank: 9, score: values[0], name: 'straight-flush', title: 'Стрит-Флэш', mult: 50 };
+            if (countVals[0] === 4) return { rank: 8, score: values[0], name: 'four', title: 'Каре', mult: 25 };
+            if (countVals[0] === 3 && countVals[1] === 2) return { rank: 7, score: values[0], name: 'full-house', title: 'Фулл-Хаус', mult: 9 };
+            if (isFlush) return { rank: 6, score: values[0], name: 'flush', title: 'Флэш', mult: 6 };
+            if (isStraight) return { rank: 5, score: values[0], name: 'straight', title: 'Стрит', mult: 4 };
+            if (countVals[0] === 3) return { rank: 4, score: values[0], name: 'three', title: 'Тройка "Сет"', mult: 3 };
+            if (countVals[0] === 2 && countVals[1] === 2) return { rank: 3, score: values[0], name: 'two-pairs', title: 'Две пары', mult: 2 };
+            
             if (countVals[0] === 2) {
                 let pairVal = Object.keys(counts).find(k => counts[k] === 2);
                 if (parseInt(pairVal) >= 11) {
-                    return { name: 'pair', mult: 1, title: 'Пара от Валетов' };
+                    return { rank: 2, score: parseInt(pairVal), name: 'pair', title: 'Пара (J+)', mult: 1 };
+                } else {
+                    return { rank: 1.5, score: parseInt(pairVal), name: 'pair', title: 'Младшая пара', mult: 0 };
                 }
             }
 
-            return { name: 'high-card', mult: 0, title: 'Старшая карта' };
+            return { rank: 1, score: values[0], name: 'high-card', title: 'Старшая карта', mult: 0 };
         }
 
         function pokerActionReal() {
@@ -1416,30 +1958,32 @@
                 showToast('🔒 Требуется VIP Lite для игры!');
                 return;
             }
+
             const betInput = document.getElementById('poker-bet');
-            const bet = parseInt(betInput ? betInput.value : 150);
-            if (isNaN(bet) || bet <= 0 || bet > balance) { showToast('⚠️ Неверная ставка!'); return; }
+            const bet = parseInt(betInput ? betInput.value : 100);
+            if (isNaN(bet) || bet <= 0) { showToast('⚠️ Укажите ставку!'); return; }
 
             const statusEl = document.getElementById('poker-status');
             const actionBtn = document.getElementById('poker-action-btn');
+            const potInfo = document.getElementById('pot-info');
+            const dealerInfo = document.getElementById('dealer-poker-info');
 
             document.querySelectorAll('.poker-pay-item').forEach(el => el.classList.remove('active-hand'));
 
-            if (pokerStep === 1) {
+            if (pokerStage === 0) {
+                if (bet > balance) { showToast('⚠️ Недостаточно средств!'); return; }
                 updateBalance(-bet);
-                // Создаем полноценную колоду из 52 карт
-                let deck = [];
-                const suits = ['♠', '♥', '♦', '♣'];
-                for (let s of suits) {
-                    for (let v = 2; v <= 14; v++) {
-                        deck.push({ val: v, suit: s, held: false });
-                    }
-                }
-                deck.sort(() => Math.random() - 0.5);
+                recordBet(bet);
+                currentAnte = bet;
+                pokerPot = currentAnte * 2;
+                potInfo.textContent = `Банк игры: ${pokerPot} BYN`;
+
+                pokerDeck = createDeck();
+                playerHand = pokerDeck.splice(0, 5);
+                dealerHand = pokerDeck.splice(0, 5);
 
                 if (guaranteedWin) {
-                    // Подсовываем каре или стрит-флэш для промокода
-                    pokerCardsData = [
+                    playerHand = [
                         { val: 14, suit: '♥', held: false },
                         { val: 14, suit: '♠', held: false },
                         { val: 14, suit: '♦', held: false },
@@ -1447,79 +1991,125 @@
                         { val: 7, suit: '♥', held: false }
                     ];
                     guaranteedWin = false;
-                } else {
-                    pokerCardsData = deck.splice(0, 5);
                 }
 
-                renderPokerCardsReal(true);
-                if (actionBtn) actionBtn.textContent = 'ОБМЕНЯТЬ';
-                if (statusEl) statusEl.textContent = 'Кликните на карты, чтобы оставить их (HOLD), затем жмите обмен!';
-                pokerStep = 2;
-            } else {
-                // Достаем новые карты взамен необмененных из свежей колоды
-                let deck = [];
-                const suits = ['♠', '♥', '♦', '♣'];
-                for (let s of suits) {
-                    for (let v = 2; v <= 14; v++) {
-                        // Исключаем те, что уже на руках
-                        if (!pokerCardsData.some(card => card.val === v && card.suit === s)) {
-                            deck.push({ val: v, suit: s, held: false });
-                        }
-                    }
-                }
-                deck.sort(() => Math.random() - 0.5);
+                renderPokerTable(true, false);
+                dealerInfo.textContent = 'Бот-соперник: оценил карты в темную';
+                statusEl.textContent = 'Раунд 1: Оцените свои 5 карт. Сделайте колл для продолжения торговли.';
+                actionBtn.textContent = 'КОЛЛ / УРАВНЯТЬ (К ОБМЕНУ)';
+                pokerStage = 1;
 
-                pokerCardsData.forEach(c => {
-                    if (!c.held) {
-                        let newC = deck.pop();
+            } else if (pokerStage === 1) {
+                statusEl.textContent = 'Этап Дро: Кликните на карты, которые хотите оставить (HOLD), затем нажмите обмен.';
+                actionBtn.textContent = 'СДЕЛАТЬ ОБМЕН КАРТ';
+                pokerStage = 2;
+
+            } else if (pokerStage === 2) {
+                playerHand.forEach(c => {
+                    if (!c.held && pokerDeck.length > 0) {
+                        let newC = pokerDeck.pop();
                         c.val = newC.val;
                         c.suit = newC.suit;
                     }
                 });
 
-                renderPokerCardsReal(false);
-
-                // Оцениваем комбинацию
-                const result = evaluatePokerHand(pokerCardsData);
-                
-                // Подсвечиваем в таблице выплат
-                const activeItem = document.querySelector(`.poker-pay-item[data-hand="${result.name}"]`);
-                if (activeItem) activeItem.classList.add('active-hand');
-
-                if (result.mult > 0) {
-                    const win = bet * result.mult;
-                    updateBalance(win);
-                    if (statusEl) statusEl.textContent = `🔥 Собрано: ${result.title}! Выигрыш x${result.mult}: +${win} BYN!`;
-                    showVictoryAnimation('view-poker', `ПОКЕР: ${result.title.toUpperCase()}!`, `Выигрыш составил +${win} BYN!`);
-                } else {
-                    if (statusEl) statusEl.textContent = `❌ Комбинация не собрана (${result.title}). Ставка сгорела.`;
+                let dEval = evaluatePokerHand(dealerHand);
+                if (dEval.rank < 3 && pokerDeck.length >= 2) {
+                    dealerHand[3] = pokerDeck.pop();
+                    dealerHand[4] = pokerDeck.pop();
                 }
 
-                if (actionBtn) actionBtn.textContent = 'РАЗДАТЬ';
-                pokerStep = 1;
+                renderPokerTable(true, false);
+                statusEl.textContent = 'Раунд 2: Обмен завершен! Сделайте финальный круг ставок перед шоудауном.';
+                actionBtn.textContent = 'ФИНАЛЬНЫЙ КОЛЛ И ВСКРЫТИЕ';
+                pokerStage = 3;
+
+            } else if (pokerStage === 3) {
+                if (bet > balance) { showToast('⚠️ Недостаточно средств!'); return; }
+                updateBalance(-bet);
+                recordBet(bet);
+                pokerPot += bet * 2;
+                potInfo.textContent = `Банк игры: ${pokerPot} BYN`;
+
+                pokerStage = 4;
+                actionBtn.textContent = 'НОВАЯ РАЗДАЧА';
+                
+                renderPokerTable(true, true);
+
+                const pRes = evaluatePokerHand(playerHand);
+                const dRes = evaluatePokerHand(dealerHand);
+
+                dealerInfo.textContent = `Бот показал карты: ${dRes.title}`;
+
+                const activeItem = document.querySelector(`.poker-pay-item[data-hand="${pRes.name}"]`);
+                if (activeItem) activeItem.classList.add('active-hand');
+
+                let playerWon = false;
+                let isDraw = false;
+
+                if (pRes.rank > dRes.rank) {
+                    playerWon = true;
+                } else if (pRes.rank === dRes.rank) {
+                    if (pRes.score > dRes.score) playerWon = true;
+                    else if (pRes.score === dRes.score) isDraw = true;
+                }
+
+                if (isDraw) {
+                    updateBalance(pokerPot / 2);
+                    statusEl.textContent = `🤝 Ничья! У обоих ${pRes.title}. Банк поделен поровну.`;
+                } else if (playerWon) {
+                    updateBalance(pokerPot);
+                    recordGameResult(true, pokerPot);
+                    statusEl.textContent = `🎉 ПОБЕДА! Ваша комбинация (${pRes.title}) сильнее бота! Забрали банк: +${pokerPot} BYN!`;
+                    showVictoryAnimation('view-poker', 'ПОБЕДА В ПОКЕРЕ!', `Вы выиграли банк +${pokerPot} BYN!`);
+                } else {
+                    recordGameResult(false, 0);
+                    statusEl.textContent = `❌ Бот выиграл с комбинацией "${dRes.title}". Банк утерян.`;
+                }
+
+                pokerStage = 0;
             }
         }
 
-        function renderPokerCardsReal(interactive) {
-            const row = document.getElementById('poker-cards');
-            if (!row) return;
-            row.innerHTML = '';
+        function renderPokerTable(playerInteractive, revealDealer) {
+            const pRow = document.getElementById('poker-cards');
+            const dRow = document.getElementById('dealer-poker-cards');
+            if (!pRow || !dRow) return;
+
+            pRow.innerHTML = '';
+            dRow.innerHTML = '';
+
             const names = {11: 'J', 12: 'Q', 13: 'K', 14: 'A'};
-            
-            pokerCardsData.forEach((c) => {
+
+            playerHand.forEach((c) => {
                 const el = document.createElement('div');
                 const isRed = ['♥', '♦'].includes(c.suit);
                 el.className = `poker-card ${c.held ? 'held' : ''} ${isRed ? 'red' : ''}`;
                 const valStr = names[c.val] || c.val;
                 el.innerHTML = `<div>${valStr}</div><div style="font-size:1.8rem; text-align:center;">${c.suit}</div><div style="text-align:right;">${valStr}</div>`;
                 
-                if (interactive) {
+                if (playerInteractive && pokerStage === 2) {
                     el.onclick = () => {
                         c.held = !c.held;
                         el.classList.toggle('held');
                     };
                 }
-                row.appendChild(el);
+                pRow.appendChild(el);
+            });
+
+            dealerHand.forEach((c) => {
+                const el = document.createElement('div');
+                const isRed = ['♥', '♦'].includes(c.suit);
+                el.className = `poker-card ${isRed ? 'red' : ''}`;
+                
+                if (!revealDealer) {
+                    el.innerHTML = `<div style="font-size:1.5rem; text-align:center; margin:auto;">🔒</div>`;
+                    el.style.background = '#1e293b';
+                } else {
+                    const valStr = names[c.val] || c.val;
+                    el.innerHTML = `<div>${valStr}</div><div style="font-size:1.8rem; text-align:center;">${c.suit}</div><div style="text-align:right;">${valStr}</div>`;
+                }
+                dRow.appendChild(el);
             });
         }
 
@@ -1581,6 +2171,7 @@
                 showToast('👑 VIP PRO активирован!');
             }
             saveData();
+            syncHeaderProfile();
             updateVipShopStatus();
             checkPokerAccess();
             checkSlotsAccess();
@@ -1600,6 +2191,7 @@
                 if (bet > balance) { showToast('⚠️ Недостаточно средств на балансе!'); return; }
 
                 updateBalance(-bet);
+                recordBet(bet);
 
                 const reels = [document.getElementById('reel-0'), document.getElementById('reel-1'), document.getElementById('reel-2')];
                 let res = [];
@@ -1624,9 +2216,11 @@
                 if (mult > 0) {
                     const win = bet * mult;
                     updateBalance(win);
+                    recordGameResult(true, win);
                     if (statusEl) statusEl.textContent = `🔥 ВЫИГРЫШ x${mult} — +${win} BYN!`;
                     showVictoryAnimation('view-slots', 'ДЖЕКПОТ В СЛОТАХ!', `Вы выиграли +${win} BYN!`);
                 } else {
+                    recordGameResult(false, 0);
                     if (statusEl) statusEl.textContent = 'Пусто! Попробуй еще.';
                 }
             } catch (err) {
@@ -1638,6 +2232,7 @@
         let bjPlayerHand = [];
         let bjDealerHand = [];
         let bjActive = false;
+        let currentBjBet = 100;
 
         function getCardValStr(val) {
             if (val === 11) return 'J';
@@ -1667,7 +2262,9 @@
             const betInput = document.getElementById('bj-bet');
             const bet = parseInt(betInput ? betInput.value : 100);
             if (isNaN(bet) || bet <= 0 || bet > balance) { showToast('⚠️ Неверная ставка!'); return; }
+            currentBjBet = bet;
             updateBalance(-bet);
+            recordBet(bet);
 
             bjPlayerHand = [];
             bjDealerHand = [];
@@ -1799,6 +2396,7 @@
             const pScore = calcScore(bjPlayerHand);
             if (pScore > 21) {
                 bjActive = false;
+                recordGameResult(false, 0);
                 const statusEl = document.getElementById('bj-status');
                 if(statusEl) statusEl.textContent = '💥 Перебор! Вы проиграли ставку.';
                 resetBjControls();
@@ -1818,19 +2416,19 @@
             }
 
             const pScore = calcScore(bjPlayerHand);
-            const betInput = document.getElementById('bj-bet');
-            const bet = parseInt(betInput ? betInput.value : 100);
             const statusEl = document.getElementById('bj-status');
 
             if (dScore > 21 || pScore > dScore) {
-                const win = bet * 2;
+                const win = currentBjBet * 2;
                 updateBalance(win);
+                recordGameResult(true, win);
                 if(statusEl) statusEl.textContent = `🎉 Вы победили дилера! Выигрыш: +${win} BYN`;
                 showVictoryAnimation('view-blackjack', 'ПОБЕДА В БЛЭКДЖЕКЕ!', `Вы обыграли дилера и получили +${win} BYN!`);
             } else if (pScore === dScore) {
-                updateBalance(bet);
+                updateBalance(currentBjBet);
                 if(statusEl) statusEl.textContent = '🤝 Ничья! Ставка возвращена.';
             } else {
+                recordGameResult(false, 0);
                 if(statusEl) statusEl.textContent = '❌ Дилер выиграл эту раздачу.';
             }
             resetBjControls();
@@ -1841,7 +2439,7 @@
             if(controls) {
                 controls.innerHTML = `
                     <label>Ставка:</label>
-                    <input type="number" id="bj-bet" value="100" min="50">
+                    <input type="number" id="bj-bet" value="${currentBjBet}" min="50">
                     <button class="btn-play" onclick="startBlackjack()">РАЗДАТЬ</button>
                 `;
             }
@@ -1942,8 +2540,10 @@
         }
 
         window.addEventListener('DOMContentLoaded', () => {
+            loadSavedData();
             const balEl = document.getElementById('balance');
-            if(balEl) balEl.textContent = balance.toLocaleString('ru-RU');
+            if (balEl) balEl.textContent = balance.toLocaleString('ru-RU');
+            syncHeaderProfile();
             showLobby();
         });
     </script>
