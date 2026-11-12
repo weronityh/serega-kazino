@@ -17,6 +17,9 @@
             --text-muted: #7d8b9e;
             --gold: #fbbf24;
             --danger: #ef4444;
+            --roulette-red: #dc2626;
+            --roulette-green: #22c55e;
+            --roulette-black: #111111;
         }
 
         * { box-sizing: border-box; }
@@ -160,17 +163,32 @@
             padding: 0 26px; display: flex; align-items: center; justify-content: space-between; gap: 16px; position: sticky; top: 0; z-index: 25;
         }
 
-        .search-box {
-            display: flex; align-items: center; gap: 10px; background: #131b24; border: 1px solid #1e2936; border-radius: 10px; padding: 9px 14px; width: 300px;
+        /* СИНЯЯ КНОПКА TG БОСС ВМЕСТО ПОИСКА */
+        .tg-boss-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(135deg, #229ED9, #1b739e);
+            border: 1px solid #38bdf8;
+            border-radius: 12px;
+            padding: 10px 18px;
+            color: #fff;
+            font-weight: 900;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            text-decoration: none;
+            box-shadow: 0 0 15px rgba(34, 158, 217, 0.4);
+            transition: 0.2s ease;
         }
-        .search-box input { background: transparent; border: none; color: #fff; font-size: 0.88rem; width: 100%; outline: none; }
+        .tg-boss-btn:hover {
+            filter: brightness(1.15);
+            transform: translateY(-2px);
+            box-shadow: 0 0 22px rgba(34, 158, 217, 0.6);
+        }
 
-        .topbar-right { display: flex; align-items: center; gap: 14px; }
-        .online-indicator { display: flex; align-items: center; gap: 8px; font-size: 0.85rem; color: var(--text-muted); }
-        .online-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--neon-green); box-shadow: 0 0 8px var(--neon-green); }
-
-        .balance-box {
-            display: flex; align-items: center; gap: 10px; background: #131b24; border: 1px solid #222f3e; padding: 8px 16px; border-radius: 10px; font-weight: 800; font-size: 1rem; color: var(--gold);
+        /* БАЛАНС ПО СЕРЕДИНЕ И КРУПНЫЙ */
+        .balance-center-box {
+            display: flex; align-items: center; gap: 12px; background: #121922; border: 2px solid #283648; padding: 10px 24px; border-radius: 14px; font-weight: 900; font-size: 1.35rem; color: var(--gold); box-shadow: 0 0 20px rgba(251, 191, 36, 0.15);
         }
 
         .content-area {
@@ -231,16 +249,16 @@
         .pay-row { display: flex; justify-content: space-between; padding: 7px 0; border-bottom: 1px solid #1b2533; font-size: 0.92rem; }
         .pay-row b { color: var(--gold); }
 
-        /* КОЛЕСО ФОРТУНЫ */
-        .roulette-container { text-align: center; padding: 20px; position: relative; }
+        /* КОЛЕСО ФОРТУНЫ И СТАВКИ */
+        .roulette-container { text-align: center; padding: 10px; position: relative; }
         .casino-wheel-wrap {
             position: relative;
-            width: 320px;
-            height: 320px;
-            margin: 0 auto 20px;
+            width: 280px;
+            height: 280px;
+            margin: 0 auto 15px;
             background: radial-gradient(circle, #b8860b 0%, #daa520 60%, #8b6508 100%);
             border-radius: 50%;
-            padding: 14px;
+            padding: 12px;
             box-shadow: 0 15px 35px rgba(0,0,0,0.6), inset 0 0 15px rgba(0,0,0,0.8);
         }
         .casino-wheel {
@@ -285,7 +303,7 @@
             line-height: 24px;
             left: 50%;
             top: 50%;
-            transform: translate(-50%, -50%) rotate(var(--rot)) translateY(-108px) rotate(calc(-1 * var(--rot)));
+            transform: translate(-50%, -50%) rotate(var(--rot)) translateY(-94px) rotate(calc(-1 * var(--rot)));
             pointer-events: none;
             text-shadow: 0 1px 2px #000;
         }
@@ -324,6 +342,39 @@
             z-index: 20;
             transition: all 3.5s cubic-bezier(0.1, 0.8, 0.2, 1);
         }
+
+        /* ПАНЕЛЬ СТАВОК НА РУЛЕТКУ */
+        .roulette-betting-panel {
+            background: #0d131a;
+            border: 1px solid #233042;
+            border-radius: 14px;
+            padding: 16px;
+            max-width: 700px;
+            margin: 0 auto 15px;
+        }
+        .roulette-bet-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+        .roulette-bet-btn {
+            background: #131b24;
+            border: 2px solid #283649;
+            color: #fff;
+            padding: 10px;
+            border-radius: 10px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: 0.2s;
+            text-align: center;
+        }
+        .roulette-bet-btn:hover { border-color: var(--neon-green); }
+        .roulette-bet-btn.selected { border-color: var(--gold); background: rgba(251, 191, 36, 0.15); box-shadow: 0 0 12px rgba(251, 191, 36, 0.3); }
+        
+        .bet-type-red { color: #f87171; }
+        .bet-type-green { color: #4ade80; }
+        .bet-type-black { color: #cbd5e1; }
 
         /* ВИДЕОПОКЕР */
         .poker-table { text-align: center; padding: 10px; }
@@ -594,14 +645,17 @@
 
     <div class="main-wrapper">
         <header class="topbar">
-            <div class="search-box">
-                <span>🔍</span>
-                <input type="text" placeholder="Поиск режимов...">
+            <!-- СИНЯЯ КНОПКА TG БОСС ВМЕСТО ПОИСКА -->
+            <a href="https://t.me/Seregablatnou" target="_blank" class="tg-boss-btn">
+                <span>✈️</span> TG БОСС
+            </a>
+
+            <!-- БАЛАНС С ПАЧКОЙ ДОЛЛАРОВ ПО СЕРЕДИНЕ КРУПНЫМ ШРИФТОМ -->
+            <div class="balance-center-box">
+                <span>💵</span><span id="balance">1000</span> <span style="font-size:0.9rem; color:#fff;">BYN</span>
             </div>
-            <div class="topbar-right">
-                <div class="online-indicator"><span class="online-dot"></span><span><b>624</b> онлайн</span></div>
-                <div class="balance-box"><span>💼</span><span id="balance">1000</span> BYN</div>
-            </div>
+
+            <div style="width: 130px;"></div> <!-- Пустой блок для идеального центрирования баланса -->
         </header>
 
         <main class="content-area">
@@ -678,10 +732,10 @@
                 <div class="status-banner" id="bj-status">Сделайте ставку и нажмите «Раздать»</div>
             </div>
 
-            <!-- КОЛЕСО ФОРТУНЫ -->
+            <!-- КОЛЕСО ФОРТУНЫ С ВЫБОРОМ СТАВОК -->
             <div id="view-roulette" class="game-view">
                 <div class="game-header">
-                    <h2>🎡 Колесо фортуны (Без лимитов)</h2>
+                    <h2>🎡 Колесо фортуны (Ставки)</h2>
                     <button class="btn-back" onclick="showLobby()">← В лобби</button>
                 </div>
                 <div class="roulette-container">
@@ -695,12 +749,30 @@
                         </div>
                         <div class="roulette-ball" id="roulette-ball"></div>
                     </div>
+
+                    <!-- ПАНЕЛЬ ВЫБОРА ТИПА СТАВКИ -->
+                    <div class="roulette-betting-panel">
+                        <div style="font-weight: 800; margin-bottom: 10px; color: var(--gold);">Выберите на что ставите:</div>
+                        <div class="roulette-bet-grid">
+                            <button class="roulette-bet-btn bet-type-red selected" onclick="selectBetType('red', this)">🔴 Красное (x2)</button>
+                            <button class="roulette-bet-btn bet-type-black" onclick="selectBetType('black', this)">⚫ Черное (x2)</button>
+                            <button class="roulette-bet-btn bet-type-green" onclick="selectBetType('green', this)">🟢 Зеленое [0] (x14)</button>
+                            <button class="roulette-bet-btn" onclick="selectBetType('even', this)">⚖️ Четное (x2)</button>
+                            <button class="roulette-bet-btn" onclick="selectBetType('odd', this)">⚖️ Нечетное (x2)</button>
+                            <button class="roulette-bet-btn" onclick="selectBetType('number', this)">🎯 Конкретное число (x35)</button>
+                        </div>
+                        <div id="number-select-box" style="display: none; margin-top: 10px;">
+                            <label style="font-size: 0.85rem; font-weight: 700;">Выберите число (0-36): </label>
+                            <input type="number" id="target-number" min="0" max="36" value="7" style="background:#131b24; border:1px solid #283649; color:#fff; padding:6px 10px; border-radius:8px; width:80px; text-align:center;">
+                        </div>
+                    </div>
+
                     <div class="controls-bar">
-                        <label>Ставка:</label>
+                        <label>Сумма ставки:</label>
                         <input type="number" id="roulette-bet" value="200" min="50">
                         <button class="btn-play" id="roulette-btn" onclick="spinWheel()">КРУТИТЬ КОЛЕСО</button>
                     </div>
-                    <div class="status-banner" id="roulette-status">Следите за шариком! Куда упадет — тот и результат.</div>
+                    <div class="status-banner" id="roulette-status">Выберите тип ставки, введите сумму и запустите колесо!</div>
                 </div>
             </div>
 
@@ -763,7 +835,7 @@
                 <div class="status-banner" id="slots-status">Зал слотов открыт для просмотра.</div>
             </div>
 
-            <!-- ОТДЕЛЬНЫЙ РАЗДЕЛ: МАГАЗИН VIP СТАТУСОВ -->
+            <!-- МАГАЗИН VIP СТАТУСОВ -->
             <div id="view-vip-shop" class="game-view">
                 <div class="game-header">
                     <h2>⭐ Магазин VIP Статусов</h2>
@@ -802,7 +874,7 @@
                 <div class="status-banner" id="vip-status-desc" style="margin-top: 15px;">У вас нет активного VIP статуса.</div>
             </div>
 
-            <!-- ОТДЕЛЬНЫЙ РАЗДЕЛ: МАГАЗИН ИМУЩЕСТВА -->
+            <!-- МАГАЗИН ИМУЩЕСТВА -->
             <div id="view-property" class="game-view">
                 <div class="game-header">
                     <h2>👑 Магазин Элитного Имущества</h2>
@@ -814,7 +886,7 @@
                 <div class="property-grid" id="property-grid"></div>
             </div>
 
-            <!-- РАЗДЕЛ ХАЛЯВА (ВИКТОРИНА) -->
+            <!-- РАЗДЕЛ ХАЛЯВА -->
             <div id="view-settings" class="game-view">
                 <div class="game-header">
                     <h2>🎁 Халява (Зарабатывай BYN)</h2>
@@ -842,6 +914,10 @@
         let ownedProps = [];
         let guaranteedWin = false;
         let answeredQuestions = {};
+        let currentBetType = 'red';
+
+        const ROULETTE_NUMBERS = [0,32,15,19,4,21,2,25,17,34,6,27,13,36,11,30,8,23,10,5,24,16,33,1,20,14,31,9,22,18,29,7,28,12,35,3,26];
+        const RED_NUMBERS = [32, 19, 21, 25, 34, 27, 36, 30, 23, 5, 16, 1, 14, 9, 18, 7, 12, 3];
 
         try {
             if (localStorage.getItem('so_kazik_balance') !== null) {
@@ -871,55 +947,35 @@
             {
                 id: 0,
                 question: "Вопрос 1: Азарт — это круто?",
-                options: [
-                    "Чуть-чуть",
-                    "Нет, это полная шляпа",
-                    "Да, если в меру и не как способ заработать монету"
-                ],
+                options: ["Чуть-чуть", "Нет, это полная шляпа", "Да, если в меру и не как способ заработать монету"],
                 correct: 2,
                 reward: 2500
             },
             {
                 id: 1,
                 question: "Вопрос 2: Кто главный создатель этого казино?",
-                options: [
-                    "Серёга и Олямбус",
-                    "Рандомный бот",
-                    "Илон Маск"
-                ],
+                options: ["Серёга и Олямбус", "Рандомный бот", "Илон Маск"],
                 correct: 0,
                 reward: 2000
             },
             {
                 id: 2,
                 question: "Вопрос 3: Какая валюта используется для ставок в нашем казике?",
-                options: [
-                    "Доллары США",
-                    "BYN (Белорусские рубли)",
-                    "Евро"
-                ],
+                options: ["Доллары США", "BYN (Белорусские рубли)", "Евро"],
                 correct: 1,
                 reward: 2000
             },
             {
                 id: 3,
                 question: "Вопрос 4: Какой режим открывается с VIP PRO статусом?",
-                options: [
-                    "Только Блэкджек",
-                    "Неоновые слоты и элитное имущество",
-                    "Ничего нового"
-                ],
+                options: ["Только Блэкджек", "Неоновые слоты и элитное имущество", "Ничего нового"],
                 correct: 1,
                 reward: 3000
             },
             {
                 id: 4,
                 question: "Вопрос 5: Какая фраза написана на главном баннере сайта?",
-                options: [
-                    "Удачи в игре",
-                    "Серёга пушка Месси игрушка сюда залетай и бабки получай",
-                    "Казино всегда в плюсе"
-                ],
+                options: ["Удачи в игре", "Серёга пушка Месси игрушка сюда залетай и бабки получай", "Казино всегда в плюсе"],
                 correct: 1,
                 reward: 5000
             }
@@ -1001,6 +1057,16 @@
             if (navBtn) navBtn.classList.add('active');
         }
 
+        function selectBetType(type, btn) {
+            document.querySelectorAll('.roulette-bet-btn').forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+            currentBetType = type;
+            const numBox = document.getElementById('number-select-box');
+            if (numBox) {
+                numBox.style.display = (type === 'number') ? 'block' : 'none';
+            }
+        }
+
         function updateVipShopStatus() {
             const vipDesc = document.getElementById('vip-status-desc');
             if (vipDesc) {
@@ -1029,10 +1095,9 @@
         function buildWheelNumbers() {
             const container = document.getElementById('wheel-numbers');
             if (!container || container.children.length > 0) return;
-            const numbers = [0,32,15,19,4,21,2,25,17,34,6,27,13,36,11,30,8,23,10,5,24,16,33,1,20,14,31,9,22,18,29,7,28,12,35,3,26];
             
-            numbers.forEach((num, index) => {
-                const angle = index * (360 / numbers.length);
+            ROULETTE_NUMBERS.forEach((num, index) => {
+                const angle = index * (360 / ROULETTE_NUMBERS.length);
                 const div = document.createElement('div');
                 div.className = 'wheel-number-label';
                 div.style.setProperty('--rot', angle + 'deg');
@@ -1210,20 +1275,17 @@
             const btn = document.getElementById('roulette-btn');
             if(btn) btn.disabled = true;
 
-            let targetAngle;
-            let mult = 0;
-
+            let winningIndex;
             if (guaranteedWin) {
-                targetAngle = 180;
-                mult = 5;
+                winningIndex = 0; // Выпадет 0 (Зеленое)
                 guaranteedWin = false;
             } else {
-                const rand = Math.random();
-                if (rand < 0.45) { targetAngle = 60; mult = 2; }
-                else if (rand < 0.75) { targetAngle = 140; mult = 0; }
-                else if (rand < 0.90) { targetAngle = 240; mult = 5; }
-                else { targetAngle = 300; mult = 2; }
+                winningIndex = Math.floor(Math.random() * ROULETTE_NUMBERS.length);
             }
+
+            const winningNumber = ROULETTE_NUMBERS[winningIndex];
+            const sectorAngle = 360 / ROULETTE_NUMBERS.length;
+            const targetAngle = winningIndex * sectorAngle;
 
             const wheelSpins = 360 * 6;
             const ballSpins = 360 * 10;
@@ -1235,7 +1297,7 @@
 
             wheel.style.transform = `rotate(${finalWheelDeg}deg)`;
             
-            const rad = 95;
+            const rad = 84;
             const angleRad = (finalBallDeg * Math.PI) / 180;
             const ballX = Math.cos(angleRad) * rad;
             const ballY = Math.sin(angleRad) * rad;
@@ -1246,13 +1308,35 @@
             setTimeout(() => {
                 if(btn) btn.disabled = false;
                 ball.style.transform = `translate(${ballX}px, ${ballY}px) scale(1)`;
-                if (mult > 0) {
+
+                let isWin = false;
+                let mult = 0;
+
+                const isRed = RED_NUMBERS.includes(winningNumber);
+                const isGreen = (winningNumber === 0);
+                const isBlack = !isRed && !isGreen;
+                const isEven = (winningNumber !== 0 && winningNumber % 2 === 0);
+                const isOdd = (winningNumber !== 0 && winningNumber % 2 !== 0);
+
+                if (currentBetType === 'red' && isRed) { isWin = true; mult = 2; }
+                else if (currentBetType === 'black' && isBlack) { isWin = true; mult = 2; }
+                else if (currentBetType === 'green' && isGreen) { isWin = true; mult = 14; }
+                else if (currentBetType === 'even' && isEven) { isWin = true; mult = 2; }
+                else if (currentBetType === 'odd' && isOdd) { isWin = true; mult = 2; }
+                else if (currentBetType === 'number') {
+                    const targetNum = parseInt(document.getElementById('target-number').value);
+                    if (winningNumber === targetNum) { isWin = true; mult = 35; }
+                }
+
+                let colorName = isGreen ? 'Зелёный [0] 🟢' : (isRed ? 'Красное 🔴' : 'Чёрное ⚫');
+
+                if (isWin) {
                     const win = bet * mult;
                     updateBalance(win);
-                    statusEl.textContent = `🎉 Шарик принес победу! Выигрыш x${mult}: +${win} BYN!`;
-                    showVictoryAnimation('view-roulette', 'ПОБЕДА В РУЛЕТКЕ!', `Выигрыш составил +${win} BYN!`);
+                    statusEl.textContent = `🎉 Выпало: ${winningNumber} (${colorName})! Победа x${mult}: +${win} BYN!`;
+                    showVictoryAnimation('view-roulette', 'ПОБЕДА В РУЛЕТКЕ!', `Выпало число ${winningNumber}! Выигрыш: +${win} BYN!`);
                 } else {
-                    statusEl.textContent = '❌ Шарик упал в пустой сектор. Попробуйте еще раз!';
+                    statusEl.textContent = `❌ Выпало: ${winningNumber} (${colorName}). Вы проиграли ставку.`;
                 }
             }, 3500);
         }
