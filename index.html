@@ -140,51 +140,6 @@
         .badge-new { background: var(--neon-green); color: #051408; }
         .badge-vip { background: #f59e0b; color: #000; }
 
-        .sidebar-promo {
-            margin-top: 18px;
-            padding-top: 16px;
-            border-top: 1px solid var(--border-color);
-        }
-
-        .promo-header {
-            display: flex;
-            align-items: center;
-            gap: 7px;
-            font-size: 0.8rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            color: #ffffff;
-            margin-bottom: 10px;
-        }
-        .promo-header span { color: var(--neon-green); }
-
-        .promo-input-group { display: flex; gap: 6px; }
-        .promo-input-group input {
-            width: 100%;
-            background: #131b24;
-            border: 1px solid #233040;
-            border-radius: 8px;
-            padding: 9px 11px;
-            color: #fff;
-            font-size: 0.84rem;
-            outline: none;
-        }
-        .promo-input-group button {
-            background: var(--neon-green);
-            color: #041307;
-            border: none;
-            border-radius: 8px;
-            padding: 0 13px;
-            font-weight: 900;
-            cursor: pointer;
-        }
-        .promo-subtext {
-            font-size: 0.66rem;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            margin-top: 8px;
-        }
-
         /* ОСНОВНОЙ КОНТЕЙНЕР */
         .main-wrapper { flex: 1; display: flex; flex-direction: column; min-width: 0; }
 
@@ -243,12 +198,6 @@
             box-shadow: 0 0 18px rgba(26, 232, 58, 0.35);
         }
 
-        .icon-circle-btn {
-            width: 38px; height: 38px; border-radius: 10px;
-            background: #131b24; border: 1px solid #222f3e; color: #cbd5e1;
-            display: grid; place-items: center; cursor: pointer;
-        }
-
         .content-area {
             padding: 22px 26px 32px;
             max-width: 1240px;
@@ -259,7 +208,7 @@
             flex-direction: column;
         }
 
-        /* ================= КАСТОМНЫЙ БАННЕР (С ВАШИМ ФОТО И РАМКОЙ) ================= */
+        /* КАСТОМНЫЙ БАННЕР С ВАШИМ ФОТО ВНУТРИ РАМКИ */
         .hero-banner-custom {
             position: relative;
             width: 100%;
@@ -269,7 +218,7 @@
             margin-bottom: 22px;
             box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
             border: 1px solid #26332c;
-            background-image: url('banner-bg.png'); /* Файл с первой фотографии[cite: 8] */
+            background-image: url('banner-bg.png'); /* Первая картинка (рамка с картами)[cite: 8] */
             background-size: cover;
             background-position: center;
             display: flex;
@@ -282,7 +231,7 @@
             content: '';
             position: absolute;
             inset: 0;
-            background: rgba(0, 0, 0, 0.35); /* Затемнение для читаемости */
+            background: rgba(0, 0, 0, 0.3);
             z-index: 1;
         }
 
@@ -326,17 +275,18 @@
         }
         .hero-action-btn:hover { transform: scale(1.04); }
 
-        /* ОКНО С ВАШИМ ФОТО ВНУТРИ БАННЕРА */
+        /* ВАШЕ ФОТО ВНУТРИ ПУСТОГО ОКНА РАМКИ */
         .banner-photo-box {
             position: relative;
             z-index: 2;
-            width: 260px;
-            height: 180px;
-            border-radius: 14px;
+            width: 250px;
+            height: 155px;
+            border-radius: 12px;
             overflow: hidden;
-            border: 3px solid var(--gold);
-            box-shadow: 0 0 25px rgba(251, 191, 36, 0.5);
+            border: 2px solid rgba(251, 191, 36, 0.6);
+            box-shadow: 0 0 20px rgba(251, 191, 36, 0.4);
             background: #000;
+            margin-right: 50px;
         }
 
         .banner-photo-box img {
@@ -401,7 +351,7 @@
         .win-pop-title { font-size: 2.2rem; font-weight: 950; color: var(--neon-green); font-style: italic; margin: 0; }
         .win-pop-amount { font-size: 1.8rem; font-weight: 900; color: var(--gold); margin-top: 5px; }
 
-        /* ОСТАЛЬНЫЕ ИГРОВЫЕ ЭКРАНЫ */
+        /* ИГРОВЫЕ ЭКРАНЫ */
         .game-view { display: none; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 18px; padding: 26px; margin-bottom: 24px; }
         .game-view.active { display: block; }
         .game-header { display: flex; align-items: center; justify-content: space-between; padding-bottom: 14px; margin-bottom: 20px; border-bottom: 1px solid var(--border-color); }
@@ -421,6 +371,16 @@
         .paytable-box { background: #0e141c; border: 1px solid #233042; border-radius: 14px; padding: 16px; }
         .pay-row { display: flex; justify-content: space-between; padding: 7px 0; border-bottom: 1px solid #1b2533; font-size: 0.92rem; }
         .pay-row b { color: var(--gold); }
+
+        /* ИМУЩЕСТВО */
+        .property-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+        .prop-card { background: #0e141c; border: 1px solid #243142; border-radius: 14px; padding: 18px; display: flex; flex-direction: column; justify-content: space-between; }
+        .prop-card.owned { border-color: var(--neon-green); background: linear-gradient(160deg, rgba(26,232,58,0.08), #0e141c); }
+        .prop-emoji { font-size: 2.6rem; margin-bottom: 10px; }
+        .prop-name { font-size: 1.1rem; font-weight: 800; color: #fff; }
+        .prop-desc { font-size: 0.84rem; color: var(--text-muted); margin-top: 4px; }
+        .prop-bottom { margin-top: 16px; display: flex; align-items: center; justify-content: space-between; }
+        .prop-price { font-weight: 900; color: var(--gold); }
 
         .trust-footer { margin-top: auto; padding-top: 18px; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-muted); }
         .toast { position: fixed; bottom: 22px; right: 22px; background: #121a24; border: 1.5px solid var(--neon-green); color: #fff; padding: 12px 18px; border-radius: 12px; font-weight: 700; transform: translateY(150%); opacity: 0; transition: 0.3s; z-index: 200; }
@@ -452,6 +412,13 @@
                 <span class="nav-item-left"><span class="nav-icon">🍒</span> Неоновые слоты</span>
                 <span class="nav-badge badge-hot">HOT</span>
             </button>
+            <button class="nav-item" id="nav-roulette" onclick="switchGame('roulette')">
+                <span class="nav-item-left"><span class="nav-icon">🎡</span> Рулетка</span>
+                <span class="nav-badge badge-new">UPD</span>
+            </button>
+            <button class="nav-item" id="nav-blackjack" onclick="switchGame('blackjack')">
+                <span class="nav-item-left"><span class="nav-icon">🃏</span> Блэкджек</span>
+            </button>
             <button class="nav-item" id="nav-property" onclick="switchGame('property')">
                 <span class="nav-item-left"><span class="nav-icon">👑</span> Имущество</span>
             </button>
@@ -474,14 +441,13 @@
         <main class="content-area">
             <!-- ГЛАВНОЕ ЛОББИ -->
             <div id="lobby-view">
-                <!-- БАННЕР С ВАШИМ ФОТО -->
                 <div class="hero-banner-custom">
                     <div class="hero-left-content">
                         <h1 class="hero-title-main">ИГРАЙ ДЕРЗКО</h1>
                         <p class="hero-desc-main">Большие выигрыши ближе, чем ты думаешь</p>
                         <button class="hero-action-btn" onclick="switchGame('slots')">НАЧАТЬ ИГРАТЬ →</button>
                     </div>
-                    <!-- Рамка, куда вставлено ваше фото -->
+                    <!-- ВАШЕ ФОТО ВНУТРИ РАМКИ БАННЕРА -->
                     <div class="banner-photo-box">
                         <img src="serega.png" alt="Серёга" onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=500&q=80'">
                     </div>
@@ -501,10 +467,38 @@
                             <div class="mode-arrow-btn">›</div>
                         </div>
                     </div>
+
+                    <div class="mode-card card-roulette" onclick="switchGame('roulette')">
+                        <div class="mode-card-visual">
+                            <div class="mode-big-emoji">🎡</div>
+                            <span class="mode-tag-pill">X2 — X14</span>
+                        </div>
+                        <div class="mode-card-footer">
+                            <div>
+                                <div class="mode-card-title">РУЛЕТКА</div>
+                                <div class="mode-card-desc">КЛАССИКА, КОТОРАЯ ВСЕГДА В ИГРЕ</div>
+                            </div>
+                            <div class="mode-arrow-btn">›</div>
+                        </div>
+                    </div>
+
+                    <div class="mode-card card-property" onclick="switchGame('property')">
+                        <div class="mode-card-visual">
+                            <div class="mode-big-emoji">🏎️</div>
+                            <span class="mode-tag-pill" id="owned-counter">0 / 6 КУПЛЕНО</span>
+                        </div>
+                        <div class="mode-card-footer">
+                            <div>
+                                <div class="mode-card-title">ИМУЩЕСТВО</div>
+                                <div class="mode-card-desc">ТАЧКИ И ПЕНТХАУСЫ НА ВЫИГРЫШИ</div>
+                            </div>
+                            <div class="mode-arrow-btn">›</div>
+                        </div>
+                    </div>
                 </section>
             </div>
 
-            <!-- ИГРОВОЙ ЭКРАН СЛОТОВ -->
+            <!-- СЛОТЫ -->
             <div id="view-slots" class="game-view">
                 <div class="game-header">
                     <h2>🍒 Неоновые слоты</h2>
@@ -534,6 +528,15 @@
                 <div class="status-banner" id="slots-status">Сделай ставку и жми «Крутить»!</div>
             </div>
 
+            <!-- ИМУЩЕСТВО -->
+            <div id="view-property" class="game-view">
+                <div class="game-header">
+                    <h2>👑 Имущество Серёги и Олямбуса</h2>
+                    <button class="btn-back" onclick="showLobby()">← В лобби</button>
+                </div>
+                <div class="property-grid" id="property-grid"></div>
+            </div>
+
             <footer class="trust-footer">
                 <div>100 000+ ИГРОКОВ</div>
                 <div>МОМЕНТАЛЬНЫЕ ВЫПЛАТЫ</div>
@@ -546,6 +549,14 @@
 
     <script>
         let balance = parseInt(localStorage.getItem('so_kazik_balance')) || 1000;
+        let ownedProps = JSON.parse(localStorage.getItem('so_kazik_props') || '[]');
+
+        const PROPERTIES = [
+            { id: 'bmw', icon: '🏎️', name: 'BMW M5 Competition', desc: 'Чёрный зверь', price: 3000 },
+            { id: 'rolex', icon: '⌚', name: 'Rolex Daytona Gold', desc: 'Золотой хронограф', price: 7500 },
+            { id: 'penthouse', icon: '🏙️', name: 'Пентхаус в центре', desc: 'Панорамные окна', price: 20000 },
+            { id: 'lambo', icon: '🚀', name: 'Lamborghini', desc: 'V12 с подсветкой', price: 50000 }
+        ];
 
         function updateBalance(delta) {
             balance += delta;
@@ -576,13 +587,14 @@
 
         function showLobby() {
             document.getElementById('lobby-view').style.display = 'block';
-            document.getElementById('view-slots').classList.remove('active');
+            document.querySelectorAll('.game-view').forEach(v => v.classList.remove('active'));
         }
 
         function switchGame(id) {
             document.getElementById('lobby-view').style.display = 'none';
             document.querySelectorAll('.game-view').forEach(v => v.classList.remove('active'));
             document.getElementById('view-' + id).classList.add('active');
+            if (id === 'property') renderProperties();
         }
 
         const SLOT_SYMBOLS = ['🍒', '🍋', '🔔', '💎', '7️⃣'];
@@ -600,35 +612,4 @@
             slotsSpinning = true;
             document.getElementById('slots-spin-btn').disabled = true;
 
-            const reels = [document.getElementById('reel-0'), document.getElementById('reel-1'), document.getElementById('reel-2')];
-            const interval = setInterval(() => {
-                reels.forEach(r => r.textContent = SLOT_SYMBOLS[Math.floor(Math.random() * SLOT_SYMBOLS.length)]);
-            }, 80);
-
-            setTimeout(() => {
-                clearInterval(interval);
-                const res = [
-                    SLOT_SYMBOLS[Math.floor(Math.random() * SLOT_SYMBOLS.length)],
-                    SLOT_SYMBOLS[Math.floor(Math.random() * SLOT_SYMBOLS.length)],
-                    SLOT_SYMBOLS[Math.floor(Math.random() * SLOT_SYMBOLS.length)]
-                ];
-                reels.forEach((r, i) => r.textContent = res[i]);
-
-                let mult = (res[0] === res[1] && res[1] === res[2]) ? 15 : ((res[0] === res[1] || res[1] === res[2]) ? 2 : 0);
-                if (mult > 0) {
-                    const win = bet * mult;
-                    updateBalance(win);
-                    triggerWinAnimation(win);
-                    document.getElementById('slots-status').textContent = `🔥 ВЫИГРЫШ x${mult} — +${win} BYN!`;
-                } else {
-                    document.getElementById('slots-status').textContent = 'Пусто. Крути ещё!';
-                }
-                slotsSpinning = false;
-                document.getElementById('slots-spin-btn').disabled = false;
-            }, 1000);
-        }
-
-        updateBalance(0);
-    </script>
-</body>
-</html>
+            const reels = [document.
