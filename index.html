@@ -287,7 +287,7 @@
         .btn-play:hover { filter: brightness(1.1); transform: scale(1.02); }
         .status-banner { margin: 16px auto 0; padding: 12px; border-radius: 10px; background: rgba(255,255,255,0.04); font-weight: 800; color: var(--gold); text-align: center; font-size: 1.05rem; }
 
-        /* ================= ПРОФИЛЬ ИгРОКА ================= */
+        /* ================= ПРОФИЛЬ ИГРОКА ================= */
         .profile-banner-card {
             position: relative;
             border-radius: 18px;
@@ -303,7 +303,6 @@
             overflow: hidden;
             transition: all 0.3s ease;
         }
-        /* Стили купленных фонов профиля */
         .profile-banner-card.bg-cyber {
             background: radial-gradient(circle at 80% 20%, rgba(236, 72, 153, 0.35), transparent 50%),
                         linear-gradient(125deg, #160c24 0%, #09192b 100%);
@@ -343,7 +342,6 @@
             flex-shrink: 0;
         }
 
-        /* Стили купленных рамок аватара */
         .profile-avatar-box.frame-neon {
             border: 4px solid var(--neon-green);
             box-shadow: 0 0 22px var(--neon-green), inset 0 0 12px var(--neon-green);
@@ -466,34 +464,21 @@
         .pay-row { display: flex; justify-content: space-between; padding: 7px 0; border-bottom: 1px solid #1b2533; font-size: 0.92rem; }
         .pay-row b { color: var(--gold); }
 
-        /* КАНВАС-КОЛЕСО ФОРТУНЫ */
+        /* КАНВАС-КОЛЕСО ФОРТУНЫ С ШАРИКОМ */
         .roulette-container { text-align: center; padding: 10px; position: relative; }
         .canvas-wheel-wrap {
             position: relative;
-            width: 320px;
-            height: 320px;
+            width: 340px;
+            height: 340px;
             margin: 0 auto 20px;
-            filter: drop-shadow(0 15px 35px rgba(0,0,0,0.6));
-        }
-        .wheel-pointer {
-            position: absolute;
-            top: -12px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 0;
-            height: 0;
-            border-left: 14px solid transparent;
-            border-right: 14px solid transparent;
-            border-top: 26px solid var(--gold);
-            z-index: 30;
-            filter: drop-shadow(0 3px 5px rgba(0,0,0,0.7));
+            filter: drop-shadow(0 15px 35px rgba(0,0,0,0.65));
         }
         #fortune-canvas {
             width: 100%;
             height: 100%;
             border-radius: 50%;
-            border: 6px solid #daa520;
-            box-shadow: inset 0 0 15px rgba(0,0,0,0.8);
+            border: 8px solid #3c2415;
+            box-shadow: 0 0 0 4px #daa520, inset 0 0 22px rgba(0,0,0,0.9);
             background: #111;
         }
 
@@ -927,7 +912,7 @@
                     <div class="mode-card" onclick="switchGame('roulette')">
                         <div class="mode-card-visual"><div class="mode-big-emoji">🎡</div><span class="mode-tag-pill" style="background:#3b82f6; color:#fff;">БЕЗ ЛИМИТОВ</span></div>
                         <div class="mode-card-footer">
-                            <div><div class="mode-card-title">Колесо фортуны</div><div class="mode-card-desc">Испытай удачу с шариком</div></div>
+                            <div><div class="mode-card-title">Колесо фортуны</div><div class="mode-card-desc">Бросок шарика по рулетке</div></div>
                             <div class="mode-arrow-btn">›</div>
                         </div>
                     </div>
@@ -961,13 +946,11 @@
                         <div class="profile-avatar-box" id="profile-avatar-box">😎</div>
                         <div>
                             <div class="profile-name-row">
-                                <input type="text" id="profile-name-input" class="profile-name-input" maxlength="18" value="Игрок #777" onchange="changeUsername(this.value)" title="Нажмите, чтобы изменить никнейм">
+                                <input type="text" id="profile-name-input" class="profile-name-input" maxlength="18" value="Игрок #777" oninput="changeUsername(this.value)" title="Нажмите, чтобы изменить никнейм">
                                 <span style="font-size: 0.75rem; color: var(--text-muted);">✏️ ник</span>
                             </div>
                             <div id="profile-title-badge" class="profile-title-badge">Новичок казика</div>
-                            <div style="margin-top: 10px; display: flex; gap: 6px; flex-wrap: wrap;" id="avatar-emoji-picker">
-                                <!-- Кнопки выбора аватарки рендерятся из JS -->
-                            </div>
+                            <div style="margin-top: 10px; display: flex; gap: 6px; flex-wrap: wrap;" id="avatar-emoji-picker"></div>
                         </div>
                     </div>
 
@@ -1053,16 +1036,15 @@
                 <div class="status-banner" id="bj-status">Сделайте ставку и нажмите «Раздать»</div>
             </div>
 
-            <!-- КОЛЕСО ФОРТУНЫ -->
+            <!-- КОЛЕСО ФОРТУНЫ С ШАРИКОМ -->
             <div id="view-roulette" class="game-view">
                 <div class="game-header">
-                    <h2>🎡 Колесо фортуны (Точный расчет)</h2>
+                    <h2>🎡 Колесо фортуны (Бросок шарика)</h2>
                     <button class="btn-back" onclick="showLobby()">← В лобби</button>
                 </div>
                 <div class="roulette-container">
                     <div class="canvas-wheel-wrap">
-                        <div class="wheel-pointer"></div>
-                        <canvas id="fortune-canvas" width="320" height="320"></canvas>
+                        <canvas id="fortune-canvas" width="340" height="340"></canvas>
                     </div>
 
                     <div class="roulette-betting-panel">
@@ -1084,9 +1066,9 @@
                     <div class="controls-bar">
                         <label>Сумма ставки:</label>
                         <input type="number" id="roulette-bet" value="200" min="50">
-                        <button class="btn-play" id="roulette-btn" onclick="spinWheelCanvas()">КРУТИТЬ КОЛЕСО</button>
+                        <button class="btn-play" id="roulette-btn" onclick="spinWheelCanvas()">БРОСИТЬ ШАРИК</button>
                     </div>
-                    <div class="status-banner" id="roulette-status">Выберите тип ставки и запустите колесо!</div>
+                    <div class="status-banner" id="roulette-status">Выберите ставку и бросьте шарик на колесо!</div>
                 </div>
             </div>
 
@@ -1311,17 +1293,12 @@
         const AVATAR_EMOJIS = ['😎', '🦁', '🐺', '🤑', '👑', '🦊', '👽', '🔥'];
 
         const COSMETICS_SHOP = [
-            // Рамки аватара
             { id: 'frame-neon', type: 'frame', cssClass: 'frame-neon', icon: '🟢', name: 'Неоновое кольцо', desc: 'Яркая зеленая подсветка аватара', price: 3000 },
             { id: 'frame-fire', type: 'frame', cssClass: 'frame-fire', icon: '🔥', name: 'Огненная аура', desc: 'Пульсирующее пламя вокруг аватара', price: 12000 },
             { id: 'frame-crown', type: 'frame', cssClass: 'frame-crown', icon: '👑', name: 'Корона Императора', desc: 'Золотая рамка + корона над головой', price: 35000 },
-
-            // Фоны баннера профиля
             { id: 'bg-cyber', type: 'bg', cssClass: 'bg-cyber', icon: '🌌', name: 'Фон: Киберпанк', desc: 'Неоново-розовый градиент профиля', price: 8000 },
             { id: 'bg-matrix', type: 'bg', cssClass: 'bg-matrix', icon: '📟', name: 'Фон: Хакер Казика', desc: 'Изумрудное сияние в стиле Матрицы', price: 20000 },
             { id: 'bg-gold', type: 'bg', cssClass: 'bg-gold', icon: '💰', name: 'Фон: Золотой Слиток', desc: 'Роскошный золотой фон для миллионеров', price: 60000 },
-
-            // Титулы
             { id: 'title-ludoman', type: 'title', cssClass: 'title-ludoman', titleText: '⚡ Опытный Лудоман', icon: '🎲', name: 'Титул: Опытный Лудоман', desc: 'Синий значок под твоим никнеймом', price: 2500 },
             { id: 'title-shark', type: 'title', cssClass: 'title-shark', titleText: '🦈 Акула Казика', icon: '🦈', name: 'Титул: Акула Казика', desc: 'Розовый хищный титул в профиле', price: 15000 },
             { id: 'title-oligarch', type: 'title', cssClass: 'title-oligarch', titleText: '💎 Олигарх BYN', icon: '💎', name: 'Титул: Олигарх BYN', desc: 'Легендарный золотой титул элиты', price: 45000 }
@@ -1330,7 +1307,6 @@
         const ROULETTE_NUMBERS = [0,32,15,19,4,21,2,25,17,34,6,27,13,36,11,30,8,23,10,5,24,16,33,1,20,14,31,9,22,18,29,7,28,12,35,3,26];
         const RED_NUMBERS = [32, 19, 21, 25, 34, 27, 36, 30, 23, 5, 16, 1, 14, 9, 18, 7, 12, 3];
 
-        // Загрузка всех сохраненных данных при запуске
         function loadSavedData() {
             try {
                 const savedBal = localStorage.getItem('so_kazik_balance');
@@ -1377,11 +1353,9 @@
             } catch (e) {}
         }
 
-        // Гарантированное сохранение перед закрытием или обновлением страницы
         window.addEventListener('beforeunload', saveData);
         window.addEventListener('pagehide', saveData);
 
-        // Учет статистики игр
         function recordBet(amount) {
             userStats.totalWagered += amount;
             saveData();
@@ -1496,7 +1470,7 @@
             if (targetView) {
                 targetView.style.display = 'block';
                 targetView.classList.add('active');
-                if (id === 'roulette') drawCanvasWheel(0);
+                if (id === 'roulette') renderWheelAndBall();
                 if (id === 'poker') checkPokerAccess();
                 if (id === 'slots') checkSlotsAccess();
             }
@@ -1533,7 +1507,6 @@
                 userProfile.username = clean;
                 saveData();
                 syncHeaderProfile();
-                showToast('✅ Никнейм сохранен!');
             }
         }
 
@@ -1581,7 +1554,6 @@
                 }
             }
 
-            // Выбор эмодзи аватара
             const picker = document.getElementById('avatar-emoji-picker');
             if (picker) {
                 picker.innerHTML = '';
@@ -1594,7 +1566,6 @@
                 });
             }
 
-            // VIP статус в профиле
             const vipDisplay = document.getElementById('profile-vip-status-display');
             if (vipDisplay) {
                 if (vipLevel === 'pro') {
@@ -1606,7 +1577,6 @@
                 }
             }
 
-            // Статистики
             document.getElementById('stat-games').textContent = userStats.gamesPlayed;
             document.getElementById('stat-wins').textContent = userStats.wins;
             document.getElementById('stat-losses').textContent = userStats.losses;
@@ -1618,7 +1588,6 @@
             document.getElementById('stat-props-count').textContent = `${ownedProps.length} / ${PROPERTIES.length}`;
             document.getElementById('stat-cosmetics-count').textContent = `${userProfile.ownedCosmetics.length} / ${COSMETICS_SHOP.length}`;
 
-            // Рендер магазина украшений
             const shopGrid = document.getElementById('cosmetics-shop-grid');
             if (shopGrid) {
                 shopGrid.innerHTML = '';
@@ -1659,7 +1628,6 @@
                 });
             }
 
-            // Витрина купленного имущества
             const ownedContainer = document.getElementById('profile-owned-props');
             if (ownedContainer) {
                 ownedContainer.innerHTML = '';
@@ -1689,7 +1657,6 @@
             }
             updateBalance(-item.price);
             userProfile.ownedCosmetics.push(id);
-            // Автоматически надеваем купленное украшение
             if (item.type === 'frame') userProfile.equippedFrame = item.cssClass;
             if (item.type === 'bg') userProfile.equippedBg = item.cssClass;
             if (item.type === 'title') userProfile.equippedTitle = item.cssClass;
@@ -1749,81 +1716,160 @@
             if (controls) controls.style.display = hasAccess ? 'flex' : 'none';
         }
 
-        // --- КАНВАС-КОЛЕСО ФОРТУНЫ ---
-        let currentWheelAngle = 0;
-        function drawCanvasWheel(angleOffset) {
+        // --- КАНВАС-КОЛЕСО ФОРТУНЫ С ШАРИКОМ (БЕЗ СТРЕЛКИ) ---
+        let wheelAngle = 0;
+        let ballAngle = -Math.PI / 2;
+        let ballRadius = 112; // Радиус лунки на колесе
+        let isSpinning = false;
+
+        function renderWheelAndBall() {
             const canvas = document.getElementById('fortune-canvas');
             if (!canvas) return;
             const ctx = canvas.getContext('2d');
             const cx = canvas.width / 2;
             const cy = canvas.height / 2;
-            const radius = cx - 10;
+            const outerRimRadius = cx - 4;
+            const wheelRadius = cx - 22; // Оставляем внешний бортик для разгона шарика
+            const pocketTrackRadius = wheelRadius - 32; // Кольцо лунок с числами
+            const innerConeRadius = wheelRadius - 50;
             const totalSectors = ROULETTE_NUMBERS.length;
             const arcSize = (Math.PI * 2) / totalSectors;
 
             ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // 1. Внешняя дорожка (обод, по которому катится шарик)
+            ctx.beginPath();
+            ctx.arc(cx, cy, outerRimRadius, 0, Math.PI * 2);
+            const rimGrad = ctx.createRadialGradient(cx, cy, wheelRadius - 5, cx, cy, outerRimRadius);
+            rimGrad.addColorStop(0, '#1e140c');
+            rimGrad.addColorStop(0.6, '#4a2e1b');
+            rimGrad.addColorStop(1, '#2b190e');
+            ctx.fillStyle = rimGrad;
+            ctx.fill();
+
+            // 2. Вращающееся колесо с секторами
             ctx.save();
             ctx.translate(cx, cy);
-            ctx.rotate(angleOffset);
+            ctx.rotate(wheelAngle);
 
             for (let i = 0; i < totalSectors; i++) {
                 const num = ROULETTE_NUMBERS[i];
-                const startAngle = i * arcSize - Math.PI / 2 - arcSize / 2;
+                // Сектор i центрирован строго на угле i * arcSize
+                const startAngle = i * arcSize - arcSize / 2;
                 const endAngle = startAngle + arcSize;
 
-                let color = '#111111';
-                if (num === 0) color = '#22c55e';
+                let color = '#12161c';
+                if (num === 0) color = '#16a34a';
                 else if (RED_NUMBERS.includes(num)) color = '#dc2626';
 
                 ctx.beginPath();
                 ctx.moveTo(0, 0);
-                ctx.arc(0, 0, radius, startAngle, endAngle);
+                ctx.arc(0, 0, wheelRadius, startAngle, endAngle);
                 ctx.closePath();
                 ctx.fillStyle = color;
                 ctx.fill();
-                ctx.strokeStyle = '#283649';
-                ctx.lineWidth = 1;
+
+                // Металлические перегородки между лунками
+                ctx.strokeStyle = '#cbd5e1';
+                ctx.lineWidth = 1.2;
                 ctx.stroke();
 
+                // Числа ближе к внешнему краю сектора
                 ctx.save();
-                const textAngle = startAngle + arcSize / 2;
-                ctx.rotate(textAngle);
-                ctx.textAlign = 'right';
+                ctx.rotate(i * arcSize);
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
                 ctx.fillStyle = '#ffffff';
                 ctx.font = 'bold 10px sans-serif';
-                ctx.fillText(num, radius - 12, 4);
+                ctx.fillText(num, wheelRadius - 14, 0);
                 ctx.restore();
             }
 
+            // Кольцо-разделитель лунок
             ctx.beginPath();
-            ctx.arc(0, 0, 32, 0, Math.PI * 2);
-            const goldGrad = ctx.createRadialGradient(0, 0, 5, 0, 0, 32);
-            goldGrad.addColorStop(0, '#ffd700');
-            goldGrad.addColorStop(0.7, '#daa520');
-            goldGrad.addColorStop(1, '#8b6508');
-            ctx.fillStyle = goldGrad;
-            ctx.fill();
-            ctx.lineWidth = 3;
-            ctx.strokeStyle = '#fff8dc';
+            ctx.arc(0, 0, pocketTrackRadius, 0, Math.PI * 2);
+            ctx.strokeStyle = '#fbbf24';
+            ctx.lineWidth = 2;
             ctx.stroke();
 
+            // Внутренний конус барабана
+            ctx.beginPath();
+            ctx.arc(0, 0, innerConeRadius, 0, Math.PI * 2);
+            const coneGrad = ctx.createRadialGradient(0, 0, 10, 0, 0, innerConeRadius);
+            coneGrad.addColorStop(0, '#3a2214');
+            coneGrad.addColorStop(0.85, '#1f120a');
+            coneGrad.addColorStop(1, '#daa520');
+            ctx.fillStyle = coneGrad;
+            ctx.fill();
+
+            // Центральная золотая крестовина (тумба)
+            ctx.beginPath();
+            ctx.arc(0, 0, 28, 0, Math.PI * 2);
+            const goldGrad = ctx.createRadialGradient(-6, -6, 4, 0, 0, 28);
+            goldGrad.addColorStop(0, '#fff3b0');
+            goldGrad.addColorStop(0.5, '#fbbf24');
+            goldGrad.addColorStop(1, '#92400e');
+            ctx.fillStyle = goldGrad;
+            ctx.fill();
+            ctx.lineWidth = 2.5;
+            ctx.strokeStyle = '#fef08a';
+            ctx.stroke();
+
+            // Декоративные ручки тумбы
+            for (let k = 0; k < 4; k++) {
+                ctx.save();
+                ctx.rotate((k * Math.PI) / 2);
+                ctx.fillStyle = '#fbbf24';
+                ctx.fillRect(-2, -38, 4, 76);
+                ctx.restore();
+            }
+
+            ctx.restore();
+
+            // 3. Отрисовка самого шарика поверх колеса
+            const bx = cx + Math.cos(ballAngle) * ballRadius;
+            const by = cy + Math.sin(ballAngle) * ballRadius;
+
+            ctx.save();
+            // Тень под шариком
+            ctx.beginPath();
+            ctx.arc(bx + 2.5, by + 3.5, 7, 0, Math.PI * 2);
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.55)';
+            ctx.fill();
+
+            // Жемчужно-белый шарик с бликом
+            ctx.beginPath();
+            ctx.arc(bx, by, 7, 0, Math.PI * 2);
+            const ballGrad = ctx.createRadialGradient(bx - 2.5, by - 2.5, 1, bx, by, 7);
+            ballGrad.addColorStop(0, '#ffffff');
+            ballGrad.addColorStop(0.65, '#e2e8f0');
+            ballGrad.addColorStop(1, '#64748b');
+            ctx.fillStyle = ballGrad;
+            ctx.fill();
+            ctx.strokeStyle = '#0f172a';
+            ctx.lineWidth = 0.8;
+            ctx.stroke();
             ctx.restore();
         }
 
         function spinWheelCanvas() {
+            if (isSpinning) return;
             const betInput = document.getElementById('roulette-bet');
             const bet = parseInt(betInput ? betInput.value : 200);
             if (isNaN(bet) || bet <= 0 || bet > balance) { showToast('⚠️ Неверная ставка!'); return; }
+            
             updateBalance(-bet);
             recordBet(bet);
+            isSpinning = true;
 
             const btn = document.getElementById('roulette-btn');
             const statusEl = document.getElementById('roulette-status');
             if (btn) btn.disabled = true;
 
+            // Выбираем выигрышный индекс сектора
             let winningIndex;
             if (guaranteedWin) {
-                winningIndex = 0;
+                winningIndex = 0; // 0 (Зелёный)
                 guaranteedWin = false;
             } else {
                 winningIndex = Math.floor(Math.random() * ROULETTE_NUMBERS.length);
@@ -1833,28 +1879,84 @@
             const totalSectors = ROULETTE_NUMBERS.length;
             const arcRad = (Math.PI * 2) / totalSectors;
 
-            const targetAngleFromTop = -(winningIndex * arcRad) - arcRad / 2;
-            const extraSpins = Math.PI * 2 * 6;
-            const finalAngle = currentWheelAngle + extraSpins + (targetAngleFromTop - (currentWheelAngle % (Math.PI * 2)));
+            // Параметры колеса и шарика
+            const cx = 170;
+            const outerRimTrack = cx - 12; // 158px — внешний обод
+            const pocketRadius = cx - 52;  // 118px — точный центр лунки сектора
+
+            // Колесо крутится ПО ЧАСОВОЙ стрелке (+)
+            const startWheelAngle = wheelAngle;
+            const wheelTotalRotation = Math.PI * 2 * (4 + Math.random() * 1.5);
+            const finalWheelAngle = startWheelAngle + wheelTotalRotation;
+
+            // Центр целевого сектора i в мировых координатах в конце вращения:
+            const targetPocketWorldAngle = finalWheelAngle + winningIndex * arcRad;
+
+            // Шарик крутится ПРОТИВ ЧАСОВОЙ стрелки (-), делая ~9 оборотов и приходя строго в центр лунки
+            const startBallAngle = ballAngle;
+            let angleDiff = (targetPocketWorldAngle - startBallAngle) % (Math.PI * 2);
+            if (angleDiff > 0) angleDiff -= Math.PI * 2;
+            const finalBallAngle = startBallAngle + angleDiff - Math.PI * 2 * 9;
 
             const startTime = performance.now();
-            const duration = 3500;
+            const duration = 4400;
 
-            statusEl.textContent = '🎡 Колесо крутится, шарик выбирает сектор...';
+            statusEl.textContent = '⚪ Шарик запущен! Крутится против хода колеса...';
 
-            function animateWheel(currentTime) {
-                const elapsed = currentTime - startTime;
-                const progress = Math.min(elapsed / duration, 1);
-                const easeOut = 1 - Math.pow(1 - progress, 3);
-                
-                const currentDrawAngle = currentWheelAngle + (finalAngle - currentWheelAngle) * easeOut;
-                drawCanvasWheel(currentDrawAngle);
+            function animatePhysics(now) {
+                const elapsed = now - startTime;
+                const t = Math.min(elapsed / duration, 1);
 
-                if (progress < 1) {
-                    requestAnimationFrame(animateWheel);
+                // Плавное замедление колеса
+                const easeWheel = 1 - Math.pow(1 - t, 2.6);
+                wheelAngle = startWheelAngle + (finalWheelAngle - startWheelAngle) * easeWheel;
+
+                // Фазы движения шарика:
+                // 0.0 -> 0.58: быстрое качение по внешнему ободу против часовой стрелки
+                // 0.58 -> 0.86: срыв с обода, падение к лункам и отскоки от перегородок
+                // 0.86 -> 1.0: фиксация строго в центре выпавшего сектора и совместное докручивание с колесом
+                if (t < 0.58) {
+                    const p = t / 0.58;
+                    const easeOrbit = 1 - Math.pow(1 - p, 1.8);
+                    // Проходит 82% пути по внешнему ободу
+                    const orbitTarget = startBallAngle + (finalBallAngle - startBallAngle) * 0.82;
+                    ballAngle = startBallAngle + (orbitTarget - startBallAngle) * easeOrbit;
+                    ballRadius = outerRimTrack;
+                } else if (t < 0.86) {
+                    const p = (t - 0.58) / 0.28;
+                    const easeDrop = 1 - Math.pow(1 - p, 2.2);
+
+                    // Имитация отскоков шарика (3 затухающих прыжка)
+                    const bounceWave = Math.abs(Math.sin(p * Math.PI * 3)) * (1 - p) * 18;
+                    const baseR = outerRimTrack + (pocketRadius - outerRimTrack) * easeDrop;
+                    ballRadius = baseR + bounceWave;
+
+                    // Плавный переход угла к вращению вместе с лункой + легкое дребезжание при ударах
+                    const orbitEnd = startBallAngle + (finalBallAngle - startBallAngle) * 0.82;
+                    const pocketCurrentAngle = wheelAngle + winningIndex * arcRad;
+                    // Нормализуем pocketCurrentAngle так, чтобы он был продолжением движения против часовой
+                    let smoothTarget = finalBallAngle - (finalWheelAngle - wheelAngle);
+                    const jitter = Math.sin(p * Math.PI * 6) * (1 - p) * 0.09;
+                    ballAngle = orbitEnd + (smoothTarget - orbitEnd) * easeDrop + jitter;
                 } else {
-                    currentWheelAngle = finalAngle;
+                    // Шарик плотно сидит ровно по центру лунки и едет вместе с колесом
+                    ballRadius = pocketRadius;
+                    ballAngle = wheelAngle + winningIndex * arcRad;
+                }
+
+                renderWheelAndBall();
+
+                if (t < 1) {
+                    requestAnimationFrame(animatePhysics);
+                } else {
+                    isSpinning = false;
                     if (btn) btn.disabled = false;
+
+                    // Финальная точная синхронизация
+                    wheelAngle = finalWheelAngle;
+                    ballRadius = pocketRadius;
+                    ballAngle = wheelAngle + winningIndex * arcRad;
+                    renderWheelAndBall();
 
                     let isWin = false;
                     let mult = 0;
@@ -1880,16 +1982,16 @@
                         const win = bet * mult;
                         updateBalance(win);
                         recordGameResult(true, win);
-                        statusEl.textContent = `🎉 Выпало: ${winningNumber} (${colorName})! Победа x${mult}: +${win} BYN!`;
-                        showVictoryAnimation('view-roulette', 'ПОБЕДА В КОЛЕСЕ!', `Выпало число ${winningNumber}! Выигрыш: +${win} BYN!`);
+                        statusEl.textContent = `🎉 Шарик упал на ${winningNumber} (${colorName})! Победа x${mult}: +${win} BYN!`;
+                        showVictoryAnimation('view-roulette', 'ПОБЕДА В КОЛЕСЕ!', `Шарик лёг на число ${winningNumber}! Выигрыш: +${win} BYN!`);
                     } else {
                         recordGameResult(false, 0);
-                        statusEl.textContent = `❌ Выпало: ${winningNumber} (${colorName}). Ставка сгорела.`;
+                        statusEl.textContent = `❌ Шарик упал на ${winningNumber} (${colorName}). Ставка сгорела.`;
                     }
                 }
             }
 
-            requestAnimationFrame(animateWheel);
+            requestAnimationFrame(animatePhysics);
         }
 
         // --- КЛАССИЧЕСКИЙ ПОКЕР (5-Card Draw) ---
@@ -2543,6 +2645,12 @@
             loadSavedData();
             const balEl = document.getElementById('balance');
             if (balEl) balEl.textContent = balance.toLocaleString('ru-RU');
+            
+            const nameInput = document.getElementById('profile-name-input');
+            if (nameInput) {
+                nameInput.value = userProfile.username;
+            }
+
             syncHeaderProfile();
             showLobby();
         });
