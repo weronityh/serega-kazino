@@ -231,22 +231,106 @@
         .pay-row { display: flex; justify-content: space-between; padding: 7px 0; border-bottom: 1px solid #1b2533; font-size: 0.92rem; }
         .pay-row b { color: var(--gold); }
 
-        /* КОЛЕСО ФОРТУНЫ С ШАРИКОМ */
+        /* ТОЧНАЯ КОПИЯ РУЛЕТКИ С ФОТО */
         .roulette-container { text-align: center; padding: 20px; position: relative; }
-        .wheel-outer-wrap { position: relative; width: 260px; height: 260px; margin: 0 auto 20px; }
-        .wheel {
-            width: 260px; height: 260px; border-radius: 50%; border: 6px solid var(--gold);
-            position: absolute; top: 0; left: 0;
-            display: grid; place-items: center; font-size: 1.5rem; font-weight: 900;
-            background: conic-gradient(#ef4444 0deg 90deg, #3b82f6 90deg 180deg, #10b981 180deg 270deg, #f59e0b 270deg 360deg);
+        .casino-wheel-wrap {
+            position: relative;
+            width: 320px;
+            height: 320px;
+            margin: 0 auto 20px;
+            background: radial-gradient(circle, #b8860b 0%, #daa520 60%, #8b6508 100%);
+            border-radius: 50%;
+            padding: 14px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6), inset 0 0 15px rgba(0,0,0,0.8);
         }
+        .casino-wheel {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            position: relative;
+            overflow: hidden;
+            background: #222;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.9);
+            transition: transform 3.5s cubic-bezier(0.15, 0.85, 0.2, 1);
+        }
+        /* Имитация секторов рулетки через SVG / Conic Gradient */
+        .wheel-sectors {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: conic-gradient(
+                #22c55e 0deg 9.73deg,     /* 0 */
+                #dc2626 9.73deg 19.46deg,  /* 32 */
+                #111111 19.46deg 29.19deg, /* 15 */
+                #dc2626 29.19deg 38.92deg, /* 19 */
+                #111111 38.92deg 48.65deg, /* 4 */
+                #dc2626 48.65deg 58.38deg, /* 21 */
+                #111111 58.38deg 68.11deg, /* 2 */
+                #dc2626 68.11deg 77.84deg, /* 25 */
+                #111111 77.84deg 87.57deg, /* 17 */
+                #dc2626 87.57deg 97.3deg,  /* 34 */
+                #111111 97.3deg 107.03deg, /* 6 */
+                #dc2626 107.03deg 116.76deg,/* 27 */
+                #111111 116.76deg 126.49deg,/* 13 */
+                #dc2626 126.49deg 136.22deg,/* 36 */
+                #111111 136.22deg 145.95deg,/* 11 */
+                #dc2626 145.95deg 155.68deg,/* 30 */
+                #111111 155.68deg 165.41deg,/* 8 */
+                #dc2626 165.41deg 175.14deg,/* 23 */
+                #111111 175.14deg 184.87deg,/* 10 */
+                #dc2626 184.87deg 194.6deg, /* 5 */
+                #111111 194.6deg 204.33deg, /* 24 */
+                #dc2626 204.33deg 214.06deg,/* 16 */
+                #111111 214.06deg 223.79deg,/* 33 */
+                #dc2626 223.79deg 233.52deg,/* 1 */
+                #111111 233.52deg 243.25deg,/* 20 */
+                #dc2626 243.25deg 252.98deg,/* 14 */
+                #111111 252.98deg 262.71deg,/* 31 */
+                #dc2626 262.71deg 272.44deg,/* 9 */
+                #111111 272.44deg 282.17deg,/* 22 */
+                #dc2626 282.17deg 291.9deg, /* 18 */
+                #111111 291.9deg 301.63deg, /* 29 */
+                #dc2626 301.63deg 311.36deg,/* 7 */
+                #111111 311.36deg 321.09deg,/* 28 */
+                #dc2626 321.09deg 330.82deg,/* 12 */
+                #111111 330.82deg 340.55deg,/* 35 */
+                #dc2626 340.55deg 350.28deg,/* 3 */
+                #111111 350.28deg 360deg    /* 26 */
+            );
+        }
+        .wheel-center-wood {
+            position: absolute;
+            top: 25%; left: 25%;
+            width: 50%; height: 50%;
+            background: radial-gradient(circle, #b8860b 0%, #8b4513 70%, #5c2c16 100%);
+            border-radius: 50%;
+            box-shadow: 0 0 15px rgba(0,0,0,0.8);
+            display: grid;
+            place-items: center;
+        }
+        .wheel-gold-spinner {
+            width: 50px; height: 50px;
+            background: radial-gradient(circle, #ffd700 0%, #daa520 70%, #b8860b 100%);
+            border-radius: 50%;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            position: relative;
+        }
+        .wheel-gold-spinner::before, .wheel-gold-spinner::after {
+            content: '';
+            position: absolute;
+            background: linear-gradient(90deg, #daa520, #fff8dc, #daa520);
+        }
+        .wheel-gold-spinner::before { top: 22px; left: -35px; width: 120px; height: 6px; border-radius: 3px; }
+        .wheel-gold-spinner::after { top: -35px; left: 22px; width: 6px; height: 120px; border-radius: 3px; }
+
         .roulette-ball {
             position: absolute;
-            width: 18px; height: 18px; background: #fff; border-radius: 50%;
+            width: 14px; height: 14px; background: #fff; border-radius: 50%;
             box-shadow: 0 0 10px #fff, inset 0 0 3px #000;
             top: 50%; left: 50%;
-            margin: -9px 0 0 -9px;
-            z-index: 10;
+            margin: -7px 0 0 -7px;
+            z-index: 20;
             transition: all 3.5s cubic-bezier(0.1, 0.8, 0.2, 1);
         }
 
@@ -597,15 +681,20 @@
                 <div class="status-banner" id="bj-status">Сделайте ставку и нажмите «Раздать»</div>
             </div>
 
-            <!-- КОЛЕСО ФОРТУНЫ -->
+            <!-- КОЛЕСО ФОРТУНЫ (РУЛЕТКА КАК НА ФОТО) -->
             <div id="view-roulette" class="game-view">
                 <div class="game-header">
                     <h2>🎡 Колесо фортуны (Без лимитов)</h2>
                     <button class="btn-back" onclick="showLobby()">← В лобби</button>
                 </div>
                 <div class="roulette-container">
-                    <div class="wheel-outer-wrap">
-                        <div class="wheel" id="fortune-wheel"></div>
+                    <div class="casino-wheel-wrap">
+                        <div class="casino-wheel" id="fortune-wheel">
+                            <div class="wheel-sectors"></div>
+                            <div class="wheel-center-wood">
+                                <div class="wheel-gold-spinner"></div>
+                            </div>
+                        </div>
                         <div class="roulette-ball" id="roulette-ball"></div>
                     </div>
                     <div class="controls-bar">
@@ -1054,38 +1143,38 @@
             const btn = document.getElementById('roulette-btn');
             if(btn) btn.disabled = true;
 
-            let targetSectorAngle;
+            let targetAngle;
             let mult = 0;
 
             if (guaranteedWin) {
-                targetSectorAngle = 225;
+                targetAngle = 180;
                 mult = 5;
                 guaranteedWin = false;
             } else {
                 const rand = Math.random();
-                if (rand < 0.45) { targetSectorAngle = 45; mult = 2; }
-                else if (rand < 0.75) { targetSectorAngle = 135; mult = 0; }
-                else if (rand < 0.90) { targetSectorAngle = 225; mult = 5; }
-                else { targetSectorAngle = 315; mult = 2; }
+                if (rand < 0.45) { targetAngle = 60; mult = 2; }
+                else if (rand < 0.75) { targetAngle = 140; mult = 0; }
+                else if (rand < 0.90) { targetAngle = 240; mult = 5; }
+                else { targetAngle = 300; mult = 2; }
             }
 
-            const wheelSpins = 360 * 5;
-            const ballSpins = 360 * 8;
+            const wheelSpins = 360 * 6;
+            const ballSpins = 360 * 10;
             const finalWheelDeg = wheelSpins + Math.floor(Math.random() * 360);
-            const finalBallDeg = ballSpins + (360 - targetSectorAngle);
+            const finalBallDeg = ballSpins + targetAngle;
 
             wheel.style.transition = 'transform 3.5s cubic-bezier(0.15, 0.85, 0.2, 1)';
             ball.style.transition = 'all 3.5s cubic-bezier(0.15, 0.85, 0.2, 1)';
 
             wheel.style.transform = `rotate(${finalWheelDeg}deg)`;
             
-            const rad = 90;
+            const rad = 110;
             const angleRad = (finalBallDeg * Math.PI) / 180;
             const ballX = Math.cos(angleRad) * rad;
             const ballY = Math.sin(angleRad) * rad;
             ball.style.transform = `translate(${ballX}px, ${ballY}px) scale(1.2)`;
 
-            statusEl.textContent = '🎡 Шарик катится по колесу... Удача близко!';
+            statusEl.textContent = '🎡 Шарик стремительно катится по рулетке...';
 
             setTimeout(() => {
                 if(btn) btn.disabled = false;
@@ -1093,10 +1182,10 @@
                 if (mult > 0) {
                     const win = bet * mult;
                     updateBalance(win);
-                    statusEl.textContent = `🎉 Шарик упал в победный сектор! Выигрыш x${mult}: +${win} BYN!`;
-                    showVictoryAnimation('view-roulette', 'ПОБЕДА НА КОЛЕСЕ!', `Шарик принес +${win} BYN!`);
+                    statusEl.textContent = `🎉 Шарик принес победу! Выигрыш x${mult}: +${win} BYN!`;
+                    showVictoryAnimation('view-roulette', 'ПОБЕДА В РУЛЕТКЕ!', `Выигрыш составил +${win} BYN!`);
                 } else {
-                    statusEl.textContent = '❌ Шарик остановился в пустом секторе. Попробуйте еще раз!';
+                    statusEl.textContent = '❌ Шарик упал в пустой сектор. Попробуйте еще раз!';
                 }
             }, 3500);
         }
