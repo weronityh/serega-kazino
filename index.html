@@ -10,20 +10,15 @@
             --bg-sidebar: #0d1218;
             --bg-topbar: #0d1319;
             --bg-card: #121922;
-            --bg-card-hover: #18222e;
             --border-color: #1c2633;
             --neon-green: #1ae83a;
-            --neon-green-dark: #10b92b;
-            --neon-glow: rgba(26, 232, 58, 0.35);
             --text-main: #ffffff;
             --text-muted: #7d8b9e;
             --gold: #fbbf24;
             --danger: #ef4444;
         }
 
-        * {
-            box-sizing: border-box;
-        }
+        * { box-sizing: border-box; }
 
         body {
             margin: 0;
@@ -36,7 +31,7 @@
             overflow-x: hidden;
         }
 
-        /* ================= ЛЕВАЯ БОКОВАЯ ПАНЕЛЬ ================= */
+        /* ЛЕВАЯ ПАНЕЛЬ */
         .left-sidebar {
             width: 240px;
             background: var(--bg-sidebar);
@@ -65,7 +60,7 @@
         .brand-crown {
             font-size: 1.45rem;
             color: var(--neon-green);
-            filter: drop-shadow(0 0 8px var(--neon-glow));
+            filter: drop-shadow(0 0 8px rgba(26, 232, 58, 0.4));
             line-height: 1;
             margin-bottom: 4px;
         }
@@ -85,7 +80,7 @@
             font-style: italic;
             letter-spacing: 1px;
             color: var(--neon-green);
-            text-shadow: 0 0 18px var(--neon-glow);
+            text-shadow: 0 0 18px rgba(26, 232, 58, 0.4);
             line-height: 1.05;
             margin-top: 2px;
         }
@@ -114,29 +109,14 @@
             text-align: left;
         }
 
-        .nav-item-left {
-            display: flex;
-            align-items: center;
-            gap: 11px;
-        }
-
-        .nav-icon {
-            font-size: 1.1rem;
-            width: 20px;
-            text-align: center;
-        }
-
-        .nav-item:hover {
-            background: rgba(255, 255, 255, 0.04);
-            color: #ffffff;
-        }
-
+        .nav-item-left { display: flex; align-items: center; gap: 11px; }
+        .nav-icon { font-size: 1.1rem; width: 20px; text-align: center; }
+        .nav-item:hover { background: rgba(255, 255, 255, 0.04); color: #ffffff; }
         .nav-item.active {
             background: linear-gradient(90deg, rgba(26, 232, 58, 0.16) 0%, rgba(26, 232, 58, 0.03) 100%);
             border-color: rgba(26, 232, 58, 0.25);
             color: #ffffff;
         }
-
         .nav-item.active::before {
             content: '';
             position: absolute;
@@ -149,17 +129,12 @@
             box-shadow: 0 0 10px var(--neon-green);
         }
 
-        .nav-item.active .nav-icon {
-            color: var(--neon-green);
-        }
-
         .nav-badge {
             font-size: 0.65rem;
             font-weight: 900;
             padding: 2px 6px;
             border-radius: 5px;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
         }
         .badge-hot { background: #ef4444; color: #fff; }
         .badge-new { background: var(--neon-green); color: #051408; }
@@ -178,23 +153,14 @@
             font-size: 0.8rem;
             font-weight: 800;
             text-transform: uppercase;
-            letter-spacing: 0.6px;
             color: #ffffff;
             margin-bottom: 10px;
         }
+        .promo-header span { color: var(--neon-green); }
 
-        .promo-header span {
-            color: var(--neon-green);
-        }
-
-        .promo-input-group {
-            display: flex;
-            gap: 6px;
-        }
-
+        .promo-input-group { display: flex; gap: 6px; }
         .promo-input-group input {
             width: 100%;
-            min-width: 0;
             background: #131b24;
             border: 1px solid #233040;
             border-radius: 8px;
@@ -202,13 +168,7 @@
             color: #fff;
             font-size: 0.84rem;
             outline: none;
-            transition: border-color 0.2s;
         }
-
-        .promo-input-group input:focus {
-            border-color: var(--neon-green);
-        }
-
         .promo-input-group button {
             background: var(--neon-green);
             color: #041307;
@@ -216,33 +176,17 @@
             border-radius: 8px;
             padding: 0 13px;
             font-weight: 900;
-            font-size: 1rem;
             cursor: pointer;
-            transition: 0.2s;
-            box-shadow: 0 0 12px rgba(26, 232, 58, 0.3);
         }
-
-        .promo-input-group button:hover {
-            background: #35f554;
-            transform: scale(1.03);
-        }
-
         .promo-subtext {
             font-size: 0.66rem;
             color: var(--text-muted);
             text-transform: uppercase;
-            letter-spacing: 0.4px;
             margin-top: 8px;
-            line-height: 1.3;
         }
 
-        /* ================= ОСНОВНАЯ ЧАСТЬ ================= */
-        .main-wrapper {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            min-width: 0;
-        }
+        /* ОСНОВНОЙ КОНТЕЙНЕР */
+        .main-wrapper { flex: 1; display: flex; flex-direction: column; min-width: 0; }
 
         .topbar {
             height: 68px;
@@ -267,44 +211,12 @@
             border-radius: 10px;
             padding: 9px 14px;
             width: 300px;
-            max-width: 100%;
         }
+        .search-box input { background: transparent; border: none; color: #fff; font-size: 0.88rem; width: 100%; outline: none; }
 
-        .search-box input {
-            background: transparent;
-            border: none;
-            color: #fff;
-            font-size: 0.88rem;
-            width: 100%;
-            outline: none;
-        }
-
-        .search-box input::placeholder {
-            color: var(--text-muted);
-        }
-
-        .topbar-right {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-        }
-
-        .online-indicator {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            white-space: nowrap;
-        }
-
-        .online-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: var(--neon-green);
-            box-shadow: 0 0 8px var(--neon-green);
-        }
+        .topbar-right { display: flex; align-items: center; gap: 14px; }
+        .online-indicator { display: flex; align-items: center; gap: 8px; font-size: 0.85rem; color: var(--text-muted); }
+        .online-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--neon-green); box-shadow: 0 0 8px var(--neon-green); }
 
         .balance-box {
             display: flex;
@@ -316,7 +228,6 @@
             border-radius: 10px;
             font-weight: 800;
             font-size: 0.95rem;
-            white-space: nowrap;
         }
 
         .btn-topup {
@@ -328,37 +239,14 @@
             font-weight: 900;
             font-size: 0.86rem;
             text-transform: uppercase;
-            letter-spacing: 0.4px;
             cursor: pointer;
             box-shadow: 0 0 18px rgba(26, 232, 58, 0.35);
-            transition: all 0.2s;
-            white-space: nowrap;
-        }
-
-        .btn-topup:hover {
-            background: #36f755;
-            transform: translateY(-1px);
-            box-shadow: 0 0 24px rgba(26, 232, 58, 0.55);
         }
 
         .icon-circle-btn {
-            width: 38px;
-            height: 38px;
-            border-radius: 10px;
-            background: #131b24;
-            border: 1px solid #222f3e;
-            color: #cbd5e1;
-            display: grid;
-            place-items: center;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: 0.2s;
-            flex-shrink: 0;
-        }
-
-        .icon-circle-btn:hover {
-            border-color: var(--neon-green);
-            color: #fff;
+            width: 38px; height: 38px; border-radius: 10px;
+            background: #131b24; border: 1px solid #222f3e; color: #cbd5e1;
+            display: grid; place-items: center; cursor: pointer;
         }
 
         .content-area {
@@ -371,261 +259,93 @@
             flex-direction: column;
         }
 
-        /* ================= ГЛАВНЫЙ БАННЕР (РАБОТАЕТ БЕЗ ВНЕШНИХ ФАЙЛОВ + ПОДДЕРЖКА banner.jpg) ================= */
-        .hero-banner-wrap {
+        /* ================= КАСТОМНЫЙ БАННЕР (С ВАШИМ ФОТО И РАМКОЙ) ================= */
+        .hero-banner-custom {
             position: relative;
             width: 100%;
-            min-height: 255px;
+            height: 270px;
             border-radius: 18px;
             overflow: hidden;
             margin-bottom: 22px;
-            box-shadow: 0 18px 45px rgba(0, 0, 0, 0.65);
-            border: 1px solid #2a392e;
-            background:
-                radial-gradient(circle at 72% 48%, rgba(251, 191, 36, 0.35) 0%, transparent 42%),
-                radial-gradient(circle at 22% 52%, rgba(26, 232, 58, 0.28) 0%, transparent 50%),
-                radial-gradient(circle at 92% 28%, rgba(255, 42, 109, 0.28) 0%, transparent 38%),
-                linear-gradient(115deg, #09130e 0%, #14100a 48%, #241409 100%);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
+            border: 1px solid #26332c;
+            background-image: url('banner-bg.png'); /* Файл с первой фотографии[cite: 8] */
+            background-size: cover;
+            background-position: center;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 32px 38px;
+            padding: 0 40px;
         }
 
-        /* Если загрузишь файл banner.jpg в ту же папку на GitHub — он автоматически станет фоном баннера */
-        .hero-custom-bg {
+        .hero-banner-custom::before {
+            content: '';
             position: absolute;
             inset: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+            background: rgba(0, 0, 0, 0.35); /* Затемнение для читаемости */
             z-index: 1;
-            display: none;
         }
 
-        /* Декоративные золотые монеты на фоне баннера */
-        .coin-decor {
-            position: absolute;
-            border-radius: 50%;
-            background: radial-gradient(circle at 30% 30%, #fef08a, #f59e0b 65%, #b45309 100%);
-            border: 2px solid #fde047;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.6), inset 0 0 8px rgba(255,255,255,0.6);
-            display: grid;
-            place-items: center;
-            font-weight: 900;
-            color: #78350f;
-            z-index: 2;
-            pointer-events: none;
-        }
-        .c-tl { width: 46px; height: 46px; top: 14px; left: 16px; transform: rotate(-22deg); font-size: 1.1rem; }
-        .c-bl { width: 38px; height: 38px; bottom: 14px; left: 8px; transform: rotate(15deg); font-size: 0.9rem; }
-        .c-tm { width: 42px; height: 42px; top: 10px; left: 37%; transform: rotate(28deg); font-size: 1rem; }
-        .c-bm { width: 52px; height: 52px; bottom: -10px; left: 41%; transform: rotate(-14deg); font-size: 1.2rem; }
-        .c-br { width: 44px; height: 44px; bottom: 16px; right: 24%; transform: rotate(19deg); font-size: 1rem; }
-
-        .hero-left {
+        .hero-left-content {
             position: relative;
-            z-index: 4;
-            max-width: 460px;
+            z-index: 2;
+            max-width: 450px;
         }
 
-        .hero-title {
-            margin: 0;
-            line-height: 0.92;
+        .hero-title-main {
+            font-size: 3rem;
             font-weight: 950;
             font-style: italic;
             text-transform: uppercase;
-        }
-
-        .hero-title .t1 {
-            display: block;
-            font-size: 2.7rem;
-            color: #ffffff;
-            text-shadow: 0 4px 18px rgba(0, 0, 0, 0.8);
-            letter-spacing: 1px;
-        }
-
-        .hero-title .t2 {
-            display: block;
-            font-size: 3.75rem;
             color: var(--neon-green);
-            text-shadow: 0 0 30px rgba(26, 232, 58, 0.55), 0 4px 14px rgba(0, 0, 0, 0.8);
-            margin-top: 2px;
+            text-shadow: 0 0 20px rgba(26, 232, 58, 0.6);
+            margin: 0 0 10px 0;
+            line-height: 1;
         }
 
-        .hero-sub {
-            margin: 14px 0 22px;
-            font-size: 0.88rem;
+        .hero-desc-main {
+            font-size: 0.9rem;
             font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 0.7px;
             color: #e2e8f0;
-            text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+            text-transform: uppercase;
+            margin-bottom: 20px;
         }
 
-        .hero-btn {
-            background: linear-gradient(90deg, #1ce83c, #4eff6b);
+        .hero-action-btn {
+            background: var(--neon-green);
             color: #031406;
             border: none;
             border-radius: 12px;
-            padding: 14px 30px;
+            padding: 12px 24px;
+            font-weight: 950;
             font-size: 1rem;
-            font-weight: 950;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
             cursor: pointer;
-            box-shadow: 0 0 28px rgba(26, 232, 58, 0.55);
-            transition: transform 0.2s, box-shadow 0.2s;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
+            box-shadow: 0 0 20px rgba(26, 232, 58, 0.5);
+            transition: transform 0.2s;
         }
+        .hero-action-btn:hover { transform: scale(1.04); }
 
-        .hero-btn:hover {
-            transform: translateY(-2px) scale(1.03);
-            box-shadow: 0 0 38px rgba(26, 232, 58, 0.85);
-        }
-
-        /* Центрально-правая композиция: карты, фишка, кубики, босс в очках и WIN BIGGER */
-        .hero-center-art {
+        /* ОКНО С ВАШИМ ФОТО ВНУТРИ БАННЕРА */
+        .banner-photo-box {
             position: relative;
-            z-index: 3;
-            width: 330px;
-            height: 205px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
+            z-index: 2;
+            width: 260px;
+            height: 180px;
+            border-radius: 14px;
+            overflow: hidden;
+            border: 3px solid var(--gold);
+            box-shadow: 0 0 25px rgba(251, 191, 36, 0.5);
+            background: #000;
         }
 
-        .art-card {
-            position: absolute;
-            width: 64px;
-            height: 92px;
-            background: linear-gradient(145deg, #ffffff, #e2e8f0);
-            border-radius: 9px;
-            padding: 6px 8px;
-            font-weight: 950;
-            font-size: 1.2rem;
-            box-shadow: 0 12px 26px rgba(0, 0, 0, 0.75);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-        .art-card.spade { left: 12px; top: 8px; transform: rotate(-16deg); color: #0f172a; }
-        .art-card.heart { left: 54px; top: 16px; transform: rotate(8deg); color: #dc2626; }
-
-        .art-chip {
-            position: absolute;
-            left: 26px;
-            bottom: 36px;
-            width: 68px;
-            height: 68px;
-            border-radius: 50%;
-            background: radial-gradient(circle, #1e293b 48%, #0f172a 100%);
-            border: 6px dashed #fbbf24;
-            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.8);
-            display: grid;
-            place-items: center;
-            color: #fbbf24;
-            font-size: 1.35rem;
-            z-index: 3;
+        .banner-photo-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
-        .art-dice-red {
-            position: absolute;
-            width: 44px;
-            height: 44px;
-            border-radius: 10px;
-            background: linear-gradient(135deg, #ef4444, #991b1b);
-            border: 1.5px solid #fca5a5;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.75);
-            display: grid;
-            place-items: center;
-            font-size: 1.5rem;
-            z-index: 4;
-        }
-        .d1 { left: 104px; top: 26px; transform: rotate(18deg); }
-        .d2 { left: 84px; bottom: 8px; transform: rotate(-22deg); }
-
-        .boss-character {
-            position: relative;
-            margin-left: 115px;
-            width: 158px;
-            height: 175px;
-            border-radius: 24px;
-            background: radial-gradient(circle at 50% 35%, #593a1d, #1c1208 75%);
-            border: 3px solid #fbbf24;
-            box-shadow: 0 0 35px rgba(251, 191, 36, 0.45);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 3;
-        }
-
-        .boss-crown {
-            font-size: 2rem;
-            margin-bottom: -6px;
-            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.7));
-        }
-
-        .boss-face {
-            font-size: 4.1rem;
-            line-height: 1;
-            position: relative;
-        }
-
-        .boss-glasses {
-            position: absolute;
-            top: 48px;
-            font-size: 2.3rem;
-            filter: drop-shadow(0 3px 6px rgba(0,0,0,0.8));
-        }
-
-        .boss-chain {
-            margin-top: 6px;
-            background: linear-gradient(90deg, #b45309, #fde047, #b45309);
-            color: #1a0f02;
-            font-size: 0.85rem;
-            font-weight: 950;
-            padding: 3px 14px;
-            border-radius: 6px;
-            border: 1.5px solid #fef08a;
-            letter-spacing: 1px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.7);
-        }
-
-        .hero-right-text {
-            position: relative;
-            z-index: 4;
-            text-align: right;
-        }
-
-        .neon-win-bigger {
-            font-size: 2.1rem;
-            font-weight: 950;
-            font-style: italic;
-            line-height: 0.92;
-            color: #ff2a6d;
-            text-shadow: 0 0 22px rgba(255, 42, 109, 0.75);
-            transform: rotate(-7deg);
-            margin-bottom: 14px;
-        }
-
-        .gold-slogan-box {
-            background: rgba(0, 0, 0, 0.55);
-            border: 1px solid rgba(251, 191, 36, 0.35);
-            border-radius: 10px;
-            padding: 8px 12px;
-            font-size: 0.85rem;
-            font-weight: 900;
-            line-height: 1.2;
-            color: #fde68a;
-            text-transform: uppercase;
-        }
-
-        /* ================= КАРТОЧКИ РЕЖИМОВ ================= */
+        /* КАРТОЧКИ РЕЖИМОВ */
         .modes-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -636,799 +356,87 @@
         .mode-card {
             position: relative;
             border-radius: 16px;
-            padding: 22px 22px 20px;
+            padding: 22px;
             min-height: 175px;
             cursor: pointer;
             overflow: hidden;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            transition: transform 0.25s ease;
             border: 1.5px solid #2b3847;
         }
+        .mode-card:hover { transform: translateY(-5px); }
 
-        .mode-card:hover {
-            transform: translateY(-5px);
-        }
+        .card-slots { background: linear-gradient(145deg, #24190d 0%, #111319 100%); border-color: #d97706; }
+        .card-roulette { background: linear-gradient(145deg, #251020 0%, #111319 100%); border-color: #db2777; }
+        .card-toothpick { background: linear-gradient(145deg, #0d2414 0%, #111319 100%); border-color: var(--neon-green); }
+        .card-blackjack { background: linear-gradient(145deg, #0d231e 0%, #111319 100%); border-color: #10b981; }
+        .card-poker { background: linear-gradient(145deg, #101b30 0%, #111319 100%); border-color: #3b82f6; }
+        .card-property { background: linear-gradient(145deg, #1d122b 0%, #111319 100%); border-color: #a855f7; }
 
-        .card-slots {
-            background: radial-gradient(circle at 75% 40%, rgba(245, 158, 11, 0.28), transparent 60%), linear-gradient(145deg, #24190d 0%, #111319 100%);
-            border-color: #d97706;
-            box-shadow: 0 8px 25px rgba(217, 119, 6, 0.16);
-        }
-        .card-slots:hover { box-shadow: 0 12px 32px rgba(245, 158, 11, 0.35); }
-        .card-slots .mode-card-title { color: #facc15; text-shadow: 0 0 14px rgba(250, 204, 21, 0.35); }
+        .mode-card-visual { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+        .mode-big-emoji { font-size: 3.1rem; }
+        .mode-tag-pill { background: rgba(0, 0, 0, 0.45); border: 1px solid rgba(255, 255, 255, 0.14); padding: 4px 10px; border-radius: 8px; font-size: 0.75rem; font-weight: 800; color: #e2e8f0; }
 
-        .card-roulette {
-            background: radial-gradient(circle at 75% 40%, rgba(236, 72, 153, 0.28), transparent 60%), linear-gradient(145deg, #251020 0%, #111319 100%);
-            border-color: #db2777;
-            box-shadow: 0 8px 25px rgba(219, 39, 119, 0.16);
-        }
-        .card-roulette:hover { box-shadow: 0 12px 32px rgba(236, 72, 153, 0.35); }
-        .card-roulette .mode-card-title { color: #f43f5e; text-shadow: 0 0 14px rgba(244, 63, 94, 0.35); }
+        .mode-card-footer { display: flex; align-items: flex-end; justify-content: space-between; gap: 10px; }
+        .mode-card-title { font-size: 1.55rem; font-weight: 950; font-style: italic; text-transform: uppercase; color: #fff; }
+        .mode-card-desc { font-size: 0.74rem; font-weight: 700; text-transform: uppercase; color: #9aa7b8; margin-top: 5px; }
+        .mode-arrow-btn { width: 34px; height: 34px; border-radius: 50%; background: rgba(255, 255, 255, 0.08); display: grid; place-items: center; color: #fff; font-weight: 900; }
 
-        .card-toothpick {
-            background: radial-gradient(circle at 75% 40%, rgba(26, 232, 58, 0.26), transparent 60%), linear-gradient(145deg, #0d2414 0%, #111319 100%);
-            border-color: var(--neon-green);
-            box-shadow: 0 8px 25px rgba(26, 232, 58, 0.16);
-        }
-        .card-toothpick:hover { box-shadow: 0 12px 32px rgba(26, 232, 58, 0.35); }
-        .card-toothpick .mode-card-title { color: var(--neon-green); text-shadow: 0 0 14px rgba(26, 232, 58, 0.35); }
-
-        .card-blackjack {
-            background: radial-gradient(circle at 75% 40%, rgba(16, 185, 129, 0.25), transparent 60%), linear-gradient(145deg, #0d231e 0%, #111319 100%);
-            border-color: #10b981;
-            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.15);
-        }
-        .card-blackjack:hover { box-shadow: 0 12px 32px rgba(16, 185, 129, 0.32); }
-        .card-blackjack .mode-card-title { color: #34d399; }
-
-        .card-poker {
-            background: radial-gradient(circle at 75% 40%, rgba(59, 130, 246, 0.26), transparent 60%), linear-gradient(145deg, #101b30 0%, #111319 100%);
-            border-color: #3b82f6;
-            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.15);
-        }
-        .card-poker:hover { box-shadow: 0 12px 32px rgba(59, 130, 246, 0.32); }
-        .card-poker .mode-card-title { color: #60a5fa; }
-
-        .card-property {
-            background: radial-gradient(circle at 75% 40%, rgba(168, 85, 247, 0.25), transparent 60%), linear-gradient(145deg, #1d122b 0%, #111319 100%);
-            border-color: #a855f7;
-            box-shadow: 0 8px 25px rgba(168, 85, 247, 0.15);
-        }
-        .card-property:hover { box-shadow: 0 12px 32px rgba(168, 85, 247, 0.32); }
-        .card-property .mode-card-title { color: #c084fc; }
-
-        .mode-card-visual {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 14px;
-        }
-
-        .mode-big-emoji {
-            font-size: 3.1rem;
-            filter: drop-shadow(0 8px 16px rgba(0,0,0,0.6));
-            transition: transform 0.25s;
-        }
-
-        .mode-card:hover .mode-big-emoji {
-            transform: scale(1.1) rotate(-4deg);
-        }
-
-        .mode-tag-pill {
-            background: rgba(0, 0, 0, 0.45);
-            border: 1px solid rgba(255, 255, 255, 0.14);
-            padding: 4px 10px;
-            border-radius: 8px;
-            font-size: 0.75rem;
-            font-weight: 800;
-            color: #e2e8f0;
-        }
-
-        .mode-card-footer {
-            display: flex;
-            align-items: flex-end;
-            justify-content: space-between;
-            gap: 10px;
-        }
-
-        .mode-card-title {
-            font-size: 1.55rem;
-            font-weight: 950;
-            font-style: italic;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            line-height: 1.05;
-        }
-
-        .mode-card-desc {
-            font-size: 0.74rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            color: #9aa7b8;
-            margin-top: 5px;
-            letter-spacing: 0.4px;
-        }
-
-        .mode-arrow-btn {
-            width: 34px;
-            height: 34px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.18);
-            color: #fff;
-            display: grid;
-            place-items: center;
-            font-weight: 900;
-            flex-shrink: 0;
-            transition: 0.2s;
-        }
-
-        .mode-card:hover .mode-arrow-btn {
-            background: var(--neon-green);
-            color: #041307;
-            border-color: var(--neon-green);
-        }
-
-        /* ================= АНИМАЦИЯ ПОБЕДЫ (САЛЮТ И МОНЕТКИ) ================= */
+        /* АНИМАЦИЯ ПОБЕДЫ */
         .win-overlay {
-            position: fixed;
-            inset: 0;
-            pointer-events: none;
-            z-index: 150;
-            overflow: hidden;
-            display: none;
+            position: fixed; inset: 0; pointer-events: none; z-index: 150; overflow: hidden; display: none;
         }
-
-        .win-overlay.active {
-            display: block;
-        }
-
-        .floating-coin {
-            position: absolute;
-            font-size: 2.1rem;
-            animation: coinFly 1.5s ease-out forwards;
-        }
-
+        .win-overlay.active { display: block; }
+        .floating-coin { position: absolute; font-size: 2rem; animation: coinFly 1.5s ease-out forwards; }
         @keyframes coinFly {
-            0% { transform: translateY(100vh) scale(0.5) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(-10vh) scale(1.4) rotate(360deg); opacity: 0; }
+            0% { transform: translateY(100vh) scale(0.5); opacity: 1; }
+            100% { transform: translateY(-10vh) scale(1.4); opacity: 0; }
         }
-
         .win-banner-pop {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(0.5);
-            background: radial-gradient(circle, #1a3a2a 0%, #0c1b14 100%);
-            border: 3px solid var(--neon-green);
-            box-shadow: 0 0 50px rgba(26, 232, 58, 0.7);
-            padding: 24px 48px;
-            border-radius: 20px;
-            text-align: center;
-            animation: popInAnim 1.3s ease-out forwards;
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            background: #0c1b14; border: 3px solid var(--neon-green); padding: 24px 48px; border-radius: 20px; text-align: center;
         }
+        .win-pop-title { font-size: 2.2rem; font-weight: 950; color: var(--neon-green); font-style: italic; margin: 0; }
+        .win-pop-amount { font-size: 1.8rem; font-weight: 900; color: var(--gold); margin-top: 5px; }
 
-        @keyframes popInAnim {
-            0% { transform: translate(-50%, -50%) scale(0.3); opacity: 0; }
-            45% { transform: translate(-50%, -50%) scale(1.12); opacity: 1; }
-            100% { transform: translate(-50%, -50%) scale(1); opacity: 0; }
-        }
+        /* ОСТАЛЬНЫЕ ИГРОВЫЕ ЭКРАНЫ */
+        .game-view { display: none; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 18px; padding: 26px; margin-bottom: 24px; }
+        .game-view.active { display: block; }
+        .game-header { display: flex; align-items: center; justify-content: space-between; padding-bottom: 14px; margin-bottom: 20px; border-bottom: 1px solid var(--border-color); }
+        .game-header h2 { margin: 0; color: var(--neon-green); text-transform: uppercase; }
+        .btn-back { background: #18222f; border: 1px solid #283649; color: #fff; padding: 8px 16px; border-radius: 10px; cursor: pointer; font-weight: 700; }
 
-        .win-pop-title {
-            font-size: 2.2rem;
-            font-weight: 950;
-            color: var(--neon-green);
-            text-transform: uppercase;
-            font-style: italic;
-            text-shadow: 0 0 20px var(--neon-green);
-            margin: 0;
-        }
+        .controls-bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 12px; margin-top: 20px; }
+        .controls-bar input, .controls-bar select { background: #0d131a; border: 1px solid #283649; color: #fff; padding: 10px 14px; border-radius: 10px; font-weight: 700; text-align: center; outline: none; }
+        .btn-play { background: var(--neon-green); color: #031406; border: none; padding: 11px 22px; border-radius: 10px; font-weight: 900; cursor: pointer; text-transform: uppercase; }
+        .status-banner { margin: 16px auto 0; padding: 12px; border-radius: 10px; background: rgba(255,255,255,0.04); font-weight: 800; color: var(--gold); text-align: center; }
 
-        .win-pop-amount {
-            font-size: 1.8rem;
-            font-weight: 900;
-            color: var(--gold);
-            margin-top: 5px;
-        }
-
-        /* ================= НИЖНЯЯ ПАНЕЛЬ СТАТИСТИКИ ================= */
-        .trust-footer {
-            margin-top: auto;
-            padding-top: 18px;
-            border-top: 1px solid var(--border-color);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 16px;
-        }
-
-        .trust-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .trust-icon {
-            font-size: 1.35rem;
-            color: #94a3b8;
-        }
-
-        .trust-text strong {
-            display: block;
-            font-size: 0.85rem;
-            font-weight: 800;
-            color: #ffffff;
-        }
-
-        .trust-text span {
-            font-size: 0.72rem;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.4px;
-        }
-
-        .footer-slogan {
-            font-size: 0.9rem;
-            font-weight: 900;
-            font-style: italic;
-            color: #475569;
-            text-transform: uppercase;
-            transform: rotate(-4deg);
-            letter-spacing: 0.6px;
-        }
-
-        /* ================= ИГРОВЫЕ ЭКРАНЫ ================= */
-        .game-view {
-            display: none;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 18px;
-            padding: 26px;
-            box-shadow: 0 14px 36px rgba(0, 0, 0, 0.5);
-            margin-bottom: 24px;
-        }
-
-        .game-view.active {
-            display: block;
-            animation: fadeIn 0.25s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(6px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .game-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding-bottom: 14px;
-            margin-bottom: 20px;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .game-header h2 {
-            margin: 0;
-            font-size: 1.45rem;
-            font-weight: 900;
-            text-transform: uppercase;
-            color: var(--neon-green);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .btn-back {
-            background: #18222f;
-            border: 1px solid #283649;
-            color: #e2e8f0;
-            padding: 8px 16px;
-            border-radius: 10px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-
-        .btn-back:hover {
-            border-color: var(--neon-green);
-            color: var(--neon-green);
-        }
-
-        .controls-bar {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            margin-top: 20px;
-        }
-
-        .controls-bar input[type="number"],
-        .controls-bar select {
-            background: #0d131a;
-            border: 1px solid #283649;
-            color: #fff;
-            padding: 10px 14px;
-            border-radius: 10px;
-            font-size: 1rem;
-            font-weight: 700;
-            text-align: center;
-            outline: none;
-        }
-
-        .controls-bar input[type="number"] {
-            width: 110px;
-        }
-
-        .btn-play {
-            background: var(--neon-green);
-            color: #031406;
-            border: none;
-            padding: 11px 22px;
-            border-radius: 10px;
-            font-size: 0.96rem;
-            font-weight: 900;
-            text-transform: uppercase;
-            cursor: pointer;
-            box-shadow: 0 0 16px rgba(26, 232, 58, 0.3);
-            transition: 0.2s;
-        }
-
-        .btn-play:hover:not(:disabled) {
-            background: #38f856;
-            transform: translateY(-1px);
-        }
-
-        .btn-play:disabled {
-            background: #334155;
-            color: #94a3b8;
-            box-shadow: none;
-            cursor: not-allowed;
-        }
-
-        .btn-secondary {
-            background: #1e293b;
-            color: #fff;
-            border: 1px solid #334155;
-            padding: 11px 20px;
-            border-radius: 10px;
-            font-size: 0.95rem;
-            font-weight: 800;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-
-        .btn-secondary:hover:not(:disabled) {
-            border-color: var(--neon-green);
-        }
-
-        .btn-secondary:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        .status-banner {
-            margin: 16px auto 0;
-            padding: 12px 18px;
-            border-radius: 10px;
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid #243142;
-            font-weight: 800;
-            font-size: 1.05rem;
-            color: var(--gold);
-            text-align: center;
-            min-height: 46px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        /* Карты */
-        .felt-table {
-            background: radial-gradient(ellipse at center, #115e43 0%, #093b2a 70%, #06281d 100%);
-            border: 2px solid #1f7a58;
-            border-radius: 16px;
-            padding: 18px;
-            margin-bottom: 14px;
-            text-align: center;
-        }
-
-        .hand-label {
-            font-size: 0.95rem;
-            font-weight: 800;
-            color: #d1fae5;
-            margin-bottom: 10px;
-        }
-
-        .cards-row {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 10px;
-            min-height: 98px;
-        }
-
-        .playing-card {
-            width: 66px;
-            height: 96px;
-            background: #ffffff;
-            color: #0f172a;
-            border-radius: 9px;
-            padding: 6px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            font-weight: 900;
-            font-size: 1.15rem;
-            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.45);
-            user-select: none;
-            transition: transform 0.2s, box-shadow 0.2s;
-            position: relative;
-        }
-
-        .playing-card.red { color: #dc2626; }
-
-        .playing-card.hidden {
-            background: repeating-linear-gradient(45deg, #0f291e, #0f291e 7px, #16422f 7px, #16422f 14px);
-            border: 2px solid var(--neon-green);
-            color: transparent;
-        }
-
-        .playing-card.selectable { cursor: pointer; }
-        .playing-card.selectable:hover { transform: translateY(-6px); }
-        .playing-card.held {
-            border: 3px solid var(--neon-green);
-            transform: translateY(-10px);
-            box-shadow: 0 0 18px var(--neon-glow);
-        }
-
-        .hold-badge {
-            position: absolute;
-            top: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--neon-green);
-            color: #031406;
-            font-size: 0.62rem;
-            font-weight: 900;
-            padding: 2px 6px;
-            border-radius: 4px;
-        }
-
-        /* Слоты */
-        .slots-wrapper {
-            display: grid;
-            grid-template-columns: 1.4fr 1fr;
-            gap: 20px;
-            align-items: center;
-        }
-
-        .slot-cabinet {
-            background: linear-gradient(160deg, #1b132b, #0e0b18);
-            border: 3px solid var(--neon-green);
-            border-radius: 18px;
-            padding: 24px;
-            box-shadow: 0 0 28px rgba(26, 232, 58, 0.2);
-            text-align: center;
-        }
-
-        .reels-box {
-            display: flex;
-            justify-content: center;
-            gap: 12px;
-            margin: 14px 0;
-        }
-
-        .reel-cell {
-            width: 96px;
-            height: 106px;
-            background: #0d131a;
-            border: 2px solid #2e3e52;
-            border-radius: 14px;
-            display: grid;
-            place-items: center;
-            font-size: 3.2rem;
-            box-shadow: inset 0 0 16px rgba(0, 0, 0, 0.8);
-        }
-
-        .paytable-box {
-            background: #0e141c;
-            border: 1px solid #233042;
-            border-radius: 14px;
-            padding: 16px;
-        }
-
-        .paytable-box h3 {
-            margin: 0 0 10px;
-            color: var(--neon-green);
-            font-size: 1rem;
-            text-transform: uppercase;
-        }
-
-        .pay-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 7px 0;
-            border-bottom: 1px solid #1b2533;
-            font-size: 0.92rem;
-        }
-        .pay-row:last-child { border-bottom: none; }
+        /* СЛОТЫ */
+        .slots-wrapper { display: grid; grid-template-columns: 1.4fr 1fr; gap: 20px; }
+        .slot-cabinet { background: #110e18; border: 3px solid var(--neon-green); border-radius: 18px; padding: 24px; text-align: center; }
+        .reels-box { display: flex; justify-content: center; gap: 12px; margin: 14px 0; }
+        .reel-cell { width: 96px; height: 106px; background: #0d131a; border: 2px solid #2e3e52; border-radius: 14px; display: grid; place-items: center; font-size: 3.2rem; }
+        .paytable-box { background: #0e141c; border: 1px solid #233042; border-radius: 14px; padding: 16px; }
+        .pay-row { display: flex; justify-content: space-between; padding: 7px 0; border-bottom: 1px solid #1b2533; font-size: 0.92rem; }
         .pay-row b { color: var(--gold); }
 
-        /* Рулетка */
-        .roulette-stage {
-            position: relative;
-            width: 290px;
-            height: 290px;
-            margin: 10px auto 18px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .roulette-rim {
-            width: 290px;
-            height: 290px;
-            border-radius: 50%;
-            background: #1a140e;
-            border: 5px solid var(--neon-green);
-            box-shadow: 0 0 28px rgba(26, 232, 58, 0.25);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
-
-        .roulette-wheel {
-            width: 262px;
-            height: 262px;
-            border-radius: 50%;
-            transition: transform 4s cubic-bezier(0.12, 0.85, 0.22, 1);
-        }
-
-        .roulette-wheel svg {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            display: block;
-        }
-
-        .roulette-hub {
-            position: absolute;
-            width: 88px;
-            height: 88px;
-            border-radius: 50%;
-            background: #0d131a;
-            border: 3px solid var(--neon-green);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 4;
-        }
-
-        .roulette-hub-num {
-            font-size: 1.65rem;
-            font-weight: 950;
-            color: #fff;
-            line-height: 1;
-        }
-
-        .roulette-hub-label {
-            font-size: 0.62rem;
-            color: var(--neon-green);
-            text-transform: uppercase;
-            margin-top: 3px;
-            font-weight: 800;
-        }
-
-        .roulette-pointer {
-            position: absolute;
-            top: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 0;
-            height: 0;
-            border-left: 11px solid transparent;
-            border-right: 11px solid transparent;
-            border-top: 20px solid var(--neon-green);
-            filter: drop-shadow(0 0 8px var(--neon-green));
-            z-index: 6;
-        }
-
-        /* Спички */
-        .matches-box {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 16px;
-            padding: 26px 16px;
-            background: linear-gradient(145deg, #24170e, #120c07);
-            border: 2px solid #6b4426;
-            border-radius: 16px;
-            margin-bottom: 16px;
-        }
-
-        .match-btn {
-            width: 76px;
-            height: 115px;
-            background: #1a110b;
-            border: 1.5px solid #4d311c;
-            border-radius: 12px;
-            cursor: pointer;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-end;
-            padding-bottom: 14px;
-            transition: all 0.2s;
-        }
-
-        .match-btn:hover:not(:disabled) {
-            transform: translateY(-6px);
-            border-color: var(--neon-green);
-            box-shadow: 0 6px 18px rgba(26, 232, 58, 0.25);
-        }
-
-        .match-btn:disabled { cursor: default; }
-
-        .match-head {
-            width: 12px;
-            height: 16px;
-            background: radial-gradient(circle at 35% 30%, #ff7b7b, #dc2626 70%, #7f1d1d);
-            border-radius: 50% 50% 40% 40%;
-            margin-bottom: -2px;
-            z-index: 2;
-        }
-
-        .match-stick {
-            width: 6px;
-            height: 58px;
-            background: linear-gradient(90deg, #b8824a, #f5d69e, #c69057);
-            border-radius: 0 0 3px 3px;
-        }
-
-        .match-btn.short .match-stick { height: 24px; }
-
-        /* Имущество */
-        .property-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 16px;
-        }
-
-        .prop-card {
-            background: #0e141c;
-            border: 1px solid #243142;
-            border-radius: 14px;
-            padding: 18px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            transition: 0.2s;
-        }
-
-        .prop-card.owned {
-            border-color: var(--neon-green);
-            background: linear-gradient(160deg, rgba(26, 232, 58, 0.08), #0e141c);
-        }
-
-        .prop-emoji { font-size: 2.6rem; margin-bottom: 10px; }
-        .prop-name { font-size: 1.1rem; font-weight: 800; color: #fff; }
-        .prop-desc { font-size: 0.84rem; color: var(--text-muted); margin-top: 4px; }
-
-        .prop-bottom {
-            margin-top: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 10px;
-        }
-
-        .prop-price { font-weight: 900; color: var(--gold); font-size: 1rem; }
-
-        /* Настройки */
-        .modal-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.78);
-            backdrop-filter: blur(5px);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 100;
-        }
-
-        .modal-overlay.active { display: flex; }
-
-        .modal-box {
-            background: #121922;
-            border: 1.5px solid var(--neon-green);
-            border-radius: 16px;
-            padding: 24px;
-            width: 92%;
-            max-width: 420px;
-            box-shadow: 0 0 35px rgba(26, 232, 58, 0.25);
-        }
-
-        .modal-head {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-bottom: 12px;
-            margin-bottom: 18px;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .modal-head h3 { margin: 0; color: var(--neon-green); font-size: 1.2rem; text-transform: uppercase; }
-        .modal-close { background: none; border: none; color: #fff; font-size: 1.4rem; cursor: pointer; }
-        .setting-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; font-size: 0.94rem; }
-
-        .toast {
-            position: fixed;
-            bottom: 22px;
-            right: 22px;
-            background: #121a24;
-            border: 1.5px solid var(--neon-green);
-            color: #fff;
-            padding: 12px 18px;
-            border-radius: 12px;
-            font-weight: 700;
-            font-size: 0.92rem;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.65);
-            transform: translateY(120%);
-            opacity: 0;
-            transition: all 0.3s ease;
-            z-index: 200;
-        }
-
+        .trust-footer { margin-top: auto; padding-top: 18px; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-muted); }
+        .toast { position: fixed; bottom: 22px; right: 22px; background: #121a24; border: 1.5px solid var(--neon-green); color: #fff; padding: 12px 18px; border-radius: 12px; font-weight: 700; transform: translateY(150%); opacity: 0; transition: 0.3s; z-index: 200; }
         .toast.show { transform: translateY(0); opacity: 1; }
-
-        @media (max-width: 1120px) {
-            .hero-right-text { display: none; }
-        }
-
-        @media (max-width: 960px) {
-            .hero-center-art { display: none; }
-            .modes-grid { grid-template-columns: repeat(2, 1fr); }
-            .slots-wrapper { grid-template-columns: 1fr; }
-        }
-
-        @media (max-width: 768px) {
-            body { flex-direction: column; }
-            .left-sidebar {
-                width: 100%;
-                height: auto;
-                position: static;
-                border-right: none;
-                border-bottom: 1px solid var(--border-color);
-            }
-            .sidebar-menu { flex-direction: row; flex-wrap: wrap; }
-            .search-box { display: none; }
-            .online-indicator { display: none; }
-        }
-
-        @media (max-width: 540px) {
-            .modes-grid { grid-template-columns: 1fr; }
-            .hero-title .t1 { font-size: 2rem; }
-            .hero-title .t2 { font-size: 2.7rem; }
-        }
     </style>
 </head>
 <body>
 
-    <!-- АНИМАЦИЯ ПОБЕДЫ -->
     <div class="win-overlay" id="win-overlay">
-        <div class="win-banner-pop" id="win-banner-pop">
+        <div class="win-banner-pop">
             <h2 class="win-pop-title">🎉 ПОБЕДА!</h2>
             <div class="win-pop-amount" id="win-pop-amount">+0 BYN</div>
         </div>
     </div>
 
-    <!-- ЛЕВАЯ БОКОВАЯ ПАНЕЛЬ -->
+    <!-- ЛЕВАЯ ПАНЕЛЬ -->
     <aside class="left-sidebar">
         <div class="brand-logo" onclick="showLobby()">
             <div class="brand-crown">👑</div>
@@ -1444,108 +452,43 @@
                 <span class="nav-item-left"><span class="nav-icon">🍒</span> Неоновые слоты</span>
                 <span class="nav-badge badge-hot">HOT</span>
             </button>
-            <button class="nav-item" id="nav-roulette" onclick="switchGame('roulette')">
-                <span class="nav-item-left"><span class="nav-icon">🎡</span> Рулетка</span>
-                <span class="nav-badge badge-new">UPD</span>
-            </button>
-            <button class="nav-item" id="nav-blackjack" onclick="switchGame('blackjack')">
-                <span class="nav-item-left"><span class="nav-icon">🃏</span> Блэкджек</span>
-                <span class="nav-badge badge-hot">TOP</span>
-            </button>
-            <button class="nav-item" id="nav-poker" onclick="switchGame('poker')">
-                <span class="nav-item-left"><span class="nav-icon">🎴</span> Видеопокер</span>
-            </button>
-            <button class="nav-item" id="nav-toothpick" onclick="switchGame('toothpick')">
-                <span class="nav-item-left"><span class="nav-icon">🔥</span> Спички</span>
-                <span class="nav-badge badge-vip">X5</span>
-            </button>
             <button class="nav-item" id="nav-property" onclick="switchGame('property')">
                 <span class="nav-item-left"><span class="nav-icon">👑</span> Имущество</span>
             </button>
         </nav>
-
-        <div class="sidebar-promo">
-            <div class="promo-header"><span>🎁</span> ПРОМОКОД</div>
-            <div class="promo-input-group">
-                <input type="text" id="promo-input" placeholder="Введите код" autocomplete="off">
-                <button onclick="applyPromo()" title="Активировать">→</button>
-            </div>
-            <div class="promo-subtext">БОЛЬШИЕ БОНУСЫ ЖДУТ ТЕБЯ!</div>
-        </div>
     </aside>
 
-    <!-- ОСНОВНАЯ ПРАВАЯ ОБЛАСТЬ -->
     <div class="main-wrapper">
         <header class="topbar">
             <div class="search-box">
                 <span>🔍</span>
-                <input type="text" id="mode-search" placeholder="Поиск режимов..." oninput="filterModes()">
+                <input type="text" placeholder="Поиск режимов...">
             </div>
-
             <div class="topbar-right">
-                <div class="online-indicator">
-                    <span class="online-dot"></span>
-                    <span><b style="color:#fff;">624</b> игрока онлайн</span>
-                </div>
-
-                <div class="balance-box">
-                    <span>💼</span>
-                    <span id="balance">1000</span> BYN
-                </div>
-
+                <div class="online-indicator"><span class="online-dot"></span><span><b>624</b> онлайн</span></div>
+                <div class="balance-box"><span>💼</span><span id="balance">1000</span> BYN</div>
                 <button class="btn-topup" onclick="resetBalance()">ПОПОЛНИТЬ</button>
-                <button class="icon-circle-btn" onclick="openSettings()" title="Настройки">⚙️</button>
             </div>
         </header>
 
         <main class="content-area">
-
-            <!-- ГЛАВНОЕ ЛОББИ С БАННЕРОМ -->
+            <!-- ГЛАВНОЕ ЛОББИ -->
             <div id="lobby-view">
-                <section class="hero-banner-wrap">
-                    <!-- Если положишь файл banner.jpg в папку с сайтом, он загрузится поверх -->
-                    <img src="banner.jpg" alt="" class="hero-custom-bg" onload="this.style.display='block'" onerror="this.remove()">
-
-                    <div class="coin-decor c-tl">👑</div>
-                    <div class="coin-decor c-bl">₿</div>
-                    <div class="coin-decor c-tm">★</div>
-                    <div class="coin-decor c-bm">👑</div>
-                    <div class="coin-decor c-br">★</div>
-
-                    <div class="hero-left">
-                        <h1 class="hero-title">
-                            <span class="t1">ИГРАЙ</span>
-                            <span class="t2">ДЕРЗКО</span>
-                        </h1>
-                        <p class="hero-sub">БОЛЬШИЕ ВЫИГРЫШИ БЛИЖЕ, ЧЕМ ТЫ ДУМАЕШЬ</p>
-                        <button class="hero-btn" onclick="switchGame('slots')">
-                            НАЧАТЬ ИГРАТЬ <span>→</span>
-                        </button>
+                <!-- БАННЕР С ВАШИМ ФОТО -->
+                <div class="hero-banner-custom">
+                    <div class="hero-left-content">
+                        <h1 class="hero-title-main">ИГРАЙ ДЕРЗКО</h1>
+                        <p class="hero-desc-main">Большие выигрыши ближе, чем ты думаешь</p>
+                        <button class="hero-action-btn" onclick="switchGame('slots')">НАЧАТЬ ИГРАТЬ →</button>
                     </div>
-
-                    <div class="hero-center-art">
-                        <div class="art-card spade"><span>A</span><span>♠</span></div>
-                        <div class="art-card heart"><span>A</span><span>♥</span></div>
-                        <div class="art-chip">👑</div>
-                        <div class="art-dice-red d1">🎲</div>
-                        <div class="art-dice-red d2">🎲</div>
-
-                        <div class="boss-character">
-                            <div class="boss-crown">👑</div>
-                            <div class="boss-face">🦍</div>
-                            <div class="boss-glasses">🕶️</div>
-                            <div class="boss-chain">КАЗИК</div>
-                        </div>
+                    <!-- Рамка, куда вставлено ваше фото -->
+                    <div class="banner-photo-box">
+                        <img src="serega.png" alt="Серёга" onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=500&q=80'">
                     </div>
+                </div>
 
-                    <div class="hero-right-text">
-                        <div class="neon-win-bigger">WIN<br>BIGGER</div>
-                        <div class="gold-slogan-box">БОЛЬШИЕ<br>ЛЮДИ<br>БОЛЬШИЕ<br>ВЫИГРЫШИ</div>
-                    </div>
-                </section>
-
-                <section class="modes-grid" id="modes-grid">
-                    <div class="mode-card card-slots" data-name="неоновые слоты" onclick="switchGame('slots')">
+                <section class="modes-grid">
+                    <div class="mode-card card-slots" onclick="switchGame('slots')">
                         <div class="mode-card-visual">
                             <div class="mode-big-emoji">🎰</div>
                             <span class="mode-tag-pill">ДО X25</span>
@@ -1558,80 +501,10 @@
                             <div class="mode-arrow-btn">›</div>
                         </div>
                     </div>
-
-                    <div class="mode-card card-roulette" data-name="рулетка" onclick="switchGame('roulette')">
-                        <div class="mode-card-visual">
-                            <div class="mode-big-emoji">🎡</div>
-                            <span class="mode-tag-pill">X2 — X14</span>
-                        </div>
-                        <div class="mode-card-footer">
-                            <div>
-                                <div class="mode-card-title">РУЛЕТКА</div>
-                                <div class="mode-card-desc">КЛАССИКА, КОТОРАЯ ВСЕГДА В ИГРЕ</div>
-                            </div>
-                            <div class="mode-arrow-btn">›</div>
-                        </div>
-                    </div>
-
-                    <div class="mode-card card-toothpick" data-name="спички" onclick="switchGame('toothpick')">
-                        <div class="mode-card-visual">
-                            <div class="mode-big-emoji">🔥</div>
-                            <span class="mode-tag-pill">X5 РИСК</span>
-                        </div>
-                        <div class="mode-card-footer">
-                            <div>
-                                <div class="mode-card-title">СПИЧКИ</div>
-                                <div class="mode-card-desc">НЕ ВЫТЯНИ КОРОТКУЮ СПИЧКУ</div>
-                            </div>
-                            <div class="mode-arrow-btn">›</div>
-                        </div>
-                    </div>
-
-                    <div class="mode-card card-blackjack" data-name="блэкджек" onclick="switchGame('blackjack')">
-                        <div class="mode-card-visual">
-                            <div class="mode-big-emoji">🃏</div>
-                            <span class="mode-tag-pill">21 ОЧКО</span>
-                        </div>
-                        <div class="mode-card-footer">
-                            <div>
-                                <div class="mode-card-title">БЛЭКДЖЕК</div>
-                                <div class="mode-card-desc">ОБЫГРАЙ ДИЛЕРА НА ЗЕЛЁНОМ СУКНЕ</div>
-                            </div>
-                            <div class="mode-arrow-btn">›</div>
-                        </div>
-                    </div>
-
-                    <div class="mode-card card-poker" data-name="видеопокер" onclick="switchGame('poker')">
-                        <div class="mode-card-visual">
-                            <div class="mode-big-emoji">🎴</div>
-                            <span class="mode-tag-pill">ДО X50</span>
-                        </div>
-                        <div class="mode-card-footer">
-                            <div>
-                                <div class="mode-card-title">ВИДЕОПОКЕР</div>
-                                <div class="mode-card-desc">СОБЕРИ КОМБИНАЦИЮ И ЗАБЕРИ БАНК</div>
-                            </div>
-                            <div class="mode-arrow-btn">›</div>
-                        </div>
-                    </div>
-
-                    <div class="mode-card card-property" data-name="имущество" onclick="switchGame('property')">
-                        <div class="mode-card-visual">
-                            <div class="mode-big-emoji">🏎️</div>
-                            <span class="mode-tag-pill" id="owned-counter">0 / 6 КУПЛЕНО</span>
-                        </div>
-                        <div class="mode-card-footer">
-                            <div>
-                                <div class="mode-card-title">ИМУЩЕСТВО</div>
-                                <div class="mode-card-desc">ТАЧКИ, КВАРТИРЫ И ЯХТЫ НА ВЫИГРЫШ</div>
-                            </div>
-                            <div class="mode-arrow-btn">›</div>
-                        </div>
-                    </div>
                 </section>
             </div>
 
-            <!-- ИГРОВЫЕ ЭКРАНЫ -->
+            <!-- ИГРОВОЙ ЭКРАН СЛОТОВ -->
             <div id="view-slots" class="game-view">
                 <div class="game-header">
                     <h2>🍒 Неоновые слоты</h2>
@@ -1639,7 +512,7 @@
                 </div>
                 <div class="slots-wrapper">
                     <div class="slot-cabinet">
-                        <div style="color: var(--neon-green); font-weight: 900; letter-spacing: 1px;">ЛИНИЯ ВЫПЛАТ</div>
+                        <div style="color: var(--neon-green); font-weight: 900;">ЛИНИЯ ВЫПЛАТ</div>
                         <div class="reels-box">
                             <div class="reel-cell" id="reel-0">🍒</div>
                             <div class="reel-cell" id="reel-1">💎</div>
@@ -1652,109 +525,110 @@
                         </div>
                     </div>
                     <div class="paytable-box">
-                        <h3>Таблица выплат</h3>
+                        <h3 style="color:var(--neon-green); margin-top:0;">Таблица выплат</h3>
                         <div class="pay-row"><span>7️⃣ 7️⃣ 7️⃣ (Джекпот)</span><b>x25</b></div>
                         <div class="pay-row"><span>💎 💎 💎 (Алмазы)</span><b>x15</b></div>
-                        <div class="pay-row"><span>🔔 🔔 🔔 (Колокола)</span><b>x10</b></div>
                         <div class="pay-row"><span>🍋 🍋 🍋 / 🍒 🍒 🍒</span><b>x6</b></div>
-                        <div class="pay-row"><span>Любые 2 одинаковых</span><b>x2</b></div>
                     </div>
                 </div>
                 <div class="status-banner" id="slots-status">Сделай ставку и жми «Крутить»!</div>
             </div>
 
-            <div id="view-roulette" class="game-view">
-                <div class="game-header">
-                    <h2>🎡 Рулетка</h2>
-                    <button class="btn-back" onclick="showLobby()">← В лобби</button>
-                </div>
-                <div class="roulette-stage">
-                    <div class="roulette-pointer"></div>
-                    <div class="roulette-rim">
-                        <div class="roulette-wheel" id="roulette-wheel">
-                            <svg viewBox="0 0 200 200"><g id="roulette-sectors"></g></svg>
-                        </div>
-                        <div class="roulette-hub">
-                            <div class="roulette-hub-num" id="roulette-result-num">0</div>
-                            <div class="roulette-hub-label">СЕКТОР</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="controls-bar">
-                    <label>Ставка:</label>
-                    <input type="number" id="roulette-bet" value="50" min="10" step="10">
-                    <select id="roulette-choice">
-                        <option value="red">🔴 Красное (x2)</option>
-                        <option value="black">⚫ Чёрное (x2)</option>
-                        <option value="green">🟢 Зеро 0 (x14)</option>
-                    </select>
-                    <button class="btn-play" id="roulette-spin-btn" onclick="spinRoulette()">КРУТИТЬ КОЛЕСО</button>
-                </div>
-                <div class="status-banner" id="roulette-status">Выбери цвет и испытай удачу!</div>
-            </div>
+            <footer class="trust-footer">
+                <div>100 000+ ИГРОКОВ</div>
+                <div>МОМЕНТАЛЬНЫЕ ВЫПЛАТЫ</div>
+                <div>ЧЕСТНЫЙ РАНДОМ</div>
+            </footer>
+        </main>
+    </div>
 
-            <div id="view-blackjack" class="game-view">
-                <div class="game-header">
-                    <h2>🃏 Блэкджек</h2>
-                    <button class="btn-back" onclick="showLobby()">← В лобби</button>
-                </div>
-                <div class="felt-table">
-                    <div class="hand-label">Дилер: <span id="dealer-score">?</span></div>
-                    <div class="cards-row" id="dealer-cards"></div>
-                </div>
-                <div class="felt-table">
-                    <div class="hand-label">Твоя рука: <span id="player-score">0</span></div>
-                    <div class="cards-row" id="player-cards"></div>
-                </div>
-                <div class="controls-bar">
-                    <label>Ставка:</label>
-                    <input type="number" id="bj-bet" value="50" min="10" step="10">
-                    <button class="btn-play" id="bj-deal-btn" onclick="startBlackjack()">РАЗДАТЬ</button>
-                    <button class="btn-secondary" id="bj-hit-btn" onclick="bjHit()" disabled>ЕЩЁ КАРТУ</button>
-                    <button class="btn-secondary" id="bj-stand-btn" onclick="bjStand()" disabled>ХВАТИТ</button>
-                </div>
-                <div class="status-banner" id="bj-status">Нажми «Раздать», чтобы начать партию.</div>
-            </div>
+    <div class="toast" id="toast"></div>
 
-            <div id="view-poker" class="game-view">
-                <div class="game-header">
-                    <h2>🎴 Видеопокер (Jacks or Better)</h2>
-                    <button class="btn-back" onclick="showLobby()">← В лобби</button>
-                </div>
-                <div class="felt-table">
-                    <div class="hand-label">Кликни по картам, которые хочешь УДЕРЖАТЬ (HOLD), затем жми «Обменять»</div>
-                    <div class="cards-row" id="poker-cards"></div>
-                </div>
-                <div class="controls-bar">
-                    <label>Ставка:</label>
-                    <input type="number" id="poker-bet" value="50" min="10" step="10">
-                    <button class="btn-play" id="poker-deal-btn" onclick="pokerDeal()">РАЗДАТЬ</button>
-                    <button class="btn-secondary" id="poker-draw-btn" onclick="pokerDraw()" disabled>ОБМЕНЯТЬ</button>
-                </div>
-                <div class="status-banner" id="poker-status">Собирай комбинации и забирай банк!</div>
-            </div>
+    <script>
+        let balance = parseInt(localStorage.getItem('so_kazik_balance')) || 1000;
 
-            <div id="view-toothpick" class="game-view">
-                <div class="game-header">
-                    <h2>🔥 Спички (Выигрыш x5)</h2>
-                    <button class="btn-back" onclick="showLobby()">← В лобби</button>
-                </div>
-                <p style="text-align:center; color: var(--text-muted); margin-top: 0;">
-                    Угадай длинную спичку 3 раза подряд и сорви джекпот <b style="color:var(--gold);">x5</b>!
-                </p>
-                <div class="matches-box" id="matches-container"></div>
-                <div class="controls-bar">
-                    <label>Ставка:</label>
-                    <input type="number" id="match-bet" value="50" min="10" step="10">
-                    <button class="btn-play" id="match-start-btn" onclick="initMatches()">НОВАЯ ПАРТИЯ</button>
-                </div>
-                <div class="status-banner" id="match-status">Сделай ставку и выбери спичку!</div>
-            </div>
+        function updateBalance(delta) {
+            balance += delta;
+            if (balance < 0) balance = 0;
+            localStorage.setItem('so_kazik_balance', balance);
+            document.getElementById('balance').textContent = balance.toLocaleString('ru-RU');
+        }
 
-            <div id="view-property" class="game-view">
-                <div class="game-header">
-                    <h2>👑 Имущество Серёги и Олямбуса</h2>
-                    <button class="btn-back" onclick="showLobby()">← В лобби</button>
-                </div>
-                <p style="color: var(--text-muted); margin-top: 0;">Трать выигранные BYN на элитный автопарк и пентхаусы!</p>
-                <div class="property-grid"
+        function showToast(msg) {
+            const t = document.getElementById('toast');
+            t.textContent = msg;
+            t.classList.add('show');
+            setTimeout(() => t.classList.remove('show'), 3000);
+        }
+
+        function triggerWinAnimation(amount) {
+            const overlay = document.getElementById('win-overlay');
+            document.getElementById('win-pop-amount').textContent = `+${amount.toLocaleString('ru-RU')} BYN`;
+            overlay.classList.add('active');
+            setTimeout(() => overlay.classList.remove('active'), 1500);
+        }
+
+        function resetBalance() {
+            balance = 1000;
+            updateBalance(0);
+            showToast('💵 Баланс пополнен до 1 000 BYN!');
+        }
+
+        function showLobby() {
+            document.getElementById('lobby-view').style.display = 'block';
+            document.getElementById('view-slots').classList.remove('active');
+        }
+
+        function switchGame(id) {
+            document.getElementById('lobby-view').style.display = 'none';
+            document.querySelectorAll('.game-view').forEach(v => v.classList.remove('active'));
+            document.getElementById('view-' + id).classList.add('active');
+        }
+
+        const SLOT_SYMBOLS = ['🍒', '🍋', '🔔', '💎', '7️⃣'];
+        let slotsSpinning = false;
+
+        function spinSlots() {
+            if (slotsSpinning) return;
+            const bet = parseInt(document.getElementById('slots-bet').value);
+            if (isNaN(bet) || bet <= 0 || bet > balance) {
+                showToast('⚠️ Недостаточно средств!');
+                return;
+            }
+
+            updateBalance(-bet);
+            slotsSpinning = true;
+            document.getElementById('slots-spin-btn').disabled = true;
+
+            const reels = [document.getElementById('reel-0'), document.getElementById('reel-1'), document.getElementById('reel-2')];
+            const interval = setInterval(() => {
+                reels.forEach(r => r.textContent = SLOT_SYMBOLS[Math.floor(Math.random() * SLOT_SYMBOLS.length)]);
+            }, 80);
+
+            setTimeout(() => {
+                clearInterval(interval);
+                const res = [
+                    SLOT_SYMBOLS[Math.floor(Math.random() * SLOT_SYMBOLS.length)],
+                    SLOT_SYMBOLS[Math.floor(Math.random() * SLOT_SYMBOLS.length)],
+                    SLOT_SYMBOLS[Math.floor(Math.random() * SLOT_SYMBOLS.length)]
+                ];
+                reels.forEach((r, i) => r.textContent = res[i]);
+
+                let mult = (res[0] === res[1] && res[1] === res[2]) ? 15 : ((res[0] === res[1] || res[1] === res[2]) ? 2 : 0);
+                if (mult > 0) {
+                    const win = bet * mult;
+                    updateBalance(win);
+                    triggerWinAnimation(win);
+                    document.getElementById('slots-status').textContent = `🔥 ВЫИГРЫШ x${mult} — +${win} BYN!`;
+                } else {
+                    document.getElementById('slots-status').textContent = 'Пусто. Крути ещё!';
+                }
+                slotsSpinning = false;
+                document.getElementById('slots-spin-btn').disabled = false;
+            }, 1000);
+        }
+
+        updateBalance(0);
+    </script>
+</body>
+</html>
