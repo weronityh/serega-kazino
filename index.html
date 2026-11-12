@@ -177,7 +177,7 @@
             padding: 22px 26px 32px; max-width: 1240px; width: 100%; margin: 0 auto; flex: 1; display: flex; flex-direction: column;
         }
 
-        /* БАННЕР */
+        /* БАННЕР С НОВЫМ ТЕКСТОМ */
         .hero-banner {
             position: relative; border-radius: 18px; overflow: hidden;
             background: radial-gradient(circle at 78% 45%, rgba(251, 191, 36, 0.28) 0%, transparent 45%),
@@ -186,11 +186,11 @@
             border: 1px solid #26332c; padding: 34px 38px; display: flex; align-items: center; justify-content: space-between; gap: 24px; margin-bottom: 22px;
             box-shadow: 0 16px 40px rgba(0, 0, 0, 0.55);
         }
-        .hero-left { max-width: 500px; z-index: 2; }
+        .hero-left { max-width: 600px; z-index: 2; }
         .hero-title { margin: 0; line-height: 0.95; font-weight: 950; font-style: italic; text-transform: uppercase; }
-        .hero-title .line1 { display: block; font-size: 2.6rem; color: #ffffff; letter-spacing: 1px; }
-        .hero-title .line2 { display: block; font-size: 3.5rem; color: var(--neon-green); text-shadow: 0 0 28px rgba(26, 232, 58, 0.45); margin-top: 2px; }
-        .hero-subtitle { margin: 14px 0 22px; font-size: 0.86rem; font-weight: 700; text-transform: uppercase; color: #d1d9e4; }
+        .hero-title .line1 { display: block; font-size: 2.1rem; color: #ffffff; letter-spacing: 1px; }
+        .hero-title .line2 { display: block; font-size: 2.8rem; color: var(--neon-green); text-shadow: 0 0 28px rgba(26, 232, 58, 0.45); margin-top: 6px; }
+        .hero-subtitle { margin: 14px 0 22px; font-size: 0.95rem; font-weight: 800; text-transform: uppercase; color: var(--gold); text-shadow: 0 0 10px rgba(251, 191, 36, 0.3); }
         .hero-cta-btn {
             background: linear-gradient(90deg, #1ce83c, #49ff66); color: #041407; border: none; border-radius: 12px; padding: 14px 28px; font-size: 1rem; font-weight: 900; text-transform: uppercase; cursor: pointer; box-shadow: 0 0 25px rgba(26, 232, 58, 0.45); transition: 0.2s;
         }
@@ -231,9 +231,25 @@
         .pay-row { display: flex; justify-content: space-between; padding: 7px 0; border-bottom: 1px solid #1b2533; font-size: 0.92rem; }
         .pay-row b { color: var(--gold); }
 
-        /* КОЛЕСО ФОРТУНЫ */
-        .roulette-container { text-align: center; padding: 20px; }
-        .wheel { width: 220px; height: 220px; border-radius: 50%; border: 6px solid var(--gold); margin: 0 auto 20px; display: grid; place-items: center; font-size: 1.5rem; font-weight: 900; background: conic-gradient(#ef4444 0deg 90deg, #3b82f6 90deg 180deg, #10b981 180deg 270deg, #f59e0b 270deg 360deg); transition: transform 3s cubic-bezier(0.15, 0.9, 0.2, 1); }
+        /* КОЛЕСО ФОРТУНЫ С ШАРИКОМ И ФИЗИКОЙ */
+        .roulette-container { text-align: center; padding: 20px; position: relative; }
+        .wheel-outer-wrap { position: relative; width: 260px; height: 260px; margin: 0 auto 20px; }
+        .wheel {
+            width: 260px; height: 260px; border-radius: 50%; border: 6px solid var(--gold);
+            position: absolute; top: 0; left: 0;
+            display: grid; place-items: center; font-size: 1.5rem; font-weight: 900;
+            background: conic-gradient(#ef4444 0deg 90deg, #3b82f6 90deg 180deg, #10b981 180deg 270deg, #f59e0b 270deg 360deg);
+        }
+        /* ШАРИК КОЛЕСА */
+        .roulette-ball {
+            position: absolute;
+            width: 18px; height: 18px; background: #fff; border-radius: 50%;
+            box-shadow: 0 0 10px #fff, inset 0 0 3px #000;
+            top: 50%; left: 50%;
+            margin: -9px 0 0 -9px;
+            z-index: 10;
+            transition: all 3s cubic-bezier(0.1, 0.8, 0.2, 1);
+        }
 
         /* ВИДЕОПОКЕР */
         .poker-table { text-align: center; padding: 10px; }
@@ -241,7 +257,7 @@
         .poker-card { width: 70px; height: 100px; background: #fff; color: #000; border-radius: 8px; font-size: 1.3rem; font-weight: 900; display: flex; flex-direction: column; justify-content: space-between; padding: 8px; cursor: pointer; border: 3px solid transparent; }
         .poker-card.held { border-color: var(--neon-green); transform: translateY(-10px); }
 
-        /* БЛЭКДЖЕК */
+        /* БЛЭКДЖЕК С ПЛАВНОЙ ЗАМЕДЛЕННОЙ РАЗДАЧЕЙ НА СТОЛ */
         .blackjack-table {
             background: radial-gradient(circle, #0e4c27 0%, #062b16 100%);
             border: 6px solid #205c36;
@@ -259,10 +275,11 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
             min-height: 115px;
             perspective: 1000px;
         }
+        /* ЗАМЕДЛЕННАЯ И КРАСИВАЯ АНИМАЦИЯ РАЗДАЧИ КАРТ НА СТОЛ */
         .bj-card {
             width: 75px;
             height: 105px;
@@ -275,16 +292,29 @@
             padding: 8px;
             font-weight: 900;
             font-size: 1.2rem;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.5);
             border: 2px solid #ccc;
             transform-origin: top center;
-            animation: dealCardToTable 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            animation: slowDealToTable 0.9s cubic-bezier(0.25, 1, 0.5, 1) forwards;
         }
         .bj-card.red { color: #dc2626; }
-        @keyframes dealCardToTable {
-            0% { transform: translateY(-120px) scale(0.6) rotate(15deg); opacity: 0; }
-            70% { transform: translateY(10px) scale(1.05) rotate(-3deg); opacity: 1; }
-            100% { transform: translateY(0) scale(1) rotate(0deg); opacity: 1; }
+        @keyframes slowDealToTable {
+            0% {
+                transform: translateY(-200px) translateX(-50px) scale(0.4) rotate(45deg);
+                opacity: 0;
+            }
+            60% {
+                transform: translateY(15px) translateX(5px) scale(1.08) rotate(-5deg);
+                opacity: 1;
+            }
+            85% {
+                transform: translateY(-5px) translateX(-2deg) scale(0.97) rotate(2deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(0) translateX(0) scale(1) rotate(0deg);
+                opacity: 1;
+            }
         }
         .bj-info-panel {
             background: rgba(0,0,0,0.3);
@@ -421,15 +451,15 @@
         </header>
 
         <main class="content-area">
-            <!-- ГЛАВНОЕ ЛОББИ -->
+            <!-- ГЛАВНОЕ ЛОББИ С ВАШИМ ТЕКСТОМ НА БАННЕРЕ -->
             <div id="lobby-view" class="game-view">
                 <div class="hero-banner">
                     <div class="hero-left">
                         <h1 class="hero-title">
-                            <span class="line1">ИГРАЙ ДЕРЗКО</span>
-                            <span class="line2">БЕЗ ЛИМИТОВ</span>
+                            <span class="line1">СЕРЁГА ПУШКА</span>
+                            <span class="line2">МЕССИ ИГРУШКА</span>
                         </h1>
-                        <p class="hero-subtitle">Выигрывай миллионы, прокачивай VIP-статусы и скупай элитное имущество!</p>
+                        <p class="hero-subtitle">СЮДА ЗАЛЕТАЙ И БАБКИ ПОЛУЧАЙ!</p>
                         <button class="hero-cta-btn" onclick="switchGame('slots')">ИГРАТЬ СЕЙЧАС →</button>
                     </div>
                 </div>
@@ -496,20 +526,23 @@
                 <div class="status-banner" id="slots-status">Сделай ставку и жми «Крутить»!</div>
             </div>
 
-            <!-- КОЛЕСО ФОРТУНЫ -->
+            <!-- КОЛЕСО ФОРТУНЫ С ШАРИКОМ -->
             <div id="view-roulette" class="game-view">
                 <div class="game-header">
-                    <h2>🎡 Колесо фортуны</h2>
+                    <h2>🎡 Колесо фортуны с шариком</h2>
                     <button class="btn-back" onclick="showLobby()">← В лобби</button>
                 </div>
                 <div class="roulette-container">
-                    <div class="wheel" id="fortune-wheel">🏆</div>
+                    <div class="wheel-outer-wrap">
+                        <div class="wheel" id="fortune-wheel"></div>
+                        <div class="roulette-ball" id="roulette-ball"></div>
+                    </div>
                     <div class="controls-bar">
                         <label>Ставка:</label>
                         <input type="number" id="roulette-bet" value="200" min="50">
-                        <button class="btn-play" onclick="spinWheel()">КРУТИТЬ КОЛЕСО</button>
+                        <button class="btn-play" id="roulette-btn" onclick="spinWheel()">КРУТИТЬ КОЛЕСО</button>
                     </div>
-                    <div class="status-banner" id="roulette-status">Испытай удачу!</div>
+                    <div class="status-banner" id="roulette-status">Следите за шариком! Куда упадет — тот и результат.</div>
                 </div>
             </div>
 
@@ -530,10 +563,10 @@
                 </div>
             </div>
 
-            <!-- БЛЭКДЖЕК -->
+            <!-- БЛЭКДЖЕК С ПЛАВНОЙ ЗАМЕДЛЕННОЙ РАЗДАЧЕЙ -->
             <div id="view-blackjack" class="game-view">
                 <div class="game-header">
-                    <h2>♠️ Блэкджек с дилером</h2>
+                    <h2>♠️ Блэкджек (Замедленная раздача карт)</h2>
                     <button class="btn-back" onclick="showLobby()">← В лобби</button>
                 </div>
                 <div class="blackjack-table">
@@ -594,7 +627,6 @@
         let ownedProps = [];
         let guaranteedWin = false;
 
-        // Безопасная загрузка сохраненных данных с защитой от повреждения хранилища
         try {
             if (localStorage.getItem('so_kazik_balance') !== null) {
                 balance = parseInt(localStorage.getItem('so_kazik_balance')) || 1000;
@@ -605,9 +637,7 @@
             if (localStorage.getItem('so_kazik_props')) {
                 ownedProps = JSON.parse(localStorage.getItem('so_kazik_props')) || [];
             }
-        } catch (e) {
-            console.error("Storage error:", e);
-        }
+        } catch (e) {}
 
         const PROPERTIES = [
             { id: 'rolex', icon: '⌚', name: 'Rolex Daytona', desc: 'Золотой хронограф', price: 40000 },
@@ -671,7 +701,6 @@
                 v.classList.remove('active');
                 v.style.display = 'none';
             });
-
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
             
             const targetView = document.getElementById('view-' + id);
@@ -771,6 +800,7 @@
             }
         }
 
+        // КОЛЕСО ФОРТУНЫ С РЕАЛЬНЫМ ШАРИКОМ И ФИЗИКОЙ
         function spinWheel() {
             const betInput = document.getElementById('roulette-bet');
             const bet = parseInt(betInput ? betInput.value : 200);
@@ -778,22 +808,61 @@
             updateBalance(-bet);
 
             const wheel = document.getElementById('fortune-wheel');
-            const randomDeg = Math.floor(3600 + Math.random() * 360);
-            if(wheel) wheel.style.transform = `rotate(${randomDeg}deg)`;
+            const ball = document.getElementById('roulette-ball');
+            const statusEl = document.getElementById('roulette-status');
+            const btn = document.getElementById('roulette-btn');
+            if(btn) btn.disabled = true;
+
+            // Секторы колеса: 0-90 (Красный x2), 90-180 (Синий x0), 180-270 (Зеленый x5), 270-360 (Желтый x2)
+            // Определяем целевой угол остановки шарика
+            let targetSectorAngle;
+            let mult = 0;
+
+            if (guaranteedWin) {
+                targetSectorAngle = 225; // Зеленый x5
+                mult = 5;
+                guaranteedWin = false;
+            } else {
+                const rand = Math.random();
+                if (rand < 0.45) { targetSectorAngle = 45; mult = 2; }       // Красный
+                else if (rand < 0.75) { targetSectorAngle = 135; mult = 0; } // Синий (пусто)
+                else if (rand < 0.90) { targetSectorAngle = 225; mult = 5; } // Зеленый (джекпот)
+                else { targetSectorAngle = 315; mult = 2; }                  // Желтый
+            }
+
+            // Добавляем полные обороты колесу и шарику
+            const wheelSpins = 360 * 5;
+            const ballSpins = 360 * 8;
+            const finalWheelDeg = wheelSpins + Math.floor(Math.random() * 360);
+            // Шарик катится в противоположную сторону по кругу радиусом 95px
+            const finalBallDeg = ballSpins + (360 - targetSectorAngle);
+
+            wheel.style.transition = 'transform 3.5s cubic-bezier(0.15, 0.85, 0.2, 1)';
+            ball.style.transition = 'all 3.5s cubic-bezier(0.15, 0.85, 0.2, 1)';
+
+            wheel.style.transform = `rotate(${finalWheelDeg}deg)`;
+            
+            // Расчет позиции шарика по окружности
+            const rad = 90; // радиус дорожки шарика
+            const angleRad = (finalBallDeg * Math.PI) / 180;
+            const ballX = Math.cos(angleRad) * rad;
+            const ballY = Math.sin(angleRad) * rad;
+            ball.style.transform = `translate(${ballX}px, ${ballY}px) scale(1.2)`;
+
+            statusEl.textContent = '🎡 Шарик катится по колесу... Удача близко!';
 
             setTimeout(() => {
-                let mult = guaranteedWin ? 5 : (Math.random() > 0.5 ? 2 : 0);
-                guaranteedWin = false;
-                const statusEl = document.getElementById('roulette-status');
+                if(btn) btn.disabled = false;
+                ball.style.transform = `translate(${ballX}px, ${ballY}px) scale(1)`;
                 if (mult > 0) {
                     const win = bet * mult;
                     updateBalance(win);
-                    if(statusEl) statusEl.textContent = `🎉 Победа x${mult}: +${win} BYN!`;
-                    showVictoryAnimation('view-roulette', 'ПОБЕДА НА КОЛЕСЕ!', `Вы выиграли +${win} BYN!`);
+                    statusEl.textContent = `🎉 Шарик упал в победный сектор! Выигрыш x${mult}: +${win} BYN!`;
+                    showVictoryAnimation('view-roulette', 'ПОБЕДА НА КОЛЕСЕ!', `Шарик принес +${win} BYN!`);
                 } else {
-                    if(statusEl) statusEl.textContent = 'Эх, не повезло в этот раз!';
+                    statusEl.textContent = '❌ Шарик остановился в пустом секторе. Попробуйте еще раз!';
                 }
-            }, 3000);
+            }, 3500);
         }
 
         let pokerCardsData = [];
@@ -860,7 +929,7 @@
             });
         }
 
-        // БЛЭКДЖЕК
+        // БЛЭКДЖЕК С ПООЧЕРЕДНОЙ ЗАМЕДЛЕННОЙ РАЗДАЧЕЙ КАРТ
         let bjDeck = [];
         let bjPlayerHand = [];
         let bjDealerHand = [];
@@ -898,7 +967,7 @@
 
             bjPlayerHand = [];
             bjDealerHand = [];
-            bjActive = true;
+            bjActive = false;
 
             bjDeck = [];
             const suits = ['♠', '♥', '♦', '♣'];
@@ -909,24 +978,39 @@
             }
             bjDeck.sort(() => Math.random() - 0.5);
 
+            let p1, p2, d1, d2;
             if (guaranteedWin) {
-                bjPlayerHand.push({ val: 14, suit: '♠' }, { val: 13, suit: '♥' });
+                p1 = { val: 14, suit: '♠' };
+                p2 = { val: 13, suit: '♥' };
                 guaranteedWin = false;
             } else {
-                bjPlayerHand.push(bjDeck.pop(), bjDeck.pop());
+                p1 = bjDeck.pop();
+                p2 = bjDeck.pop();
             }
-            bjDealerHand.push(bjDeck.pop(), bjDeck.pop());
+            d1 = bjDeck.pop();
+            d2 = bjDeck.pop();
 
-            renderBjTable(false);
             const statusEl = document.getElementById('bj-status');
-            if(statusEl) statusEl.textContent = 'Ваш ход: выберите действие';
+            if(statusEl) statusEl.textContent = '🃏 Дилер раздает карты с замедлением...';
             const controls = document.getElementById('bj-controls');
-            if(controls) {
-                controls.innerHTML = `
-                    <button class="btn-play" onclick="bjHit()">ЕЩЁ</button>
-                    <button class="btn-play" style="background:#ef4444;" onclick="bjStand()">ХВАТИТ</button>
-                `;
-            }
+            if(controls) controls.innerHTML = '';
+
+            // Поочередная замедленная раздача (чтобы каждая карта красиво ложилась на стол)
+            setTimeout(() => { bjPlayerHand.push(p1); renderBjTable(false); }, 200);
+            setTimeout(() => { bjDealerHand.push(d1); renderBjTable(false); }, 600);
+            setTimeout(() => { bjPlayerHand.push(p2); renderBjTable(false); }, 1000);
+            setTimeout(() => { 
+                bjDealerHand.push(d2); 
+                renderBjTable(false); 
+                bjActive = true;
+                if(statusEl) statusEl.textContent = 'Ваш ход: выберите действие';
+                if(controls) {
+                    controls.innerHTML = `
+                        <button class="btn-play" onclick="bjHit()">ЕЩЁ</button>
+                        <button class="btn-play" style="background:#ef4444;" onclick="bjStand()">ХВАТИТ</button>
+                    `;
+                }
+            }, 1400);
         }
 
         function renderBjTable(revealDealer) {
@@ -1066,7 +1150,6 @@
             showVictoryAnimation('view-property', 'ЭЛИТНАЯ ПОКУПКА!', 'Вы пополнили свою коллекцию роскоши!');
         }
 
-        // Гарантированная инициализация интерфейса после загрузки DOM
         window.addEventListener('DOMContentLoaded', () => {
             const balEl = document.getElementById('balance');
             if(balEl) balEl.textContent = balance.toLocaleString('ru-RU');
