@@ -2465,6 +2465,15 @@
                 document.getElementById('nav-music').style.display = 'flex';
                 showToast('🎵 Режим МУЗОН разблокирован!');
                 activated = true;
+            } else if (code === 'антиадмин') {  // <--- ВОТ НОВЫЙ ПРОМОКОД
+                adminUnlocked = false;
+                localStorage.setItem('so_kazik_admin', 'false');
+                document.getElementById('nav-admin').style.display = 'none';
+                if (document.getElementById('view-admin').classList.contains('active')) {
+                    showLobby();
+                }
+                showToast('🛡️ Админ-меню скрыто!');
+                activated = true;
             } else {
                 showToast('❌ Неверный промокод');
             }
