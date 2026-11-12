@@ -261,7 +261,7 @@
         }
 
         /* КАРТОЧКИ РЕЖИМОВ */
-        .modes-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
+        .modes-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 24px; }
         .mode-card {
             position: relative; border-radius: 16px; padding: 20px; min-height: 175px; cursor: pointer; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; transition: 0.25s ease; border: 1.5px solid #2b3847; background: #121922;
         }
@@ -459,10 +459,45 @@
         .slots-wrapper { display: grid; grid-template-columns: 1.4fr 1fr; gap: 20px; }
         .slot-cabinet { background: #110e18; border: 3px solid var(--neon-green); border-radius: 18px; padding: 24px; text-align: center; }
         .reels-box { display: flex; justify-content: center; gap: 12px; margin: 14px 0; }
-        .reel-cell { width: 96px; height: 106px; background: #0d131a; border: 2px solid #2e3e52; border-radius: 14px; display: grid; place-items: center; font-size: 3.2rem; }
+        .reel-cell { width: 96px; height: 106px; background: #0d131a; border: 2px solid #2e3e52; border-radius: 14px; display: grid; place-items: center; font-size: 3.2rem; transition: transform 0.1s ease; }
+        .reel-cell.spinning { animation: reelBounce 0.15s infinite alternate; filter: blur(1px); }
+        @keyframes reelBounce {
+            0% { transform: translateY(-4px); }
+            100% { transform: translateY(4px); }
+        }
         .paytable-box { background: #0e141c; border: 1px solid #233042; border-radius: 14px; padding: 16px; }
         .pay-row { display: flex; justify-content: space-between; padding: 7px 0; border-bottom: 1px solid #1b2533; font-size: 0.92rem; }
         .pay-row b { color: var(--gold); }
+
+        /* РАКЕТКА (ЛАКИ ДЖЕТ) */
+        .jet-container { text-align: center; max-width: 700px; margin: 0 auto; }
+        .jet-screen {
+            background: radial-gradient(circle at 50% 50%, #1a102f 0%, #070913 100%);
+            border: 2px solid #3b82f6;
+            border-radius: 16px;
+            height: 260px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: inset 0 0 40px rgba(59, 130, 246, 0.2);
+            margin-bottom: 20px;
+        }
+        .jet-multiplier {
+            font-size: 3.8rem;
+            font-weight: 950;
+            color: #fff;
+            text-shadow: 0 0 20px rgba(59, 130, 246, 0.8);
+            letter-spacing: 2px;
+        }
+        .jet-rocket {
+            font-size: 3.2rem;
+            position: absolute;
+            transition: transform 0.1s linear;
+            filter: drop-shadow(0 0 10px #f59e0b);
+        }
 
         /* КАНВАС-КОЛЕСО ФОРТУНЫ С ШАРИКОМ */
         .roulette-container { text-align: center; padding: 10px; position: relative; }
@@ -608,6 +643,32 @@
             display: flex;
             justify-content: space-around;
             font-weight: 800;
+        }
+
+        /* АДМИН ПАНЕЛЬ */
+        .admin-panel-card {
+            background: #0d131a;
+            border: 2px solid var(--danger);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 0 30px rgba(239, 68, 68, 0.2);
+        }
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 12px;
+            font-size: 0.9rem;
+            text-align: left;
+        }
+        .admin-table th, .admin-table td {
+            padding: 10px;
+            border-bottom: 1px solid #1c2633;
+        }
+        .admin-table th {
+            color: var(--danger);
+            text-transform: uppercase;
+            font-size: 0.78rem;
         }
 
         /* ХАЛЯВА */
@@ -829,17 +890,25 @@
                 <span class="nav-item-left"><span class="nav-icon">🎡</span> Колесо</span>
                 <span class="nav-badge" style="background:#3b82f6; color:#fff;">FREE</span>
             </button>
+            <button class="nav-item" id="nav-jet" onclick="switchGame('jet')">
+                <span class="nav-item-left"><span class="nav-icon">🚀</span> Ракетка</span>
+                <span class="nav-badge" style="background:#3b82f6; color:#fff;">NEW</span>
+            </button>
             <button class="nav-item" id="nav-poker" onclick="switchGame('poker')">
                 <span class="nav-item-left"><span class="nav-icon">🃏</span> Покер</span>
                 <span class="nav-badge badge-vip">VIP LITE</span>
             </button>
             <button class="nav-item" id="nav-slots" onclick="switchGame('slots')">
-                <span class="nav-item-left"><span class="nav-icon">🍒</span> Слоты</span>
+                <span class="nav-item-left"><span class="nav-icon">🎰</span> Слоты</span>
                 <span class="nav-badge badge-pro">VIP PRO</span>
             </button>
             <button class="nav-item" id="nav-music" onclick="switchGame('music')" style="display: none; border-color: #ec4899;">
                 <span class="nav-item-left"><span class="nav-icon">🎵</span> МУЗОН</span>
                 <span class="nav-badge" style="background:#ec4899; color:#fff;">MORGEN</span>
+            </button>
+            <button class="nav-item" id="nav-admin" onclick="switchGame('admin')" style="display: none; border-color: var(--danger);">
+                <span class="nav-item-left"><span class="nav-icon">🛡️</span> Админ-меню</span>
+                <span class="nav-badge" style="background:var(--danger); color:#fff;">ADMIN</span>
             </button>
             <button class="nav-item" id="nav-vip-shop" onclick="switchGame('vip-shop')">
                 <span class="nav-item-left"><span class="nav-icon">⭐</span> VIP Статусы</span>
@@ -916,6 +985,13 @@
                             <div class="mode-arrow-btn">›</div>
                         </div>
                     </div>
+                    <div class="mode-card" onclick="switchGame('jet')">
+                        <div class="mode-card-visual"><div class="mode-big-emoji">🚀</div><span class="mode-tag-pill" style="background:#3b82f6; color:#fff;">ДО 75X</span></div>
+                        <div class="mode-card-footer">
+                            <div><div class="mode-card-title">Ракетка</div><div class="mode-card-desc">Успей забрать иксы до 75x</div></div>
+                            <div class="mode-arrow-btn">›</div>
+                        </div>
+                    </div>
                     <div class="mode-card" onclick="switchGame('poker')">
                         <div class="mode-card-visual"><div class="mode-big-emoji">🃏</div><span class="mode-tag-pill">VIP LITE</span></div>
                         <div class="mode-card-footer">
@@ -924,9 +1000,9 @@
                         </div>
                     </div>
                     <div class="mode-card" onclick="switchGame('slots')">
-                        <div class="mode-card-visual"><div class="mode-big-emoji">🍒</div><span class="mode-tag-pill" style="background:var(--neon-green); color:#000;">VIP PRO</span></div>
+                        <div class="mode-card-visual"><div class="mode-big-emoji">🎰</div><span class="mode-tag-pill" style="background:var(--neon-green); color:#000;">VIP PRO</span></div>
                         <div class="mode-card-footer">
-                            <div><div class="mode-card-title">Неоновые слоты</div><div class="mode-card-desc">Крути барабаны до x25</div></div>
+                            <div><div class="mode-card-title">Слоты</div><div class="mode-card-desc">Крути барабаны до x25</div></div>
                             <div class="mode-arrow-btn">›</div>
                         </div>
                     </div>
@@ -1008,6 +1084,36 @@
                 <div id="profile-owned-props" style="display: flex; gap: 12px; flex-wrap: wrap;"></div>
             </div>
 
+            <!-- АДМИН-МЕНЮ (РЕАЛЬНЫЕ ИГРОКИ С FIREBASE) -->
+            <div id="view-admin" class="game-view">
+                <div class="game-header">
+                    <h2>🛡️ Секретное Админ-Меню</h2>
+                    <button class="btn-back" onclick="showLobby()">← В лобби</button>
+                </div>
+                <div class="admin-panel-card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+                        <div>
+                            <h3 style="color: var(--danger); margin:0;">👥 Мониторинг друзей на сайте</h3>
+                            <p style="color: var(--text-muted); font-size: 0.85rem; margin: 4px 0 0 0;">Активность пользователей, балансы и статистика ставок в реальном времени.</p>
+                        </div>
+                        <button class="btn-play" style="padding: 8px 14px; font-size: 0.8rem;" onclick="renderAdminPanel()">🔄 Обновить</button>
+                    </div>
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Игрок</th>
+                                <th>VIP Статус</th>
+                                <th>Баланс</th>
+                                <th>Игр (Побед / Проигр.)</th>
+                                <th>Поставлено / Выиграно</th>
+                                <th>Профит казика</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-players-tbody"></tbody>
+                    </table>
+                </div>
+            </div>
+
             <!-- БЛЭКДЖЕК -->
             <div id="view-blackjack" class="game-view">
                 <div class="game-header">
@@ -1072,6 +1178,26 @@
                 </div>
             </div>
 
+            <!-- РАКЕТКА (ЛАКИ ДЖЕТ) -->
+            <div id="view-jet" class="game-view">
+                <div class="game-header">
+                    <h2>🚀 Ракетка (Лаки Джет)</h2>
+                    <button class="btn-back" onclick="showLobby()">← В лобби</button>
+                </div>
+                <div class="jet-container">
+                    <div class="jet-screen">
+                        <div class="jet-rocket" id="jet-rocket-icon" style="bottom: 20px; left: 30px;">🚀</div>
+                        <div class="jet-multiplier" id="jet-multiplier-display">1.00x</div>
+                    </div>
+                    <div class="controls-bar" id="jet-controls-box">
+                        <label>Ставка:</label>
+                        <input type="number" id="jet-bet" value="100" min="50">
+                        <button class="btn-play" id="jet-action-btn" onclick="startJetGame()">ЗАПУСТИТЬ</button>
+                    </div>
+                    <div class="status-banner" id="jet-status">Максимальный множитель 75.00x! Успей забрать до улёта ракетки!</div>
+                </div>
+            </div>
+
             <!-- 5-CARD DRAW ПОКЕР -->
             <div id="view-poker" class="game-view">
                 <div class="game-header">
@@ -1121,17 +1247,17 @@
             <!-- СЛОТЫ -->
             <div id="view-slots" class="game-view">
                 <div class="game-header">
-                    <h2>🍒 Неоновые слоты</h2>
+                    <h2>🎰 Слоты</h2>
                     <button class="btn-back" onclick="showLobby()">← В лобби</button>
                 </div>
                 <div id="slots-lock-banner" class="status-banner" style="background: rgba(26, 232, 58, 0.15); border: 2px dashed var(--neon-green); color: var(--neon-green); margin-bottom: 20px; display: none;">
-                    🔒 Чтобы крутить Неоновые слоты, обязательно нужно прикупить статус <b>VIP Pro</b>!
+                    🔒 Чтобы крутить Слоты, обязательно нужно прикупить статус <b>VIP Pro</b>!
                 </div>
                 <div class="slots-wrapper">
                     <div class="slot-cabinet">
                         <div style="color: var(--neon-green); font-weight: 900;">ЛИНИЯ ВЫПЛАТ</div>
                         <div class="reels-box">
-                            <div class="reel-cell" id="reel-0">🍒</div>
+                            <div class="reel-cell" id="reel-0">💎</div>
                             <div class="reel-cell" id="reel-1">💎</div>
                             <div class="reel-cell" id="reel-2">7️⃣</div>
                         </div>
@@ -1145,10 +1271,10 @@
                         <h3 style="color:var(--neon-green); margin-top:0;">Таблица выплат</h3>
                         <div class="pay-row"><span>7️⃣ 7️⃣ 7️⃣ (Джекпот)</span><b>x25</b></div>
                         <div class="pay-row"><span>💎 💎 💎 (Алмазы)</span><b>x15</b></div>
-                        <div class="pay-row"><span>🍋 🍋 🍋 / 🍒 🍒 🍒</span><b>x6</b></div>
+                        <div class="pay-row"><span>🍋 🍋 🍋 / 🔔 🔔 🔔</span><b>x6</b></div>
                     </div>
                 </div>
-                <div class="status-banner" id="slots-status">Зал слотов открыт для просмотра.</div>
+                <div class="status-banner" id="slots-status">Зал слотов открыт для игры. Испытай свою удачу!</div>
             </div>
 
             <!-- МУЗОН -->
@@ -1214,7 +1340,7 @@
                             <span class="nav-badge badge-pro" style="font-size:0.8rem; padding:4px 8px;">VIP PRO</span>
                             <h3 style="color: var(--neon-green); margin-top: 10px;">50 000 BYN</h3>
                             <ul class="vip-features-list">
-                                <li>🍒 Доступ к игре в <b>Неоновые слоты</b> (до x25)</li>
+                                <li>🎰 Доступ к игре в <b>Слоты</b> (до x25)</li>
                                 <li>👑 Полный доступ к покупке <b>Элитного имущества</b></li>
                                 <li>🚀 Увеличенные множители выигрышей</li>
                                 <li>🎁 Ежедневный бонус +5 000 BYN</li>
@@ -1262,16 +1388,49 @@
     <div class="toast" id="toast"></div>
 
     <script>
-        // ================= ПОЛНОЕ СОХРАНЕНИЕ СОСТОЯНИЯ =================
+        // ================= ОБЛАЧНАЯ БАЗА FIREBASE ДЛЯ ДРУЗЕЙ =================
+        const FIREBASE_DB_URL = "https://ВАШ-ПРОЕКТ-default-rtdb.firebaseio.com"; // <-- Вставьте сюда ссылку из консоли Firebase
+
+        let playerId = localStorage.getItem('so_kazik_uid');
+        if (!playerId) {
+            playerId = 'user_' + Math.random().toString(36).substring(2, 10);
+            localStorage.setItem('so_kazik_uid', playerId);
+        }
+
+        function syncPlayerToCloud() {
+            if (!FIREBASE_DB_URL || FIREBASE_DB_URL.includes("ВАШ-ПРОЕКТ")) return;
+            
+            const payload = {
+                username: userProfile.username,
+                avatar: userProfile.avatar,
+                vipLevel: vipLevel,
+                balance: balance,
+                gamesPlayed: userStats.gamesPlayed,
+                wins: userStats.wins,
+                losses: userStats.losses,
+                totalWagered: userStats.totalWagered,
+                totalWon: userStats.totalWon,
+                lastActive: Date.now()
+            };
+
+            fetch(`${FIREBASE_DB_URL}/players/${playerId}.json`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            }).catch(() => {});
+        }
+
+        // ================= СОСТОЯНИЕ ИГРЫ =================
         let balance = 1000;
         let vipLevel = 'none';
         let ownedProps = [];
         let guaranteedWin = false;
         let musicUnlocked = false;
+        let adminUnlocked = false;
         let answeredQuestions = {};
         let currentBetType = 'red';
+        let promoCooldowns = {};
 
-        // Профиль и статистика
         let userProfile = {
             username: 'Игрок #777',
             avatar: '😎',
@@ -1303,78 +1462,6 @@
             { id: 'title-shark', type: 'title', cssClass: 'title-shark', titleText: '🦈 Акула Казика', icon: '🦈', name: 'Титул: Акула Казика', desc: 'Розовый хищный титул в профиле', price: 15000 },
             { id: 'title-oligarch', type: 'title', cssClass: 'title-oligarch', titleText: '💎 Олигарх BYN', icon: '💎', name: 'Титул: Олигарх BYN', desc: 'Легендарный золотой титул элиты', price: 45000 }
         ];
-
-        const ROULETTE_NUMBERS = [0,32,15,19,4,21,2,25,17,34,6,27,13,36,11,30,8,23,10,5,24,16,33,1,20,14,31,9,22,18,29,7,28,12,35,3,26];
-        const RED_NUMBERS = [32, 19, 21, 25, 34, 27, 36, 30, 23, 5, 16, 1, 14, 9, 18, 7, 12, 3];
-
-        function loadSavedData() {
-            try {
-                const savedBal = localStorage.getItem('so_kazik_balance');
-                if (savedBal !== null && !isNaN(parseInt(savedBal))) {
-                    balance = parseInt(savedBal);
-                }
-                const savedVip = localStorage.getItem('so_kazik_vip');
-                if (savedVip) {
-                    vipLevel = savedVip;
-                }
-                const savedProps = localStorage.getItem('so_kazik_props');
-                if (savedProps) {
-                    ownedProps = JSON.parse(savedProps) || [];
-                }
-                const savedQuiz = localStorage.getItem('so_kazik_quiz');
-                if (savedQuiz) {
-                    answeredQuestions = JSON.parse(savedQuiz) || {};
-                }
-                if (localStorage.getItem('so_kazik_music') === 'true') {
-                    musicUnlocked = true;
-                    const musicBtn = document.getElementById('nav-music');
-                    if (musicBtn) musicBtn.style.display = 'flex';
-                }
-                const savedProfile = localStorage.getItem('so_kazik_profile');
-                if (savedProfile) {
-                    userProfile = { ...userProfile, ...JSON.parse(savedProfile) };
-                }
-                const savedStats = localStorage.getItem('so_kazik_stats');
-                if (savedStats) {
-                    userStats = { ...userStats, ...JSON.parse(savedStats) };
-                }
-            } catch (e) {}
-        }
-
-        function saveData() {
-            try {
-                localStorage.setItem('so_kazik_balance', String(balance));
-                localStorage.setItem('so_kazik_vip', vipLevel);
-                localStorage.setItem('so_kazik_props', JSON.stringify(ownedProps));
-                localStorage.setItem('so_kazik_quiz', JSON.stringify(answeredQuestions));
-                localStorage.setItem('so_kazik_music', String(musicUnlocked));
-                localStorage.setItem('so_kazik_profile', JSON.stringify(userProfile));
-                localStorage.setItem('so_kazik_stats', JSON.stringify(userStats));
-            } catch (e) {}
-        }
-
-        window.addEventListener('beforeunload', saveData);
-        window.addEventListener('pagehide', saveData);
-
-        function recordBet(amount) {
-            userStats.totalWagered += amount;
-            saveData();
-        }
-
-        function recordGameResult(isWin, winAmount = 0) {
-            userStats.gamesPlayed += 1;
-            if (isWin) {
-                userStats.wins += 1;
-                userStats.totalWon += winAmount;
-                if (winAmount > userStats.biggestWin) {
-                    userStats.biggestWin = winAmount;
-                }
-            } else {
-                userStats.losses += 1;
-            }
-            saveData();
-            syncHeaderProfile();
-        }
 
         const PROPERTIES = [
             { id: 'rolex', icon: '⌚', name: 'Rolex Daytona', desc: 'Золотой хронограф', price: 40000 },
@@ -1410,7 +1497,7 @@
             {
                 id: 3,
                 question: "Вопрос 4: Какой режим открывается с VIP PRO статусом?",
-                options: ["Только Блэкджек", "Неоновые слоты и элитное имущество", "Ничего нового"],
+                options: ["Только Блэкджек", "Слоты и элитное имущество", "Ничего нового"],
                 correct: 1,
                 reward: 3000
             },
@@ -1422,6 +1509,72 @@
                 reward: 5000
             }
         ];
+
+        function loadSavedData() {
+            try {
+                const savedBal = localStorage.getItem('so_kazik_balance');
+                if (savedBal !== null && !isNaN(parseInt(savedBal))) balance = parseInt(savedBal);
+                const savedVip = localStorage.getItem('so_kazik_vip');
+                if (savedVip) vipLevel = savedVip;
+                const savedProps = localStorage.getItem('so_kazik_props');
+                if (savedProps) ownedProps = JSON.parse(savedProps) || [];
+                const savedQuiz = localStorage.getItem('so_kazik_quiz');
+                if (savedQuiz) answeredQuestions = JSON.parse(savedQuiz) || {};
+                const savedPromo = localStorage.getItem('so_kazik_promo_cd');
+                if (savedPromo) promoCooldowns = JSON.parse(savedPromo) || {};
+                if (localStorage.getItem('so_kazik_music') === 'true') {
+                    musicUnlocked = true;
+                    const musicBtn = document.getElementById('nav-music');
+                    if (musicBtn) musicBtn.style.display = 'flex';
+                }
+                if (localStorage.getItem('so_kazik_admin') === 'true') {
+                    adminUnlocked = true;
+                    const adminBtn = document.getElementById('nav-admin');
+                    if (adminBtn) adminBtn.style.display = 'flex';
+                }
+                const savedProfile = localStorage.getItem('so_kazik_profile');
+                if (savedProfile) userProfile = { ...userProfile, ...JSON.parse(savedProfile) };
+                const savedStats = localStorage.getItem('so_kazik_stats');
+                if (savedStats) userStats = { ...userStats, ...JSON.parse(savedStats) };
+            } catch (e) {}
+        }
+
+        function saveData() {
+            try {
+                localStorage.setItem('so_kazik_balance', String(balance));
+                localStorage.setItem('so_kazik_vip', vipLevel);
+                localStorage.setItem('so_kazik_props', JSON.stringify(ownedProps));
+                localStorage.setItem('so_kazik_quiz', JSON.stringify(answeredQuestions));
+                localStorage.setItem('so_kazik_promo_cd', JSON.stringify(promoCooldowns));
+                localStorage.setItem('so_kazik_music', String(musicUnlocked));
+                localStorage.setItem('so_kazik_admin', String(adminUnlocked));
+                localStorage.setItem('so_kazik_profile', JSON.stringify(userProfile));
+                localStorage.setItem('so_kazik_stats', JSON.stringify(userStats));
+                syncPlayerToCloud();
+            } catch (e) {}
+        }
+
+        window.addEventListener('beforeunload', saveData);
+        window.addEventListener('pagehide', saveData);
+
+        function recordBet(amount) {
+            userStats.totalWagered += amount;
+            saveData();
+        }
+
+        function recordGameResult(isWin, winAmount = 0) {
+            userStats.gamesPlayed += 1;
+            if (isWin) {
+                userStats.wins += 1;
+                userStats.totalWon += winAmount;
+                if (winAmount > userStats.biggestWin) userStats.biggestWin = winAmount;
+            } else {
+                userStats.losses += 1;
+            }
+            saveData();
+            syncHeaderProfile();
+            if (adminUnlocked) renderAdminPanel();
+        }
 
         function updateBalance(delta) {
             balance += delta;
@@ -1459,6 +1612,7 @@
             if (id === 'property') renderProperties();
             if (id === 'vip-shop') updateVipShopStatus();
             if (id === 'settings') renderQuiz();
+            if (id === 'admin') renderAdminPanel();
 
             document.querySelectorAll('.game-view').forEach(v => {
                 v.classList.remove('active');
@@ -1479,7 +1633,6 @@
             if (navBtn) navBtn.classList.add('active');
         }
 
-        // ================= ЛОГИКА ПРОФИЛЯ И УКРАШЕНИЙ =================
         function syncHeaderProfile() {
             const topName = document.getElementById('topbar-username');
             const topAva = document.getElementById('topbar-avatar-emoji');
@@ -1527,17 +1680,13 @@
             if (avaBox) {
                 avaBox.textContent = userProfile.avatar;
                 avaBox.className = 'profile-avatar-box';
-                if (userProfile.equippedFrame !== 'none') {
-                    avaBox.classList.add(userProfile.equippedFrame);
-                }
+                if (userProfile.equippedFrame !== 'none') avaBox.classList.add(userProfile.equippedFrame);
             }
 
             const bannerCard = document.getElementById('profile-banner-card');
             if (bannerCard) {
                 bannerCard.className = 'profile-banner-card';
-                if (userProfile.equippedBg !== 'none') {
-                    bannerCard.classList.add(userProfile.equippedBg);
-                }
+                if (userProfile.equippedBg !== 'none') bannerCard.classList.add(userProfile.equippedBg);
             }
 
             const titleBadge = document.getElementById('profile-title-badge');
@@ -1568,13 +1717,9 @@
 
             const vipDisplay = document.getElementById('profile-vip-status-display');
             if (vipDisplay) {
-                if (vipLevel === 'pro') {
-                    vipDisplay.innerHTML = '<span style="color:var(--neon-green);">👑 VIP PRO (МАКСИМУМ)</span>';
-                } else if (vipLevel === 'lite') {
-                    vipDisplay.innerHTML = '<span style="color:#f59e0b;">⭐ VIP LITE АКТИВЕН</span>';
-                } else {
-                    vipDisplay.innerHTML = '<span style="color:var(--text-muted);">СТАНДАРТ (БЕЗ VIP)</span>';
-                }
+                if (vipLevel === 'pro') vipDisplay.innerHTML = '<span style="color:var(--neon-green);">👑 VIP PRO (МАКСИМУМ)</span>';
+                else if (vipLevel === 'lite') vipDisplay.innerHTML = '<span style="color:#f59e0b;">⭐ VIP LITE АКТИВЕН</span>';
+                else vipDisplay.innerHTML = '<span style="color:var(--text-muted);">СТАНДАРТ (БЕЗ VIP)</span>';
             }
 
             document.getElementById('stat-games').textContent = userStats.gamesPlayed;
@@ -1595,22 +1740,17 @@
 
                 COSMETICS_SHOP.forEach(item => {
                     const isOwned = userProfile.ownedCosmetics.includes(item.id);
-                    const isEquipped =
-                        (item.type === 'frame' && userProfile.equippedFrame === item.cssClass) ||
-                        (item.type === 'bg' && userProfile.equippedBg === item.cssClass) ||
-                        (item.type === 'title' && userProfile.equippedTitle === item.cssClass);
+                    const isEquipped = (item.type === 'frame' && userProfile.equippedFrame === item.cssClass) ||
+                                       (item.type === 'bg' && userProfile.equippedBg === item.cssClass) ||
+                                       (item.type === 'title' && userProfile.equippedTitle === item.cssClass);
 
                     const card = document.createElement('div');
                     card.className = `cosmetic-card ${isEquipped ? 'equipped' : ''}`;
 
                     let actionHtml = '';
-                    if (!isOwned) {
-                        actionHtml = `<button class="btn-play" style="padding:7px 14px; font-size:0.8rem;" onclick="buyCosmetic('${item.id}')">КУПИТЬ</button>`;
-                    } else if (isEquipped) {
-                        actionHtml = `<button class="btn-back" style="padding:7px 12px; font-size:0.8rem; border-color:var(--neon-green); color:var(--neon-green);" onclick="toggleCosmetic('${item.id}')">НАДЕТО ✓</button>`;
-                    } else {
-                        actionHtml = `<button class="btn-play" style="background:#3b82f6; color:#fff; padding:7px 14px; font-size:0.8rem;" onclick="toggleCosmetic('${item.id}')">НАДЕТЬ</button>`;
-                    }
+                    if (!isOwned) actionHtml = `<button class="btn-play" style="padding:7px 14px; font-size:0.8rem;" onclick="buyCosmetic('${item.id}')">КУПИТЬ</button>`;
+                    else if (isEquipped) actionHtml = `<button class="btn-back" style="padding:7px 12px; font-size:0.8rem; border-color:var(--neon-green); color:var(--neon-green);" onclick="toggleCosmetic('${item.id}')">НАДЕТО ✓</button>`;
+                    else actionHtml = `<button class="btn-play" style="background:#3b82f6; color:#fff; padding:7px 14px; font-size:0.8rem;" onclick="toggleCosmetic('${item.id}')">НАДЕТЬ</button>`;
 
                     card.innerHTML = `
                         <div>
@@ -1649,12 +1789,8 @@
 
         function buyCosmetic(id) {
             const item = COSMETICS_SHOP.find(c => c.id === id);
-            if (!item) return;
-            if (userProfile.ownedCosmetics.includes(id)) return;
-            if (balance < item.price) {
-                showToast('⚠️ Недостаточно BYN! Копите валюту в играх.');
-                return;
-            }
+            if (!item || userProfile.ownedCosmetics.includes(id)) return;
+            if (balance < item.price) { showToast('⚠️ Недостаточно BYN!'); return; }
             updateBalance(-item.price);
             userProfile.ownedCosmetics.push(id);
             if (item.type === 'frame') userProfile.equippedFrame = item.cssClass;
@@ -1663,22 +1799,69 @@
 
             saveData();
             renderProfile();
-            showToast(`✨ Украшение «${item.name}» куплено и надето!`);
+            showToast(`✨ Украшение «${item.name}» куплено!`);
         }
 
         function toggleCosmetic(id) {
             const item = COSMETICS_SHOP.find(c => c.id === id);
             if (!item || !userProfile.ownedCosmetics.includes(id)) return;
 
-            if (item.type === 'frame') {
-                userProfile.equippedFrame = (userProfile.equippedFrame === item.cssClass) ? 'none' : item.cssClass;
-            } else if (item.type === 'bg') {
-                userProfile.equippedBg = (userProfile.equippedBg === item.cssClass) ? 'none' : item.cssClass;
-            } else if (item.type === 'title') {
-                userProfile.equippedTitle = (userProfile.equippedTitle === item.cssClass) ? 'none' : item.cssClass;
-            }
+            if (item.type === 'frame') userProfile.equippedFrame = (userProfile.equippedFrame === item.cssClass) ? 'none' : item.cssClass;
+            else if (item.type === 'bg') userProfile.equippedBg = (userProfile.equippedBg === item.cssClass) ? 'none' : item.cssClass;
+            else if (item.type === 'title') userProfile.equippedTitle = (userProfile.equippedTitle === item.cssClass) ? 'none' : item.cssClass;
             saveData();
             renderProfile();
+        }
+
+        // --- АДМИН ПАНЕЛЬ С ПОДКЛЮЧЕНИЕМ ДРУЗЕЙ ИЗ FIREBASE ---
+        async function renderAdminPanel() {
+            const tbody = document.getElementById('admin-players-tbody');
+            if (!tbody) return;
+
+            tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; color:var(--gold);">⏳ Загрузка реальных игроков из облака...</td></tr>';
+
+            try {
+                const res = await fetch(`${FIREBASE_DB_URL}/players.json`);
+                const data = await res.json();
+
+                if (!data) {
+                    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;">Пока нет данных в облаке. Сделайте ставку!</td></tr>';
+                    return;
+                }
+
+                tbody.innerHTML = '';
+                const now = Date.now();
+                const players = Object.entries(data).map(([id, p]) => ({ id, ...p }));
+                players.sort((a, b) => (b.lastActive || 0) - (a.lastActive || 0));
+
+                players.forEach(p => {
+                    const isMe = (p.id === playerId);
+                    const isOnline = (now - (p.lastActive || 0)) < 180000;
+                    const statusBadge = isMe
+                        ? '<span style="color:var(--neon-green); font-size:0.75rem;">(Вы)</span>'
+                        : (isOnline ? '<span style="color:var(--neon-green); font-size:0.75rem;">● Онлайн</span>' : '<span style="color:var(--text-muted); font-size:0.75rem;">○ Офлайн</span>');
+
+                    const wagered = p.totalWagered || 0;
+                    const won = p.totalWon || 0;
+                    const profit = wagered - won;
+                    const profitColor = profit >= 0 ? 'var(--neon-green)' : 'var(--danger)';
+                    const vip = (p.vipLevel || 'none').toUpperCase();
+                    const vipColor = vip === 'PRO' ? 'var(--neon-green)' : (vip === 'LITE' ? '#f59e0b' : 'var(--text-muted)');
+
+                    tbody.innerHTML += `
+                        <tr>
+                            <td><b>${p.avatar || '😎'} ${p.username || 'Игрок'}</b> ${statusBadge}</td>
+                            <td><span style="color:${vipColor}; font-weight:800;">${vip}</span></td>
+                            <td style="color:var(--gold); font-weight:800;">${(p.balance || 0).toLocaleString('ru-RU')} BYN</td>
+                            <td>${p.gamesPlayed || 0} (<span style="color:var(--neon-green);">${p.wins || 0}</span> / <span style="color:var(--danger);">${p.losses || 0}</span>)</td>
+                            <td>${wagered.toLocaleString('ru-RU')} / <span style="color:var(--gold);">${won.toLocaleString('ru-RU')} BYN</span></td>
+                            <td style="color:${profitColor}; font-weight:900;">${profit >= 0 ? '+' : ''}${profit.toLocaleString('ru-RU')} BYN</td>
+                        </tr>
+                    `;
+                });
+            } catch (e) {
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; color:var(--danger);">❌ Ошибка подключения к базе Firebase. Проверьте ссылку!</td></tr>';
+            }
         }
 
         function selectBetType(type, btn) {
@@ -1686,17 +1869,14 @@
             btn.classList.add('selected');
             currentBetType = type;
             const numBox = document.getElementById('number-select-box');
-            if (numBox) {
-                numBox.style.display = (type === 'number') ? 'block' : 'none';
-            }
+            if (numBox) numBox.style.display = (type === 'number') ? 'block' : 'none';
         }
 
         function updateVipShopStatus() {
             const vipDesc = document.getElementById('vip-status-desc');
             if (vipDesc) {
-                vipDesc.textContent = 
-                    vipLevel === 'pro' ? '👑 У вас активирован максимальный VIP PRO статус!' :
-                    (vipLevel === 'lite' ? '⭐ У вас активирован VIP LITE статус (Купите PRO для полного доступа).' : 'У вас нет активного VIP статуса.');
+                vipDesc.textContent = vipLevel === 'pro' ? '👑 У вас активирован максимальный VIP PRO статус!' :
+                    (vipLevel === 'lite' ? '⭐ У вас активирован VIP LITE статус.' : 'У вас нет активного VIP статуса.');
             }
         }
 
@@ -1716,11 +1896,111 @@
             if (controls) controls.style.display = hasAccess ? 'flex' : 'none';
         }
 
-        // --- КАНВАС-КОЛЕСО ФОРТУНЫ С ШАРИКОМ (БЕЗ СТРЕЛКИ) ---
+        // --- РАКЕТКА (ЛАКИ ДЖЕТ ДО 75X) ---
+        let jetActive = false;
+        let jetMultiplier = 1.00;
+        let jetInterval = null;
+        let jetCrashAt = 1.00;
+        let currentJetBet = 100;
+        let jetStartTime = 0;
+
+        function startJetGame() {
+            if (jetActive) return;
+            const betInput = document.getElementById('jet-bet');
+            const bet = parseInt(betInput ? betInput.value : 100);
+            if (isNaN(bet) || bet <= 0 || bet > balance) { showToast('⚠️ Неверная ставка!'); return; }
+
+            currentJetBet = bet;
+            updateBalance(-bet);
+            recordBet(bet);
+
+            jetActive = true;
+            jetMultiplier = 1.00;
+            
+            const r = Math.random();
+            if (r < 0.80) jetCrashAt = 1.00 + Math.random() * 0.24;
+            else if (r < 0.96) jetCrashAt = 1.25 + Math.random() * 2.55;
+            else jetCrashAt = 3.81 + Math.random() * 71.19;
+
+            if (guaranteedWin) {
+                jetCrashAt = 15.00;
+                guaranteedWin = false;
+            }
+
+            const btn = document.getElementById('jet-action-btn');
+            const statusEl = document.getElementById('jet-status');
+            const multDisplay = document.getElementById('jet-multiplier-display');
+            const rocketIcon = document.getElementById('jet-rocket-icon');
+
+            btn.textContent = 'ЗАБРАТЬ';
+            btn.style.background = 'var(--gold)';
+            btn.style.color = '#000';
+            btn.onclick = cashOutJet;
+
+            statusEl.textContent = '🚀 Ракетка полетела! Успейте забрать до улёта!';
+            
+            jetStartTime = performance.now();
+            let posX = 30;
+            let posY = 20;
+
+            jetInterval = setInterval(() => {
+                const elapsedSec = (performance.now() - jetStartTime) / 1000;
+                jetMultiplier = 1.0 + elapsedSec + Math.pow(elapsedSec, 2) * 0.15;
+                if (jetMultiplier > 75.0) jetMultiplier = 75.0;
+                multDisplay.textContent = jetMultiplier.toFixed(2) + 'x';
+
+                posX += 3;
+                posY += 2;
+                if (posX > 400) posX = 400;
+                if (posY > 180) posY = 180;
+                rocketIcon.style.left = posX + 'px';
+                rocketIcon.style.bottom = posY + 'px';
+
+                if (jetMultiplier >= jetCrashAt || jetMultiplier >= 75.0) crashJet();
+            }, 50);
+        }
+
+        function cashOutJet() {
+            if (!jetActive) return;
+            clearInterval(jetInterval);
+            jetActive = false;
+
+            const win = Math.floor(currentJetBet * jetMultiplier);
+            updateBalance(win);
+            recordGameResult(true, win);
+
+            const statusEl = document.getElementById('jet-status');
+            statusEl.textContent = `🎉 Успешно! Вы забрали ${jetMultiplier.toFixed(2)}x и выиграли +${win} BYN!`;
+            showVictoryAnimation('view-jet', 'ПОБЕДА В РАКЕТКЕ!', `Забрали коэффициент ${jetMultiplier.toFixed(2)}x (+${win} BYN)!`);
+            resetJetControls();
+        }
+
+        function crashJet() {
+            clearInterval(jetInterval);
+            jetActive = false;
+            recordGameResult(false, 0);
+            const finalCrash = Math.min(jetCrashAt, 75.0);
+            document.getElementById('jet-status').textContent = `💥 Упс! Ракетка улетела на ${finalCrash.toFixed(2)}x. Ставка сгорела.`;
+            resetJetControls();
+        }
+
+        function resetJetControls() {
+            const btn = document.getElementById('jet-action-btn');
+            btn.textContent = 'ЗАПУСТИТЬ';
+            btn.style.background = 'var(--neon-green)';
+            btn.style.color = '#031406';
+            btn.onclick = startJetGame;
+            document.getElementById('jet-rocket-icon').style.left = '30px';
+            document.getElementById('jet-rocket-icon').style.bottom = '20px';
+        }
+
+        // --- КОЛЕСО ФОРТУНЫ ---
         let wheelAngle = 0;
         let ballAngle = -Math.PI / 2;
-        let ballRadius = 112; // Радиус лунки на колесе
+        let ballRadius = 112;
         let isSpinning = false;
+        const ROULETTE_NUMBERS = [0,32,15,19,4,21,2,25,17,34,6,27,13,36,11,30,8,23,10,5,24,16,33,1,20,14,31,9,22,18,29,7,28,12,35,3,26];
+        const RED_NUMBERS = [32, 19, 21, 25, 34, 27, 36, 30, 23, 5, 16, 1, 14, 9, 18, 7, 12, 3];
 
         function renderWheelAndBall() {
             const canvas = document.getElementById('fortune-canvas');
@@ -1729,15 +2009,14 @@
             const cx = canvas.width / 2;
             const cy = canvas.height / 2;
             const outerRimRadius = cx - 4;
-            const wheelRadius = cx - 22; // Оставляем внешний бортик для разгона шарика
-            const pocketTrackRadius = wheelRadius - 32; // Кольцо лунок с числами
+            const wheelRadius = cx - 22;
+            const pocketTrackRadius = wheelRadius - 32;
             const innerConeRadius = wheelRadius - 50;
             const totalSectors = ROULETTE_NUMBERS.length;
             const arcSize = (Math.PI * 2) / totalSectors;
 
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            // 1. Внешняя дорожка (обод, по которому катится шарик)
             ctx.beginPath();
             ctx.arc(cx, cy, outerRimRadius, 0, Math.PI * 2);
             const rimGrad = ctx.createRadialGradient(cx, cy, wheelRadius - 5, cx, cy, outerRimRadius);
@@ -1747,14 +2026,12 @@
             ctx.fillStyle = rimGrad;
             ctx.fill();
 
-            // 2. Вращающееся колесо с секторами
             ctx.save();
             ctx.translate(cx, cy);
             ctx.rotate(wheelAngle);
 
             for (let i = 0; i < totalSectors; i++) {
                 const num = ROULETTE_NUMBERS[i];
-                // Сектор i центрирован строго на угле i * arcSize
                 const startAngle = i * arcSize - arcSize / 2;
                 const endAngle = startAngle + arcSize;
 
@@ -1769,12 +2046,10 @@
                 ctx.fillStyle = color;
                 ctx.fill();
 
-                // Металлические перегородки между лунками
                 ctx.strokeStyle = '#cbd5e1';
                 ctx.lineWidth = 1.2;
                 ctx.stroke();
 
-                // Числа ближе к внешнему краю сектора
                 ctx.save();
                 ctx.rotate(i * arcSize);
                 ctx.textAlign = 'center';
@@ -1785,14 +2060,12 @@
                 ctx.restore();
             }
 
-            // Кольцо-разделитель лунок
             ctx.beginPath();
             ctx.arc(0, 0, pocketTrackRadius, 0, Math.PI * 2);
             ctx.strokeStyle = '#fbbf24';
             ctx.lineWidth = 2;
             ctx.stroke();
 
-            // Внутренний конус барабана
             ctx.beginPath();
             ctx.arc(0, 0, innerConeRadius, 0, Math.PI * 2);
             const coneGrad = ctx.createRadialGradient(0, 0, 10, 0, 0, innerConeRadius);
@@ -1802,7 +2075,6 @@
             ctx.fillStyle = coneGrad;
             ctx.fill();
 
-            // Центральная золотая крестовина (тумба)
             ctx.beginPath();
             ctx.arc(0, 0, 28, 0, Math.PI * 2);
             const goldGrad = ctx.createRadialGradient(-6, -6, 4, 0, 0, 28);
@@ -1815,7 +2087,6 @@
             ctx.strokeStyle = '#fef08a';
             ctx.stroke();
 
-            // Декоративные ручки тумбы
             for (let k = 0; k < 4; k++) {
                 ctx.save();
                 ctx.rotate((k * Math.PI) / 2);
@@ -1826,18 +2097,10 @@
 
             ctx.restore();
 
-            // 3. Отрисовка самого шарика поверх колеса
             const bx = cx + Math.cos(ballAngle) * ballRadius;
             const by = cy + Math.sin(ballAngle) * ballRadius;
 
             ctx.save();
-            // Тень под шариком
-            ctx.beginPath();
-            ctx.arc(bx + 2.5, by + 3.5, 7, 0, Math.PI * 2);
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.55)';
-            ctx.fill();
-
-            // Жемчужно-белый шарик с бликом
             ctx.beginPath();
             ctx.arc(bx, by, 7, 0, Math.PI * 2);
             const ballGrad = ctx.createRadialGradient(bx - 2.5, by - 2.5, 1, bx, by, 7);
@@ -1866,80 +2129,55 @@
             const statusEl = document.getElementById('roulette-status');
             if (btn) btn.disabled = true;
 
-            // Выбираем выигрышный индекс сектора
-            let winningIndex;
-            if (guaranteedWin) {
-                winningIndex = 0; // 0 (Зелёный)
-                guaranteedWin = false;
-            } else {
-                winningIndex = Math.floor(Math.random() * ROULETTE_NUMBERS.length);
-            }
+            let winningIndex = guaranteedWin ? 0 : Math.floor(Math.random() * ROULETTE_NUMBERS.length);
+            if (guaranteedWin) guaranteedWin = false;
 
             const winningNumber = ROULETTE_NUMBERS[winningIndex];
             const totalSectors = ROULETTE_NUMBERS.length;
             const arcRad = (Math.PI * 2) / totalSectors;
 
-            // Параметры колеса и шарика
             const cx = 170;
-            const outerRimTrack = cx - 12; // 158px — внешний обод
-            const pocketRadius = cx - 52;  // 118px — точный центр лунки сектора
+            const outerRimTrack = cx - 12;
+            const pocketRadius = cx - 52;
 
-            // Колесо крутится ПО ЧАСОВОЙ стрелке (+)
             const startWheelAngle = wheelAngle;
             const wheelTotalRotation = Math.PI * 2 * (4 + Math.random() * 1.5);
             const finalWheelAngle = startWheelAngle + wheelTotalRotation;
-
-            // Центр целевого сектора i в мировых координатах в конце вращения:
             const targetPocketWorldAngle = finalWheelAngle + winningIndex * arcRad;
 
-            // Шарик крутится ПРОТИВ ЧАСОВОЙ стрелки (-), делая ~9 оборотов и приходя строго в центр лунки
             const startBallAngle = ballAngle;
             let angleDiff = (targetPocketWorldAngle - startBallAngle) % (Math.PI * 2);
             if (angleDiff > 0) angleDiff -= Math.PI * 2;
             const finalBallAngle = startBallAngle + angleDiff - Math.PI * 2 * 9;
 
+            statusEl.textContent = '⚪ Шарик запущен!';
+
             const startTime = performance.now();
             const duration = 4400;
-
-            statusEl.textContent = '⚪ Шарик запущен! Крутится против хода колеса...';
 
             function animatePhysics(now) {
                 const elapsed = now - startTime;
                 const t = Math.min(elapsed / duration, 1);
 
-                // Плавное замедление колеса
                 const easeWheel = 1 - Math.pow(1 - t, 2.6);
                 wheelAngle = startWheelAngle + (finalWheelAngle - startWheelAngle) * easeWheel;
 
-                // Фазы движения шарика:
-                // 0.0 -> 0.58: быстрое качение по внешнему ободу против часовой стрелки
-                // 0.58 -> 0.86: срыв с обода, падение к лункам и отскоки от перегородок
-                // 0.86 -> 1.0: фиксация строго в центре выпавшего сектора и совместное докручивание с колесом
                 if (t < 0.58) {
                     const p = t / 0.58;
                     const easeOrbit = 1 - Math.pow(1 - p, 1.8);
-                    // Проходит 82% пути по внешнему ободу
                     const orbitTarget = startBallAngle + (finalBallAngle - startBallAngle) * 0.82;
                     ballAngle = startBallAngle + (orbitTarget - startBallAngle) * easeOrbit;
                     ballRadius = outerRimTrack;
                 } else if (t < 0.86) {
                     const p = (t - 0.58) / 0.28;
                     const easeDrop = 1 - Math.pow(1 - p, 2.2);
-
-                    // Имитация отскоков шарика (3 затухающих прыжка)
                     const bounceWave = Math.abs(Math.sin(p * Math.PI * 3)) * (1 - p) * 18;
-                    const baseR = outerRimTrack + (pocketRadius - outerRimTrack) * easeDrop;
-                    ballRadius = baseR + bounceWave;
+                    ballRadius = outerRimTrack + (pocketRadius - outerRimTrack) * easeDrop + bounceWave;
 
-                    // Плавный переход угла к вращению вместе с лункой + легкое дребезжание при ударах
                     const orbitEnd = startBallAngle + (finalBallAngle - startBallAngle) * 0.82;
-                    const pocketCurrentAngle = wheelAngle + winningIndex * arcRad;
-                    // Нормализуем pocketCurrentAngle так, чтобы он был продолжением движения против часовой
                     let smoothTarget = finalBallAngle - (finalWheelAngle - wheelAngle);
-                    const jitter = Math.sin(p * Math.PI * 6) * (1 - p) * 0.09;
-                    ballAngle = orbitEnd + (smoothTarget - orbitEnd) * easeDrop + jitter;
+                    ballAngle = orbitEnd + (smoothTarget - orbitEnd) * easeDrop;
                 } else {
-                    // Шарик плотно сидит ровно по центру лунки и едет вместе с колесом
                     ballRadius = pocketRadius;
                     ballAngle = wheelAngle + winningIndex * arcRad;
                 }
@@ -1951,8 +2189,6 @@
                 } else {
                     isSpinning = false;
                     if (btn) btn.disabled = false;
-
-                    // Финальная точная синхронизация
                     wheelAngle = finalWheelAngle;
                     ballRadius = pocketRadius;
                     ballAngle = wheelAngle + winningIndex * arcRad;
@@ -1994,21 +2230,19 @@
             requestAnimationFrame(animatePhysics);
         }
 
-        // --- КЛАССИЧЕСКИЙ ПОКЕР (5-Card Draw) ---
+        // --- ПОКЕР (5-Card Draw) ---
         let pokerDeck = [];
         let playerHand = [];
         let dealerHand = [];
         let pokerPot = 0;
-        let pokerStage = 0; // 0: ожидание ставки, 1: карты разданы (можно кликать и менять), 2: вскрытие/итоги
+        let pokerStage = 0;
         let currentAnte = 100;
 
         function createDeck() {
             let deck = [];
             const suits = ['♠', '♥', '♦', '♣'];
             for (let s of suits) {
-                for (let v = 2; v <= 14; v++) {
-                    deck.push({ val: v, suit: s, held: false });
-                }
+                for (let v = 2; v <= 14; v++) deck.push({ val: v, suit: s, held: false });
             }
             return deck.sort(() => Math.random() - 0.5);
         }
@@ -2016,18 +2250,13 @@
         function evaluatePokerHand(cards) {
             const values = cards.map(c => c.val).sort((a, b) => b - a);
             const suits = cards.map(c => c.suit);
-
             const isFlush = suits.every(s => s === suits[0]);
             
             let isStraight = false;
             let uniqueVals = [...new Set(values)];
             if (uniqueVals.length === 5) {
-                if (uniqueVals[0] - uniqueVals[4] === 4) {
-                    isStraight = true;
-                }
-                if (uniqueVals[0] === 14 && uniqueVals[1] === 5 && uniqueVals[2] === 4 && uniqueVals[3] === 3 && uniqueVals[4] === 2) {
-                    isStraight = true;
-                }
+                if (uniqueVals[0] - uniqueVals[4] === 4) isStraight = true;
+                if (uniqueVals[0] === 14 && uniqueVals[1] === 5 && uniqueVals[2] === 4 && uniqueVals[3] === 3 && uniqueVals[4] === 2) isStraight = true;
             }
 
             const counts = {};
@@ -2042,25 +2271,16 @@
             if (isStraight) return { rank: 5, score: values[0], name: 'straight', title: 'Стрит', mult: 4 };
             if (countVals[0] === 3) return { rank: 4, score: values[0], name: 'three', title: 'Тройка "Сет"', mult: 3 };
             if (countVals[0] === 2 && countVals[1] === 2) return { rank: 3, score: values[0], name: 'two-pairs', title: 'Две пары', mult: 2 };
-            
             if (countVals[0] === 2) {
                 let pairVal = Object.keys(counts).find(k => counts[k] === 2);
-                if (parseInt(pairVal) >= 11) {
-                    return { rank: 2, score: parseInt(pairVal), name: 'pair', title: 'Пара (J+)', mult: 1 };
-                } else {
-                    return { rank: 1.5, score: parseInt(pairVal), name: 'pair', title: 'Младшая пара', mult: 0 };
-                }
+                if (parseInt(pairVal) >= 11) return { rank: 2, score: parseInt(pairVal), name: 'pair', title: 'Пара (J+)', mult: 1 };
+                else return { rank: 1.5, score: parseInt(pairVal), name: 'pair', title: 'Младшая пара', mult: 0 };
             }
-
             return { rank: 1, score: values[0], name: 'high-card', title: 'Старшая карта', mult: 0 };
         }
 
         function pokerActionReal() {
-            if (vipLevel === 'none') {
-                showToast('🔒 Требуется VIP Lite для игры!');
-                return;
-            }
-
+            if (vipLevel === 'none') { showToast('🔒 Требуется VIP Lite!'); return; }
             const betInput = document.getElementById('poker-bet');
             const bet = parseInt(betInput ? betInput.value : 100);
             if (isNaN(bet) || bet <= 0) { showToast('⚠️ Укажите ставку!'); return; }
@@ -2073,7 +2293,6 @@
             document.querySelectorAll('.poker-pay-item').forEach(el => el.classList.remove('active-hand'));
 
             if (pokerStage === 0) {
-                // Этап 1: Ставка сделана, карты разданы. Игрок может выбирать карты для обмена (HOLD).
                 if (bet > balance) { showToast('⚠️ Недостаточно средств!'); return; }
                 updateBalance(-bet);
                 recordBet(bet);
@@ -2086,89 +2305,66 @@
                 dealerHand = pokerDeck.splice(0, 5);
 
                 if (guaranteedWin) {
-                    playerHand = [
-                        { val: 14, suit: '♥', held: false },
-                        { val: 14, suit: '♠', held: false },
-                        { val: 14, suit: '♦', held: false },
-                        { val: 14, suit: '♣', held: false },
-                        { val: 7, suit: '♥', held: false }
-                    ];
+                    playerHand = [{val:14,suit:'♥',held:false},{val:14,suit:'♠',held:false},{val:14,suit:'♦',held:false},{val:14,suit:'♣',held:false},{val:7,suit:'♥',held:false}];
                     guaranteedWin = false;
                 }
 
                 pokerStage = 1;
                 renderPokerTable(true, false);
-                dealerInfo.textContent = 'Бот-соперник: оценил карты в темную';
-                statusEl.textContent = 'Кликните на ненужные карты, чтобы зафиксировать (HOLD), затем нажмите «Обменять карты».';
-                actionBtn.textContent = 'ОБМЕНЯТЬ КАРТЫ И ВСКРЫТЬСЯ';
+                dealerInfo.textContent = 'Бот-соперник: ожидает вскрытия';
+                statusEl.textContent = 'Выберите карты для HOLD и нажмите «Обменять».';
+                actionBtn.textContent = 'ОБМЕНЯТЬ КАРТЫ';
 
             } else if (pokerStage === 1) {
-                // Этап 2: Производим обмен непомеченных карт и сразу переходим к вскрытию и сравнению рук
                 playerHand.forEach(c => {
                     if (!c.held && pokerDeck.length > 0) {
                         let newC = pokerDeck.pop();
-                        c.val = newC.val;
-                        c.suit = newC.suit;
+                        c.val = newC.val; c.suit = newC.suit;
                     }
                 });
 
                 let dEval = evaluatePokerHand(dealerHand);
                 if (dEval.rank < 3 && pokerDeck.length >= 2) {
-                    dealerHand[3] = pokerDeck.pop();
-                    dealerHand[4] = pokerDeck.pop();
+                    dealerHand[3] = pokerDeck.pop(); dealerHand[4] = pokerDeck.pop();
                 }
 
                 pokerStage = 2;
                 actionBtn.textContent = 'НОВАЯ РАЗДАЧА';
-                
                 renderPokerTable(true, true);
 
                 const pRes = evaluatePokerHand(playerHand);
                 const dRes = evaluatePokerHand(dealerHand);
-
-                dealerInfo.textContent = `Бот показал карты: ${dRes.title}`;
+                dealerInfo.textContent = `Бот показал: ${dRes.title}`;
 
                 const activeItem = document.querySelector(`.poker-pay-item[data-hand="${pRes.name}"]`);
                 if (activeItem) activeItem.classList.add('active-hand');
 
-                let playerWon = false;
-                let isDraw = false;
-
-                if (pRes.rank > dRes.rank) {
-                    playerWon = true;
-                } else if (pRes.rank === dRes.rank) {
+                let playerWon = false, isDraw = false;
+                if (pRes.rank > dRes.rank) playerWon = true;
+                else if (pRes.rank === dRes.rank) {
                     if (pRes.score > dRes.score) playerWon = true;
                     else if (pRes.score === dRes.score) isDraw = true;
                 }
 
                 if (isDraw) {
                     updateBalance(pokerPot / 2);
-                    statusEl.textContent = `🤝 Ничья! У обоих ${pRes.title}. Банк поделен поровну.`;
+                    statusEl.textContent = `🤝 Ничья! Банк поделен.`;
                 } else if (playerWon) {
                     updateBalance(pokerPot);
                     recordGameResult(true, pokerPot);
-                    statusEl.textContent = `🎉 ПОБЕДА! Ваша комбинация (${pRes.title}) сильнее бота! Забрали банк: +${pokerPot} BYN!`;
-                    showVictoryAnimation('view-poker', 'ПОБЕДА В ПОКЕРЕ!', `Вы выиграли банк +${pokerPot} BYN!`);
+                    statusEl.textContent = `🎉 ПОБЕДА! Забрали банк: +${pokerPot} BYN!`;
+                    showVictoryAnimation('view-poker', 'ПОБЕДА В ПОКЕРЕ!', `Вы выиграли +${pokerPot} BYN!`);
                 } else {
                     recordGameResult(false, 0);
-                    statusEl.textContent = `❌ Бот выиграл с комбинацией "${dRes.title}". Банк утерян.`;
+                    statusEl.textContent = `❌ Бот выиграл с комбинацией "${dRes.title}".`;
                 }
-
             } else if (pokerStage === 2) {
-                // Сброс для новой раздачи
                 pokerStage = 0;
                 actionBtn.textContent = 'НАЧАТЬ РАЗДАЧУ';
-                statusEl.textContent = 'Добро пожаловать в 5-Card Draw покер! Сделайте ставку и начните раздачу.';
+                statusEl.textContent = 'Сделайте ставку для новой раздачи.';
                 potInfo.textContent = 'Банк игры: 0 BYN';
                 dealerInfo.textContent = 'Бот-соперник: ожидает раздачи';
                 document.getElementById('dealer-poker-cards').innerHTML = '';
-                document.getElementById('poker-cards').innerHTML = `
-                    <div class="poker-card" style="opacity:0.4;"><div>J</div><div style="font-size:1.8rem; text-align:center;">♠</div><div style="text-align:right;">J</div></div>
-                    <div class="poker-card" style="opacity:0.4;"><div>Q</div><div style="font-size:1.8rem; text-align:center;">♥</div><div style="text-align:right;">Q</div></div>
-                    <div class="poker-card" style="opacity:0.4;"><div>K</div><div style="font-size:1.8rem; text-align:center;">♦</div><div style="text-align:right;">K</div></div>
-                    <div class="poker-card" style="opacity:0.4;"><div>A</div><div style="font-size:1.8rem; text-align:center;">♣</div><div style="text-align:right;">A</div></div>
-                    <div class="poker-card" style="opacity:0.4;"><div>10</div><div style="font-size:1.8rem; text-align:center;">♠</div><div style="text-align:right;">10</div></div>
-                `;
             }
         }
 
@@ -2176,40 +2372,31 @@
             const pRow = document.getElementById('poker-cards');
             const dRow = document.getElementById('dealer-poker-cards');
             if (!pRow || !dRow) return;
-
-            pRow.innerHTML = '';
-            dRow.innerHTML = '';
-
+            pRow.innerHTML = ''; dRow.innerHTML = '';
             const names = {11: 'J', 12: 'Q', 13: 'K', 14: 'A'};
 
-            playerHand.forEach((c) => {
+            playerHand.forEach(c => {
                 const el = document.createElement('div');
                 const isRed = ['♥', '♦'].includes(c.suit);
                 el.className = `poker-card ${c.held ? 'held' : ''} ${isRed ? 'red' : ''}`;
-                const valStr = names[c.val] || c.val;
-                el.innerHTML = `<div>${valStr}</div><div style="font-size:1.8rem; text-align:center;">${c.suit}</div><div style="text-align:right;">${valStr}</div>`;
-                
-                // Клик по карте работает именно на этапе обмена (pokerStage === 1)
+                const vs = names[c.val] || c.val;
+                el.innerHTML = `<div>${vs}</div><div style="font-size:1.8rem; text-align:center;">${c.suit}</div><div style="text-align:right;">${vs}</div>`;
                 if (playerInteractive && pokerStage === 1) {
-                    el.onclick = () => {
-                        c.held = !c.held;
-                        el.classList.toggle('held');
-                    };
+                    el.onclick = () => { c.held = !c.held; el.classList.toggle('held'); };
                 }
                 pRow.appendChild(el);
             });
 
-            dealerHand.forEach((c) => {
+            dealerHand.forEach(c => {
                 const el = document.createElement('div');
                 const isRed = ['♥', '♦'].includes(c.suit);
                 el.className = `poker-card ${isRed ? 'red' : ''}`;
-                
                 if (!revealDealer) {
                     el.innerHTML = `<div style="font-size:1.5rem; text-align:center; margin:auto;">🔒</div>`;
                     el.style.background = '#1e293b';
                 } else {
-                    const valStr = names[c.val] || c.val;
-                    el.innerHTML = `<div>${valStr}</div><div style="font-size:1.8rem; text-align:center;">${c.suit}</div><div style="text-align:right;">${valStr}</div>`;
+                    const vs = names[c.val] || c.val;
+                    el.innerHTML = `<div>${vs}</div><div style="font-size:1.8rem; text-align:center;">${c.suit}</div><div style="text-align:right;">${vs}</div>`;
                 }
                 dRow.appendChild(el);
             });
@@ -2221,10 +2408,8 @@
             const popup = document.createElement('div');
             popup.className = 'win-popup-overlay';
             popup.innerHTML = `
-                <div class="confetti-coin" style="left: 10%; top: 20%; animation-delay: 0s;">🪙</div>
-                <div class="confetti-coin" style="left: 80%; top: 15%; animation-delay: 0.3s;">🎉</div>
-                <div class="confetti-coin" style="left: 30%; top: 70%; animation-delay: 0.6s;">💰</div>
-                <div class="confetti-coin" style="left: 70%; top: 60%; animation-delay: 0.2s;">✨</div>
+                <div class="confetti-coin" style="left: 10%; top: 20%;">🪙</div>
+                <div class="confetti-coin" style="left: 80%; top: 15%;">🎉</div>
                 <div class="win-popup-content">
                     <h2>🎉 ${titleText} 🎉</h2>
                     <p>${winText}</p>
@@ -2235,36 +2420,77 @@
             setTimeout(() => { if(popup.parentNode) popup.remove(); }, 3500);
         }
 
+        // --- ПРОМОКОДЫ ---
         function applyPromo() {
             const input = document.getElementById('promo-input');
             if (!input) return;
             const code = input.value.trim().toLowerCase();
-            
-            if (code === 'seregaa') {
+            const now = Date.now();
+            const ONE_HOUR = 60 * 60 * 1000;
+
+            if (code === 'сброс') {
+                promoCooldowns = {};
+                saveData();
+                showToast('🔄 Кулдауны промокодов сброшены!');
+                input.value = '';
+                return;
+            }
+
+            if (promoCooldowns[code] && now < promoCooldowns[code]) {
+                const rem = Math.ceil((promoCooldowns[code] - now) / 60000);
+                showToast(`⏳ Промокод уже использован! Ждите ${rem} мин.`);
+                input.value = '';
+                return;
+            }
+
+            let activated = false;
+            if (code === 'админ228') {
+                adminUnlocked = true;
+                saveData();
+                document.getElementById('nav-admin').style.display = 'flex';
+                showToast('🛡️ Админ-меню разблокировано!');
+                activated = true;
+            } else if (code === 'андрей') {
+                vipLevel = 'pro';
+                saveData();
+                syncHeaderProfile();
+                updateVipShopStatus();
+                checkPokerAccess();
+                checkSlotsAccess();
+                showToast('👑 VIP PRO активирован!');
+                activated = true;
+            } else if (code === 'seregaa') {
                 guaranteedWin = true;
-                showToast('🔥 Промокод активирован: следующая игра принесет победу!');
+                showToast('🔥 Следующая игра принесет победу!');
+                activated = true;
             } else if (code === 'салфетка') {
                 updateBalance(4000);
-                showToast('🎁 Промокод активирован: +4 000 BYN на баланс!');
+                showToast('🎁 +4 000 BYN на баланс!');
+                activated = true;
             } else if (code === 'моргенштерн') {
                 musicUnlocked = true;
                 saveData();
-                const musicBtn = document.getElementById('nav-music');
-                if (musicBtn) musicBtn.style.display = 'flex';
-                showToast('🎵 Режим МУЗОН разблокирован в меню!');
+                document.getElementById('nav-music').style.display = 'flex';
+                showToast('🎵 Режим МУЗОН разблокирован!');
+                activated = true;
             } else {
                 showToast('❌ Неверный промокод');
+            }
+
+            if (activated) {
+                promoCooldowns[code] = now + ONE_HOUR;
+                saveData();
             }
             input.value = '';
         }
 
         function buyVip(tier) {
             if (tier === 'lite') {
-                if (vipLevel !== 'none') { showToast('Уже есть VIP статус!'); return; }
+                if (vipLevel !== 'none') { showToast('Уже есть VIP!'); return; }
                 if (balance < 10000) { showToast('Недостаточно средств!'); return; }
                 updateBalance(-10000);
                 vipLevel = 'lite';
-                showToast('⭐ VIP LITE успешно активирован!');
+                showToast('⭐ VIP LITE активирован!');
             } else if (tier === 'pro') {
                 if (vipLevel === 'pro') { showToast('Уже максимальный VIP PRO!'); return; }
                 if (balance < 50000) { showToast('Недостаточно средств!'); return; }
@@ -2279,84 +2505,80 @@
             checkSlotsAccess();
         }
 
-        const SLOT_SYMBOLS = ['🍒', '🍋', '🔔', '💎', '7️⃣'];
+        // --- СЛОТЫ ---
+        const SLOT_SYMBOLS = ['🍋', '🔔', '💎', '7️⃣'];
         function spinSlots() {
-            if (vipLevel !== 'pro') {
-                showToast('🔒 Требуется VIP Pro для игры!');
-                return;
-            }
-            try {
-                const betInput = document.getElementById('slots-bet');
-                const bet = parseInt(betInput ? betInput.value : 100);
-                
-                if (isNaN(bet) || bet <= 0) { showToast('⚠️ Укажите корректную ставку!'); return; }
-                if (bet > balance) { showToast('⚠️ Недостаточно средств на балансе!'); return; }
+            if (vipLevel !== 'pro') { showToast('🔒 Требуется VIP Pro!'); return; }
+            const betInput = document.getElementById('slots-bet');
+            const bet = parseInt(betInput ? betInput.value : 100);
+            if (isNaN(bet) || bet <= 0 || bet > balance) { showToast('⚠️ Неверная ставка!'); return; }
 
-                updateBalance(-bet);
-                recordBet(bet);
+            updateBalance(-bet);
+            recordBet(bet);
 
-                const reels = [document.getElementById('reel-0'), document.getElementById('reel-1'), document.getElementById('reel-2')];
+            const reels = [document.getElementById('reel-0'), document.getElementById('reel-1'), document.getElementById('reel-2')];
+            reels.forEach(r => r.classList.add('spinning'));
+            document.getElementById('slots-status').textContent = '🎰 Барабаны крутятся...';
+
+            let animTimer = setInterval(() => {
+                reels.forEach(r => r.textContent = SLOT_SYMBOLS[Math.floor(Math.random() * SLOT_SYMBOLS.length)]);
+            }, 80);
+
+            setTimeout(() => {
+                clearInterval(animTimer);
+                reels.forEach(r => r.classList.remove('spinning'));
+
                 let res = [];
                 if (guaranteedWin) {
                     res = ['7️⃣', '7️⃣', '7️⃣'];
                     guaranteedWin = false;
                 } else {
-                    res = [
-                        SLOT_SYMBOLS[Math.floor(Math.random() * SLOT_SYMBOLS.length)],
-                        SLOT_SYMBOLS[Math.floor(Math.random() * SLOT_SYMBOLS.length)],
-                        SLOT_SYMBOLS[Math.floor(Math.random() * SLOT_SYMBOLS.length)]
-                    ];
+                    const houseRoll = Math.random();
+                    if (houseRoll < 0.88) {
+                        const s1 = SLOT_SYMBOLS[Math.floor(Math.random() * SLOT_SYMBOLS.length)];
+                        const s2 = SLOT_SYMBOLS[Math.floor(Math.random() * SLOT_SYMBOLS.length)];
+                        let s3 = SLOT_SYMBOLS[Math.floor(Math.random() * SLOT_SYMBOLS.length)];
+                        while (s1 === s2 && s2 === s3) s3 = SLOT_SYMBOLS[Math.floor(Math.random() * SLOT_SYMBOLS.length)];
+                        res = [s1, s2, s3];
+                    } else {
+                        let sym = Math.random() < 0.7 ? '🍋' : (Math.random() < 0.9 ? '💎' : '7️⃣');
+                        res = [sym, sym, sym];
+                    }
                 }
 
                 reels.forEach((r, i) => { if (r) r.textContent = res[i]; });
 
                 let mult = 0;
-                if (res[0] === res[1] && res[1] === res[2]) mult = 25;
-                else if (res[0] === res[1] || res[1] === res[2] || res[0] === res[2]) mult = 3;
+                if (res[0] === res[1] && res[1] === res[2]) {
+                    if (res[0] === '7️⃣') mult = 25;
+                    else if (res[0] === '💎') mult = 15;
+                    else mult = 6;
+                }
 
-                const statusEl = document.getElementById('slots-status');
                 if (mult > 0) {
                     const win = bet * mult;
                     updateBalance(win);
                     recordGameResult(true, win);
-                    if (statusEl) statusEl.textContent = `🔥 ВЫИГРЫШ x${mult} — +${win} BYN!`;
-                    showVictoryAnimation('view-slots', 'ДЖЕКПОТ В СЛОТАХ!', `Вы выиграли +${win} BYN!`);
+                    document.getElementById('slots-status').textContent = `🔥 ДЖЕКПОТ x${mult} — +${win} BYN!`;
+                    showVictoryAnimation('view-slots', 'ДЖЕКПОТ!', `Вы выиграли +${win} BYN!`);
                 } else {
                     recordGameResult(false, 0);
-                    if (statusEl) statusEl.textContent = 'Пусто! Попробуй еще.';
+                    document.getElementById('slots-status').textContent = 'Пусто! Повезет в следующий раз.';
                 }
-            } catch (err) {
-                showToast('❌ Ошибка при вращении слотов');
-            }
+            }, 1200);
         }
 
-        let bjDeck = [];
-        let bjPlayerHand = [];
-        let bjDealerHand = [];
-        let bjActive = false;
-        let currentBjBet = 100;
-
-        function getCardValStr(val) {
-            if (val === 11) return 'J';
-            if (val === 12) return 'Q';
-            if (val === 13) return 'K';
-            if (val === 14) return 'A';
-            return val;
-        }
-
+        // --- БЛЭКДЖЕК ---
+        let bjDeck = [], bjPlayerHand = [], bjDealerHand = [], bjActive = false, currentBjBet = 100;
+        function getCardValStr(v) { return v === 11 ? 'J' : (v === 12 ? 'Q' : (v === 13 ? 'K' : (v === 14 ? 'A' : v))); }
         function calcScore(hand) {
-            let score = 0;
-            let aces = 0;
+            let score = 0, aces = 0;
             hand.forEach(c => {
-                let v = c.val;
-                if (v >= 11 && v <= 13) score += 10;
-                else if (v === 14) { score += 11; aces++; }
-                else score += v;
+                if (c.val >= 11 && c.val <= 13) score += 10;
+                else if (c.val === 14) { score += 11; aces++; }
+                else score += c.val;
             });
-            while (score > 21 && aces > 0) {
-                score -= 10;
-                aces--;
-            }
+            while (score > 21 && aces > 0) { score -= 10; aces--; }
             return score;
         }
 
@@ -2368,69 +2590,29 @@
             updateBalance(-bet);
             recordBet(bet);
 
-            bjPlayerHand = [];
-            bjDealerHand = [];
-            bjActive = false;
-
+            bjPlayerHand = []; bjDealerHand = []; bjActive = false;
             bjDeck = [];
             const suits = ['♠', '♥', '♦', '♣'];
-            for (let s of suits) {
-                for (let v = 2; v <= 14; v++) {
-                    bjDeck.push({ val: v, suit: s });
-                }
-            }
+            for (let s of suits) for (let v = 2; v <= 14; v++) bjDeck.push({ val: v, suit: s });
             bjDeck.sort(() => Math.random() - 0.5);
 
-            let p1, p2, d1, d2;
-            if (guaranteedWin) {
-                p1 = { val: 14, suit: '♠' };
-                p2 = { val: 13, suit: '♥' };
-                guaranteedWin = false;
-            } else {
-                p1 = bjDeck.pop();
-                p2 = bjDeck.pop();
-            }
-            d1 = bjDeck.pop();
-            d2 = bjDeck.pop();
-
-            const statusEl = document.getElementById('bj-status');
-            if(statusEl) statusEl.textContent = '🃏 Раздача карт по одной...';
-            const controls = document.getElementById('bj-controls');
-            if(controls) controls.innerHTML = '';
+            let p1 = guaranteedWin ? { val: 14, suit: '♠' } : bjDeck.pop();
+            let p2 = guaranteedWin ? { val: 13, suit: '♥' } : bjDeck.pop();
+            if (guaranteedWin) guaranteedWin = false;
+            let d1 = bjDeck.pop(), d2 = bjDeck.pop();
 
             document.getElementById('dealer-cards').innerHTML = '';
             document.getElementById('player-cards').innerHTML = '';
+            document.getElementById('bj-controls').innerHTML = '';
 
+            setTimeout(() => { bjDealerHand.push(d1); appendBjCard('dealer-cards', d1, false); updateBjScores(false); }, 400);
+            setTimeout(() => { bjPlayerHand.push(p1); appendBjCard('player-cards', p1, true); updateBjScores(false); }, 1200);
+            setTimeout(() => { bjPlayerHand.push(p2); appendBjCard('player-cards', p2, true); updateBjScores(false); }, 2000);
             setTimeout(() => { 
-                bjDealerHand.push(d1); 
-                appendBjCard('dealer-cards', d1, false);
-                updateBjScores(false);
-            }, 400);
-
-            setTimeout(() => { 
-                bjPlayerHand.push(p1); 
-                appendBjCard('player-cards', p1, true);
-                updateBjScores(false);
-            }, 1200);
-
-            setTimeout(() => { 
-                bjPlayerHand.push(p2); 
-                appendBjCard('player-cards', p2, true);
-                updateBjScores(false);
-            }, 2000);
-
-            setTimeout(() => { 
-                bjDealerHand.push(d2); 
-                appendBjCard('dealer-cards', d2, true);
-                updateBjScores(false);
+                bjDealerHand.push(d2); appendBjCard('dealer-cards', d2, true); updateBjScores(false);
                 bjActive = true;
-                if(statusEl) statusEl.textContent = 'Ваш ход: выберите действие';
-                if(controls) {
-                    controls.innerHTML = `
-                        <button class="btn-play" onclick="bjHit()">ЕЩЁ</button>
-                        <button class="btn-play" style="background:#ef4444;" onclick="bjStand()">ХВАТИТ</button>
-                    `;
-                }
+                document.getElementById('bj-status').textContent = 'Ваш ход!';
+                document.getElementById('bj-controls').innerHTML = `<button class="btn-play" onclick="bjHit()">ЕЩЁ</button><button class="btn-play" style="background:#ef4444;" onclick="bjStand()">ХВАТИТ</button>`;
             }, 2800);
         }
 
@@ -2440,67 +2622,39 @@
             const el = document.createElement('div');
             const isRed = ['♥', '♦'].includes(c.suit);
             el.className = `bj-card bj-card-new ${isRed ? 'red' : ''}`;
-            if (!isVisible) {
-                el.innerHTML = `<div style="font-size:1.5rem; text-align:center; margin:auto;">🔒</div>`;
-            } else {
-                const vs = getCardValStr(c.val);
-                el.innerHTML = `<div>${vs}</div><div style="font-size:1.5rem; text-align:center;">${c.suit}</div><div style="text-align:right;">${vs}</div>`;
-            }
+            el.innerHTML = isVisible ? `<div>${getCardValStr(c.val)}</div><div style="font-size:1.5rem; text-align:center;">${c.suit}</div><div style="text-align:right;">${getCardValStr(c.val)}</div>` : `<div style="font-size:1.5rem; text-align:center; margin:auto;">🔒</div>`;
             container.appendChild(el);
         }
 
-        function updateBjScores(revealDealer) {
-            const pScoreEl = document.getElementById('player-score');
-            const dScoreEl = document.getElementById('dealer-score');
-            if(pScoreEl) pScoreEl.textContent = `Ваш счет: ${calcScore(bjPlayerHand)}`;
-            if(dScoreEl) dScoreEl.textContent = revealDealer ? `Дилер: ${calcScore(bjDealerHand)}` : `Дилер: ?`;
+        function updateBjScores(reveal) {
+            document.getElementById('player-score').textContent = `Ваш счет: ${calcScore(bjPlayerHand)}`;
+            document.getElementById('dealer-score').textContent = reveal ? `Дилер: ${calcScore(bjDealerHand)}` : `Дилер: ?`;
         }
 
-        function renderFullBjTable(revealDealer) {
-            const pCont = document.getElementById('player-cards');
-            const dCont = document.getElementById('dealer-cards');
-            if(!pCont || !dCont) return;
-            pCont.innerHTML = '';
-            dCont.innerHTML = '';
-
-            bjPlayerHand.forEach((c) => {
-                const el = document.createElement('div');
+        function renderFullBjTable(reveal) {
+            const pCont = document.getElementById('player-cards'), dCont = document.getElementById('dealer-cards');
+            pCont.innerHTML = ''; dCont.innerHTML = '';
+            bjPlayerHand.forEach(c => {
                 const isRed = ['♥', '♦'].includes(c.suit);
-                el.className = `bj-card ${isRed ? 'red' : ''}`;
-                const vs = getCardValStr(c.val);
-                el.innerHTML = `<div>${vs}</div><div style="font-size:1.5rem; text-align:center;">${c.suit}</div><div style="text-align:right;">${vs}</div>`;
-                pCont.appendChild(el);
+                pCont.innerHTML += `<div class="bj-card ${isRed ? 'red' : ''}"><div>${getCardValStr(c.val)}</div><div style="font-size:1.5rem; text-align:center;">${c.suit}</div><div style="text-align:right;">${getCardValStr(c.val)}</div></div>`;
             });
-
             bjDealerHand.forEach((c, idx) => {
-                const el = document.createElement('div');
                 const isRed = ['♥', '♦'].includes(c.suit);
-                el.className = `bj-card ${isRed ? 'red' : ''}`;
-                if (idx === 1 && !revealDealer) {
-                    el.innerHTML = `<div style="font-size:1.5rem; text-align:center; margin:auto;">🔒</div>`;
-                } else {
-                    const vs = getCardValStr(c.val);
-                    el.innerHTML = `<div>${vs}</div><div style="font-size:1.5rem; text-align:center;">${c.suit}</div><div style="text-align:right;">${vs}</div>`;
-                }
-                dCont.appendChild(el);
+                if (idx === 1 && !reveal) dCont.innerHTML += `<div class="bj-card"><div style="font-size:1.5rem; text-align:center; margin:auto;">🔒</div></div>`;
+                else dCont.innerHTML += `<div class="bj-card ${isRed ? 'red' : ''}"><div>${getCardValStr(c.val)}</div><div style="font-size:1.5rem; text-align:center;">${c.suit}</div><div style="text-align:right;">${getCardValStr(c.val)}</div></div>`;
             });
-
-            updateBjScores(revealDealer);
+            updateBjScores(reveal);
         }
 
         function bjHit() {
             if (!bjActive) return;
-            const newCard = bjDeck.pop();
-            bjPlayerHand.push(newCard);
-            appendBjCard('player-cards', newCard, true);
+            bjPlayerHand.push(bjDeck.pop());
+            appendBjCard('player-cards', bjPlayerHand[bjPlayerHand.length - 1], true);
             updateBjScores(false);
-
-            const pScore = calcScore(bjPlayerHand);
-            if (pScore > 21) {
+            if (calcScore(bjPlayerHand) > 21) {
                 bjActive = false;
                 recordGameResult(false, 0);
-                const statusEl = document.getElementById('bj-status');
-                if(statusEl) statusEl.textContent = '💥 Перебор! Вы проиграли ставку.';
+                document.getElementById('bj-status').textContent = '💥 Перебор!';
                 resetBjControls();
             }
         }
@@ -2509,133 +2663,87 @@
             if (!bjActive) return;
             bjActive = false;
             renderFullBjTable(true);
-
             let dScore = calcScore(bjDealerHand);
             while (dScore < 17 && bjDeck.length > 0) {
                 bjDealerHand.push(bjDeck.pop());
                 dScore = calcScore(bjDealerHand);
                 renderFullBjTable(true);
             }
-
             const pScore = calcScore(bjPlayerHand);
-            const statusEl = document.getElementById('bj-status');
-
             if (dScore > 21 || pScore > dScore) {
                 const win = currentBjBet * 2;
                 updateBalance(win);
                 recordGameResult(true, win);
-                if(statusEl) statusEl.textContent = `🎉 Вы победили дилера! Выигрыш: +${win} BYN`;
-                showVictoryAnimation('view-blackjack', 'ПОБЕДА В БЛЭКДЖЕКЕ!', `Вы обыграли дилера и получили +${win} BYN!`);
+                document.getElementById('bj-status').textContent = `🎉 Победа! +${win} BYN`;
+                showVictoryAnimation('view-blackjack', 'ПОБЕДА!', `Выиграли +${win} BYN!`);
             } else if (pScore === dScore) {
                 updateBalance(currentBjBet);
-                if(statusEl) statusEl.textContent = '🤝 Ничья! Ставка возвращена.';
+                document.getElementById('bj-status').textContent = '🤝 Ничья!';
             } else {
                 recordGameResult(false, 0);
-                if(statusEl) statusEl.textContent = '❌ Дилер выиграл эту раздачу.';
+                document.getElementById('bj-status').textContent = '❌ Дилер выиграл.';
             }
             resetBjControls();
         }
 
         function resetBjControls() {
-            const controls = document.getElementById('bj-controls');
-            if(controls) {
-                controls.innerHTML = `
-                    <label>Ставка:</label>
-                    <input type="number" id="bj-bet" value="${currentBjBet}" min="50">
-                    <button class="btn-play" onclick="startBlackjack()">РАЗДАТЬ</button>
-                `;
-            }
+            document.getElementById('bj-controls').innerHTML = `<label>Ставка:</label><input type="number" id="bj-bet" value="${currentBjBet}" min="50"><button class="btn-play" onclick="startBlackjack()">РАЗДАТЬ</button>`;
         }
 
         function renderProperties() {
             const grid = document.getElementById('property-grid');
-            if(!grid) return;
+            if (!grid) return;
             grid.innerHTML = '';
-
             PROPERTIES.forEach(p => {
                 const owned = ownedProps.includes(p.id);
-                const card = document.createElement('div');
-                card.className = `prop-card ${owned ? 'owned' : ''}`;
-                card.innerHTML = `
-                    <div>
-                        <div class="prop-emoji">${p.icon}</div>
-                        <div class="prop-name">${p.name}</div>
-                        <div class="prop-desc">${p.desc}</div>
-                    </div>
-                    <div class="prop-bottom">
-                        <span class="prop-price">${p.price.toLocaleString('ru-RU')} BYN</span>
-                        ${owned ? '<span style="color:var(--neon-green); font-weight:900;">КУПЛЕНО ✓</span>' : `<button class="btn-play" onclick="buyProperty('${p.id}', ${p.price})">КУПИТЬ</button>`}
-                    </div>
-                `;
-                grid.appendChild(card);
+                grid.innerHTML += `
+                    <div class="prop-card ${owned ? 'owned' : ''}">
+                        <div><div class="prop-emoji">${p.icon}</div><div class="prop-name">${p.name}</div><div class="prop-desc">${p.desc}</div></div>
+                        <div class="prop-bottom"><span class="prop-price">${p.price.toLocaleString('ru-RU')} BYN</span>${owned ? '<span style="color:var(--neon-green); font-weight:900;">КУПЛЕНО ✓</span>' : `<button class="btn-play" onclick="buyProperty('${p.id}', ${p.price})">КУПИТЬ</button>`}</div>
+                    </div>`;
             });
         }
 
         function buyProperty(id, price) {
-            if (vipLevel !== 'pro') {
-                showToast('🔒 Для покупки имущества нужен VIP PRO статус!');
-                return;
-            }
-            if (balance < price) {
-                showToast('Недостаточно средств!');
-                return;
-            }
+            if (vipLevel !== 'pro') { showToast('🔒 Нужен VIP PRO!'); return; }
+            if (balance < price) { showToast('Недостаточно средств!'); return; }
             updateBalance(-price);
             ownedProps.push(id);
             saveData();
             renderProperties();
-            showToast('🎉 Покупка успешно совершена!');
-            showVictoryAnimation('view-property', 'ЭЛИТНАЯ ПОКУПКА!', 'Вы пополнили свою коллекцию роскоши!');
+            showToast('🎉 Имущество куплено!');
         }
 
         function renderQuiz() {
             const container = document.getElementById('quiz-container');
             if (!container) return;
             container.innerHTML = '';
-
             QUIZ_QUESTIONS.forEach(q => {
                 const isAnswered = answeredQuestions[q.id] !== undefined;
                 const userChoice = answeredQuestions[q.id];
-
-                const card = document.createElement('div');
-                card.className = 'quiz-card';
-
-                let html = `
-                    <div class="quiz-question">${q.question} <span style="color:var(--gold); font-size:0.9rem;">(+${q.reward} BYN)</span></div>
-                    <div class="quiz-options">
-                `;
-
+                let html = `<div class="quiz-card"><div class="quiz-question">${q.question} <span style="color:var(--gold);">(+${q.reward} BYN)</span></div><div class="quiz-options">`;
                 q.options.forEach((opt, idx) => {
                     let btnClass = 'quiz-option-btn';
-                    let disabled = isAnswered ? 'disabled' : '';
                     if (isAnswered) {
                         if (idx === q.correct) btnClass += ' correct';
                         else if (idx === userChoice) btnClass += ' wrong';
                     }
-                    html += `<button class="${btnClass}" ${disabled} onclick="answerQuiz(${q.id}, ${idx})">${opt}</button>`;
+                    html += `<button class="${btnClass}" ${isAnswered ? 'disabled' : ''} onclick="answerQuiz(${q.id}, ${idx})">${opt}</button>`;
                 });
-
-                html += `</div>`;
-                if (isAnswered) {
-                    html += `<div style="margin-top:12px; font-weight:800; color:${userChoice === q.correct ? 'var(--neon-green)' : 'var(--danger)'};">${userChoice === q.correct ? '✓ Правильно! Награда зачислена.' : '✕ Неправильно.'}</div>`;
-                }
-
-                card.innerHTML = html;
-                container.appendChild(card);
+                html += `</div></div>`;
+                container.innerHTML += html;
             });
         }
 
-        function answerQuiz(qId, optionIdx) {
+        function answerQuiz(qId, idx) {
             if (answeredQuestions[qId] !== undefined) return;
             const q = QUIZ_QUESTIONS.find(item => item.id === qId);
-            if (!q) return;
-
-            answeredQuestions[qId] = optionIdx;
-            if (optionIdx === q.correct) {
+            answeredQuestions[qId] = idx;
+            if (idx === q.correct) {
                 updateBalance(q.reward);
-                showToast(`🎉 Верно! Вы получили +${q.reward} BYN!`);
+                showToast(`🎉 Верно! +${q.reward} BYN!`);
             } else {
-                showToast('❌ Неправильный ответ!');
+                showToast('❌ Ошибка!');
             }
             saveData();
             renderQuiz();
@@ -2643,14 +2751,7 @@
 
         window.addEventListener('DOMContentLoaded', () => {
             loadSavedData();
-            const balEl = document.getElementById('balance');
-            if (balEl) balEl.textContent = balance.toLocaleString('ru-RU');
-            
-            const nameInput = document.getElementById('profile-name-input');
-            if (nameInput) {
-                nameInput.value = userProfile.username;
-            }
-
+            document.getElementById('balance').textContent = balance.toLocaleString('ru-RU');
             syncHeaderProfile();
             showLobby();
         });
