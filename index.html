@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>СЕРЁГА И ОЛЯМБУС КАЗИК — Игровой портал</title>
+    <title>СЕРЁГА И ОЛЯМБУС КАЗИК</title>
     <style>
         :root {
             --bg-main: #090d11;
@@ -12,7 +12,6 @@
             --bg-card: #121922;
             --border-color: #1c2633;
             --neon-green: #1ae83a;
-            --neon-glow: rgba(26, 232, 58, 0.35);
             --text-main: #ffffff;
             --text-muted: #7d8b9e;
             --gold: #fbbf24;
@@ -24,12 +23,11 @@
         body {
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Inter, Roboto, Arial, sans-serif;
+            font-family: Arial, sans-serif;
             background-color: var(--bg-main);
             color: var(--text-main);
             display: flex;
             min-height: 100vh;
-            overflow-x: hidden;
         }
 
         /* ЛЕВАЯ ПАНЕЛЬ */
@@ -40,12 +38,11 @@
             display: flex;
             flex-direction: column;
             padding: 20px 14px;
-            flex-shrink: 0;
             position: sticky;
             top: 0;
             height: 100vh;
             overflow-y: auto;
-            z-index: 30;
+            flex-shrink: 0;
         }
 
         .brand-logo {
@@ -53,139 +50,139 @@
             flex-direction: column;
             align-items: center;
             text-align: center;
-            padding: 6px 8px 22px;
-            margin-bottom: 10px;
+            padding: 10px;
+            margin-bottom: 15px;
             cursor: pointer;
         }
 
-        .brand-crown {
-            font-size: 1.45rem;
-            color: var(--neon-green);
-            filter: drop-shadow(0 0 8px var(--neon-glow));
-            line-height: 1;
-            margin-bottom: 4px;
-        }
+        .brand-crown { font-size: 1.5rem; color: var(--neon-green); margin-bottom: 5px; }
+        .brand-title-top { font-size: 1rem; font-weight: bold; text-transform: uppercase; }
+        .brand-title-bottom { font-size: 1.5rem; font-weight: bold; font-style: italic; color: var(--neon-green); }
 
-        .brand-title-top {
-            font-size: 1.05rem;
-            font-weight: 900;
-            letter-spacing: 0.8px;
-            color: #ffffff;
-            line-height: 1.15;
-            text-transform: uppercase;
-        }
-
-        .brand-title-bottom {
-            font-size: 1.65rem;
-            font-weight: 950;
-            font-style: italic;
-            letter-spacing: 1px;
-            color: var(--neon-green);
-            text-shadow: 0 0 18px var(--neon-glow);
-            line-height: 1.05;
-            margin-top: 2px;
-        }
-
-        .sidebar-menu {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-            flex: 1;
-        }
+        .sidebar-menu { display: flex; flex-direction: column; gap: 8px; flex: 1; }
 
         .nav-item {
-            position: relative;
             background: transparent;
             border: 1px solid transparent;
             color: var(--text-muted);
-            padding: 12px 14px;
-            border-radius: 10px;
+            padding: 12px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 0.94rem;
-            font-weight: 600;
+            font-size: 0.9rem;
+            font-weight: bold;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            transition: all 0.2s ease;
             text-align: left;
+            transition: 0.2s;
         }
 
-        .nav-item-left { display: flex; align-items: center; gap: 11px; }
-        .nav-icon { font-size: 1.1rem; width: 20px; text-align: center; }
-        .nav-item:hover { background: rgba(255, 255, 255, 0.04); color: #ffffff; }
-        .nav-item.active {
-            background: linear-gradient(90deg, rgba(26, 232, 58, 0.16) 0%, rgba(26, 232, 58, 0.03) 100%);
-            border-color: rgba(26, 232, 58, 0.25);
-            color: #ffffff;
-        }
-        .nav-item.active::before {
-            content: '';
-            position: absolute;
-            left: -14px; top: 8px; bottom: 8px;
-            width: 4px; border-radius: 0 4px 4px 0;
-            background: var(--neon-green);
-            box-shadow: 0 0 10px var(--neon-green);
-        }
+        .nav-item:hover { background: rgba(255, 255, 255, 0.05); color: #fff; }
+        .nav-item.active { background: rgba(26, 232, 58, 0.15); border-color: rgba(26, 232, 58, 0.3); color: #fff; }
 
-        .nav-badge {
-            font-size: 0.65rem; font-weight: 900; padding: 2px 6px; border-radius: 5px; text-transform: uppercase;
-        }
-        .badge-hot { background: #ef4444; color: #fff; }
-        .badge-vip { background: #f59e0b; color: #000; }
+        .nav-badge { font-size: 0.65rem; font-weight: bold; padding: 2px 6px; border-radius: 4px; background: #f59e0b; color: #000; text-transform: uppercase; }
 
-        /* ПРОМОКОДЫ */
-        .sidebar-promo {
-            margin-top: 18px;
-            padding-top: 16px;
-            border-top: 1px solid var(--border-color);
-        }
-        .promo-header {
-            display: flex; align-items: center; gap: 7px; font-size: 0.8rem; font-weight: 800; text-transform: uppercase; color: #ffffff; margin-bottom: 10px;
-        }
-        .promo-header span { color: var(--neon-green); }
-        .promo-input-group { display: flex; gap: 6px; }
-        .promo-input-group input {
-            width: 100%; background: #131b24; border: 1px solid #233040; border-radius: 8px; padding: 9px 11px; color: #fff; font-size: 0.84rem; outline: none;
-        }
-        .promo-input-group button {
-            background: var(--neon-green); color: #041307; border: none; border-radius: 8px; padding: 0 13px; font-weight: 900; cursor: pointer;
-        }
+        .sidebar-promo { margin-top: 15px; padding-top: 15px; border-top: 1px solid var(--border-color); }
+        .promo-input-group { display: flex; gap: 6px; margin-top: 8px; }
+        .promo-input-group input { width: 100%; background: #131b24; border: 1px solid #233040; border-radius: 6px; padding: 8px; color: #fff; outline: none; }
+        .promo-input-group button { background: var(--neon-green); color: #041307; border: none; border-radius: 6px; padding: 0 12px; font-weight: bold; cursor: pointer; }
 
         /* ОСНОВНОЙ КОНТЕЙНЕР */
         .main-wrapper { flex: 1; display: flex; flex-direction: column; min-width: 0; }
 
         .topbar {
-            height: 68px; background: var(--bg-topbar); border-bottom: 1px solid var(--border-color);
-            padding: 0 26px; display: flex; align-items: center; justify-content: space-between; gap: 16px; position: sticky; top: 0; z-index: 25;
+            height: 65px; background: var(--bg-topbar); border-bottom: 1px solid var(--border-color);
+            padding: 0 25px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 10;
         }
 
-        .search-box {
-            display: flex; align-items: center; gap: 10px; background: #131b24; border: 1px solid #1e2936; border-radius: 10px; padding: 9px 14px; width: 300px;
-        }
-        .search-box input { background: transparent; border: none; color: #fff; font-size: 0.88rem; width: 100%; outline: none; }
+        .balance-box { background: #131b24; border: 1px solid #222f3e; padding: 8px 16px; border-radius: 8px; font-weight: bold; color: var(--gold); }
 
-        .topbar-right { display: flex; align-items: center; gap: 14px; }
-        .online-indicator { display: flex; align-items: center; gap: 8px; font-size: 0.85rem; color: var(--text-muted); }
-        .online-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--neon-green); box-shadow: 0 0 8px var(--neon-green); }
+        .content-area { padding: 25px; max-width: 1200px; width: 100%; margin: 0 auto; flex: 1; }
 
-        .balance-box {
-            display: flex; align-items: center; gap: 10px; background: #131b24; border: 1px solid #222f3e; padding: 8px 16px; border-radius: 10px; font-weight: 800; font-size: 1rem; color: var(--gold);
-        }
-
-        .content-area {
-            padding: 22px 26px 32px; max-width: 1240px; width: 100%; margin: 0 auto; flex: 1; display: flex; flex-direction: column;
-        }
-
-        /* БАННЕР */
         .hero-banner {
-            position: relative; border-radius: 18px; overflow: hidden;
-            background: radial-gradient(circle at 78% 45%, rgba(251, 191, 36, 0.28) 0%, transparent 45%),
-                        radial-gradient(circle at 20% 50%, rgba(26, 232, 58, 0.22) 0%, transparent 55%),
-                        linear-gradient(115deg, #0b1612 0%, #15120c 48%, #22140a 100%);
-            border: 1px solid #26332c; padding: 34px 38px; display: flex; align-items: center; justify-content: space-between; gap: 24px; margin-bottom: 22px;
-            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.55);
+            background: linear-gradient(115deg, #0b1612 0%, #22140a 100%);
+            border: 1px solid #26332c; border-radius: 16px; padding: 30px; margin-bottom: 25px;
         }
-        .hero-left { max-width: 500px; z-index: 2; }
-        .hero-title { margin: 0; line-height: 0.95; font-weight: 950; font-style: italic; text-transform: uppercase; }
-        .hero-title .line1 { display: block; font-size: 2.6rem; color: #ffffff; letter-spacing: 1px; }
-        .hero-title .line2 { display: block; font-size: 3.5rem
+        .hero-title { font-size: 2.2rem; font-weight: bold; font-style: italic; color: var(--neon-green); margin: 0 0 10px 0; text-transform: uppercase; }
+        .hero-subtitle { color: #d1d9e4; font-size: 0.85rem; margin-bottom: 20px; text-transform: uppercase; }
+        .hero-btn { background: var(--neon-green); color: #031406; border: none; padding: 12px 24px; border-radius: 8px; font-weight: bold; cursor: pointer; text-transform: uppercase; }
+
+        .modes-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 25px; }
+        .mode-card {
+            background: var(--bg-card); border: 1.5px solid #2b3847; border-radius: 14px; padding: 20px; cursor: pointer; transition: 0.2s;
+            display: flex; flex-direction: column; justify-content: space-between; min-height: 150px;
+        }
+        .mode-card:hover { transform: translateY(-4px); border-color: var(--neon-green); }
+        .mode-title { font-size: 1.2rem; font-weight: bold; font-style: italic; color: #fff; text-transform: uppercase; }
+
+        .game-view { display: none; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 16px; padding: 25px; }
+        .game-view.active { display: block; }
+        .game-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 15px; margin-bottom: 20px; }
+        .game-header h2 { margin: 0; color: var(--neon-green); text-transform: uppercase; }
+        .btn-back { background: #18222f; border: 1px solid #283649; color: #fff; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-weight: bold; }
+
+        .controls-bar { display: flex; gap: 10px; justify-content: center; margin-top: 20px; align-items: center; }
+        .controls-bar input { background: #0d131a; border: 1px solid #283649; color: #fff; padding: 10px; border-radius: 8px; text-align: center; font-weight: bold; outline: none; width: 100px; }
+        .btn-play { background: var(--neon-green); color: #031406; border: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; text-transform: uppercase; }
+        .status-banner { margin-top: 15px; padding: 12px; background: rgba(255,255,255,0.03); border-radius: 8px; color: var(--gold); font-weight: bold; text-align: center; }
+
+        /* СЛОТЫ */
+        .slots-box { display: flex; justify-content: center; gap: 15px; margin: 20px 0; }
+        .reel { width: 90px; height: 100px; background: #0d131a; border: 2px solid #2e3e52; border-radius: 10px; display: grid; place-items: center; font-size: 3rem; }
+
+        /* КАРТЫ (ПОКЕР / БЛЕК-ДЖЕК) */
+        .cards-row { display: flex; justify-content: center; gap: 10px; margin: 20px 0; min-height: 100px; }
+        .poker-card { width: 65px; height: 95px; background: #fff; color: #000; border-radius: 6px; font-size: 1.2rem; font-weight: bold; display: flex; flex-direction: column; justify-content: space-between; padding: 6px; border: 2px solid transparent; }
+        .poker-card.red { color: #dc2626; }
+        .poker-card.held { border-color: var(--neon-green); transform: translateY(-8px); }
+
+        /* ИМУЩЕСТВО */
+        .property-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; }
+        .prop-card { background: #0e141c; border: 1px solid #243142; border-radius: 10px; padding: 15px; display: flex; flex-direction: column; justify-content: space-between; }
+        .prop-card.owned { border-color: var(--neon-green); }
+        .prop-price { font-weight: bold; color: var(--gold); margin-top: 10px; }
+
+        .vip-banner { background: #1b150c; border: 2px solid var(--gold); border-radius: 12px; padding: 15px; margin-bottom: 20px; text-align: center; }
+        .vip-banner h3 { color: var(--gold); margin-top: 0; }
+
+        .toast { position: fixed; bottom: 20px; right: 20px; background: #121a24; border: 1.5px solid var(--neon-green); color: #fff; padding: 12px 18px; border-radius: 10px; font-weight: bold; transform: translateY(150%); opacity: 0; transition: 0.3s; z-index: 100; }
+        .toast.show { transform: translateY(0); opacity: 1; }
+    </style>
+</head>
+<body>
+
+    <aside class="left-sidebar">
+        <div class="brand-logo" onclick="showLobby()">
+            <div class="brand-crown">👑</div>
+            <div class="brand-title-top">СЕРЁГА И ОЛЯМБУС</div>
+            <div class="brand-title-bottom">КАЗИК</div>
+        </div>
+
+        <nav class="sidebar-menu">
+            <button class="nav-item active" id="nav-lobby" onclick="showLobby()">🏠 Главная</button>
+            <button class="nav-item" id="nav-slots" onclick="switchGame('slots')">🍒 Неоновые слоты</button>
+            <button class="nav-item" id="nav-blackjack" onclick="switchGame('blackjack')">🎯 Блек-джек <span class="nav-badge">VIP LITE</span></button>
+            <button class="nav-item" id="nav-roulette" onclick="switchGame('roulette')">🎡 Колесо фортуны <span class="nav-badge">VIP LITE</span></button>
+            <button class="nav-item" id="nav-poker" onclick="switchGame('poker')">🃏 Видеопокер <span class="nav-badge">VIP LITE</span></button>
+            <button class="nav-item" id="nav-property" onclick="switchGame('property')">👑 Имущество <span class="nav-badge">VIP PRO</span></button>
+        </nav>
+
+        <div class="sidebar-promo">
+            <div style="font-size:0.8rem; font-weight:bold; color:#fff; text-transform:uppercase;">🎁 Промокод</div>
+            <div class="promo-input-group">
+                <input type="text" id="promo-input" placeholder="Код">
+                <button onclick="applyPromo()">OK</button>
+            </div>
+        </div>
+    </aside>
+
+    <div class="main-wrapper">
+        <header class="topbar">
+            <div style="color: var(--text-muted); font-size: 0.9rem;">🟢 Онлайн: <b>624</b></div>
+            <div class="balance-box">💼 <span id="balance">1000</span> BYN</div>
+        </header>
+
+        <main class="content-area">
+            <div id="lobby-view">
+                <div class="hero-banner">
+                    <h1 class="hero-title">ИГРАЙ ДЕРЗКО БЕЗ ЛИМИТОВ</h1>
