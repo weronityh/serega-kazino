@@ -231,7 +231,7 @@
         .pay-row { display: flex; justify-content: space-between; padding: 7px 0; border-bottom: 1px solid #1b2533; font-size: 0.92rem; }
         .pay-row b { color: var(--gold); }
 
-        /* ТОЧНАЯ КОПИЯ РУЛЕТКИ С ФОТО */
+        /* КОЛЕСО ФОРТУНЫ */
         .roulette-container { text-align: center; padding: 20px; position: relative; }
         .casino-wheel-wrap {
             position: relative;
@@ -253,64 +253,55 @@
             box-shadow: inset 0 0 20px rgba(0,0,0,0.9);
             transition: transform 3.5s cubic-bezier(0.15, 0.85, 0.2, 1);
         }
-        /* Имитация секторов рулетки через SVG / Conic Gradient */
         .wheel-sectors {
             position: absolute;
             width: 100%;
             height: 100%;
             border-radius: 50%;
             background: conic-gradient(
-                #22c55e 0deg 9.73deg,     /* 0 */
-                #dc2626 9.73deg 19.46deg,  /* 32 */
-                #111111 19.46deg 29.19deg, /* 15 */
-                #dc2626 29.19deg 38.92deg, /* 19 */
-                #111111 38.92deg 48.65deg, /* 4 */
-                #dc2626 48.65deg 58.38deg, /* 21 */
-                #111111 58.38deg 68.11deg, /* 2 */
-                #dc2626 68.11deg 77.84deg, /* 25 */
-                #111111 77.84deg 87.57deg, /* 17 */
-                #dc2626 87.57deg 97.3deg,  /* 34 */
-                #111111 97.3deg 107.03deg, /* 6 */
-                #dc2626 107.03deg 116.76deg,/* 27 */
-                #111111 116.76deg 126.49deg,/* 13 */
-                #dc2626 126.49deg 136.22deg,/* 36 */
-                #111111 136.22deg 145.95deg,/* 11 */
-                #dc2626 145.95deg 155.68deg,/* 30 */
-                #111111 155.68deg 165.41deg,/* 8 */
-                #dc2626 165.41deg 175.14deg,/* 23 */
-                #111111 175.14deg 184.87deg,/* 10 */
-                #dc2626 184.87deg 194.6deg, /* 5 */
-                #111111 194.6deg 204.33deg, /* 24 */
-                #dc2626 204.33deg 214.06deg,/* 16 */
-                #111111 214.06deg 223.79deg,/* 33 */
-                #dc2626 223.79deg 233.52deg,/* 1 */
-                #111111 233.52deg 243.25deg,/* 20 */
-                #dc2626 243.25deg 252.98deg,/* 14 */
-                #111111 252.98deg 262.71deg,/* 31 */
-                #dc2626 262.71deg 272.44deg,/* 9 */
-                #111111 272.44deg 282.17deg,/* 22 */
-                #dc2626 282.17deg 291.9deg, /* 18 */
-                #111111 291.9deg 301.63deg, /* 29 */
-                #dc2626 301.63deg 311.36deg,/* 7 */
-                #111111 311.36deg 321.09deg,/* 28 */
-                #dc2626 321.09deg 330.82deg,/* 12 */
-                #111111 330.82deg 340.55deg,/* 35 */
-                #dc2626 340.55deg 350.28deg,/* 3 */
-                #111111 350.28deg 360deg    /* 26 */
+                #22c55e 0deg 9.73deg,     #dc2626 9.73deg 19.46deg,  #111111 19.46deg 29.19deg,
+                #dc2626 29.19deg 38.92deg, #111111 38.92deg 48.65deg, #dc2626 48.65deg 58.38deg,
+                #111111 58.38deg 68.11deg, #dc2626 68.11deg 77.84deg, #111111 77.84deg 87.57deg,
+                #dc2626 87.57deg 97.3deg,  #111111 97.3deg 107.03deg, #dc2626 107.03deg 116.76deg,
+                #111111 116.76deg 126.49deg,#dc2626 126.49deg 136.22deg,#111111 136.22deg 145.95deg,
+                #dc2626 145.95deg 155.68deg,#111111 155.68deg 165.41deg,#dc2626 165.41deg 175.14deg,
+                #111111 175.14deg 184.87deg,#dc2626 184.87deg 194.6deg, #111111 194.6deg 204.33deg,
+                #dc2626 204.33deg 214.06deg,#111111 214.06deg 223.79deg,#dc2626 223.79deg 233.52deg,
+                #111111 233.52deg 243.25deg,#dc2626 243.25deg 252.98deg,#111111 252.98deg 262.71deg,
+                #dc2626 262.71deg 272.44deg,#111111 272.44deg 282.17deg,#dc2626 282.17deg 291.9deg,
+                #111111 291.9deg 301.63deg, #dc2626 301.63deg 311.36deg,#111111 311.36deg 321.09deg,
+                #dc2626 321.09deg 330.82deg,#111111 330.82deg 340.55deg,#dc2626 340.55deg 350.28deg,
+                #111111 350.28deg 360deg
             );
+        }
+        .wheel-number-label {
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            font-size: 9px;
+            font-weight: 900;
+            color: #fff;
+            text-align: center;
+            line-height: 24px;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%) rotate(var(--rot)) translateY(-108px) rotate(calc(-1 * var(--rot)));
+            pointer-events: none;
+            text-shadow: 0 1px 2px #000;
         }
         .wheel-center-wood {
             position: absolute;
-            top: 25%; left: 25%;
-            width: 50%; height: 50%;
+            top: 31%; left: 31%;
+            width: 38%; height: 38%;
             background: radial-gradient(circle, #b8860b 0%, #8b4513 70%, #5c2c16 100%);
             border-radius: 50%;
             box-shadow: 0 0 15px rgba(0,0,0,0.8);
             display: grid;
             place-items: center;
+            z-index: 5;
         }
         .wheel-gold-spinner {
-            width: 50px; height: 50px;
+            width: 32px; height: 32px;
             background: radial-gradient(circle, #ffd700 0%, #daa520 70%, #b8860b 100%);
             border-radius: 50%;
             box-shadow: 0 4px 10px rgba(0,0,0,0.5);
@@ -321,8 +312,8 @@
             position: absolute;
             background: linear-gradient(90deg, #daa520, #fff8dc, #daa520);
         }
-        .wheel-gold-spinner::before { top: 22px; left: -35px; width: 120px; height: 6px; border-radius: 3px; }
-        .wheel-gold-spinner::after { top: -35px; left: 22px; width: 6px; height: 120px; border-radius: 3px; }
+        .wheel-gold-spinner::before { top: 13px; left: -18px; width: 68px; height: 6px; border-radius: 3px; }
+        .wheel-gold-spinner::after { top: -18px; left: 13px; width: 6px; height: 68px; border-radius: 3px; }
 
         .roulette-ball {
             position: absolute;
@@ -377,6 +368,8 @@
             box-shadow: 0 12px 25px rgba(0,0,0,0.5);
             border: 2px solid #ccc;
             transform-origin: top center;
+        }
+        .bj-card.bj-card-new {
             animation: slowDealToTable 0.9s cubic-bezier(0.25, 1, 0.5, 1) forwards;
         }
         .bj-card.red { color: #dc2626; }
@@ -395,7 +388,7 @@
             font-weight: 800;
         }
 
-        /* НАСТРОЙКИ И ВИКТОРИНА ЗА BYN */
+        /* ХАЛЯВА */
         .settings-container {
             max-width: 700px;
             margin: 0 auto;
@@ -446,7 +439,7 @@
             color: var(--danger);
         }
 
-        /* МАГАЗИН И ПРЕИМУЩЕСТВА ВИП */
+        /* МАГАЗИН VIP СТАТУСОВ */
         .vip-shop-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -481,6 +474,7 @@
             gap: 8px;
         }
 
+        /* МАГАЗИН ИМУЩЕСТВА */
         .property-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
         .prop-card { background: #0e141c; border: 1px solid #243142; border-radius: 14px; padding: 18px; display: flex; flex-direction: column; justify-content: space-between; }
         .prop-card.owned { border-color: var(--neon-green); background: linear-gradient(160deg, rgba(26,232,58,0.08), #0e141c); }
@@ -575,13 +569,16 @@
                 <span class="nav-item-left"><span class="nav-icon">🍒</span> Слоты</span>
                 <span class="nav-badge badge-pro">VIP PRO</span>
             </button>
+            <button class="nav-item" id="nav-vip-shop" onclick="switchGame('vip-shop')">
+                <span class="nav-item-left"><span class="nav-icon">⭐</span> VIP Статусы</span>
+                <span class="nav-badge badge-vip">SHOP</span>
+            </button>
             <button class="nav-item" id="nav-property" onclick="switchGame('property')">
                 <span class="nav-item-left"><span class="nav-icon">👑</span> Имущество</span>
                 <span class="nav-badge badge-pro">VIP PRO</span>
             </button>
-            <!-- КНОПКА НАСТРОЙКИ С ВИКТОРИНОЙ ЗА BYN -->
             <button class="nav-item" id="nav-settings" onclick="switchGame('settings')">
-                <span class="nav-item-left"><span class="nav-icon">⚙️</span> Настройки (Викторина)</span>
+                <span class="nav-item-left"><span class="nav-icon">🎁</span> ХАЛЯВА</span>
                 <span class="nav-badge" style="background:var(--gold); color:#000;">+BYN</span>
             </button>
         </nav>
@@ -681,7 +678,7 @@
                 <div class="status-banner" id="bj-status">Сделайте ставку и нажмите «Раздать»</div>
             </div>
 
-            <!-- КОЛЕСО ФОРТУНЫ (РУЛЕТКА КАК НА ФОТО) -->
+            <!-- КОЛЕСО ФОРТУНЫ -->
             <div id="view-roulette" class="game-view">
                 <div class="game-header">
                     <h2>🎡 Колесо фортуны (Без лимитов)</h2>
@@ -691,6 +688,7 @@
                     <div class="casino-wheel-wrap">
                         <div class="casino-wheel" id="fortune-wheel">
                             <div class="wheel-sectors"></div>
+                            <div id="wheel-numbers"></div>
                             <div class="wheel-center-wood">
                                 <div class="wheel-gold-spinner"></div>
                             </div>
@@ -709,25 +707,37 @@
             <!-- ВИДЕОПОКЕР -->
             <div id="view-poker" class="game-view">
                 <div class="game-header">
-                    <h2>🃏 Видеопокер (Требуется VIP Lite)</h2>
+                    <h2>🃏 Видеопокер</h2>
                     <button class="btn-back" onclick="showLobby()">← В лобби</button>
                 </div>
                 <div class="poker-table">
-                    <div class="cards-row" id="poker-cards"></div>
-                    <div class="controls-bar">
+                    <div id="poker-lock-banner" class="status-banner" style="background: rgba(245, 158, 11, 0.15); border: 2px dashed #f59e0b; color: #f59e0b; margin-bottom: 20px; display: none;">
+                        🔒 Чтобы играть в Видеопокер, обязательно нужно прикупить статус <b>VIP Lite</b>!
+                    </div>
+                    <div class="cards-row" id="poker-cards">
+                        <div class="poker-card" style="opacity:0.4;"><div>J</div><div style="font-size:1.8rem; text-align:center;">♠</div><div style="text-align:right;">J</div></div>
+                        <div class="poker-card" style="opacity:0.4;"><div>Q</div><div style="font-size:1.8rem; text-align:center;">♥</div><div style="text-align:right;">Q</div></div>
+                        <div class="poker-card" style="opacity:0.4;"><div>K</div><div style="font-size:1.8rem; text-align:center;">♦</div><div style="text-align:right;">K</div></div>
+                        <div class="poker-card" style="opacity:0.4;"><div>A</div><div style="font-size:1.8rem; text-align:center;">♣</div><div style="text-align:right;">A</div></div>
+                        <div class="poker-card" style="opacity:0.4;"><div>10</div><div style="font-size:1.8rem; text-align:center;">♠</div><div style="text-align:right;">10</div></div>
+                    </div>
+                    <div class="controls-bar" id="poker-controls-box">
                         <label>Ставка:</label>
                         <input type="number" id="poker-bet" value="150" min="50">
                         <button class="btn-play" id="poker-action-btn" onclick="pokerAction()">РАЗДАТЬ</button>
                     </div>
-                    <div class="status-banner" id="poker-status">Выберите карты для удержания</div>
+                    <div class="status-banner" id="poker-status">Зал видеопокера открыт для просмотра.</div>
                 </div>
             </div>
 
             <!-- СЛОТЫ -->
             <div id="view-slots" class="game-view">
                 <div class="game-header">
-                    <h2>🍒 Неоновые слоты (Требуется VIP Pro)</h2>
+                    <h2>🍒 Неоновые слоты</h2>
                     <button class="btn-back" onclick="showLobby()">← В лобби</button>
+                </div>
+                <div id="slots-lock-banner" class="status-banner" style="background: rgba(26, 232, 58, 0.15); border: 2px dashed var(--neon-green); color: var(--neon-green); margin-bottom: 20px; display: none;">
+                    🔒 Чтобы крутить Неоновые слоты, обязательно нужно прикупить статус <b>VIP Pro</b>!
                 </div>
                 <div class="slots-wrapper">
                     <div class="slot-cabinet">
@@ -737,7 +747,7 @@
                             <div class="reel-cell" id="reel-1">💎</div>
                             <div class="reel-cell" id="reel-2">7️⃣</div>
                         </div>
-                        <div class="controls-bar">
+                        <div class="controls-bar" id="slots-controls-box">
                             <label>Ставка:</label>
                             <input type="number" id="slots-bet" value="100" min="10" step="10">
                             <button class="btn-play" id="slots-spin-btn" onclick="spinSlots()">КРУТИТЬ</button>
@@ -750,25 +760,13 @@
                         <div class="pay-row"><span>🍋 🍋 🍋 / 🍒 🍒 🍒</span><b>x6</b></div>
                     </div>
                 </div>
-                <div class="status-banner" id="slots-status">Сделай ставку и жми «Крутить»!</div>
+                <div class="status-banner" id="slots-status">Зал слотов открыт для просмотра.</div>
             </div>
 
-            <!-- НАСТРОЙКИ И ВИКТОРИНА ЗА BYN -->
-            <div id="view-settings" class="game-view">
+            <!-- ОТДЕЛЬНЫЙ РАЗДЕЛ: МАГАЗИН VIP СТАТУСОВ -->
+            <div id="view-vip-shop" class="game-view">
                 <div class="game-header">
-                    <h2>⚙️ Настройки и Викторина за BYN</h2>
-                    <button class="btn-back" onclick="showLobby()">← В лобби</button>
-                </div>
-                <div class="settings-container">
-                    <div class="status-banner" style="margin-bottom:20px;">Отвечай на вопросы и зарабатывай BYN на баланс!</div>
-                    <div id="quiz-container"></div>
-                </div>
-            </div>
-
-            <!-- ИМУЩЕСТВО И ВИП -->
-            <div id="view-property" class="game-view">
-                <div class="game-header">
-                    <h2>👑 Магазин Имущества и VIP-статусов</h2>
+                    <h2>⭐ Магазин VIP Статусов</h2>
                     <button class="btn-back" onclick="showLobby()">← В лобби</button>
                 </div>
 
@@ -778,7 +776,7 @@
                             <span class="nav-badge badge-vip" style="font-size:0.8rem; padding:4px 8px;">VIP LITE</span>
                             <h3 style="color: #f59e0b; margin-top: 10px;">10 000 BYN</h3>
                             <ul class="vip-features-list">
-                                <li>🃏 Доступ к режиму <b>Видеопокер</b></li>
+                                <li>🃏 Доступ к игре в <b>Видеопокер</b></li>
                                 <li>🎁 Ежедневный бонус +1 000 BYN</li>
                                 <li>⭐ Золотой значок в профиле</li>
                             </ul>
@@ -791,7 +789,7 @@
                             <span class="nav-badge badge-pro" style="font-size:0.8rem; padding:4px 8px;">VIP PRO</span>
                             <h3 style="color: var(--neon-green); margin-top: 10px;">50 000 BYN</h3>
                             <ul class="vip-features-list">
-                                <li>🍒 Доступ к <b>Неоновым слотам</b> (до x25)</li>
+                                <li>🍒 Доступ к игре в <b>Неоновые слоты</b> (до x25)</li>
                                 <li>👑 Полный доступ к покупке <b>Элитного имущества</b></li>
                                 <li>🚀 Увеличенные множители выигрышей</li>
                                 <li>🎁 Ежедневный бонус +5 000 BYN</li>
@@ -801,10 +799,31 @@
                     </div>
                 </div>
 
-                <div class="status-banner" id="vip-status-desc" style="margin-bottom: 25px;">У вас нет активного VIP статуса.</div>
+                <div class="status-banner" id="vip-status-desc" style="margin-top: 15px;">У вас нет активного VIP статуса.</div>
+            </div>
 
-                <h3 style="color:var(--neon-green); margin-bottom:15px;">Элитное имущество (требуется VIP PRO)</h3>
+            <!-- ОТДЕЛЬНЫЙ РАЗДЕЛ: МАГАЗИН ИМУЩЕСТВА -->
+            <div id="view-property" class="game-view">
+                <div class="game-header">
+                    <h2>👑 Магазин Элитного Имущества</h2>
+                    <button class="btn-back" onclick="showLobby()">← В лобби</button>
+                </div>
+                <div class="status-banner" style="background: rgba(245, 158, 11, 0.12); border: 1px solid rgba(245, 158, 11, 0.3); color: var(--gold); margin-bottom: 20px;">
+                    👑 Покупка элитного имущества доступна только владельцам статуса <b>VIP PRO</b>!
+                </div>
                 <div class="property-grid" id="property-grid"></div>
+            </div>
+
+            <!-- РАЗДЕЛ ХАЛЯВА (ВИКТОРИНА) -->
+            <div id="view-settings" class="game-view">
+                <div class="game-header">
+                    <h2>🎁 Халява (Зарабатывай BYN)</h2>
+                    <button class="btn-back" onclick="showLobby()">← В лобби</button>
+                </div>
+                <div class="settings-container">
+                    <div class="status-banner" style="margin-bottom:20px;">Отвечай на вопросы и получай бесплатные BYN на баланс!</div>
+                    <div id="quiz-container"></div>
+                </div>
             </div>
 
             <footer class="trust-footer">
@@ -947,18 +966,11 @@
         }
 
         function switchGame(id) {
-            if (id === 'poker' && vipLevel === 'none') {
-                showToast('🔒 Для видеопокера нужен статус VIP Lite!');
-                switchGame('property');
-                return;
-            }
-            if (id === 'slots' && vipLevel !== 'pro') {
-                showToast('🔒 Для неоновых слотов необходим VIP Pro!');
-                switchGame('property');
-                return;
-            }
             if (id === 'property') {
                 renderProperties();
+            }
+            if (id === 'vip-shop') {
+                updateVipShopStatus();
             }
             if (id === 'settings') {
                 renderQuiz();
@@ -974,10 +986,59 @@
             if (targetView) {
                 targetView.style.display = 'block';
                 targetView.classList.add('active');
+                if (id === 'roulette') {
+                    buildWheelNumbers();
+                }
+                if (id === 'poker') {
+                    checkPokerAccess();
+                }
+                if (id === 'slots') {
+                    checkSlotsAccess();
+                }
             }
             
             const navBtn = document.getElementById('nav-' + id);
             if (navBtn) navBtn.classList.add('active');
+        }
+
+        function updateVipShopStatus() {
+            const vipDesc = document.getElementById('vip-status-desc');
+            if (vipDesc) {
+                vipDesc.textContent = 
+                    vipLevel === 'pro' ? '👑 У вас активирован максимальный VIP PRO статус!' :
+                    (vipLevel === 'lite' ? '⭐ У вас активирован VIP LITE статус (Купите PRO для полного доступа).' : 'У вас нет активного VIP статуса.');
+            }
+        }
+
+        function checkPokerAccess() {
+            const banner = document.getElementById('poker-lock-banner');
+            const controls = document.getElementById('poker-controls-box');
+            const hasAccess = (vipLevel === 'lite' || vipLevel === 'pro');
+            if (banner) banner.style.display = hasAccess ? 'none' : 'block';
+            if (controls) controls.style.display = hasAccess ? 'flex' : 'none';
+        }
+
+        function checkSlotsAccess() {
+            const banner = document.getElementById('slots-lock-banner');
+            const controls = document.getElementById('slots-controls-box');
+            const hasAccess = (vipLevel === 'pro');
+            if (banner) banner.style.display = hasAccess ? 'none' : 'block';
+            if (controls) controls.style.display = hasAccess ? 'flex' : 'none';
+        }
+
+        function buildWheelNumbers() {
+            const container = document.getElementById('wheel-numbers');
+            if (!container || container.children.length > 0) return;
+            const numbers = [0,32,15,19,4,21,2,25,17,34,6,27,13,36,11,30,8,23,10,5,24,16,33,1,20,14,31,9,22,18,29,7,28,12,35,3,26];
+            
+            numbers.forEach((num, index) => {
+                const angle = index * (360 / numbers.length);
+                const div = document.createElement('div');
+                div.className = 'wheel-number-label';
+                div.style.setProperty('--rot', angle + 'deg');
+                div.textContent = num;
+                container.appendChild(div);
+            });
         }
 
         function renderQuiz() {
@@ -1084,11 +1145,17 @@
                 showToast('👑 VIP PRO активирован!');
             }
             saveData();
-            renderProperties();
+            updateVipShopStatus();
+            checkPokerAccess();
+            checkSlotsAccess();
         }
 
         const SLOT_SYMBOLS = ['🍒', '🍋', '🔔', '💎', '7️⃣'];
         function spinSlots() {
+            if (vipLevel !== 'pro') {
+                showToast('🔒 Требуется VIP Pro для игры!');
+                return;
+            }
             try {
                 const betInput = document.getElementById('slots-bet');
                 const bet = parseInt(betInput ? betInput.value : 100);
@@ -1164,11 +1231,11 @@
             const finalBallDeg = ballSpins + targetAngle;
 
             wheel.style.transition = 'transform 3.5s cubic-bezier(0.15, 0.85, 0.2, 1)';
-            ball.style.transition = 'all 3.5s cubic-bezier(0.15, 0.85, 0.2, 1)';
+            ball.style.transition = 'all 3.5s cubic-bezier(0.1, 0.8, 0.2, 1)';
 
             wheel.style.transform = `rotate(${finalWheelDeg}deg)`;
             
-            const rad = 110;
+            const rad = 95;
             const angleRad = (finalBallDeg * Math.PI) / 180;
             const ballX = Math.cos(angleRad) * rad;
             const ballY = Math.sin(angleRad) * rad;
@@ -1193,6 +1260,10 @@
         let pokerCardsData = [];
         let pokerStep = 1;
         function pokerAction() {
+            if (vipLevel === 'none') {
+                showToast('🔒 Требуется VIP Lite для игры!');
+                return;
+            }
             const betInput = document.getElementById('poker-bet');
             const bet = parseInt(betInput ? betInput.value : 150);
             if (isNaN(bet) || bet <= 0 || bet > balance) { showToast('⚠️ Неверная ставка!'); return; }
@@ -1315,16 +1386,35 @@
             d2 = bjDeck.pop();
 
             const statusEl = document.getElementById('bj-status');
-            if(statusEl) statusEl.textContent = '🃏 Дилер раздает карты с замедлением...';
+            if(statusEl) statusEl.textContent = '🃏 Раздача карт по одной...';
             const controls = document.getElementById('bj-controls');
             if(controls) controls.innerHTML = '';
 
-            setTimeout(() => { bjPlayerHand.push(p1); renderBjTable(false); }, 200);
-            setTimeout(() => { bjDealerHand.push(d1); renderBjTable(false); }, 600);
-            setTimeout(() => { bjPlayerHand.push(p2); renderBjTable(false); }, 1000);
+            document.getElementById('dealer-cards').innerHTML = '';
+            document.getElementById('player-cards').innerHTML = '';
+
+            setTimeout(() => { 
+                bjDealerHand.push(d1); 
+                appendBjCard('dealer-cards', d1, false);
+                updateBjScores(false);
+            }, 400);
+
+            setTimeout(() => { 
+                bjPlayerHand.push(p1); 
+                appendBjCard('player-cards', p1, true);
+                updateBjScores(false);
+            }, 1200);
+
+            setTimeout(() => { 
+                bjPlayerHand.push(p2); 
+                appendBjCard('player-cards', p2, true);
+                updateBjScores(false);
+            }, 2000);
+
             setTimeout(() => { 
                 bjDealerHand.push(d2); 
-                renderBjTable(false); 
+                appendBjCard('dealer-cards', d2, true);
+                updateBjScores(false);
                 bjActive = true;
                 if(statusEl) statusEl.textContent = 'Ваш ход: выберите действие';
                 if(controls) {
@@ -1333,10 +1423,32 @@
                         <button class="btn-play" style="background:#ef4444;" onclick="bjStand()">ХВАТИТ</button>
                     `;
                 }
-            }, 1400);
+            }, 2800);
         }
 
-        function renderBjTable(revealDealer) {
+        function appendBjCard(containerId, c, isVisible) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            const el = document.createElement('div');
+            const isRed = ['♥', '♦'].includes(c.suit);
+            el.className = `bj-card bj-card-new ${isRed ? 'red' : ''}`;
+            if (!isVisible) {
+                el.innerHTML = `<div style="font-size:1.5rem; text-align:center; margin:auto;">🔒</div>`;
+            } else {
+                const vs = getCardValStr(c.val);
+                el.innerHTML = `<div>${vs}</div><div style="font-size:1.5rem; text-align:center;">${c.suit}</div><div style="text-align:right;">${vs}</div>`;
+            }
+            container.appendChild(el);
+        }
+
+        function updateBjScores(revealDealer) {
+            const pScoreEl = document.getElementById('player-score');
+            const dScoreEl = document.getElementById('dealer-score');
+            if(pScoreEl) pScoreEl.textContent = `Ваш счет: ${calcScore(bjPlayerHand)}`;
+            if(dScoreEl) dScoreEl.textContent = revealDealer ? `Дилер: ${calcScore(bjDealerHand)}` : `Дилер: ?`;
+        }
+
+        function renderFullBjTable(revealDealer) {
             const pCont = document.getElementById('player-cards');
             const dCont = document.getElementById('dealer-cards');
             if(!pCont || !dCont) return;
@@ -1365,16 +1477,16 @@
                 dCont.appendChild(el);
             });
 
-            const pScoreEl = document.getElementById('player-score');
-            const dScoreEl = document.getElementById('dealer-score');
-            if(pScoreEl) pScoreEl.textContent = `Ваш счет: ${calcScore(bjPlayerHand)}`;
-            if(dScoreEl) dScoreEl.textContent = revealDealer ? `Дилер: ${calcScore(bjDealerHand)}` : `Дилер: ?`;
+            updateBjScores(revealDealer);
         }
 
         function bjHit() {
             if (!bjActive) return;
-            bjPlayerHand.push(bjDeck.pop());
-            renderBjTable(false);
+            const newCard = bjDeck.pop();
+            bjPlayerHand.push(newCard);
+            appendBjCard('player-cards', newCard, true);
+            updateBjScores(false);
+
             const pScore = calcScore(bjPlayerHand);
             if (pScore > 21) {
                 bjActive = false;
@@ -1387,13 +1499,13 @@
         function bjStand() {
             if (!bjActive) return;
             bjActive = false;
-            renderBjTable(true);
+            renderFullBjTable(true);
 
             let dScore = calcScore(bjDealerHand);
             while (dScore < 17 && bjDeck.length > 0) {
                 bjDealerHand.push(bjDeck.pop());
                 dScore = calcScore(bjDealerHand);
-                renderBjTable(true);
+                renderFullBjTable(true);
             }
 
             const pScore = calcScore(bjPlayerHand);
@@ -1430,12 +1542,6 @@
             const grid = document.getElementById('property-grid');
             if(!grid) return;
             grid.innerHTML = '';
-            const vipDesc = document.getElementById('vip-status-desc');
-            if(vipDesc) {
-                vipDesc.textContent = 
-                    vipLevel === 'pro' ? '👑 У вас активирован максимальный VIP PRO статус!' :
-                    (vipLevel === 'lite' ? '⭐ У вас активирован VIP LITE статус (Купите PRO для слотов и имущества).' : 'У вас нет активного VIP статуса.');
-            }
 
             PROPERTIES.forEach(p => {
                 const owned = ownedProps.includes(p.id);
@@ -1458,7 +1564,7 @@
 
         function buyProperty(id, price) {
             if (vipLevel !== 'pro') {
-                showToast('🔒 Для покупки имущества нужен VIP PRO!');
+                showToast('🔒 Для покупки имущества нужен VIP PRO статус!');
                 return;
             }
             if (balance < price) {
