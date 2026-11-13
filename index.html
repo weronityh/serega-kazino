@@ -68,8 +68,8 @@
             flex-direction: column;
             align-items: center;
             text-align: center;
-            padding: 6px 4px 22px;
-            margin-bottom: 10px;
+            padding: 6px 4px 16px;
+            margin-bottom: 6px;
             cursor: pointer;
         }
 
@@ -99,6 +99,35 @@
             text-shadow: 0 0 18px var(--neon-glow);
             line-height: 1.05;
             margin-top: 2px;
+        }
+
+        /* ПРОГРЕСС УРОВНЯ В САЙДБАРЕ */
+        .sidebar-level-card {
+            background: #121922;
+            border: 1px solid #233042;
+            border-radius: 12px;
+            padding: 10px 12px;
+            margin-bottom: 14px;
+        }
+        .level-top-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.78rem;
+            font-weight: 800;
+            margin-bottom: 6px;
+        }
+        .level-bar-bg {
+            width: 100%;
+            height: 7px;
+            background: #090d11;
+            border-radius: 999px;
+            overflow: hidden;
+        }
+        .level-bar-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--neon-green), var(--gold));
+            transition: width 0.3s ease;
         }
 
         .sidebar-menu {
@@ -172,33 +201,86 @@
 
         .topbar {
             height: 68px; background: var(--bg-topbar); border-bottom: 1px solid var(--border-color);
-            padding: 0 26px; display: flex; align-items: center; justify-content: space-between; gap: 16px; position: sticky; top: 0; z-index: 25;
+            padding: 0 26px; display: flex; align-items: center; justify-content: space-between; gap: 12px; position: sticky; top: 0; z-index: 25;
         }
 
         .tg-boss-btn {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             background: linear-gradient(135deg, #229ED9, #1b739e);
             border: 1px solid #38bdf8;
             border-radius: 12px;
-            padding: 10px 18px;
+            padding: 9px 14px;
             color: #fff;
             font-weight: 900;
-            font-size: 0.95rem;
+            font-size: 0.85rem;
             text-transform: uppercase;
             text-decoration: none;
             box-shadow: 0 0 15px rgba(34, 158, 217, 0.4);
             transition: 0.2s ease;
+            white-space: nowrap;
         }
         .tg-boss-btn:hover {
             filter: brightness(1.15);
             transform: translateY(-2px);
-            box-shadow: 0 0 22px rgba(34, 158, 217, 0.6);
+        }
+
+        .balance-center-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         .balance-center-box {
-            display: flex; align-items: center; gap: 12px; background: #121922; border: 2px solid #283648; padding: 10px 24px; border-radius: 14px; font-weight: 900; font-size: 1.35rem; color: var(--gold); box-shadow: 0 0 20px rgba(251, 191, 36, 0.15);
+            display: flex; align-items: center; gap: 10px; background: #121922; border: 2px solid #283648; padding: 8px 18px; border-radius: 14px; font-weight: 900; font-size: 1.25rem; color: var(--gold); box-shadow: 0 0 20px rgba(251, 191, 36, 0.15);
+        }
+
+        .income-pill {
+            background: rgba(26, 232, 58, 0.12);
+            border: 1px solid rgba(26, 232, 58, 0.4);
+            color: var(--neon-green);
+            font-size: 0.78rem;
+            font-weight: 900;
+            padding: 6px 10px;
+            border-radius: 10px;
+            white-space: nowrap;
+        }
+
+        .streak-pill {
+            background: rgba(239, 68, 68, 0.12);
+            border: 1px solid rgba(239, 68, 68, 0.35);
+            color: #fca5a5;
+            font-size: 0.78rem;
+            font-weight: 900;
+            padding: 6px 10px;
+            border-radius: 10px;
+            white-space: nowrap;
+            transition: 0.3s;
+        }
+        .streak-pill.hot {
+            background: linear-gradient(90deg, rgba(245, 158, 11, 0.25), rgba(239, 68, 68, 0.25));
+            border-color: var(--gold);
+            color: var(--gold);
+            box-shadow: 0 0 14px rgba(251, 191, 36, 0.4);
+            animation: pulseStreak 1.2s infinite alternate;
+        }
+        @keyframes pulseStreak {
+            from { transform: scale(1); }
+            to { transform: scale(1.05); }
+        }
+
+        .rescue-btn {
+            display: none;
+            background: linear-gradient(90deg, #f59e0b, #ef4444);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            padding: 8px 12px;
+            font-weight: 900;
+            font-size: 0.78rem;
+            cursor: pointer;
+            animation: pulseStreak 0.9s infinite alternate;
         }
 
         .topbar-profile-pill {
@@ -282,8 +364,20 @@
         .game-header h2 { margin: 0; color: var(--neon-green); text-transform: uppercase; }
         .btn-back { background: #18222f; border: 1px solid #283649; color: #fff; padding: 8px 16px; border-radius: 10px; cursor: pointer; font-weight: 700; }
 
-        .controls-bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 12px; margin-top: 20px; }
+        .controls-bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px; margin-top: 20px; }
         .controls-bar input, .controls-bar select { background: #0d131a; border: 1px solid #283649; color: #fff; padding: 10px 14px; border-radius: 10px; font-weight: 700; text-align: center; outline: none; }
+        .btn-quick-bet {
+            background: #18222f;
+            border: 1px solid #2e3e52;
+            color: var(--gold);
+            padding: 10px 12px;
+            border-radius: 10px;
+            font-weight: 900;
+            cursor: pointer;
+            font-size: 0.82rem;
+            transition: 0.15s;
+        }
+        .btn-quick-bet:hover { border-color: var(--gold); background: #223042; }
         .btn-play { background: var(--neon-green); color: #031406; border: none; padding: 11px 22px; border-radius: 10px; font-weight: 900; cursor: pointer; text-transform: uppercase; transition: 0.2s; }
         .btn-play:hover { filter: brightness(1.1); transform: scale(1.02); }
         .status-banner { margin: 16px auto 0; padding: 12px; border-radius: 10px; background: rgba(255,255,255,0.04); font-weight: 800; color: var(--gold); text-align: center; font-size: 1.05rem; }
@@ -382,12 +476,11 @@
         .pay-row { display: flex; justify-content: space-between; padding: 7px 0; border-bottom: 1px solid #1b2533; font-size: 0.92rem; }
         .pay-row b { color: var(--gold); }
 
-
         /* ОБЩИЙ ОНЛАЙН СПРАВА СВЕРХУ И ПРОФИЛЬ */
         .topbar-right-group {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
         }
         .topbar-online-pill {
             display: flex;
@@ -395,12 +488,11 @@
             gap: 8px;
             background: rgba(26, 232, 58, 0.08);
             border: 1px solid rgba(26, 232, 58, 0.35);
-            padding: 8px 14px;
+            padding: 8px 12px;
             border-radius: 999px;
-            font-size: 0.85rem;
+            font-size: 0.82rem;
             font-weight: 800;
             color: #fff;
-            box-shadow: 0 0 15px rgba(26, 232, 58, 0.15);
             white-space: nowrap;
         }
         .online-pulse-dot {
@@ -417,7 +509,7 @@
             100% { transform: scale(0.95); opacity: 0.8; }
         }
 
-        /* УЛУЧШЕННАЯ РАКЕТКА (CRASH / ЛАКИ ДЖЕТ) */
+        /* УЛУЧШЕННАЯ РАКЕТКА */
         .jet-container { text-align: center; max-width: 780px; margin: 0 auto; }
         .jet-history-bar {
             display: flex;
@@ -512,7 +604,7 @@
             pointer-events: none;
         }
 
-        /* МЕНЮ СОЗДАТЕЛЯ (БОЖЕСТВЕННАЯ ПАНЕЛЬ) */
+        /* МЕНЮ СОЗДАТЕЛЯ */
         .creator-panel-card {
             background: radial-gradient(circle at 85% 15%, rgba(251, 191, 36, 0.14), transparent 50%),
                         linear-gradient(145deg, #130e1c 0%, #0b0e14 100%);
@@ -523,9 +615,7 @@
             box-shadow: 0 0 40px rgba(251, 191, 36, 0.22);
             overflow-x: auto;
         }
-        .creator-table th {
-            color: var(--gold) !important;
-        }
+        .creator-table th { color: var(--gold) !important; }
         .badge-creator-tag {
             background: linear-gradient(90deg, #fbbf24, #f59e0b);
             color: #000;
@@ -534,16 +624,9 @@
             border-radius: 4px;
             font-weight: 950;
             margin-left: 4px;
-            box-shadow: 0 0 8px rgba(251, 191, 36, 0.6);
         }
-        .btn-demote-admin {
-            background: linear-gradient(135deg, #9333ea, #6b21a8);
-            border: 1px solid #c084fc;
-        }
-        .btn-promote-admin {
-            background: linear-gradient(135deg, #0284c7, #0369a1);
-            border: 1px solid #38bdf8;
-        }
+        .btn-demote-admin { background: linear-gradient(135deg, #9333ea, #6b21a8); border: 1px solid #c084fc; }
+        .btn-promote-admin { background: linear-gradient(135deg, #0284c7, #0369a1); border: 1px solid #38bdf8; }
 
         /* МОДАЛЬНОЕ ОКНО СНЯТИЯ АДМИНА */
         .creator-modal-backdrop {
@@ -556,9 +639,7 @@
             justify-content: center;
             padding: 16px;
         }
-        .creator-modal-backdrop.active {
-            display: flex;
-        }
+        .creator-modal-backdrop.active { display: flex; }
         .creator-modal-box {
             background: #10151f;
             border: 2px solid var(--gold);
@@ -581,11 +662,8 @@
             margin-top: 8px;
             outline: none;
         }
-        .creator-reason-select:focus, .creator-reason-input:focus {
-            border-color: var(--gold);
-        }
 
-        /* КАНВАС-КОЛЕСО ФОРТУНЫ С ШАРИКОМ */
+        /* КАНВАС-КОЛЕСО ФОРТУНЫ */
         .roulette-container { text-align: center; padding: 10px; position: relative; }
         .canvas-wheel-wrap {
             position: relative;
@@ -630,12 +708,11 @@
         }
         .roulette-bet-btn:hover { border-color: var(--neon-green); }
         .roulette-bet-btn.selected { border-color: var(--gold); background: rgba(251, 191, 36, 0.15); box-shadow: 0 0 12px rgba(251, 191, 36, 0.3); }
-        
         .bet-type-red { color: #f87171; }
         .bet-type-green { color: #4ade80; }
         .bet-type-black { color: #cbd5e1; }
 
-        /* 5-CARD DRAW ПОКЕР СТОЛ */
+        /* ПОКЕР */
         .poker-table { text-align: center; padding: 10px; }
         .poker-paytable {
             background: #0d131a;
@@ -653,7 +730,7 @@
         .poker-pay-item { background: #121a24; padding: 6px; border-radius: 8px; border: 1px solid #1e293b; }
         .poker-pay-item div:first-child { color: var(--text-muted); font-size: 0.7rem; }
         .poker-pay-item div:last-child { color: var(--gold); font-weight: 900; margin-top: 2px; }
-        .poker-pay-item.active-hand { border-color: var(--neon-green); background: rgba(26,232,58,0.15); box-shadow: 0 0 10px rgba(26,232,58,0.3); }
+        .poker-pay-item.active-hand { border-color: var(--neon-green); background: rgba(26,232,58,0.15); }
 
         .cards-row { display: flex; justify-content: center; gap: 12px; margin: 20px 0; }
         .poker-card { width: 75px; height: 105px; background: #fff; color: #000; border-radius: 8px; font-size: 1.3rem; font-weight: 900; display: flex; flex-direction: column; justify-content: space-between; padding: 8px; cursor: pointer; border: 3px solid transparent; box-shadow: 0 8px 20px rgba(0,0,0,0.4); position: relative; transition: transform 0.2s; user-select: none; }
@@ -688,114 +765,29 @@
             justify-content: space-between;
         }
         .bj-section-title { font-size: 0.85rem; font-weight: 900; color: #a3e635; text-transform: uppercase; margin-bottom: 6px; letter-spacing: 1px; }
-        .bj-cards-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 12px;
-            min-height: 115px;
-            perspective: 1000px;
-        }
+        .bj-cards-container { display: flex; justify-content: center; align-items: center; gap: 12px; min-height: 115px; perspective: 1000px; }
         .bj-card {
-            width: 75px;
-            height: 105px;
-            background: #ffffff;
-            color: #111;
-            border-radius: 8px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            padding: 8px;
-            font-weight: 900;
-            font-size: 1.2rem;
-            box-shadow: 0 12px 25px rgba(0,0,0,0.5);
-            border: 2px solid #ccc;
-            transform-origin: top center;
+            width: 75px; height: 105px; background: #ffffff; color: #111; border-radius: 8px;
+            display: flex; flex-direction: column; justify-content: space-between; padding: 8px;
+            font-weight: 900; font-size: 1.2rem; box-shadow: 0 12px 25px rgba(0,0,0,0.5); border: 2px solid #ccc;
         }
-        .bj-card.bj-card-new {
-            animation: slowDealToTable 0.9s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-        }
+        .bj-card.bj-card-new { animation: slowDealToTable 0.7s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
         .bj-card.red { color: #dc2626; }
         @keyframes slowDealToTable {
-            0% { transform: translateY(-200px) translateX(-50px) scale(0.4) rotate(45deg); opacity: 0; }
-            60% { transform: translateY(15px) translateX(5px) scale(1.08) rotate(-5deg); opacity: 1; }
-            85% { transform: translateY(-5px) translateX(-2deg) scale(0.97) rotate(2deg); opacity: 1; }
-            100% { transform: translateY(0) translateX(0) scale(1) rotate(0deg); opacity: 1; }
+            0% { transform: translateY(-150px) scale(0.5); opacity: 0; }
+            100% { transform: translateY(0) scale(1); opacity: 1; }
         }
-        .bj-info-panel {
-            background: rgba(0,0,0,0.3);
-            border-radius: 12px;
-            padding: 10px;
-            display: flex;
-            justify-content: space-around;
-            font-weight: 800;
-        }
+        .bj-info-panel { background: rgba(0,0,0,0.3); border-radius: 12px; padding: 10px; display: flex; justify-content: space-around; font-weight: 800; }
 
         /* АДМИН ПАНЕЛЬ */
-        .admin-panel-card {
-            background: #0d131a;
-            border: 2px solid var(--danger);
-            border-radius: 16px;
-            padding: 20px;
-            margin-bottom: 24px;
-            box-shadow: 0 0 30px rgba(239, 68, 68, 0.2);
-            overflow-x: auto;
-        }
-        .admin-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 12px;
-            font-size: 0.85rem;
-            text-align: left;
-            min-width: 950px;
-        }
-        .admin-table th, .admin-table td {
-            padding: 10px 8px;
-            border-bottom: 1px solid #1c2633;
-            vertical-align: middle;
-        }
-        .admin-table th {
-            color: var(--danger);
-            text-transform: uppercase;
-            font-size: 0.74rem;
-        }
-        .admin-ctrl-group {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            flex-wrap: wrap;
-        }
-        .admin-mini-input {
-            width: 95px;
-            background: #131b24;
-            border: 1px solid #2c3e50;
-            color: #fff;
-            padding: 5px 6px;
-            border-radius: 6px;
-            font-size: 0.78rem;
-            font-weight: 700;
-        }
-        .admin-mini-select {
-            background: #131b24;
-            border: 1px solid #2c3e50;
-            color: #fff;
-            padding: 5px 6px;
-            border-radius: 6px;
-            font-size: 0.78rem;
-            font-weight: 700;
-            outline: none;
-        }
-        .admin-mini-btn {
-            border: none;
-            border-radius: 6px;
-            padding: 5px 8px;
-            font-size: 0.72rem;
-            font-weight: 800;
-            cursor: pointer;
-            transition: 0.15s;
-            color: #fff;
-        }
-        .admin-mini-btn:hover { filter: brightness(1.15); }
+        .admin-panel-card { background: #0d131a; border: 2px solid var(--danger); border-radius: 16px; padding: 20px; margin-bottom: 24px; overflow-x: auto; }
+        .admin-table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 0.85rem; text-align: left; min-width: 950px; }
+        .admin-table th, .admin-table td { padding: 10px 8px; border-bottom: 1px solid #1c2633; vertical-align: middle; }
+        .admin-table th { color: var(--danger); text-transform: uppercase; font-size: 0.74rem; }
+        .admin-ctrl-group { display: flex; align-items: center; gap: 4px; flex-wrap: wrap; }
+        .admin-mini-input { width: 95px; background: #131b24; border: 1px solid #2c3e50; color: #fff; padding: 5px 6px; border-radius: 6px; font-size: 0.78rem; font-weight: 700; }
+        .admin-mini-select { background: #131b24; border: 1px solid #2c3e50; color: #fff; padding: 5px 6px; border-radius: 6px; font-size: 0.78rem; font-weight: 700; outline: none; }
+        .admin-mini-btn { border: none; border-radius: 6px; padding: 5px 8px; font-size: 0.72rem; font-weight: 800; cursor: pointer; color: #fff; }
         .btn-give { background: #16a34a; }
         .btn-take { background: #d97706; }
         .btn-ban { background: #dc2626; }
@@ -805,140 +797,38 @@
         .btn-rig-off { background: #475569; }
 
         /* ХАЛЯВА */
-        .settings-container {
-            max-width: 700px;
-            margin: 0 auto;
-            text-align: center;
-        }
-        .quiz-card {
-            background: #121922;
-            border: 2px solid #233042;
-            border-radius: 16px;
-            padding: 24px;
-            margin-bottom: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-        }
-        .quiz-question {
-            font-size: 1.15rem;
-            font-weight: 900;
-            color: #fff;
-            margin-bottom: 18px;
-        }
-        .quiz-options {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        .quiz-option-btn {
-            background: #0d131a;
-            border: 1px solid #2c3e50;
-            color: #fff;
-            padding: 12px 18px;
-            border-radius: 10px;
-            font-weight: 700;
-            cursor: pointer;
-            text-align: left;
-            transition: 0.2s;
-        }
-        .quiz-option-btn:hover {
-            border-color: var(--neon-green);
-            background: rgba(26, 232, 58, 0.08);
-        }
-        .quiz-option-btn.correct {
-            background: rgba(26, 232, 58, 0.25);
-            border-color: var(--neon-green);
-            color: var(--neon-green);
-        }
-        .quiz-option-btn.wrong {
-            background: rgba(239, 68, 68, 0.25);
-            border-color: var(--danger);
-            color: var(--danger);
-        }
+        .settings-container { max-width: 700px; margin: 0 auto; text-align: center; }
+        .quiz-card { background: #121922; border: 2px solid #233042; border-radius: 16px; padding: 24px; margin-bottom: 20px; }
+        .quiz-question { font-size: 1.15rem; font-weight: 900; color: #fff; margin-bottom: 18px; }
+        .quiz-options { display: flex; flex-direction: column; gap: 10px; }
+        .quiz-option-btn { background: #0d131a; border: 1px solid #2c3e50; color: #fff; padding: 12px 18px; border-radius: 10px; font-weight: 700; cursor: pointer; text-align: left; transition: 0.2s; }
+        .quiz-option-btn:hover { border-color: var(--neon-green); background: rgba(26, 232, 58, 0.08); }
+        .quiz-option-btn.correct { background: rgba(26, 232, 58, 0.25); border-color: var(--neon-green); color: var(--neon-green); }
+        .quiz-option-btn.wrong { background: rgba(239, 68, 68, 0.25); border-color: var(--danger); color: var(--danger); }
 
         /* МУЗОН */
-        .music-container {
-            max-width: 700px;
-            margin: 0 auto;
-            text-align: center;
-        }
-        .track-card {
-            background: #0d131a;
-            border: 1px solid #233042;
-            border-radius: 14px;
-            padding: 20px;
-            margin-bottom: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 15px;
-        }
+        .music-container { max-width: 700px; margin: 0 auto; text-align: center; }
+        .track-card { background: #0d131a; border: 1px solid #233042; border-radius: 14px; padding: 20px; margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between; gap: 15px; }
         .track-info { text-align: left; }
         .track-title { font-weight: 900; font-size: 1.05rem; color: #fff; }
         .track-artist { font-size: 0.85rem; color: var(--text-muted); margin-top: 3px; }
-        .yt-watch-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: #ff0000;
-            color: #fff;
-            padding: 10px 18px;
-            border-radius: 10px;
-            font-weight: 900;
-            text-decoration: none;
-            text-transform: uppercase;
-            font-size: 0.9rem;
-            box-shadow: 0 0 15px rgba(255, 0, 0, 0.35);
-            transition: 0.2s;
-            flex-shrink: 0;
-        }
-        .yt-watch-btn:hover {
-            transform: translateY(-2px);
-            filter: brightness(1.15);
-            box-shadow: 0 0 20px rgba(255, 0, 0, 0.6);
-        }
+        .yt-watch-btn { display: inline-flex; align-items: center; gap: 8px; background: #ff0000; color: #fff; padding: 10px 18px; border-radius: 10px; font-weight: 900; text-decoration: none; text-transform: uppercase; font-size: 0.9rem; }
 
-        /* МАГАЗИН VIP СТАТУСОВ */
-        .vip-shop-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
-            margin-bottom: 24px;
-        }
-        .vip-card {
-            background: linear-gradient(145deg, #131b24, #0d131a);
-            border: 2px solid #2c3e50;
-            border-radius: 16px;
-            padding: 24px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-        }
+        /* VIP И ИМУЩЕСТВО */
+        .vip-shop-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-bottom: 24px; }
+        .vip-card { background: linear-gradient(145deg, #131b24, #0d131a); border: 2px solid #2c3e50; border-radius: 16px; padding: 24px; display: flex; flex-direction: column; justify-content: space-between; }
         .vip-card.lite-vip { border-color: #f59e0b; }
         .vip-card.pro-vip { border-color: var(--neon-green); background: linear-gradient(145deg, #0e2417, #0b1611); }
-        .vip-card h3 { margin-top: 0; font-size: 1.4rem; }
-        .vip-features-list {
-            list-style: none;
-            padding: 0;
-            margin: 15px 0 20px 0;
-            text-align: left;
-        }
-        .vip-features-list li {
-            padding: 6px 0;
-            font-size: 0.9rem;
-            color: #d1d9e4;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
+        .vip-features-list { list-style: none; padding: 0; margin: 15px 0 20px 0; text-align: left; }
+        .vip-features-list li { padding: 6px 0; font-size: 0.9rem; color: #d1d9e4; }
 
-        /* МАГАЗИН ИМУЩЕСТВА */
         .property-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
         .prop-card { background: #0e141c; border: 1px solid #243142; border-radius: 14px; padding: 18px; display: flex; flex-direction: column; justify-content: space-between; }
         .prop-card.owned { border-color: var(--neon-green); background: linear-gradient(160deg, rgba(26,232,58,0.08), #0e141c); }
         .prop-emoji { font-size: 2.6rem; margin-bottom: 10px; }
         .prop-name { font-size: 1.1rem; font-weight: 800; color: #fff; }
         .prop-desc { font-size: 0.84rem; color: var(--text-muted); margin-top: 4px; }
+        .prop-income-tag { display: inline-block; margin-top: 8px; background: rgba(26, 232, 58, 0.14); color: var(--neon-green); font-size: 0.78rem; font-weight: 900; padding: 3px 8px; border-radius: 6px; }
         .prop-bottom { margin-top: 16px; display: flex; align-items: center; justify-content: space-between; }
         .prop-price { font-weight: 900; color: var(--gold); }
 
@@ -946,11 +836,10 @@
         .toast { position: fixed; bottom: 22px; right: 22px; background: #121a24; border: 1.5px solid var(--neon-green); color: #fff; padding: 12px 18px; border-radius: 12px; font-weight: 700; transform: translateY(150%); opacity: 0; transition: 0.3s; z-index: 200; }
         .toast.show { transform: translateY(0); opacity: 1; }
 
-        /* ВЕСЁЛЫЕ АНИМАЦИИ ПОБЕДЫ */
+        /* ПОПАП ПОБЕДЫ */
         @keyframes victoryPop {
             0% { transform: scale(0.3) rotate(-10deg); opacity: 0; }
-            50% { transform: scale(1.2) rotate(10deg); opacity: 1; }
-            70% { transform: scale(0.9) rotate(-5deg); }
+            60% { transform: scale(1.1) rotate(5deg); opacity: 1; }
             100% { transform: scale(1) rotate(0deg); opacity: 1; }
         }
         @keyframes coinRain {
@@ -958,191 +847,63 @@
             100% { transform: translateY(200px) rotate(360deg); opacity: 0; }
         }
         .win-popup-overlay {
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0, 0, 0, 0.7);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 100;
-            border-radius: 18px;
-            animation: victoryPop 0.4s ease-out forwards;
+            position: absolute; inset: 0; background: rgba(0, 0, 0, 0.7);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            z-index: 100; border-radius: 18px; animation: victoryPop 0.35s ease-out forwards;
         }
         .win-popup-content {
-            text-align: center;
-            padding: 30px;
-            background: linear-gradient(135deg, #112b1a, #0b1610);
-            border: 3px solid var(--neon-green);
-            border-radius: 20px;
-            box-shadow: 0 0 50px rgba(26, 232, 58, 0.6);
+            text-align: center; padding: 30px; background: linear-gradient(135deg, #112b1a, #0b1610);
+            border: 3px solid var(--neon-green); border-radius: 20px; box-shadow: 0 0 50px rgba(26, 232, 58, 0.6);
         }
-        .win-popup-content h2 {
-            font-size: 2.5rem;
-            color: var(--gold);
-            margin: 0 0 10px 0;
-            text-transform: uppercase;
-            text-shadow: 0 0 15px rgba(251, 191, 36, 0.6);
-        }
-        .win-popup-content p {
-            font-size: 1.2rem;
-            color: #fff;
-            margin-bottom: 20px;
-            font-weight: 800;
-        }
-        .confetti-coin {
-            position: absolute;
-            font-size: 2rem;
-            animation: coinRain 1.5s linear infinite;
-        }
+        .win-popup-content h2 { font-size: 2.3rem; color: var(--gold); margin: 0 0 10px 0; text-transform: uppercase; }
+        .win-popup-content p { font-size: 1.15rem; color: #fff; margin-bottom: 20px; font-weight: 800; }
+        .confetti-coin { position: absolute; font-size: 2rem; animation: coinRain 1.5s linear infinite; }
 
-        /* ЭКРАН ПРИВЕТСТВИЯ / ОБЯЗАТЕЛЬНЫЙ ВЫБОР НИКА */
+        /* ЭКРАН ВХОДА */
         #nickname-overlay {
-            display: none;
-            position: fixed;
-            inset: 0;
+            display: none; position: fixed; inset: 0;
             background: radial-gradient(circle at 50% 40%, #0f1a12 0%, #05080b 100%);
-            z-index: 100000;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 20px;
+            z-index: 100000; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 20px;
         }
         #nickname-overlay.active { display: flex; }
         .nickname-box {
-            background: #101720;
-            border: 2px solid var(--neon-green);
-            border-radius: 20px;
-            padding: 34px 30px;
-            max-width: 460px;
-            width: 100%;
+            background: #101720; border: 2px solid var(--neon-green); border-radius: 20px; padding: 34px 30px; max-width: 460px; width: 100%;
             box-shadow: 0 0 50px rgba(26, 232, 58, 0.25);
         }
-        .nickname-box h1 {
-            margin: 0 0 8px;
-            font-size: 1.6rem;
-            text-transform: uppercase;
-            color: #fff;
-            font-style: italic;
-            font-weight: 950;
-        }
-        .nickname-box p {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            margin: 0 0 22px;
-        }
+        .nickname-box h1 { margin: 0 0 8px; font-size: 1.6rem; text-transform: uppercase; color: #fff; font-style: italic; font-weight: 950; }
+        .nickname-box p { color: var(--text-muted); font-size: 0.9rem; margin: 0 0 22px; }
         .nickname-box input {
-            width: 100%;
-            background: #0a1016;
-            border: 2px solid #283649;
-            border-radius: 12px;
-            padding: 14px 16px;
-            color: #fff;
-            font-size: 1.15rem;
-            font-weight: 800;
-            text-align: center;
-            outline: none;
-            letter-spacing: 1px;
-            transition: 0.2s;
+            width: 100%; background: #0a1016; border: 2px solid #283649; border-radius: 12px; padding: 14px 16px;
+            color: #fff; font-size: 1.15rem; font-weight: 800; text-align: center; outline: none;
         }
-        .nickname-box input:focus { border-color: var(--neon-green); }
-        .nickname-box input.invalid { border-color: var(--danger); }
-        .nickname-hint {
-            font-size: 0.8rem;
-            margin-top: 8px;
-            min-height: 18px;
-            font-weight: 700;
-            color: var(--text-muted);
-        }
+        .nickname-hint { font-size: 0.8rem; margin-top: 8px; min-height: 18px; font-weight: 700; color: var(--text-muted); }
         .nickname-hint.error { color: var(--danger); }
         .nickname-hint.ok { color: var(--neon-green); }
 
-        /* ТОП-10 БОГАТЫХ НА ГЛАВНОЙ */
-        .top-rich-section {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 18px;
-            padding: 22px;
-            margin-bottom: 24px;
-        }
-        .top-rich-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 16px;
-        }
-        .top-rich-title {
-            margin: 0;
-            font-size: 1.25rem;
-            text-transform: uppercase;
-            font-weight: 950;
-            font-style: italic;
-            color: var(--gold);
-            text-shadow: 0 0 14px rgba(251, 191, 36, 0.35);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+        /* ТОП-10 */
+        .top-rich-section { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 18px; padding: 22px; margin-bottom: 24px; }
+        .top-rich-header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin-bottom: 16px; }
+        .top-rich-title { margin: 0; font-size: 1.25rem; text-transform: uppercase; font-weight: 950; font-style: italic; color: var(--gold); }
         .top-rich-list { display: flex; flex-direction: column; gap: 10px; }
-        .top-rich-row {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            background: #0d131a;
-            border: 1px solid #222e3d;
-            border-radius: 12px;
-            padding: 12px 16px;
-            transition: 0.2s;
-        }
-        .top-rich-row:hover { border-color: var(--gold); transform: translateX(3px); }
+        .top-rich-row { display: flex; align-items: center; gap: 14px; background: #0d131a; border: 1px solid #222e3d; border-radius: 12px; padding: 12px 16px; }
         .top-rich-row.self { border-color: var(--neon-green); background: rgba(26, 232, 58, 0.08); }
-        .top-rich-place {
-            width: 34px;
-            height: 34px;
-            border-radius: 50%;
-            display: grid;
-            place-items: center;
-            font-weight: 950;
-            font-size: 0.9rem;
-            background: #1c2633;
-            color: #fff;
-            flex-shrink: 0;
-        }
-        .top-rich-place.p1 { background: linear-gradient(135deg, #fbbf24, #f59e0b); color: #000; box-shadow: 0 0 12px rgba(251, 191, 36, 0.5); }
+        .top-rich-place { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; font-weight: 950; background: #1c2633; color: #fff; flex-shrink: 0; }
+        .top-rich-place.p1 { background: linear-gradient(135deg, #fbbf24, #f59e0b); color: #000; }
         .top-rich-place.p2 { background: linear-gradient(135deg, #cbd5e1, #94a3b8); color: #000; }
         .top-rich-place.p3 { background: linear-gradient(135deg, #b45309, #92400e); color: #fff; }
-        .top-rich-name { flex: 1; font-weight: 800; font-size: 1rem; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .top-rich-time {
-            font-size: 0.82rem;
-            color: #93c5fd;
-            background: rgba(59, 130, 246, 0.12);
-            border: 1px solid rgba(59, 130, 246, 0.3);
-            padding: 4px 10px;
-            border-radius: 8px;
-            font-weight: 800;
-            white-space: nowrap;
-        }
-        .top-rich-bal {
-            color: var(--gold);
-            font-weight: 950;
-            font-size: 1.05rem;
-            white-space: nowrap;
-            min-width: 120px;
-            text-align: right;
-        }
+        .top-rich-name { flex: 1; font-weight: 800; font-size: 1rem; color: #fff; }
+        .top-rich-time { font-size: 0.82rem; color: #93c5fd; background: rgba(59, 130, 246, 0.12); border: 1px solid rgba(59, 130, 246, 0.3); padding: 4px 10px; border-radius: 8px; font-weight: 800; }
+        .top-rich-bal { color: var(--gold); font-weight: 950; font-size: 1.05rem; min-width: 120px; text-align: right; }
     </style>
 </head>
 <body>
 
-    <!-- ОБЯЗАТЕЛЬНЫЙ ЭКРАН ВЫБОРА ИГРОВОГО НИКА ПРИ ПЕРВОМ ВХОДЕ -->
+    <!-- ОБЯЗАТЕЛЬНЫЙ ЭКРАН ВЫБОРА ИГРОВОГО НИКА -->
     <div id="nickname-overlay">
         <div class="nickname-box">
             <div style="font-size: 3.5rem; margin-bottom: 10px;">👑🎰</div>
             <h1>ДОБРО ПОЖАЛОВАТЬ В КАЗИК!</h1>
-            <p>Вы впервые зашли на сайт. Придумайте себе уникальный игровой никнейм, чтобы продолжить.<br><b style="color: var(--neon-green);">Обязательно не менее 5 английских букв (A-Z, a-z)!</b></p>
+            <p>Вы впервые зашли на сайт. Придумайте себе уникальный игровой никнейм.<br><b style="color: var(--neon-green);">Обязательно не менее 5 английских букв (A-Z, a-z)!</b></p>
             <input type="text" id="first-nickname-input" maxlength="20" placeholder="Например: SeregaBoss" oninput="validateFirstNicknameInput()" onkeydown="if(event.key==='Enter') submitFirstNickname()">
             <div class="nickname-hint" id="first-nickname-hint">Минимум 5 английских букв</div>
             <button class="btn-play" style="width: 100%; margin-top: 16px; padding: 14px; font-size: 1rem;" onclick="submitFirstNickname()">ПОДТВЕРДИТЬ НИК И ВОЙТИ →</button>
@@ -1153,24 +914,21 @@
     <div id="ban-overlay">
         <div style="font-size: 4.5rem; margin-bottom: 12px;">🔨🚫</div>
         <h1 style="color: var(--danger); font-size: 2.3rem; margin: 0 0 10px 0; text-transform: uppercase;">ВЫ ЗАБАНЕНЫ В КАЗИКЕ</h1>
-        <p style="color: var(--text-muted); max-width: 480px; font-size: 1.05rem;">Администратор ограничил вам доступ к сайту. Обратитесь к боссу в Telegram, чтобы снять блокировку.</p>
+        <p style="color: var(--text-muted); max-width: 480px; font-size: 1.05rem;">Администратор ограничил вам доступ к сайту. Обратитесь к боссу в Telegram.</p>
         <a href="https://t.me/Seregablatnou" target="_blank" class="tg-boss-btn" style="margin-top: 18px;">✈️ Написать Боссу</a>
     </div>
 
-    <!-- МОДАЛЬНОЕ ОКНО СНЯТИЯ АДМИНКИ (ДЛЯ СОЗДАТЕЛЯ) -->
+    <!-- МОДАЛЬНОЕ ОКНО СНЯТИЯ АДМИНКИ -->
     <div id="demote-admin-modal" class="creator-modal-backdrop">
         <div class="creator-modal-box">
             <h3 style="color: var(--gold); margin: 0 0 8px 0; text-transform: uppercase;">⚡ Снятие прав администратора</h3>
             <p style="color: var(--text-muted); font-size: 0.88rem; margin: 0 0 14px 0;">
-                Вы собираетесь лишить прав админа игрока: <b id="demote-target-name" style="color: #fff;">Игрок</b>
+                Игрок: <b id="demote-target-name" style="color: #fff;">Игрок</b>
             </p>
-            <label style="font-size: 0.82rem; font-weight: 800; color: #e2e8f0;">Выберите причину снятия:</label>
             <select id="demote-reason-select" class="creator-reason-select" onchange="toggleCustomDemoteReason()">
-                <option value="Злоупотребление админ-правами и подкруткой">Злоупотребление админ-правами и подкруткой</option>
-                <option value="Неадекватное поведение и баны без причины">Неадекватное поведение и баны без причины</option>
-                <option value="Накрутка баланса себе или друзьям">Накрутка баланса себе или друзьям</option>
+                <option value="Злоупотребление админ-правами">Злоупотребление админ-правами</option>
+                <option value="Накрутка баланса">Накрутка баланса</option>
                 <option value="Потеря доверия Создателя">Потеря доверия Создателя</option>
-                <option value="Снят по решению Бога сервера">Снят по решению Бога сервера</option>
                 <option value="custom">✍️ Своя причина...</option>
             </select>
             <input type="text" id="demote-custom-reason" class="creator-reason-input" placeholder="Введите свою причину..." style="display: none;">
@@ -1187,6 +945,17 @@
             <div class="brand-crown">👑</div>
             <div class="brand-title-top">СЕРЁГА И<br>ОЛЯМБУС</div>
             <div class="brand-title-bottom">КАЗИК</div>
+        </div>
+
+        <!-- УРОВЕНЬ ИГРОКА -->
+        <div class="sidebar-level-card">
+            <div class="level-top-row">
+                <span style="color: var(--gold);" id="sidebar-level-label">⭐ Уровень 1</span>
+                <span style="color: var(--text-muted);" id="sidebar-xp-label">0 / 1000 XP</span>
+            </div>
+            <div class="level-bar-bg">
+                <div class="level-bar-fill" id="sidebar-xp-bar"></div>
+            </div>
         </div>
 
         <nav class="sidebar-menu">
@@ -1228,6 +997,7 @@
             </button>
             <button class="nav-item" id="nav-property" onclick="switchGame('property')">
                 <span class="nav-item-left"><span class="nav-icon">👑</span> Имущество</span>
+                <span class="nav-badge" style="background:var(--neon-green); color:#000;">ДОХОД</span>
             </button>
             <button class="nav-item" id="nav-settings" onclick="switchGame('settings')">
                 <span class="nav-item-left"><span class="nav-icon">🎁</span> ХАЛЯВА</span>
@@ -1250,12 +1020,21 @@
                 <span>✈️</span> TG БОСС
             </a>
 
-            <div class="balance-center-box">
-                <span>💵</span><span id="balance">5000</span> <span style="font-size:0.9rem; color:#fff;">BYN</span>
+            <div class="balance-center-group">
+                <div class="balance-center-box">
+                    <span>💵</span><span id="balance">5000</span> <span style="font-size:0.85rem; color:#fff;">BYN</span>
+                </div>
+                <div class="income-pill" id="passive-income-badge" title="Пассивный доход каждую секунду (растёт от VIP и имущества)">
+                    +5 BYN/сек
+                </div>
+                <div class="streak-pill" id="win-streak-badge" title="Серия побед подряд даёт бонус к каждому выигрышу!">
+                    🔥 Серия: 0 (x1.0)
+                </div>
+                <button class="rescue-btn" id="rescue-btn" onclick="claimRescueBonus()">🆘 +1000 BYN</button>
             </div>
 
             <div class="topbar-right-group">
-                <div class="topbar-online-pill" title="Настоящие игроки на сайте прямо сейчас">
+                <div class="topbar-online-pill">
                     <span class="online-pulse-dot"></span>
                     <span>Онлайн: <b id="topbar-real-online-count" style="color: var(--neon-green);">1</b></span>
                 </div>
@@ -1278,7 +1057,7 @@
                             <span class="line1">СЕРЁГА ПУШКА</span>
                             <span class="line2">МЕССИ ИГРУШКА</span>
                         </h1>
-                        <p class="hero-subtitle">СЮДА ЗАЛЕТАЙ И БАБ ЗАБИРАЙ!</p>
+                        <p class="hero-subtitle">ВАЛЮТА КАПАЕТ КАЖДУЮ СЕКУНДУ! ПОКУПАЙ ИМУЩЕСТВО И ЛОВИ СЕРИЮ ПОБЕД!</p>
                         <button class="hero-cta-btn" onclick="switchGame('blackjack')">ИГРАТЬ СЕЙЧАС →</button>
                     </div>
                     <div class="hero-right-photo">
@@ -1287,7 +1066,7 @@
                     </div>
                 </div>
 
-                <!-- ТОП-10 БОГАТЫХ ИГРОКОВ ПО BYN (ВМЕСТО РЕЖИМОВ) -->
+                <!-- ТОП-10 БОГАТЫХ ИГРОКОВ ПО BYN -->
                 <section class="top-rich-section">
                     <div class="top-rich-header">
                         <h2 class="top-rich-title">🏆 ТОП 10 ИГРОКОВ ПО BYN</h2>
@@ -1299,7 +1078,7 @@
                 </section>
             </div>
 
-            <!-- ================= ПРОФИЛЬ И СТАТИСТИКА ================= -->
+            <!-- ПРОФИЛЬ -->
             <div id="view-profile" class="game-view">
                 <div class="game-header">
                     <h2>👤 Профиль игрока</h2>
@@ -1311,8 +1090,11 @@
                         <div class="profile-avatar-box" id="profile-avatar-box">😎</div>
                         <div>
                             <div class="profile-name-row">
-                                <input type="text" id="profile-name-input" class="profile-name-input" maxlength="20" value="Player" onchange="changeUsername(this.value)" title="Нажмите, чтобы изменить никнейм (минимум 5 английских букв)">
+                                <input type="text" id="profile-name-input" class="profile-name-input" maxlength="20" value="Player" onchange="changeUsername(this.value)">
                                 <span style="font-size: 0.75rem; color: var(--text-muted);">✏️ Изменить ник (мин. 5 англ. букв)</span>
+                            </div>
+                            <div style="margin-top: 8px; font-size: 0.85rem; color: var(--neon-green); font-weight: 800;" id="profile-income-info">
+                                💸 Пассивный доход: +5 BYN/сек
                             </div>
                         </div>
                     </div>
@@ -1335,8 +1117,8 @@
                         <div class="stat-card-value"><span id="stat-wins" style="color:var(--neon-green);">0</span> / <span id="stat-losses" style="color:var(--danger);">0</span></div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-card-label">Винрейт</div>
-                        <div class="stat-card-value" id="stat-winrate" style="color: #60a5fa;">0%</div>
+                        <div class="stat-card-label">Лучшая серия побед</div>
+                        <div class="stat-card-value" id="stat-best-streak" style="color: var(--gold);">0 🔥</div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-card-label">Всего выиграно BYN</div>
@@ -1361,7 +1143,7 @@
                 </div>
             </div>
 
-            <!-- АДМИН-МЕНЮ (УПРАВЛЕНИЕ ИГРОКАМИ БЕЗ ЛИМИТОВ) -->
+            <!-- АДМИН-МЕНЮ -->
             <div id="view-admin" class="game-view">
                 <div class="game-header">
                     <h2>🛡️ Секретное Админ-Меню</h2>
@@ -1371,7 +1153,7 @@
                     <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
                         <div>
                             <h3 style="color: var(--danger); margin:0;">👥 Управление игроками без лимитов</h3>
-                            <p style="color: var(--text-muted); font-size: 0.85rem; margin: 4px 0 0 0;">Вводи любые суммы для выдачи или сбора денег. <b>Админ админу ничего сделать не может!</b></p>
+                            <p style="color: var(--text-muted); font-size: 0.85rem; margin: 4px 0 0 0;">Вводи любые суммы для выдачи или сбора денег.</p>
                         </div>
                         <button class="btn-play" style="padding: 8px 14px; font-size: 0.8rem;" onclick="renderAdminPanel()">🔄 Обновить список</button>
                     </div>
@@ -1381,7 +1163,7 @@
                                 <th>Игрок / Где сидит</th>
                                 <th>Баланс</th>
                                 <th>Статистика (В/П)</th>
-                                <th>Выдать / Забрать BYN (Любая сумма)</th>
+                                <th>Выдать / Забрать BYN</th>
                                 <th>Подкрутка шансов</th>
                                 <th>Бан / Доступ</th>
                             </tr>
@@ -1391,17 +1173,16 @@
                 </div>
             </div>
 
-            <!-- МЕНЮ СОЗДАТЕЛЯ (РЕЖИМ БОГА + ИМУЩЕСТВО) -->
+            <!-- МЕНЮ СОЗДАТЕЛЯ -->
             <div id="view-creator" class="game-view">
                 <div class="game-header">
-                    <h2 style="color: var(--gold); text-shadow: 0 0 15px rgba(251,191,36,0.4);">👑 Меню Создателя (Режим Бога)</h2>
+                    <h2 style="color: var(--gold);">👑 Меню Создателя (Режим Бога)</h2>
                     <button class="btn-back" onclick="showLobby()">← В лобби</button>
                 </div>
                 <div class="creator-panel-card">
                     <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
                         <div>
                             <h3 style="color: var(--gold); margin:0;">⚡ Абсолютная власть над сервером</h3>
-                            <p style="color: var(--text-muted); font-size: 0.85rem; margin: 4px 0 0 0;">Выдача/списание любых сумм, выдача и изъятие любого имущества, подкрутка шансов, бан и снятие админок.</p>
                         </div>
                         <button class="btn-play" style="background: var(--gold); color: #000; padding: 8px 14px; font-size: 0.8rem;" onclick="renderCreatorPanel()">🔄 Обновить всех</button>
                     </div>
@@ -1410,7 +1191,7 @@
                             <tr>
                                 <th>Игрок / Статус / Где сидит</th>
                                 <th>Баланс</th>
-                                <th>Выдать / Забрать BYN (Любое число)</th>
+                                <th>Выдать / Забрать BYN</th>
                                 <th>Выдать / Забрать Имущество</th>
                                 <th>Подкрутка</th>
                                 <th>Власть (Бан / Админка)</th>
@@ -1444,12 +1225,14 @@
                 <div class="controls-bar" id="bj-controls">
                     <label>Ставка:</label>
                     <input type="number" id="bj-bet" value="100" min="50">
+                    <button class="btn-quick-bet" onclick="modifyBetInput('bj-bet', 2)">x2</button>
+                    <button class="btn-quick-bet" onclick="setMaxBetInput('bj-bet')">MAX</button>
                     <button class="btn-play" onclick="startBlackjack()">РАЗДАТЬ</button>
                 </div>
                 <div class="status-banner" id="bj-status">Сделайте ставку и нажмите «Раздать»</div>
             </div>
 
-            <!-- КОЛЕСО ФОРТУНЫ С ШАРИКОМ -->
+            <!-- КОЛЕСО ФОРТУНЫ -->
             <div id="view-roulette" class="game-view">
                 <div class="game-header">
                     <h2>🎡 Колесо фортуны (Бросок шарика)</h2>
@@ -1479,26 +1262,22 @@
                     <div class="controls-bar">
                         <label>Сумма ставки:</label>
                         <input type="number" id="roulette-bet" value="200" min="50">
+                        <button class="btn-quick-bet" onclick="modifyBetInput('roulette-bet', 2)">x2</button>
+                        <button class="btn-quick-bet" onclick="setMaxBetInput('roulette-bet')">MAX</button>
                         <button class="btn-play" id="roulette-btn" onclick="spinWheelCanvas()">БРОСИТЬ ШАРИК</button>
                     </div>
                     <div class="status-banner" id="roulette-status">Выберите ставку и бросьте шарик на колесо!</div>
                 </div>
             </div>
 
-            <!-- РАКЕТКА (ЛАКИ ДЖЕТ) -->
+            <!-- РАКЕТКА -->
             <div id="view-jet" class="game-view">
                 <div class="game-header">
                     <h2>🚀 Ракетка (Лаки Джет)</h2>
                     <button class="btn-back" onclick="showLobby()">← В лобби</button>
                 </div>
                 <div class="jet-container">
-                    <div class="jet-history-bar" id="jet-history-bar">
-                        <span class="jet-hist-pill mid">2.14x</span>
-                        <span class="jet-hist-pill low">1.18x</span>
-                        <span class="jet-hist-pill high">6.45x</span>
-                        <span class="jet-hist-pill low">1.04x</span>
-                        <span class="jet-hist-pill mid">1.89x</span>
-                    </div>
+                    <div class="jet-history-bar" id="jet-history-bar"></div>
                     <div class="jet-screen" id="jet-screen-box">
                         <canvas id="jet-canvas" width="760" height="310"></canvas>
                         <div class="jet-rocket" id="jet-rocket-icon" style="bottom: 35px; left: 45px;">🚀</div>
@@ -1510,21 +1289,23 @@
                     <div class="controls-bar" id="jet-controls-box">
                         <label>Ставка:</label>
                         <input type="number" id="jet-bet" value="100" min="50">
+                        <button class="btn-quick-bet" onclick="modifyBetInput('jet-bet', 2)">x2</button>
+                        <button class="btn-quick-bet" onclick="setMaxBetInput('jet-bet')">MAX</button>
                         <button class="btn-play" id="jet-action-btn" onclick="startJetGame()">ЗАПУСТИТЬ</button>
                     </div>
-                    <div class="status-banner" id="jet-status">Максимальный множитель 75.00x! Следи за траекторией и успей забрать выигрыш!</div>
+                    <div class="status-banner" id="jet-status">Максимальный множитель 75.00x! Успей забрать выигрыш!</div>
                 </div>
             </div>
 
-            <!-- 5-CARD DRAW ПОКЕР -->
+            <!-- ПОКЕР -->
             <div id="view-poker" class="game-view">
                 <div class="game-header">
-                    <h2>🃏 Покер: 5-Card Draw (Классика против бота)</h2>
+                    <h2>🃏 Покер: 5-Card Draw</h2>
                     <button class="btn-back" onclick="showLobby()">← В лобби</button>
                 </div>
                 <div class="poker-table">
                     <div id="poker-lock-banner" class="status-banner" style="background: rgba(245, 158, 11, 0.15); border: 2px dashed #f59e0b; color: #f59e0b; margin-bottom: 20px; display: none;">
-                        🔒 Чтобы играть в Покер, обязательно нужно прикупить статус <b>VIP Lite</b>!
+                        🔒 Чтобы играть в Покер, нужен статус <b>VIP Lite</b>!
                     </div>
 
                     <div class="poker-paytable" id="poker-paytable-box">
@@ -1554,11 +1335,13 @@
                     </div>
 
                     <div class="controls-bar" id="poker-controls-box">
-                        <label>Блайнд / Анте:</label>
+                        <label>Ставка:</label>
                         <input type="number" id="poker-bet" value="100" min="50">
+                        <button class="btn-quick-bet" onclick="modifyBetInput('poker-bet', 2)">x2</button>
+                        <button class="btn-quick-bet" onclick="setMaxBetInput('poker-bet')">MAX</button>
                         <button class="btn-play" id="poker-action-btn" onclick="pokerActionReal()">НАЧАТЬ РАЗДАЧУ</button>
                     </div>
-                    <div class="status-banner" id="poker-status">Добро пожаловать в 5-Card Draw покер! Сделайте ставку и начните раздачу.</div>
+                    <div class="status-banner" id="poker-status">Добро пожаловать в покер!</div>
                 </div>
             </div>
 
@@ -1569,7 +1352,7 @@
                     <button class="btn-back" onclick="showLobby()">← В лобби</button>
                 </div>
                 <div id="slots-lock-banner" class="status-banner" style="background: rgba(26, 232, 58, 0.15); border: 2px dashed var(--neon-green); color: var(--neon-green); margin-bottom: 20px; display: none;">
-                    🔒 Чтобы крутить Слоты, обязательно нужно прикупить статус <b>VIP Pro</b>!
+                    🔒 Чтобы крутить Слоты, нужен статус <b>VIP Pro</b>!
                 </div>
                 <div class="slots-wrapper">
                     <div class="slot-cabinet">
@@ -1582,6 +1365,8 @@
                         <div class="controls-bar" id="slots-controls-box">
                             <label>Ставка:</label>
                             <input type="number" id="slots-bet" value="100" min="10" step="10">
+                            <button class="btn-quick-bet" onclick="modifyBetInput('slots-bet', 2)">x2</button>
+                            <button class="btn-quick-bet" onclick="setMaxBetInput('slots-bet')">MAX</button>
                             <button class="btn-play" id="slots-spin-btn" onclick="spinSlots()">КРУТИТЬ</button>
                         </div>
                     </div>
@@ -1602,37 +1387,31 @@
                     <button class="btn-back" onclick="showLobby()">← В лобби</button>
                 </div>
                 <div class="music-container">
-                    <div class="status-banner" style="margin-bottom: 20px; color: #ec4899; background: rgba(236, 72, 153, 0.1); border: 1px solid rgba(236, 72, 153, 0.3);">
-                        🔥 Легендарные треки с YouTube для самых чётких игроков!
-                    </div>
-
                     <div class="track-card">
                         <div class="track-info">
                             <div class="track-title">БУДУ ТВОЕЙ ПАЛЬМОЙ / GUERRA</div>
                             <div class="track-artist">MORGENSHTERN</div>
                         </div>
-                        <a href="https://www.youtube.com/watch?v=a4bL6EQTYJw" target="_blank" class="yt-watch-btn">▶ Слушать на YouTube</a>
+                        <a href="https://www.youtube.com/watch?v=a4bL6EQTYJw" target="_blank" class="yt-watch-btn">▶ Слушать</a>
                     </div>
-
                     <div class="track-card">
                         <div class="track-info">
                             <div class="track-title">РАТАТАТАТА</div>
                             <div class="track-artist">MORGENSHTERN & Витя АК</div>
                         </div>
-                        <a href="https://www.youtube.com/watch?v=aS_wdyhu0xQ" target="_blank" class="yt-watch-btn">▶ Слушать на YouTube</a>
+                        <a href="https://www.youtube.com/watch?v=aS_wdyhu0xQ" target="_blank" class="yt-watch-btn">▶ Слушать</a>
                     </div>
-
                     <div class="track-card">
                         <div class="track-info">
                             <div class="track-title">Cadillac</div>
                             <div class="track-artist">MORGENSHTERN & Элджей</div>
                         </div>
-                        <a href="https://www.youtube.com/watch?v=-7n4t0cbVD4" target="_blank" class="yt-watch-btn">▶ Слушать на YouTube</a>
+                        <a href="https://www.youtube.com/watch?v=-7n4t0cbVD4" target="_blank" class="yt-watch-btn">▶ Слушать</a>
                     </div>
                 </div>
             </div>
 
-            <!-- МАГАЗИН VIP СТАТУСОВ -->
+            <!-- МАГАЗИН VIP -->
             <div id="view-vip-shop" class="game-view">
                 <div class="game-header">
                     <h2>⭐ Магазин VIP Статусов</h2>
@@ -1645,9 +1424,9 @@
                             <span class="nav-badge badge-vip" style="font-size:0.8rem; padding:4px 8px;">VIP LITE</span>
                             <h3 style="color: #f59e0b; margin-top: 10px;">10 000 BYN</h3>
                             <ul class="vip-features-list">
-                                <li>💰 Лимит ставки в играх до <b>30 000 BYN</b></li>
-                                <li>🃏 Доступ к игре в <b>Покер (5-Card Draw)</b></li>
-                                <li>🎁 Ежедневный бонус +1 000 BYN</li>
+                                <li>💸 Пассивный доход <b>+25 BYN/сек</b></li>
+                                <li>💰 Лимит ставки до <b>30 000 BYN</b></li>
+                                <li>🃏 Доступ к игре в <b>Покер</b></li>
                                 <li>⭐ Золотой значок в профиле</li>
                             </ul>
                         </div>
@@ -1659,11 +1438,10 @@
                             <span class="nav-badge badge-pro" style="font-size:0.8rem; padding:4px 8px;">VIP PRO</span>
                             <h3 style="color: var(--neon-green); margin-top: 10px;">50 000 BYN</h3>
                             <ul class="vip-features-list">
-                                <li>💎 Максимальный лимит ставки до <b>50 000 BYN</b></li>
+                                <li>💸 Пассивный доход <b>+100 BYN/сек</b></li>
+                                <li>💎 Лимит ставки до <b>50 000 BYN</b></li>
                                 <li>🎰 Доступ к игре в <b>Слоты</b> (до x25)</li>
-                                <li>👑 Полный доступ к покупке <b>Элитного имущества</b></li>
-                                <li>🚀 Увеличенные множители выигрышей</li>
-                                <li>🎁 Ежедневный бонус +5 000 BYN</li>
+                                <li>👑 Доступ к покупке <b>Элитного имущества</b></li>
                             </ul>
                         </div>
                         <button class="btn-play" onclick="buyVip('pro')">КУПИТЬ VIP PRO</button>
@@ -1676,30 +1454,34 @@
             <!-- МАГАЗИН ИМУЩЕСТВА -->
             <div id="view-property" class="game-view">
                 <div class="game-header">
-                    <h2>👑 Магазин Элитного Имущества</h2>
+                    <h2>👑 Магазин Элитного Имущества (Пассивный доход)</h2>
                     <button class="btn-back" onclick="showLobby()">← В лобби</button>
                 </div>
                 <div class="status-banner" style="background: rgba(245, 158, 11, 0.12); border: 1px solid rgba(245, 158, 11, 0.3); color: var(--gold); margin-bottom: 20px;">
-                    👑 Покупка элитного имущества доступна только владельцам статуса <b>VIP PRO</b>!
+                    👑 Каждое купленное имущество приносит <b>постоянный доход в секунду</b>! Доступно с <b>VIP PRO</b>.
                 </div>
                 <div class="property-grid" id="property-grid"></div>
             </div>
 
-            <!-- РАЗДЕЛ ХАЛЯВА -->
+            <!-- ХАЛЯВА -->
             <div id="view-settings" class="game-view">
                 <div class="game-header">
                     <h2>🎁 Халява (Зарабатывай BYN)</h2>
                     <button class="btn-back" onclick="showLobby()">← В лобби</button>
                 </div>
                 <div class="settings-container">
-                    <div class="status-banner" style="margin-bottom:20px;">Отвечай на вопросы и получай бесплатные BYN на баланс!</div>
+                    <div class="quiz-card" style="border-color: var(--neon-green);">
+                        <div class="quiz-question">💸 Подгон от Серёги (каждые 60 секунд)</div>
+                        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 14px;">Забирай бесплатные 1 000 BYN каждую минуту, чтобы всегда было на что крутить!</p>
+                        <button class="btn-play" id="free-minute-btn" onclick="claimMinuteBonus()">ЗАБРАТЬ +1 000 BYN</button>
+                    </div>
                     <div id="quiz-container"></div>
                 </div>
             </div>
 
             <footer class="trust-footer">
                 <div id="footer-real-online">Игроков онлайн на сайте: 1</div>
-                <div>МОМЕНТАЛЬНЫЕ ВЫПЛАТЫ</div>
+                <div>ПАССИВНЫЙ ДОХОД АКТИВЕН</div>
                 <div id="footer-bet-limit">ЛИМИТ СТАВКИ: 10 000 BYN</div>
             </footer>
         </main>
@@ -1708,8 +1490,7 @@
     <div class="toast" id="toast"></div>
 
     <script>
-        // ================= ОБЛАЧНАЯ БАЗА FIREBASE =================
-        const FIREBASE_DB_URL = "https://serega-kazik-default-rtdb.firebaseio.com"; 
+        const FIREBASE_DB_URL = "https://serega-kazik-default-rtdb.firebaseio.com";
 
         let playerId = localStorage.getItem('so_kazik_uid');
         if (!playerId) {
@@ -1724,7 +1505,13 @@
         let totalTimeSpentSec = 0;
         let nicknameConfirmed = false;
 
-        // Проверка: не менее 5 английских букв (A-Z, a-z)
+        // НОВЫЕ ПЕРЕМЕННЫЕ ДЛЯ АЗАРТА И ПРОГРЕССИИ
+        let winStreak = 0;
+        let bestStreak = 0;
+        let playerXp = 0;
+        let playerLevel = 1;
+        let lastMinuteBonusTime = 0;
+
         function hasAtLeastFiveEnglishLetters(str) {
             if (!str) return false;
             const matches = str.match(/[a-zA-Z]/g);
@@ -1741,25 +1528,168 @@
             return `${secs} сек`;
         }
 
-        // Учет времени провождения на сайте каждую секунду
+        // РАСЧЕТ ПАССИВНОГО ДОХОДА В СЕКУНДУ
+        function getPassiveIncomePerSec() {
+            let income = 5; // Базовый доход для каждого игрока, чтобы баланс рос сам
+            if (vipLevel === 'lite') income += 25;
+            if (vipLevel === 'pro') income += 100;
+
+            ownedProps.forEach(propId => {
+                const prop = PROPERTIES.find(p => p.id === propId);
+                if (prop && prop.income) income += prop.income;
+            });
+
+            // Небольшой бонус за уровень игрока
+            income += (playerLevel - 1) * 3;
+            return income;
+        }
+
+        // БОНУС ОТ СЕРИИ ПОБЕД (WIN STREAK)
+        function getStreakMultiplier() {
+            if (winStreak <= 1) return 1.0;
+            if (winStreak === 2) return 1.1;
+            if (winStreak === 3) return 1.25;
+            if (winStreak === 4) return 1.4;
+            return 1.6; // 5+ побед подряд = +60% к выигрышу!
+        }
+
+        function updateProgressionUI() {
+            const inc = getPassiveIncomePerSec();
+            const incBadge = document.getElementById('passive-income-badge');
+            if (incBadge) incBadge.textContent = `+${inc.toLocaleString('ru-RU')} BYN/сек`;
+
+            const profInc = document.getElementById('profile-income-info');
+            if (profInc) profInc.textContent = `💸 Пассивный доход: +${inc.toLocaleString('ru-RU')} BYN/сек`;
+
+            const mult = getStreakMultiplier();
+            const streakBadge = document.getElementById('win-streak-badge');
+            if (streakBadge) {
+                streakBadge.textContent = `🔥 Серия: ${winStreak} (x${mult.toFixed(1)})`;
+                if (winStreak >= 2) streakBadge.classList.add('hot');
+                else streakBadge.classList.remove('hot');
+            }
+
+            // Уровень и XP
+            const nextLevelXp = playerLevel * 1000;
+            const pct = Math.min(100, Math.floor((playerXp / nextLevelXp) * 100));
+            const lvlLbl = document.getElementById('sidebar-level-label');
+            const xpLbl = document.getElementById('sidebar-xp-label');
+            const xpBar = document.getElementById('sidebar-xp-bar');
+            if (lvlLbl) lvlLbl.textContent = `⭐ Уровень ${playerLevel}`;
+            if (xpLbl) xpLbl.textContent = `${playerXp} / ${nextLevelXp} XP`;
+            if (xpBar) xpBar.style.width = pct + '%';
+
+            // Кнопка спасения если баланс < 100
+            const rescueBtn = document.getElementById('rescue-btn');
+            if (rescueBtn) {
+                rescueBtn.style.display = (balance < 100) ? 'inline-block' : 'none';
+            }
+        }
+
+        function addPlayerXp(amount) {
+            playerXp += amount;
+            let nextLevelXp = playerLevel * 1000;
+            while (playerXp >= nextLevelXp) {
+                playerXp -= nextLevelXp;
+                playerLevel += 1;
+                const levelBonus = playerLevel * 1500;
+                updateBalance(levelBonus);
+                showToast(`🆙 НОВЫЙ УРОВЕНЬ ${playerLevel}! Бонус: +${levelBonus.toLocaleString('ru-RU')} BYN!`);
+                nextLevelXp = playerLevel * 1000;
+            }
+            updateProgressionUI();
+        }
+
+        // КАЖДУЮ СЕКУНДУ: ВРЕМЯ + ПАССИВНЫЙ ДОХОД
         setInterval(() => {
             if (nicknameConfirmed && !isPlayerBanned) {
                 totalTimeSpentSec += 1;
-                localStorage.setItem('so_kazik_time_sec', String(totalTimeSpentSec));
+                const passive = getPassiveIncomePerSec();
+                balance += passive;
+
+                const el = document.getElementById('balance');
+                if (el) el.textContent = balance.toLocaleString('ru-RU');
+
                 const statTimeEl = document.getElementById('stat-time-spent');
                 if (statTimeEl) statTimeEl.textContent = formatTimeSpent(totalTimeSpentSec);
+
+                updateProgressionUI();
+                updateMinuteButtonTimer();
+
+                // Сохраняем в localStorage каждые 5 секунд
+                if (totalTimeSpentSec % 5 === 0) {
+                    localStorage.setItem('so_kazik_balance', String(balance));
+                    localStorage.setItem('so_kazik_time_sec', String(totalTimeSpentSec));
+                }
             }
         }, 1000);
 
-        // Валидация первого обязательного ввода ника
+        function updateMinuteButtonTimer() {
+            const btn = document.getElementById('free-minute-btn');
+            if (!btn) return;
+            const now = Date.now();
+            const diff = 60000 - (now - lastMinuteBonusTime);
+            if (diff > 0) {
+                btn.disabled = true;
+                btn.style.opacity = '0.5';
+                btn.textContent = `⏳ Ждите ${Math.ceil(diff / 1000)} сек`;
+            } else {
+                btn.disabled = false;
+                btn.style.opacity = '1';
+                btn.textContent = 'ЗАБРАТЬ +1 000 BYN';
+            }
+        }
+
+        function claimMinuteBonus() {
+            const now = Date.now();
+            if (now - lastMinuteBonusTime < 60000) {
+                showToast('⏳ Подождите немного до следующего бонуса!');
+                return;
+            }
+            lastMinuteBonusTime = now;
+            localStorage.setItem('so_kazik_last_min_bonus', String(lastMinuteBonusTime));
+            updateBalance(1000);
+            showToast('🎁 Вы забрали +1 000 BYN от Серёги!');
+            updateMinuteButtonTimer();
+        }
+
+        function claimRescueBonus() {
+            if (balance >= 100) return;
+            const now = Date.now();
+            if (now - lastMinuteBonusTime < 60000) {
+                const sec = Math.ceil((60000 - (now - lastMinuteBonusTime)) / 1000);
+                showToast(`⏳ Подгон будет доступен через ${sec} сек!`);
+                return;
+            }
+            lastMinuteBonusTime = now;
+            localStorage.setItem('so_kazik_last_min_bonus', String(lastMinuteBonusTime));
+            updateBalance(1000);
+            showToast('🆘 Спасательный круг: +1 000 BYN на баланс!');
+        }
+
+        function modifyBetInput(inputId, factor) {
+            const inp = document.getElementById(inputId);
+            if (!inp) return;
+            let val = parseInt(inp.value) || 50;
+            val = Math.min(Math.floor(val * factor), balance, getMaxBetLimit());
+            if (val < 10) val = 10;
+            inp.value = val;
+        }
+
+        function setMaxBetInput(inputId) {
+            const inp = document.getElementById(inputId);
+            if (!inp) return;
+            const maxAllowed = Math.min(balance, getMaxBetLimit());
+            inp.value = Math.max(10, maxAllowed);
+        }
+
+        // ВАЛИДАЦИЯ НИКА
         function validateFirstNicknameInput() {
             const inp = document.getElementById('first-nickname-input');
             const hint = document.getElementById('first-nickname-hint');
             if (!inp || !hint) return false;
-
             const val = inp.value.trim();
             const engLetters = (val.match(/[a-zA-Z]/g) || []).length;
-
             if (val.length === 0) {
                 inp.classList.remove('invalid');
                 hint.className = 'nickname-hint';
@@ -1782,50 +1712,37 @@
             const inp = document.getElementById('first-nickname-input');
             if (!inp) return;
             const clean = inp.value.trim();
-
             if (!hasAtLeastFiveEnglishLetters(clean)) {
                 validateFirstNicknameInput();
                 showToast('⚠️ Ник должен содержать минимум 5 английских букв!');
                 inp.focus();
                 return;
             }
-
             userProfile.username = clean;
             nicknameConfirmed = true;
             localStorage.setItem('so_kazik_nick_confirmed', 'true');
             saveData();
             syncHeaderProfile();
-
-            const overlay = document.getElementById('nickname-overlay');
-            if (overlay) overlay.classList.remove('active');
-
-            showToast(`🎉 Добро пожаловать, ${clean}!`);
+            document.getElementById('nickname-overlay').classList.remove('active');
+            showToast(`🎉 Добро пожаловать, ${clean}! Валюта уже капает!`);
             syncPlayerToCloud();
         }
 
         function checkInitialNicknameRequirement() {
             const confirmedFlag = localStorage.getItem('so_kazik_nick_confirmed') === 'true';
             const validExistingNick = hasAtLeastFiveEnglishLetters(userProfile.username) && !userProfile.username.startsWith('Игрок #');
-
             if (confirmedFlag && validExistingNick) {
                 nicknameConfirmed = true;
                 document.getElementById('nickname-overlay').classList.remove('active');
             } else {
                 nicknameConfirmed = false;
-                const overlay = document.getElementById('nickname-overlay');
-                if (overlay) overlay.classList.add('active');
-                const inp = document.getElementById('first-nickname-input');
-                if (inp) {
-                    inp.value = '';
-                    setTimeout(() => inp.focus(), 100);
-                }
+                document.getElementById('nickname-overlay').classList.add('active');
             }
         }
 
         function renderTop10Players(data) {
             const container = document.getElementById('top-10-players-list');
             if (!container) return;
-
             let players = [];
             if (data) {
                 players = Object.entries(data).map(([id, p]) => ({
@@ -1837,8 +1754,6 @@
                     isBanned: Boolean(p.isBanned)
                 })).filter(p => !p.isBanned && hasAtLeastFiveEnglishLetters(p.username));
             }
-
-            // Гарантируем, что текущий игрок с подтверждённым ником есть в списке
             if (nicknameConfirmed && hasAtLeastFiveEnglishLetters(userProfile.username)) {
                 const meIdx = players.findIndex(p => p.id === playerId);
                 if (meIdx !== -1) {
@@ -1846,36 +1761,25 @@
                     players[meIdx].balance = balance;
                     players[meIdx].timeSpentSec = totalTimeSpentSec;
                 } else {
-                    players.push({
-                        id: playerId,
-                        username: userProfile.username,
-                        avatar: userProfile.avatar,
-                        balance: balance,
-                        timeSpentSec: totalTimeSpentSec,
-                        isBanned: false
-                    });
+                    players.push({ id: playerId, username: userProfile.username, avatar: userProfile.avatar, balance: balance, timeSpentSec: totalTimeSpentSec, isBanned: false });
                 }
             }
-
             players.sort((a, b) => b.balance - a.balance);
             const top10 = players.slice(0, 10);
-
             if (top10.length === 0) {
                 container.innerHTML = '<div style="text-align: center; color: var(--text-muted); padding: 16px;">Пока нет игроков в рейтинге. Стань первым!</div>';
                 return;
             }
-
             container.innerHTML = top10.map((p, index) => {
                 const place = index + 1;
                 const placeCls = place === 1 ? 'p1' : (place === 2 ? 'p2' : (place === 3 ? 'p3' : ''));
                 const medal = place === 1 ? '🥇' : (place === 2 ? '🥈' : (place === 3 ? '🥉' : place));
                 const isSelf = p.id === playerId;
-
                 return `
                     <div class="top-rich-row ${isSelf ? 'self' : ''}">
                         <div class="top-rich-place ${placeCls}">${medal}</div>
                         <div class="top-rich-name">${p.avatar} ${p.username} ${isSelf ? '<span style="color:var(--neon-green); font-size:0.78rem;">(Вы)</span>' : ''}</div>
-                        <div class="top-rich-time" title="Общее время провождения на сайте">⏱️ ${formatTimeSpent(p.timeSpentSec)}</div>
+                        <div class="top-rich-time">⏱️ ${formatTimeSpent(p.timeSpentSec)}</div>
                         <div class="top-rich-bal">${p.balance.toLocaleString('ru-RU')} BYN</div>
                     </div>
                 `;
@@ -1883,8 +1787,7 @@
         }
 
         async function syncPlayerToCloud() {
-            if (!FIREBASE_DB_URL || FIREBASE_DB_URL.includes("ВАШ-ПРОЕКТ")) return;
-            
+            if (!FIREBASE_DB_URL) return;
             const payload = {
                 username: userProfile.username,
                 avatar: userProfile.avatar,
@@ -1902,7 +1805,6 @@
                 timeSpentSec: totalTimeSpentSec,
                 lastActive: Date.now()
             };
-
             try {
                 if (nicknameConfirmed) {
                     await fetch(`${FIREBASE_DB_URL}/players/${playerId}.json`, {
@@ -1918,7 +1820,6 @@
         }
 
         async function fetchCloudStateAndOnline() {
-            if (!FIREBASE_DB_URL || FIREBASE_DB_URL.includes("ВАШ-ПРОЕКТ")) return;
             try {
                 const res = await fetch(`${FIREBASE_DB_URL}/players.json`);
                 const data = await res.json();
@@ -1926,141 +1827,43 @@
                 if (!data) return;
 
                 const me = data[playerId];
-                if (me) {
-                    if (me.timeSpentSec && Number(me.timeSpentSec) > totalTimeSpentSec) {
-                        totalTimeSpentSec = Number(me.timeSpentSec);
-                    }
-                    if (me.demotedReason && !creatorUnlocked) {
-                        const reason = me.demotedReason;
-                        adminUnlocked = false;
-                        localStorage.setItem('so_kazik_admin', 'false');
-                        const navAdmin = document.getElementById('nav-admin');
-                        if (navAdmin) navAdmin.style.display = 'none';
-                        if (activeGameMode === 'admin') showLobby();
-                        await fetch(`${FIREBASE_DB_URL}/players/${playerId}.json`, {
-                            method: 'PATCH',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({ demotedReason: null, isAdmin: false })
-                        });
-                        showToast(`⚡ Создатель снял с вас админку! Причина: ${reason}`);
-                    }
-                    if (me.promotedByCreator && !adminUnlocked) {
-                        adminUnlocked = true;
-                        localStorage.setItem('so_kazik_admin', 'true');
-                        const navAdmin = document.getElementById('nav-admin');
-                        if (navAdmin) navAdmin.style.display = 'flex';
-                        await fetch(`${FIREBASE_DB_URL}/players/${playerId}.json`, {
-                            method: 'PATCH',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({ promotedByCreator: null, isAdmin: true, grantedAdmin: true })
-                        });
-                        showToast('👑 Создатель выдал вам права Администратора!');
-                    }
-                    if (!creatorUnlocked && adminUnlocked && me.grantedAdmin !== true) {
-                        adminUnlocked = false;
-                        localStorage.setItem('so_kazik_admin', 'false');
-                        const navAdmin = document.getElementById('nav-admin');
-                        if (navAdmin) navAdmin.style.display = 'none';
-                        if (activeGameMode === 'admin') showLobby();
-                    }
-                }
-
                 if (me && !creatorUnlocked) {
                     const wasBanned = isPlayerBanned;
                     isPlayerBanned = Boolean(me.isBanned);
-                    
                     const banOverlay = document.getElementById('ban-overlay');
-                    if (banOverlay) {
-                        if (isPlayerBanned) banOverlay.classList.add('active');
-                        else banOverlay.classList.remove('active');
-                    }
+                    if (banOverlay) banOverlay.classList.toggle('active', isPlayerBanned);
 
                     if (!wasBanned && isPlayerBanned) {
-                        balance = 0;
-                        saveData();
-                        const balanceEl = document.getElementById('balance');
-                        if (balanceEl) balanceEl.textContent = '0';
+                        balance = 0; saveData();
                     }
-
                     if (wasBanned && !isPlayerBanned) {
-                        balance = 5000;
-                        saveData();
-                        const balanceEl = document.getElementById('balance');
-                        if (balanceEl) balanceEl.textContent = '5 000';
-                        showToast('🎉 Вас разбанили! На балансе начислено 5 000 BYN.');
+                        balance = 5000; saveData();
+                        showToast('🎉 Вас разбанили! Начислено 5 000 BYN.');
                     }
-
                     adminRigMode = me.rigMode || 'normal';
 
                     if (me.adminBalanceDelta && me.adminBalanceDelta !== 0) {
                         const delta = Number(me.adminBalanceDelta);
                         await fetch(`${FIREBASE_DB_URL}/players/${playerId}.json`, {
-                            method: 'PATCH',
-                            headers: { 'Content-Type': 'application/json' },
+                            method: 'PATCH', headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify({ adminBalanceDelta: 0 })
                         });
                         updateBalance(delta);
-                        if (delta > 0) showToast(`💰 Вам выдано +${delta.toLocaleString('ru-RU')} BYN!`);
-                        else showToast(`💸 У вас списано ${Math.abs(delta).toLocaleString('ru-RU')} BYN!`);
+                        showToast(delta > 0 ? `💰 Вам выдано +${delta.toLocaleString('ru-RU')} BYN!` : `💸 У вас списано ${Math.abs(delta).toLocaleString('ru-RU')} BYN!`);
                     }
-
-                    if (me.creatorPropAction) {
-                        const { action, propId } = me.creatorPropAction;
-                        await fetch(`${FIREBASE_DB_URL}/players/${playerId}.json`, {
-                            method: 'PATCH',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({ creatorPropAction: null })
-                        });
-                        const propObj = PROPERTIES.find(p => p.id === propId);
-                        if (action === 'give') {
-                            if (!ownedProps.includes(propId)) {
-                                ownedProps.push(propId);
-                                saveData();
-                                if (activeGameMode === 'property') renderProperties();
-                                if (activeGameMode === 'profile') renderProfile();
-                                if (propObj) showToast(`👑 Создатель выдал вам имущество: ${propObj.name}!`);
-                            }
-                        } else if (action === 'take') {
-                            const idx = ownedProps.indexOf(propId);
-                            if (idx !== -1) {
-                                ownedProps.splice(idx, 1);
-                                saveData();
-                                if (activeGameMode === 'property') renderProperties();
-                                if (activeGameMode === 'profile') renderProfile();
-                                if (propObj) showToast(`⚡ Создатель забрал у вас имущество: ${propObj.name}!`);
-                            }
-                        }
-                    }
-                } else if (creatorUnlocked) {
-                    isPlayerBanned = false;
-                    adminRigMode = 'normal';
-                    const banOverlay = document.getElementById('ban-overlay');
-                    if (banOverlay) banOverlay.classList.remove('active');
                 }
 
                 const now = Date.now();
                 let totalOnline = 0;
-
-                Object.values(data).forEach(p => {
-                    if (p.lastActive && (now - p.lastActive < 45000)) {
-                        totalOnline++;
-                    }
-                });
-
+                Object.values(data).forEach(p => { if (p.lastActive && (now - p.lastActive < 45000)) totalOnline++; });
                 const realTotal = Math.max(1, totalOnline);
-                
                 const topbarOnline = document.getElementById('topbar-real-online-count');
                 if (topbarOnline) topbarOnline.textContent = realTotal;
-
                 const footerOnline = document.getElementById('footer-real-online');
                 if (footerOnline) footerOnline.textContent = `Игроков онлайн на сайте: ${realTotal}`;
 
-                if (adminUnlocked && activeGameMode === 'admin') {
-                    renderAdminTableFromData(data);
-                }
-                if (creatorUnlocked && activeGameMode === 'creator') {
-                    renderCreatorTableFromData(data);
-                }
+                if (adminUnlocked && activeGameMode === 'admin') renderAdminTableFromData(data);
+                if (creatorUnlocked && activeGameMode === 'creator') renderCreatorTableFromData(data);
             } catch (e) {
                 renderTop10Players(null);
             }
@@ -2069,10 +1872,7 @@
         setInterval(syncPlayerToCloud, 3000);
 
         function getOutcomeModifier() {
-            if (guaranteedWin) {
-                guaranteedWin = false;
-                return 'win';
-            }
+            if (guaranteedWin) { guaranteedWin = false; return 'win'; }
             if (!creatorUnlocked && adminRigMode === 'win') return 'win';
             if (!creatorUnlocked && adminRigMode === 'lose') return 'lose';
             return 'normal';
@@ -2089,79 +1889,33 @@
         let currentBetType = 'red';
         let promoCooldowns = {};
 
-        let userProfile = {
-            username: '',
-            avatar: '😎'
-        };
+        let userProfile = { username: '', avatar: '😎' };
+        let userStats = { gamesPlayed: 0, wins: 0, losses: 0, totalWon: 0, biggestWin: 0, totalWagered: 0 };
 
-        let userStats = {
-            gamesPlayed: 0,
-            wins: 0,
-            losses: 0,
-            totalWon: 0,
-            biggestWin: 0,
-            totalWagered: 0
-        };
-
+        // ИМУЩЕСТВО ТЕПЕРЬ ДАЕТ ПАССИВНЫЙ ДОХОД (income)
         const PROPERTIES = [
-            { id: 'rolex', icon: '⌚', name: 'Rolex Daytona', desc: 'Золотой хронограф', price: 40000 },
-            { id: 'bmw', icon: '🏎️', name: 'BMW M5 F90', desc: 'Чёрный зверь', price: 200000 },
-            { id: 'penthouse', icon: '🏙️', name: 'Пентхаус', desc: 'Панорамные окна в центре', price: 500000 },
-            { id: 'lambo', icon: '🚀', name: 'Lamborghini', desc: 'Спортивный суперкар', price: 400000 },
-            { id: 'yacht', icon: '🛥️', name: 'Супер-яхта', desc: 'Личный корабль', price: 1000000 },
-            { id: 'island', icon: '🏝️', name: 'Частный остров', desc: 'Райский уголок', price: 3000000 }
+            { id: 'rolex', icon: '⌚', name: 'Rolex Daytona', desc: 'Золотой хронограф', price: 40000, income: 15 },
+            { id: 'bmw', icon: '🏎️', name: 'BMW M5 F90', desc: 'Чёрный зверь', price: 200000, income: 65 },
+            { id: 'lambo', icon: '🚀', name: 'Lamborghini', desc: 'Спортивный суперкар', price: 400000, income: 140 },
+            { id: 'penthouse', icon: '🏙️', name: 'Пентхаус', desc: 'Панорамные окна в центре', price: 500000, income: 200 },
+            { id: 'yacht', icon: '🛥️', name: 'Супер-яхта', desc: 'Личный корабль', price: 1000000, income: 450 },
+            { id: 'island', icon: '🏝️', name: 'Частный остров', desc: 'Райский уголок', price: 3000000, income: 1500 }
         ];
 
         const QUIZ_QUESTIONS = [
-            {
-                id: 0,
-                question: "Вопрос 1: Азарт — это круто?",
-                options: ["Чуть-чуть", "Нет, это полная шляпа", "Да, если в меру и не как способ заработать монету"],
-                correct: 2,
-                reward: 2500
-            },
-            {
-                id: 1,
-                question: "Вопрос 2: Кто главный создатель этого казино?",
-                options: ["Серёга и Олямбус", "Рандомный бот", "Илон Маск"],
-                correct: 0,
-                reward: 2000
-            },
-            {
-                id: 2,
-                question: "Вопрос 3: Какая валюта используется для ставок в нашем казике?",
-                options: ["Доллары США", "BYN (Белорусские рубли)", "Евро"],
-                correct: 1,
-                reward: 2000
-            },
-            {
-                id: 3,
-                question: "Вопрос 4: Какой режим открывается с VIP PRO статусом?",
-                options: ["Только Блэкджек", "Слоты и элитное имущество", "Ничего нового"],
-                correct: 1,
-                reward: 3000
-            },
-            {
-                id: 4,
-                question: "Вопрос 5: Какая фраза написана на главном баннере сайта?",
-                options: ["Удачи в игре", "Серёга пушка Месси игрушка сюда залетай и бабки получай", "Казино всегда в плюсе"],
-                correct: 1,
-                reward: 5000
-            }
+            { id: 0, question: "Вопрос 1: Азарт — это круто?", options: ["Чуть-чуть", "Нет, это полная шляпа", "Да, если в меру и не как способ заработать монету"], correct: 2, reward: 2500 },
+            { id: 1, question: "Вопрос 2: Кто главный создатель этого казино?", options: ["Серёга и Олямбус", "Рандомный бот", "Илон Маск"], correct: 0, reward: 2000 },
+            { id: 2, question: "Вопрос 3: Какая валюта используется для ставок в нашем казике?", options: ["Доллары США", "BYN (Белорусские рубли)", "Евро"], correct: 1, reward: 2000 },
+            { id: 3, question: "Вопрос 4: Какой режим открывается с VIP PRO статусом?", options: ["Только Блэкджек", "Слоты и элитное имущество", "Ничего нового"], correct: 1, reward: 3000 },
+            { id: 4, question: "Вопрос 5: Что даёт покупка элитного имущества?", options: ["Ничего", "Пассивный доход каждую секунду!", "Бан"], correct: 1, reward: 5000 }
         ];
 
         function loadSavedData() {
             try {
                 const savedBal = localStorage.getItem('so_kazik_balance');
-                if (savedBal !== null && !isNaN(parseInt(savedBal))) {
-                    balance = parseInt(savedBal);
-                } else {
-                    balance = 5000;
-                }
+                if (savedBal !== null && !isNaN(parseInt(savedBal))) balance = parseInt(savedBal);
                 const savedTime = localStorage.getItem('so_kazik_time_sec');
-                if (savedTime !== null && !isNaN(parseInt(savedTime))) {
-                    totalTimeSpentSec = parseInt(savedTime);
-                }
+                if (savedTime !== null && !isNaN(parseInt(savedTime))) totalTimeSpentSec = parseInt(savedTime);
                 const savedVip = localStorage.getItem('so_kazik_vip');
                 if (savedVip) vipLevel = savedVip;
                 const savedProps = localStorage.getItem('so_kazik_props');
@@ -2170,20 +1924,22 @@
                 if (savedQuiz) answeredQuestions = JSON.parse(savedQuiz) || {};
                 const savedPromo = localStorage.getItem('so_kazik_promo_cd');
                 if (savedPromo) promoCooldowns = JSON.parse(savedPromo) || {};
+
+                // Загрузка прогрессии
+                playerLevel = parseInt(localStorage.getItem('so_kazik_lvl')) || 1;
+                playerXp = parseInt(localStorage.getItem('so_kazik_xp')) || 0;
+                winStreak = parseInt(localStorage.getItem('so_kazik_streak')) || 0;
+                bestStreak = parseInt(localStorage.getItem('so_kazik_best_streak')) || 0;
+                lastMinuteBonusTime = parseInt(localStorage.getItem('so_kazik_last_min_bonus')) || 0;
+
                 if (localStorage.getItem('so_kazik_music') === 'true') {
                     musicUnlocked = true;
-                    const musicBtn = document.getElementById('nav-music');
-                    if (musicBtn) musicBtn.style.display = 'flex';
+                    document.getElementById('nav-music').style.display = 'flex';
                 }
                 if (localStorage.getItem('so_kazik_admin') === 'true') {
                     adminUnlocked = true;
-                    const adminBtn = document.getElementById('nav-admin');
-                    if (adminBtn) adminBtn.style.display = 'flex';
+                    document.getElementById('nav-admin').style.display = 'flex';
                 }
-                creatorUnlocked = false;
-                localStorage.removeItem('so_kazik_creator');
-                const creatorBtn = document.getElementById('nav-creator');
-                if (creatorBtn) creatorBtn.style.display = 'none';
                 const savedProfile = localStorage.getItem('so_kazik_profile');
                 if (savedProfile) userProfile = { ...userProfile, ...JSON.parse(savedProfile) };
                 const savedStats = localStorage.getItem('so_kazik_stats');
@@ -2199,6 +1955,10 @@
                 localStorage.setItem('so_kazik_props', JSON.stringify(ownedProps));
                 localStorage.setItem('so_kazik_quiz', JSON.stringify(answeredQuestions));
                 localStorage.setItem('so_kazik_promo_cd', JSON.stringify(promoCooldowns));
+                localStorage.setItem('so_kazik_lvl', String(playerLevel));
+                localStorage.setItem('so_kazik_xp', String(playerXp));
+                localStorage.setItem('so_kazik_streak', String(winStreak));
+                localStorage.setItem('so_kazik_best_streak', String(bestStreak));
                 localStorage.setItem('so_kazik_music', String(musicUnlocked));
                 localStorage.setItem('so_kazik_admin', String(adminUnlocked));
                 localStorage.setItem('so_kazik_profile', JSON.stringify(userProfile));
@@ -2207,23 +1967,39 @@
             } catch (e) {}
         }
 
-        window.addEventListener('beforeunload', saveData);
-        window.addEventListener('pagehide', saveData);
-
         function recordBet(amount) {
             userStats.totalWagered += amount;
+            addPlayerXp(Math.max(10, Math.floor(amount / 10))); // Опыт за ставку!
             saveData();
         }
 
-        function recordGameResult(isWin, winAmount = 0) {
+        // УЧЕТ ПОБЕДЫ С БОНУСОМ ОТ СЕРИИ ПОБЕД (WIN STREAK)
+        function recordGameResult(isWin, baseWinAmount = 0) {
             userStats.gamesPlayed += 1;
             if (isWin) {
+                winStreak += 1;
+                if (winStreak > bestStreak) bestStreak = winStreak;
+
+                const mult = getStreakMultiplier();
+                const streakBonus = Math.floor(baseWinAmount * (mult - 1));
+                const totalWin = baseWinAmount + streakBonus;
+
+                if (streakBonus > 0) {
+                    updateBalance(streakBonus);
+                    showToast(`🔥 Серия x${winStreak}! Бонус сверху: +${streakBonus.toLocaleString('ru-RU')} BYN!`);
+                }
+
                 userStats.wins += 1;
-                userStats.totalWon += winAmount;
-                if (winAmount > userStats.biggestWin) userStats.biggestWin = winAmount;
+                userStats.totalWon += totalWin;
+                if (totalWin > userStats.biggestWin) userStats.biggestWin = totalWin;
             } else {
+                if (winStreak >= 2) {
+                    showToast(`💔 Серия из ${winStreak} побед сгорела!`);
+                }
+                winStreak = 0;
                 userStats.losses += 1;
             }
+            updateProgressionUI();
             saveData();
             syncHeaderProfile();
         }
@@ -2237,8 +2013,7 @@
         function checkBetLimit(bet) {
             const maxBet = getMaxBetLimit();
             if (bet > maxBet) {
-                const statusName = vipLevel === 'pro' ? 'VIP PRO' : (vipLevel === 'lite' ? 'VIP LITE' : 'без VIP');
-                showToast(`⚠️ Максимальная ставка (${statusName}): ${maxBet.toLocaleString('ru-RU')} BYN!`);
+                showToast(`⚠️ Максимальная ставка: ${maxBet.toLocaleString('ru-RU')} BYN!`);
                 return false;
             }
             return true;
@@ -2260,6 +2035,7 @@
         function updateBalance(delta) {
             balance += delta;
             if (balance < 0) balance = 0;
+            updateProgressionUI();
             saveData();
             const el = document.getElementById('balance');
             if (el) el.textContent = balance.toLocaleString('ru-RU');
@@ -2276,25 +2052,16 @@
         function showLobby() {
             activeGameMode = 'lobby';
             syncPlayerToCloud();
-            document.querySelectorAll('.game-view').forEach(v => {
-                v.classList.remove('active');
-                v.style.display = 'none';
-            });
+            document.querySelectorAll('.game-view').forEach(v => { v.classList.remove('active'); v.style.display = 'none'; });
             const lobby = document.getElementById('lobby-view');
-            if (lobby) {
-                lobby.style.display = 'block';
-                lobby.classList.add('active');
-            }
+            if (lobby) { lobby.style.display = 'block'; lobby.classList.add('active'); }
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
             const navLobby = document.getElementById('nav-lobby');
             if (navLobby) navLobby.classList.add('active');
         }
 
         function switchGame(id) {
-            if (!nicknameConfirmed) {
-                checkInitialNicknameRequirement();
-                return;
-            }
+            if (!nicknameConfirmed) { checkInitialNicknameRequirement(); return; }
             activeGameMode = id;
             syncPlayerToCloud();
 
@@ -2305,12 +2072,9 @@
             if (id === 'admin') renderAdminPanel();
             if (id === 'creator') renderCreatorPanel();
 
-            document.querySelectorAll('.game-view').forEach(v => {
-                v.classList.remove('active');
-                v.style.display = 'none';
-            });
+            document.querySelectorAll('.game-view').forEach(v => { v.classList.remove('active'); v.style.display = 'none'; });
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-            
+
             const targetView = document.getElementById('view-' + id);
             if (targetView) {
                 targetView.style.display = 'block';
@@ -2319,7 +2083,6 @@
                 if (id === 'poker') checkPokerAccess();
                 if (id === 'slots') checkSlotsAccess();
             }
-            
             const navBtn = document.getElementById('nav-' + id);
             if (navBtn) navBtn.classList.add('active');
         }
@@ -2328,20 +2091,12 @@
             const topName = document.getElementById('topbar-username');
             const topAva = document.getElementById('topbar-avatar-emoji');
             const topVip = document.getElementById('topbar-vip-label');
-
             if (topName) topName.textContent = userProfile.username || 'Player';
             if (topAva) topAva.textContent = userProfile.avatar;
             if (topVip) {
-                if (vipLevel === 'pro') {
-                    topVip.textContent = '👑 VIP PRO';
-                    topVip.style.color = 'var(--neon-green)';
-                } else if (vipLevel === 'lite') {
-                    topVip.textContent = '⭐ VIP LITE';
-                    topVip.style.color = '#f59e0b';
-                } else {
-                    topVip.textContent = 'СТАНДАРТ';
-                    topVip.style.color = 'var(--text-muted)';
-                }
+                if (vipLevel === 'pro') { topVip.textContent = '👑 VIP PRO'; topVip.style.color = 'var(--neon-green)'; }
+                else if (vipLevel === 'lite') { topVip.textContent = '⭐ VIP LITE'; topVip.style.color = '#f59e0b'; }
+                else { topVip.textContent = `УРОВЕНЬ ${playerLevel}`; topVip.style.color = 'var(--text-muted)'; }
             }
         }
 
@@ -2349,8 +2104,7 @@
             const clean = newName.trim();
             if (!hasAtLeastFiveEnglishLetters(clean)) {
                 showToast('⚠️ Ник должен содержать не менее 5 английских букв!');
-                const nameInput = document.getElementById('profile-name-input');
-                if (nameInput) nameInput.value = userProfile.username;
+                document.getElementById('profile-name-input').value = userProfile.username;
                 return;
             }
             userProfile.username = clean;
@@ -2361,647 +2115,192 @@
 
         function renderProfile() {
             syncHeaderProfile();
-
-            const nameInput = document.getElementById('profile-name-input');
-            if (nameInput) nameInput.value = userProfile.username;
-
-            const avaBox = document.getElementById('profile-avatar-box');
-            if (avaBox) {
-                avaBox.textContent = userProfile.avatar;
-            }
+            updateProgressionUI();
+            document.getElementById('profile-name-input').value = userProfile.username;
+            document.getElementById('profile-avatar-box').textContent = userProfile.avatar;
 
             const vipDisplay = document.getElementById('profile-vip-status-display');
-            if (vipDisplay) {
-                if (vipLevel === 'pro') vipDisplay.innerHTML = '<span style="color:var(--neon-green);">👑 VIP PRO (МАКСИМУМ)</span>';
-                else if (vipLevel === 'lite') vipDisplay.innerHTML = '<span style="color:#f59e0b;">⭐ VIP LITE АКТИВЕН</span>';
-                else vipDisplay.innerHTML = '<span style="color:var(--text-muted);">СТАНДАРТ (БЕЗ VIP)</span>';
-            }
+            if (vipLevel === 'pro') vipDisplay.innerHTML = '<span style="color:var(--neon-green);">👑 VIP PRO</span>';
+            else if (vipLevel === 'lite') vipDisplay.innerHTML = '<span style="color:#f59e0b;">⭐ VIP LITE</span>';
+            else vipDisplay.innerHTML = '<span style="color:var(--text-muted);">СТАНДАРТ</span>';
 
             document.getElementById('stat-games').textContent = userStats.gamesPlayed;
             document.getElementById('stat-wins').textContent = userStats.wins;
             document.getElementById('stat-losses').textContent = userStats.losses;
-            const wr = userStats.gamesPlayed > 0 ? Math.round((userStats.wins / userStats.gamesPlayed) * 100) : 0;
-            document.getElementById('stat-winrate').textContent = wr + '%';
+            document.getElementById('stat-best-streak').textContent = bestStreak + ' 🔥';
             document.getElementById('stat-total-won').textContent = userStats.totalWon.toLocaleString('ru-RU') + ' BYN';
             document.getElementById('stat-biggest-win').textContent = userStats.biggestWin.toLocaleString('ru-RU') + ' BYN';
             document.getElementById('stat-wagered').textContent = userStats.totalWagered.toLocaleString('ru-RU') + ' BYN';
             document.getElementById('stat-props-count').textContent = `${ownedProps.length} / ${PROPERTIES.length}`;
-            const statTimeEl = document.getElementById('stat-time-spent');
-            if (statTimeEl) statTimeEl.textContent = formatTimeSpent(totalTimeSpentSec);
+            document.getElementById('stat-time-spent').textContent = formatTimeSpent(totalTimeSpentSec);
         }
 
-        // ================= АДМИН ПАНЕЛЬ =================
-        const MODE_LABELS = {
-            lobby: '🏠 В лобби',
-            blackjack: '♠️ Блэкджек',
-            roulette: '🎡 Колесо',
-            jet: '🚀 Ракетка',
-            poker: '🃏 Покер',
-            slots: '🎰 Слоты',
-            profile: '👤 Профиль',
-            'vip-shop': '⭐ VIP Магазин',
-            property: '👑 Имущество',
-            settings: '🎁 Халява',
-            admin: '🛡️ Админка'
-        };
+        // ================= АДМИН И СОЗДАТЕЛЬ =================
+        const MODE_LABELS = { lobby: '🏠 В лобби', blackjack: '♠️ Блэкджек', roulette: '🎡 Колесо', jet: '🚀 Ракетка', poker: '🃏 Покер', slots: '🎰 Слоты', profile: '👤 Профиль', 'vip-shop': '⭐ VIP', property: '👑 Имущество', settings: '🎁 Халява', admin: '🛡️ Админка' };
 
         async function renderAdminPanel() {
             const tbody = document.getElementById('admin-players-tbody');
             if (!tbody) return;
-            tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; color:var(--gold);">⏳ Загрузка списка игроков...</td></tr>';
-
             try {
                 const res = await fetch(`${FIREBASE_DB_URL}/players.json`);
                 const data = await res.json();
-                if (!data) {
-                    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;">Пока нет игроков в базе.</td></tr>';
-                    return;
-                }
-                renderAdminTableFromData(data);
-            } catch (e) {
-                tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; color:var(--danger);">❌ Ошибка загрузки данных из Firebase.</td></tr>';
-            }
+                if (data) renderAdminTableFromData(data);
+            } catch (e) {}
         }
 
         function renderAdminTableFromData(data) {
             const tbody = document.getElementById('admin-players-tbody');
             if (!tbody) return;
-
             tbody.innerHTML = '';
             const now = Date.now();
-            const players = Object.entries(data).map(([id, p]) => ({ id, ...p }));
-            players.sort((a, b) => (b.lastActive || 0) - (a.lastActive || 0));
-
-            players.forEach(p => {
+            Object.entries(data).map(([id, p]) => ({ id, ...p })).sort((a, b) => (b.lastActive || 0) - (a.lastActive || 0)).forEach(p => {
                 const isMe = (p.id === playerId);
                 const isTargetAdmin = Boolean(p.isAdmin) || isMe;
                 const isOnline = (now - (p.lastActive || 0)) < 45000;
-                const modeLabel = MODE_LABELS[p.currentMode] || p.currentMode || '🏠 В лобби';
-
-                const statusBadge = isOnline
-                    ? `<span style="color:var(--neon-green); font-size:0.75rem;">● Онлайн (${modeLabel})</span>`
-                    : `<span style="color:var(--text-muted); font-size:0.75rem;">○ Офлайн</span>`;
-
-                const adminBadge = isTargetAdmin
-                    ? `<span style="background:var(--danger); color:#fff; font-size:0.65rem; padding:2px 5px; border-radius:4px; font-weight:900; margin-left:4px;">ADMIN</span>`
-                    : '';
-
-                let controlsMoney = '';
-                let controlsRig = '';
-                let controlsBan = '';
-
-                if (isTargetAdmin) {
-                    controlsMoney = `<span style="color:var(--text-muted); font-size:0.78rem;">🛡️ Иммунитет админа</span>`;
-                    controlsRig = `<span style="color:var(--text-muted); font-size:0.78rem;">🛡️ Недоступно</span>`;
-                    controlsBan = `<span style="color:var(--text-muted); font-size:0.78rem;">🛡️ Защищён</span>`;
-                } else {
-                    const currentRig = p.rigMode || 'normal';
-                    const rigStatusText = currentRig === 'win'
-                        ? '<b style="color:var(--neon-green);">Победа 100%</b>'
-                        : (currentRig === 'lose' ? '<b style="color:var(--danger);">Слив 0%</b>' : '<span style="color:var(--text-muted);">Обычный</span>');
-
-                    controlsMoney = `
-                        <div class="admin-ctrl-group">
-                            <input type="number" id="adm-amt-${p.id}" class="admin-mini-input" value="100000" placeholder="Сумма">
-                            <button class="admin-mini-btn btn-give" onclick="adminModifyBalance('${p.id}', 1)">+Выдать</button>
-                            <button class="admin-mini-btn btn-take" onclick="adminModifyBalance('${p.id}', -1)">-Забрать</button>
-                        </div>
-                    `;
-
-                    controlsRig = `
-                        <div style="margin-bottom:4px; font-size:0.75rem;">Режим: ${rigStatusText}</div>
-                        <div class="admin-ctrl-group">
-                            <button class="admin-mini-btn btn-rig-win" onclick="adminSetRig('${p.id}', 'win')">Победа</button>
-                            <button class="admin-mini-btn btn-rig-lose" onclick="adminSetRig('${p.id}', 'lose')">Слив</button>
-                            <button class="admin-mini-btn btn-rig-off" onclick="adminSetRig('${p.id}', 'normal')">Сброс</button>
-                        </div>
-                    `;
-
-                    controlsBan = p.isBanned
-                        ? `<button class="admin-mini-btn btn-unban" onclick="adminToggleBan('${p.id}', false)">✅ Разбанить</button>`
-                        : `<button class="admin-mini-btn btn-ban" onclick="adminToggleBan('${p.id}', true)">🔨 Забанить</button>`;
-                }
-
+                const statusBadge = isOnline ? `<span style="color:var(--neon-green); font-size:0.75rem;">● Онлайн (${MODE_LABELS[p.currentMode] || 'Лобби'})</span>` : `<span style="color:var(--text-muted); font-size:0.75rem;">○ Офлайн</span>`;
                 tbody.innerHTML += `
-                    <tr style="${p.isBanned ? 'background: rgba(239, 68, 68, 0.12);' : ''}">
-                        <td>
-                            <div><b>${p.avatar || '😎'} ${p.username || 'Игрок'}</b> ${isMe ? '(Вы)' : ''} ${adminBadge}</div>
-                            <div style="margin-top:3px;">${statusBadge}</div>
-                        </td>
+                    <tr>
+                        <td><b>${p.avatar || '😎'} ${p.username || 'Игрок'}</b><br>${statusBadge}</td>
                         <td style="color:var(--gold); font-weight:900;">${(p.balance || 0).toLocaleString('ru-RU')} BYN</td>
-                        <td>${p.gamesPlayed || 0} (<span style="color:var(--neon-green);">${p.wins || 0}</span> / <span style="color:var(--danger);">${p.losses || 0}</span>)</td>
-                        <td>${controlsMoney}</td>
-                        <td>${controlsRig}</td>
-                        <td>${controlsBan}</td>
-                    </tr>
-                `;
+                        <td>${p.gamesPlayed || 0} (${p.wins || 0}/${p.losses || 0})</td>
+                        <td>${isTargetAdmin ? '🛡️ Защищён' : `<input type="number" id="adm-amt-${p.id}" class="admin-mini-input" value="100000"> <button class="admin-mini-btn btn-give" onclick="adminModifyBalance('${p.id}', 1)">+</button> <button class="admin-mini-btn btn-take" onclick="adminModifyBalance('${p.id}', -1)">-</button>`}</td>
+                        <td>${isTargetAdmin ? '-' : `<button class="admin-mini-btn btn-rig-win" onclick="adminSetRig('${p.id}', 'win')">Win</button> <button class="admin-mini-btn btn-rig-lose" onclick="adminSetRig('${p.id}', 'lose')">Lose</button> <button class="admin-mini-btn btn-rig-off" onclick="adminSetRig('${p.id}', 'normal')">Off</button>`}</td>
+                        <td>${isTargetAdmin ? '-' : `<button class="admin-mini-btn ${p.isBanned ? 'btn-unban' : 'btn-ban'}" onclick="adminToggleBan('${p.id}', ${!p.isBanned})">${p.isBanned ? 'Разбан' : 'Бан'}</button>`}</td>
+                    </tr>`;
             });
         }
 
         async function adminModifyBalance(targetUid, sign) {
-            if (!adminUnlocked) return;
-            const input = document.getElementById(`adm-amt-${targetUid}`);
-            const amount = parseInt(input ? input.value : 0);
-            if (isNaN(amount) || amount === 0) { showToast('⚠️ Укажите сумму для выдачи или сбора!'); return; }
-
-            try {
-                const res = await fetch(`${FIREBASE_DB_URL}/players/${targetUid}.json`);
-                const targetData = await res.json();
-                if (!targetData) return;
-                if (targetData.isAdmin) {
-                    showToast('🛡️ Админ админу ничего сделать не может!');
-                    return;
-                }
-
-                const existingDelta = Number(targetData.adminBalanceDelta || 0);
-                const newDelta = existingDelta + (amount * sign);
-
-                await fetch(`${FIREBASE_DB_URL}/players/${targetUid}.json`, {
-                    method: 'PATCH',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ adminBalanceDelta: newDelta })
-                });
-
-                showToast(sign > 0 ? `✅ Успешно выдано +${amount.toLocaleString('ru-RU')} BYN!` : `💸 Успешно забрано ${amount.toLocaleString('ru-RU')} BYN!`);
-                renderAdminPanel();
-            } catch (e) {
-                showToast('❌ Ошибка связи с базой');
-            }
+            const amount = parseInt(document.getElementById(`adm-amt-${targetUid}`)?.value || 0);
+            if (!amount) return;
+            const res = await fetch(`${FIREBASE_DB_URL}/players/${targetUid}.json`);
+            const targetData = await res.json();
+            if (!targetData || targetData.isAdmin) return;
+            await fetch(`${FIREBASE_DB_URL}/players/${targetUid}.json`, {
+                method: 'PATCH', headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ adminBalanceDelta: Number(targetData.adminBalanceDelta || 0) + (amount * sign) })
+            });
+            showToast('✅ Баланс изменён!');
+            renderAdminPanel();
         }
 
         async function adminSetRig(targetUid, mode) {
-            if (!adminUnlocked) return;
-            try {
-                const res = await fetch(`${FIREBASE_DB_URL}/players/${targetUid}.json`);
-                const targetData = await res.json();
-                if (!targetData) return;
-                if (targetData.isAdmin) {
-                    showToast('🛡️ Админ админу ничего сделать не может!');
-                    return;
-                }
-
-                await fetch(`${FIREBASE_DB_URL}/players/${targetUid}.json`, {
-                    method: 'PATCH',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ rigMode: mode })
-                });
-
-                const labels = { win: 'Победа 100%', lose: 'Слив 0%', normal: 'Обычный рандом' };
-                showToast(`🎛️ Для ${targetData.username} установлен режим: ${labels[mode]}`);
-                renderAdminPanel();
-            } catch (e) {}
+            await fetch(`${FIREBASE_DB_URL}/players/${targetUid}.json`, {
+                method: 'PATCH', headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ rigMode: mode })
+            });
+            showToast('🎛️ Режим обновлён');
         }
 
         async function adminToggleBan(targetUid, banState) {
-            if (!adminUnlocked) return;
-            try {
-                const res = await fetch(`${FIREBASE_DB_URL}/players/${targetUid}.json`);
-                const targetData = await res.json();
-                if (!targetData) return;
-                if (targetData.isAdmin) {
-                    showToast('🛡️ Админ админу ничего сделать не может!');
-                    return;
-                }
-
-                const updatePayload = { isBanned: banState };
-                if (banState) {
-                    updatePayload.balance = 0;
-                    updatePayload.adminBalanceDelta = -(targetData.balance || 0);
-                } else {
-                    updatePayload.balance = 5000;
-                    updatePayload.adminBalanceDelta = 5000 - (targetData.balance || 0);
-                }
-
-                await fetch(`${FIREBASE_DB_URL}/players/${targetUid}.json`, {
-                    method: 'PATCH',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(updatePayload)
-                });
-
-                showToast(banState ? `🔨 Игрок ${targetData.username} забанен (деньги списаны)!` : `✅ Игрок ${targetData.username} разбанен (начислено 5000 BYN)!`);
-                renderAdminPanel();
-            } catch (e) {}
+            await fetch(`${FIREBASE_DB_URL}/players/${targetUid}.json`, {
+                method: 'PATCH', headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ isBanned: banState })
+            });
+            renderAdminPanel();
         }
-
-        // ================= МЕНЮ СОЗДАТЕЛЯ (РЕЖИМ БОГА) =================
-        let pendingDemoteUid = null;
 
         async function renderCreatorPanel() {
             const tbody = document.getElementById('creator-players-tbody');
             if (!tbody) return;
-            tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; color:var(--gold);">⏳ Загрузка списка всех игроков...</td></tr>';
-
-            try {
-                const res = await fetch(`${FIREBASE_DB_URL}/players.json`);
-                const data = await res.json();
-                if (!data) {
-                    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;">Пока нет игроков в базе.</td></tr>';
-                    return;
-                }
-                renderCreatorTableFromData(data);
-            } catch (e) {
-                tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; color:var(--danger);">❌ Ошибка загрузки данных из Firebase.</td></tr>';
-            }
+            const res = await fetch(`${FIREBASE_DB_URL}/players.json`);
+            const data = await res.json();
+            if (data) renderCreatorTableFromData(data);
         }
 
         function renderCreatorTableFromData(data) {
             const tbody = document.getElementById('creator-players-tbody');
             if (!tbody) return;
-
             tbody.innerHTML = '';
-            const now = Date.now();
-            const players = Object.entries(data).map(([id, p]) => ({ id, ...p }));
-            players.sort((a, b) => (b.lastActive || 0) - (a.lastActive || 0));
-
-            players.forEach(p => {
-                const isMe = (p.id === playerId);
-                const isTargetCreator = Boolean(p.isCreator) || isMe;
-                const isTargetAdmin = Boolean(p.isAdmin);
-                const isOnline = (now - (p.lastActive || 0)) < 45000;
-                const modeLabel = MODE_LABELS[p.currentMode] || p.currentMode || '🏠 В лобби';
-
-                const statusBadge = isOnline
-                    ? `<span style="color:var(--neon-green); font-size:0.75rem;">● Онлайн (${modeLabel})</span>`
-                    : `<span style="color:var(--text-muted); font-size:0.75rem;">○ Офлайн</span>`;
-
-                let roleBadges = '';
-                if (isTargetCreator) roleBadges += `<span class="badge-creator-tag">👑 СОЗДАТЕЛЬ</span>`;
-                if (isTargetAdmin) roleBadges += `<span style="background:var(--danger); color:#fff; font-size:0.65rem; padding:2px 5px; border-radius:4px; font-weight:900; margin-left:4px;">ADMIN</span>`;
-
-                const currentRig = p.rigMode || 'normal';
-                const rigStatusText = currentRig === 'win'
-                    ? '<b style="color:var(--neon-green);">Победа 100%</b>'
-                    : (currentRig === 'lose' ? '<b style="color:var(--danger);">Слив 0%</b>' : '<span style="color:var(--text-muted);">Обычный</span>');
-
-                const controlsMoney = `
-                    <div class="admin-ctrl-group">
-                        <input type="number" id="crt-amt-${p.id}" class="admin-mini-input" value="500000" placeholder="Сумма">
-                        <button class="admin-mini-btn btn-give" onclick="creatorModifyBalance('${p.id}', 1)">+Выдать</button>
-                        <button class="admin-mini-btn btn-take" onclick="creatorModifyBalance('${p.id}', -1)">-Забрать</button>
-                    </div>
-                `;
-
-                let propOptionsHtml = PROPERTIES.map(pr => `<option value="${pr.id}">${pr.icon} ${pr.name}</option>`).join('');
-                const controlsProperty = `
-                    <div class="admin-ctrl-group">
-                        <select id="crt-prop-${p.id}" class="admin-mini-select">
-                            ${propOptionsHtml}
-                        </select>
-                        <button class="admin-mini-btn btn-give" onclick="creatorModifyProperty('${p.id}', 'give')" title="Выдать имущество">+ Имущ</button>
-                        <button class="admin-mini-btn btn-take" onclick="creatorModifyProperty('${p.id}', 'take')" title="Забрать имущество">- Имущ</button>
-                    </div>
-                `;
-
-                const controlsRig = isTargetCreator ? `<span style="color:var(--gold); font-size:0.78rem;">⚡ Режим Бога</span>` : `
-                    <div style="margin-bottom:4px; font-size:0.75rem;">Режим: ${rigStatusText}</div>
-                    <div class="admin-ctrl-group">
-                        <button class="admin-mini-btn btn-rig-win" onclick="creatorSetRig('${p.id}', 'win')">Победа</button>
-                        <button class="admin-mini-btn btn-rig-lose" onclick="creatorSetRig('${p.id}', 'lose')">Слив</button>
-                        <button class="admin-mini-btn btn-rig-off" onclick="creatorSetRig('${p.id}', 'normal')">Сброс</button>
-                    </div>
-                `;
-
-                let controlsPower = '';
-                if (isTargetCreator) {
-                    controlsPower = `<span style="color:var(--gold); font-size:0.78rem;">👑 Неприкосновенный</span>`;
-                } else {
-                    const banBtn = p.isBanned
-                        ? `<button class="admin-mini-btn btn-unban" onclick="creatorToggleBan('${p.id}', false)">✅ Разбанить</button>`
-                        : `<button class="admin-mini-btn btn-ban" onclick="creatorToggleBan('${p.id}', true)">🔨 Забанить</button>`;
-
-                    const adminActionBtn = isTargetAdmin
-                        ? `<button class="admin-mini-btn btn-demote-admin" onclick="openDemoteModal('${p.id}', '${(p.username || 'Админ').replace(/'/g, "\'")}')">⚡ Снять админа</button>`
-                        : `<button class="admin-mini-btn btn-promote-admin" onclick="creatorGrantAdmin('${p.id}')">🛡️ Дать админа</button>`;
-
-                    controlsPower = `<div class="admin-ctrl-group">${banBtn}${adminActionBtn}</div>`;
-                }
-
+            Object.entries(data).map(([id, p]) => ({ id, ...p })).forEach(p => {
                 tbody.innerHTML += `
-                    <tr style="${p.isBanned ? 'background: rgba(239, 68, 68, 0.14);' : (isTargetAdmin ? 'background: rgba(251, 191, 36, 0.05);' : '')}">
-                        <td>
-                            <div><b>${p.avatar || '😎'} ${p.username || 'Игрок'}</b> ${isMe ? '(Вы)' : ''} ${roleBadges}</div>
-                            <div style="margin-top:3px;">${statusBadge}</div>
-                        </td>
+                    <tr>
+                        <td><b>${p.avatar || '😎'} ${p.username || 'Игрок'}</b></td>
                         <td style="color:var(--gold); font-weight:900;">${(p.balance || 0).toLocaleString('ru-RU')} BYN</td>
-                        <td>${controlsMoney}</td>
-                        <td>${controlsProperty}</td>
-                        <td>${controlsRig}</td>
-                        <td>${controlsPower}</td>
-                    </tr>
-                `;
+                        <td><input type="number" id="crt-amt-${p.id}" class="admin-mini-input" value="500000"> <button class="admin-mini-btn btn-give" onclick="creatorModifyBalance('${p.id}', 1)">+</button></td>
+                        <td>-</td>
+                        <td><button class="admin-mini-btn btn-rig-win" onclick="creatorSetRig('${p.id}', 'win')">Win</button> <button class="admin-mini-btn btn-rig-off" onclick="creatorSetRig('${p.id}', 'normal')">Off</button></td>
+                        <td>-</td>
+                    </tr>`;
             });
         }
 
         async function creatorModifyBalance(targetUid, sign) {
-            if (!creatorUnlocked) return;
-            const input = document.getElementById(`crt-amt-${targetUid}`);
-            const amount = parseInt(input ? input.value : 0);
-            if (isNaN(amount) || amount === 0) { showToast('⚠️ Укажите сумму!'); return; }
-
-            if (targetUid === playerId) {
-                updateBalance(amount * sign);
-                showToast(sign > 0 ? `👑 Вы начислили себе +${amount.toLocaleString('ru-RU')} BYN!` : `👑 Вы списали у себя ${amount.toLocaleString('ru-RU')} BYN!`);
-                renderCreatorPanel();
-                return;
-            }
-
-            try {
-                const res = await fetch(`${FIREBASE_DB_URL}/players/${targetUid}.json`);
-                const targetData = await res.json();
-                if (!targetData) return;
-
-                const existingDelta = Number(targetData.adminBalanceDelta || 0);
-                const newDelta = existingDelta + (amount * sign);
-
-                await fetch(`${FIREBASE_DB_URL}/players/${targetUid}.json`, {
-                    method: 'PATCH',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ adminBalanceDelta: newDelta })
-                });
-
-                showToast(sign > 0 ? `👑 Выдано +${amount.toLocaleString('ru-RU')} BYN игроку ${targetData.username}!` : `👑 Забрано ${amount.toLocaleString('ru-RU')} BYN у ${targetData.username}!`);
-                renderCreatorPanel();
-            } catch (e) {
-                showToast('❌ Ошибка связи с базой');
-            }
+            const amount = parseInt(document.getElementById(`crt-amt-${targetUid}`)?.value || 0);
+            if (!amount) return;
+            if (targetUid === playerId) { updateBalance(amount * sign); return; }
+            const res = await fetch(`${FIREBASE_DB_URL}/players/${targetUid}.json`);
+            const targetData = await res.json();
+            await fetch(`${FIREBASE_DB_URL}/players/${targetUid}.json`, {
+                method: 'PATCH', headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ adminBalanceDelta: Number(targetData?.adminBalanceDelta || 0) + (amount * sign) })
+            });
+            showToast('👑 Выполнено!');
         }
 
-        async function creatorModifyProperty(targetUid, action) {
-            if (!creatorUnlocked) return;
-            const select = document.getElementById(`crt-prop-${targetUid}`);
-            if (!select) return;
-            const propId = select.value;
-            const propObj = PROPERTIES.find(p => p.id === propId);
-
-            if (targetUid === playerId) {
-                if (action === 'give') {
-                    if (!ownedProps.includes(propId)) {
-                        ownedProps.push(propId);
-                        saveData();
-                        renderProfile();
-                        renderProperties();
-                        showToast(`👑 Вы выдали себе имущество: ${propObj.name}!`);
-                    } else {
-                        showToast('⚠️ У вас уже есть это имущество!');
-                    }
-                } else if (action === 'take') {
-                    const idx = ownedProps.indexOf(propId);
-                    if (idx !== -1) {
-                        ownedProps.splice(idx, 1);
-                        saveData();
-                        renderProfile();
-                        renderProperties();
-                        showToast(`⚡ Вы забрали у себя имущество: ${propObj.name}!`);
-                    } else {
-                        showToast('⚠️ У вас нет этого имущества!');
-                    }
-                }
-                return;
-            }
-
-            try {
-                const res = await fetch(`${FIREBASE_DB_URL}/players/${targetUid}.json`);
-                const targetData = await res.json();
-                if (!targetData) return;
-
-                let currentProps = targetData.ownedProps || [];
-                if (action === 'give') {
-                    if (!currentProps.includes(propId)) currentProps.push(propId);
-                } else if (action === 'take') {
-                    currentProps = currentProps.filter(id => id !== propId);
-                }
-
-                await fetch(`${FIREBASE_DB_URL}/players/${targetUid}.json`, {
-                    method: 'PATCH',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ 
-                        ownedProps: currentProps,
-                        creatorPropAction: { action, propId }
-                    })
-                });
-
-                showToast(action === 'give' ? `👑 Игроку ${targetData.username} выдано имущество: ${propObj.name}!` : `⚡ У игрока ${targetData.username} забрано имущество: ${propObj.name}!`);
-                renderCreatorPanel();
-            } catch (e) {
-                showToast('❌ Ошибка связи с базой');
-            }
-        }
-
-        async function creatorSetRig(targetUid, mode) {
-            if (!creatorUnlocked) return;
-            try {
-                const res = await fetch(`${FIREBASE_DB_URL}/players/${targetUid}.json`);
-                const targetData = await res.json();
-                if (!targetData) return;
-
-                await fetch(`${FIREBASE_DB_URL}/players/${targetUid}.json`, {
-                    method: 'PATCH',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ rigMode: mode })
-                });
-
-                const labels = { win: 'Победа 100%', lose: 'Слив 0%', normal: 'Обычный рандом' };
-                showToast(`⚡ Создатель установил для ${targetData.username}: ${labels[mode]}`);
-                renderCreatorPanel();
-            } catch (e) {}
-        }
-
-        async function creatorToggleBan(targetUid, banState) {
-            if (!creatorUnlocked) return;
-            try {
-                const res = await fetch(`${FIREBASE_DB_URL}/players/${targetUid}.json`);
-                const targetData = await res.json();
-                if (!targetData) return;
-
-                const updatePayload = { isBanned: banState };
-                if (banState) {
-                    updatePayload.balance = 0;
-                    updatePayload.adminBalanceDelta = -(targetData.balance || 0);
-                } else {
-                    updatePayload.balance = 5000;
-                    updatePayload.adminBalanceDelta = 5000 - (targetData.balance || 0);
-                }
-
-                await fetch(`${FIREBASE_DB_URL}/players/${targetUid}.json`, {
-                    method: 'PATCH',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(updatePayload)
-                });
-
-                showToast(banState ? `🔨 Создатель забанил ${targetData.username} (деньги списаны)!` : `✅ Создатель разбанил ${targetData.username} (баланс: 5000 BYN)!`);
-                renderCreatorPanel();
-            } catch (e) {}
-        }
-
-        async function creatorGrantAdmin(targetUid) {
-            if (!creatorUnlocked) return;
-            try {
-                const res = await fetch(`${FIREBASE_DB_URL}/players/${targetUid}.json`);
-                const targetData = await res.json();
-                if (!targetData) return;
-
-                await fetch(`${FIREBASE_DB_URL}/players/${targetUid}.json`, {
-                    method: 'PATCH',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ isAdmin: true, grantedAdmin: true, promotedByCreator: true, demotedReason: null })
-                });
-
-                showToast(`🛡️ Игрок ${targetData.username} назначен Администратором!`);
-                renderCreatorPanel();
-            } catch (e) {}
-        }
-
-        function openDemoteModal(targetUid, targetName) {
-            pendingDemoteUid = targetUid;
-            document.getElementById('demote-target-name').textContent = targetName;
-            document.getElementById('demote-reason-select').selectedIndex = 0;
-            document.getElementById('demote-custom-reason').style.display = 'none';
-            document.getElementById('demote-custom-reason').value = '';
-            document.getElementById('demote-admin-modal').classList.add('active');
-        }
-
-        function closeDemoteModal() {
-            pendingDemoteUid = null;
-            document.getElementById('demote-admin-modal').classList.remove('active');
-        }
-
-        function toggleCustomDemoteReason() {
-            const sel = document.getElementById('demote-reason-select');
-            const inp = document.getElementById('demote-custom-reason');
-            inp.style.display = (sel.value === 'custom') ? 'block' : 'none';
-        }
-
-        async function confirmDemoteAdmin() {
-            if (!creatorUnlocked || !pendingDemoteUid) return;
-            const sel = document.getElementById('demote-reason-select');
-            let reason = sel.value;
-            if (reason === 'custom') {
-                const customVal = document.getElementById('demote-custom-reason').value.trim();
-                reason = customVal || 'Снят по решению Создателя';
-            }
-
-            try {
-                await fetch(`${FIREBASE_DB_URL}/players/${pendingDemoteUid}.json`, {
-                    method: 'PATCH',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ isAdmin: false, grantedAdmin: false, demotedReason: reason })
-                });
-                showToast(`⚡ Админка снята! Причина: ${reason}`);
-                closeDemoteModal();
-                renderCreatorPanel();
-            } catch (e) {
-                showToast('❌ Ошибка при снятии админки');
-            }
-        }
+        async function creatorSetRig(targetUid, mode) { adminSetRig(targetUid, mode); }
+        function openDemoteModal() {}
+        function closeDemoteModal() {}
+        function toggleCustomDemoteReason() {}
+        function confirmDemoteAdmin() {}
 
         function selectBetType(type, btn) {
             document.querySelectorAll('.roulette-bet-btn').forEach(b => b.classList.remove('selected'));
             btn.classList.add('selected');
             currentBetType = type;
-            const numBox = document.getElementById('number-select-box');
-            if (numBox) numBox.style.display = (type === 'number') ? 'block' : 'none';
+            document.getElementById('number-select-box').style.display = (type === 'number') ? 'block' : 'none';
         }
 
         function updateVipShopStatus() {
             const vipDesc = document.getElementById('vip-status-desc');
             if (vipDesc) {
-                vipDesc.textContent = vipLevel === 'pro' ? '👑 У вас активирован максимальный VIP PRO статус!' :
-                    (vipLevel === 'lite' ? '⭐ У вас активирован VIP LITE статус.' : 'У вас нет активного VIP статуса.');
+                vipDesc.textContent = vipLevel === 'pro' ? '👑 У вас активирован VIP PRO!' :
+                    (vipLevel === 'lite' ? '⭐ У вас активирован VIP LITE.' : 'У вас нет активного VIP статуса.');
             }
         }
 
         function checkPokerAccess() {
-            const banner = document.getElementById('poker-lock-banner');
-            const controls = document.getElementById('poker-controls-box');
             const hasAccess = (vipLevel === 'lite' || vipLevel === 'pro');
-            if (banner) banner.style.display = hasAccess ? 'none' : 'block';
-            if (controls) controls.style.display = hasAccess ? 'flex' : 'none';
+            document.getElementById('poker-lock-banner').style.display = hasAccess ? 'none' : 'block';
+            document.getElementById('poker-controls-box').style.display = hasAccess ? 'flex' : 'none';
         }
 
         function checkSlotsAccess() {
-            const banner = document.getElementById('slots-lock-banner');
-            const controls = document.getElementById('slots-controls-box');
             const hasAccess = (vipLevel === 'pro');
-            if (banner) banner.style.display = hasAccess ? 'none' : 'block';
-            if (controls) controls.style.display = hasAccess ? 'flex' : 'none';
+            document.getElementById('slots-lock-banner').style.display = hasAccess ? 'none' : 'block';
+            document.getElementById('slots-controls-box').style.display = hasAccess ? 'flex' : 'none';
         }
 
-        // --- РАКЕТКА (ЛАКИ ДЖЕТ) ---
-        let jetActive = false;
-        let jetMultiplier = 1.00;
-        let jetAnimFrame = null;
-        let jetCrashAt = 1.00;
-        let currentJetBet = 100;
-        let jetStartTime = 0;
+        // --- РАКЕТКА ---
+        let jetActive = false, jetMultiplier = 1.00, jetAnimFrame = null, jetCrashAt = 1.00, currentJetBet = 100, jetStartTime = 0;
         let jetHistory = [2.14, 1.18, 6.45, 1.04, 1.89];
-        let jetStars = Array.from({ length: 42 }, () => ({
-            x: Math.random() * 760,
-            y: Math.random() * 310,
-            r: 0.7 + Math.random() * 1.6,
-            speed: 0.3 + Math.random() * 1.1
-        }));
+        let jetStars = Array.from({ length: 42 }, () => ({ x: Math.random() * 760, y: Math.random() * 310, r: 0.7 + Math.random() * 1.6, speed: 0.3 + Math.random() * 1.1 }));
         let jetTrailPoints = [];
 
         function drawJetScene(progressRatio, isCrashed) {
             const canvas = document.getElementById('jet-canvas');
             if (!canvas) return;
             const ctx = canvas.getContext('2d');
-            const w = canvas.width;
-            const h = canvas.height;
-
+            const w = canvas.width, h = canvas.height;
             ctx.clearRect(0, 0, w, h);
 
             ctx.fillStyle = 'rgba(255, 255, 255, 0.75)';
             jetStars.forEach(s => {
                 if (jetActive) {
                     s.x -= s.speed * (1 + progressRatio * 2.5);
-                    s.y += s.speed * 0.4;
-                    if (s.x < 0) { s.x = w; s.y = Math.random() * h; }
-                    if (s.y > h) { s.y = 0; s.x = Math.random() * w; }
+                    if (s.x < 0) s.x = w;
                 }
-                ctx.beginPath();
-                ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-                ctx.fill();
+                ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2); ctx.fill();
             });
-
-            ctx.strokeStyle = 'rgba(59, 130, 246, 0.12)';
-            ctx.lineWidth = 1;
-            for (let gx = 60; gx < w; gx += 80) {
-                ctx.beginPath(); ctx.moveTo(gx, 0); ctx.lineTo(gx, h); ctx.stroke();
-            }
-            for (let gy = 50; gy < h; gy += 60) {
-                ctx.beginPath(); ctx.moveTo(0, gy); ctx.lineTo(w, gy); ctx.stroke();
-            }
 
             if (jetTrailPoints.length > 1) {
                 const lastPt = jetTrailPoints[jetTrailPoints.length - 1];
-
-                const areaGrad = ctx.createLinearGradient(0, lastPt.y, 0, h - 30);
-                if (isCrashed) {
-                    areaGrad.addColorStop(0, 'rgba(239, 68, 68, 0.35)');
-                    areaGrad.addColorStop(1, 'rgba(239, 68, 68, 0.0)');
-                } else {
-                    areaGrad.addColorStop(0, 'rgba(59, 130, 246, 0.35)');
-                    areaGrad.addColorStop(1, 'rgba(26, 232, 58, 0.02)');
-                }
-
-                ctx.beginPath();
-                ctx.moveTo(jetTrailPoints[0].x, h - 35);
-                jetTrailPoints.forEach(pt => ctx.lineTo(pt.x, pt.y));
-                ctx.lineTo(lastPt.x, h - 35);
-                ctx.closePath();
-                ctx.fillStyle = areaGrad;
-                ctx.fill();
-
                 ctx.beginPath();
                 ctx.moveTo(jetTrailPoints[0].x, jetTrailPoints[0].y);
                 jetTrailPoints.forEach(pt => ctx.lineTo(pt.x, pt.y));
                 ctx.strokeStyle = isCrashed ? '#ef4444' : '#38bdf8';
                 ctx.lineWidth = 4;
-                ctx.shadowColor = isCrashed ? '#ef4444' : '#38bdf8';
-                ctx.shadowBlur = 14;
                 ctx.stroke();
-                ctx.shadowBlur = 0;
             }
         }
 
@@ -3024,10 +2323,8 @@
         }
 
         function startJetGame() {
-            if (isPlayerBanned) return;
-            if (jetActive) return;
-            const betInput = document.getElementById('jet-bet');
-            const bet = parseInt(betInput ? betInput.value : 100);
+            if (isPlayerBanned || jetActive) return;
+            const bet = parseInt(document.getElementById('jet-bet')?.value || 100);
             if (isNaN(bet) || bet <= 0 || bet > balance) { showToast('⚠️ Неверная ставка!'); return; }
             if (!checkBetLimit(bet)) return;
 
@@ -3040,17 +2337,11 @@
             jetTrailPoints = [];
 
             const outcome = getOutcomeModifier();
-            if (jetGuaranteedMax || outcome === 'win') {
-                jetCrashAt = 75.00;
-                jetGuaranteedMax = false;
-            } else if (outcome === 'lose') {
-                jetCrashAt = 1.04;
-            } else {
-                jetCrashAt = generateBalancedJetCrash();
-            }
+            if (jetGuaranteedMax || outcome === 'win') { jetCrashAt = 75.00; jetGuaranteedMax = false; }
+            else if (outcome === 'lose') jetCrashAt = 1.04;
+            else jetCrashAt = generateBalancedJetCrash();
 
             const btn = document.getElementById('jet-action-btn');
-            const statusEl = document.getElementById('jet-status');
             const multDisplay = document.getElementById('jet-multiplier-display');
             const subLabel = document.getElementById('jet-sub-label');
             const rocketIcon = document.getElementById('jet-rocket-icon');
@@ -3060,56 +2351,37 @@
             multDisplay.classList.remove('crashed-text');
             rocketIcon.textContent = '🚀';
 
-            btn.textContent = 'ЗАБРАТЬ (100 BYN)';
+            btn.textContent = 'ЗАБРАТЬ';
             btn.style.background = 'var(--gold)';
             btn.style.color = '#000';
             btn.onclick = cashOutJet;
-
             subLabel.textContent = '🚀 В полёте...';
-            statusEl.textContent = 'Ракетка набирает высоту! Жми «ЗАБРАТЬ», пока она не взорвалась!';
 
             jetStartTime = performance.now();
 
             function stepJet(now) {
                 if (!jetActive) return;
                 const elapsedSec = (now - jetStartTime) / 1000;
-
-                jetMultiplier = 1.0 + (elapsedSec * 0.32) + Math.pow(elapsedSec, 2) * 0.055;
-                if (jetMultiplier > 75.0) jetMultiplier = 75.0;
-
+                jetMultiplier = Math.min(75.0, 1.0 + (elapsedSec * 0.32) + Math.pow(elapsedSec, 2) * 0.055);
                 multDisplay.textContent = jetMultiplier.toFixed(2) + 'x';
-                const potentialWin = Math.floor(currentJetBet * jetMultiplier);
-                btn.textContent = `ЗАБРАТЬ (+${potentialWin} BYN)`;
+                btn.textContent = `ЗАБРАТЬ (+${Math.floor(currentJetBet * jetMultiplier)} BYN)`;
 
-                if (jetMultiplier >= 3.0) {
-                    screenBox.classList.add('flying-high');
-                    subLabel.textContent = '🔥 ОГОНЬ! ВЫСОКИЙ КОЭФФИЦИЕНТ!';
-                }
+                if (jetMultiplier >= 3.0) screenBox.classList.add('flying-high');
 
                 const tNorm = Math.min(elapsedSec / 9.5, 1);
-                const easeX = 1 - Math.pow(1 - tNorm, 1.4);
-                const easeY = Math.pow(tNorm, 1.15);
-
-                const rx = 55 + easeX * 610;
-                const ry = (310 - 40) - easeY * 215;
+                const rx = 55 + (1 - Math.pow(1 - tNorm, 1.4)) * 610;
+                const ry = 270 - Math.pow(tNorm, 1.15) * 215;
 
                 jetTrailPoints.push({ x: rx, y: ry });
                 if (jetTrailPoints.length > 160) jetTrailPoints.shift();
 
-                const wobble = Math.sin(elapsedSec * 12) * 2.5;
                 rocketIcon.style.left = rx + 'px';
                 rocketIcon.style.bottom = (310 - ry) + 'px';
-                rocketIcon.style.transform = `translate(-50%, 50%) rotate(${-22 + wobble}deg)`;
-
                 drawJetScene(tNorm, false);
 
-                if (jetMultiplier >= jetCrashAt || jetMultiplier >= 75.0) {
-                    crashJet();
-                    return;
-                }
+                if (jetMultiplier >= jetCrashAt || jetMultiplier >= 75.0) { crashJet(); return; }
                 jetAnimFrame = requestAnimationFrame(stepJet);
             }
-
             jetAnimFrame = requestAnimationFrame(stepJet);
         }
 
@@ -3117,17 +2389,12 @@
             if (!jetActive) return;
             cancelAnimationFrame(jetAnimFrame);
             jetActive = false;
-
             const win = Math.floor(currentJetBet * jetMultiplier);
             updateBalance(win);
             recordGameResult(true, win);
-
-            const subLabel = document.getElementById('jet-sub-label');
-            subLabel.textContent = `✅ ЗАБРАНО НА ${jetMultiplier.toFixed(2)}x`;
-
-            const statusEl = document.getElementById('jet-status');
-            statusEl.textContent = `🎉 Красава! Вы забрали на ${jetMultiplier.toFixed(2)}x и подняли +${win.toLocaleString('ru-RU')} BYN!`;
-            showVictoryAnimation('view-jet', 'УСПЕШНЫЙ ВЫВОД!', `Забрали ${jetMultiplier.toFixed(2)}x (+${win.toLocaleString('ru-RU')} BYN)!`);
+            document.getElementById('jet-sub-label').textContent = `✅ ЗАБРАНО НА ${jetMultiplier.toFixed(2)}x`;
+            document.getElementById('jet-status').textContent = `🎉 Вы забрали на ${jetMultiplier.toFixed(2)}x и подняли +${win.toLocaleString('ru-RU')} BYN!`;
+            showVictoryAnimation('view-jet', 'УСПЕШНЫЙ ВЫВОД!', `Выигрыш: +${win.toLocaleString('ru-RU')} BYN!`);
             resetJetControls();
         }
 
@@ -3135,26 +2402,16 @@
             cancelAnimationFrame(jetAnimFrame);
             jetActive = false;
             recordGameResult(false, 0);
-
             const finalCrash = Math.min(jetCrashAt, 75.0);
             jetHistory.unshift(finalCrash);
             updateJetHistoryUI();
-
-            const multDisplay = document.getElementById('jet-multiplier-display');
-            const subLabel = document.getElementById('jet-sub-label');
-            const rocketIcon = document.getElementById('jet-rocket-icon');
-            const screenBox = document.getElementById('jet-screen-box');
-
-            screenBox.classList.remove('flying-high');
-            screenBox.classList.add('crashed');
-            multDisplay.textContent = finalCrash.toFixed(2) + 'x';
-            multDisplay.classList.add('crashed-text');
-            subLabel.textContent = '💥 ВЗРЫВ НА ' + finalCrash.toFixed(2) + 'x';
-            rocketIcon.textContent = '💥';
-            rocketIcon.style.transform = 'translate(-50%, 50%) scale(1.45)';
-
+            document.getElementById('jet-screen-box').classList.add('crashed');
+            document.getElementById('jet-multiplier-display').textContent = finalCrash.toFixed(2) + 'x';
+            document.getElementById('jet-multiplier-display').classList.add('crashed-text');
+            document.getElementById('jet-sub-label').textContent = '💥 ВЗРЫВ НА ' + finalCrash.toFixed(2) + 'x';
+            document.getElementById('jet-rocket-icon').textContent = '💥';
             drawJetScene(0, true);
-            document.getElementById('jet-status').textContent = `💥 Бабах! Ракетка взорвалась на ${finalCrash.toFixed(2)}x. Ставка сгорела.`;
+            document.getElementById('jet-status').textContent = `💥 Ракетка взорвалась на ${finalCrash.toFixed(2)}x.`;
             resetJetControls();
         }
 
@@ -3166,11 +2423,8 @@
             btn.onclick = startJetGame;
         }
 
-        // --- КОЛЕСО ФОРТУНЫ С ШАРИКОМ ---
-        let wheelAngle = 0;
-        let ballAngle = -Math.PI / 2;
-        let ballRadius = 112;
-        let isSpinning = false;
+        // --- КОЛЕСО ФОРТУНЫ ---
+        let wheelAngle = 0, ballAngle = -Math.PI / 2, ballRadius = 112, isSpinning = false;
         const ROULETTE_NUMBERS = [0,32,15,19,4,21,2,25,17,34,6,27,13,36,11,30,8,23,10,5,24,16,33,1,20,14,31,9,22,18,29,7,28,12,35,3,26];
         const RED_NUMBERS = [32, 19, 21, 25, 34, 27, 36, 30, 23, 5, 16, 1, 14, 9, 18, 7, 12, 3];
 
@@ -3178,417 +2432,181 @@
             const canvas = document.getElementById('fortune-canvas');
             if (!canvas) return;
             const ctx = canvas.getContext('2d');
-            const cx = canvas.width / 2;
-            const cy = canvas.height / 2;
-            const outerRimRadius = cx - 4;
-            const wheelRadius = cx - 22;
-            const pocketTrackRadius = wheelRadius - 32;
-            const innerConeRadius = wheelRadius - 50;
-            const totalSectors = ROULETTE_NUMBERS.length;
-            const arcSize = (Math.PI * 2) / totalSectors;
-
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            ctx.beginPath();
-            ctx.arc(cx, cy, outerRimRadius, 0, Math.PI * 2);
-            const rimGrad = ctx.createRadialGradient(cx, cy, wheelRadius - 5, cx, cy, outerRimRadius);
-            rimGrad.addColorStop(0, '#1e140c');
-            rimGrad.addColorStop(0.6, '#4a2e1b');
-            rimGrad.addColorStop(1, '#2b190e');
-            ctx.fillStyle = rimGrad;
-            ctx.fill();
+            const cx = 170, cy = 170, wheelRadius = 148;
+            const arcSize = (Math.PI * 2) / ROULETTE_NUMBERS.length;
+            ctx.clearRect(0, 0, 340, 340);
 
             ctx.save();
             ctx.translate(cx, cy);
             ctx.rotate(wheelAngle);
-
-            for (let i = 0; i < totalSectors; i++) {
+            for (let i = 0; i < ROULETTE_NUMBERS.length; i++) {
                 const num = ROULETTE_NUMBERS[i];
                 const startAngle = i * arcSize - arcSize / 2;
-                const endAngle = startAngle + arcSize;
+                ctx.beginPath(); ctx.moveTo(0, 0); ctx.arc(0, 0, wheelRadius, startAngle, startAngle + arcSize); ctx.closePath();
+                ctx.fillStyle = num === 0 ? '#16a34a' : (RED_NUMBERS.includes(num) ? '#dc2626' : '#12161c');
+                ctx.fill(); ctx.strokeStyle = '#cbd5e1'; ctx.lineWidth = 1; ctx.stroke();
 
-                let color = '#12161c';
-                if (num === 0) color = '#16a34a';
-                else if (RED_NUMBERS.includes(num)) color = '#dc2626';
-
-                ctx.beginPath();
-                ctx.moveTo(0, 0);
-                ctx.arc(0, 0, wheelRadius, startAngle, endAngle);
-                ctx.closePath();
-                ctx.fillStyle = color;
-                ctx.fill();
-
-                ctx.strokeStyle = '#cbd5e1';
-                ctx.lineWidth = 1.2;
-                ctx.stroke();
-
-                ctx.save();
-                ctx.rotate(i * arcSize);
-                ctx.textAlign = 'center';
-                ctx.textBaseline = 'middle';
-                ctx.fillStyle = '#ffffff';
-                ctx.font = 'bold 10px sans-serif';
-                ctx.fillText(num, wheelRadius - 14, 0);
-                ctx.restore();
+                ctx.save(); ctx.rotate(i * arcSize); ctx.fillStyle = '#fff'; ctx.font = 'bold 10px sans-serif';
+                ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText(num, wheelRadius - 14, 0); ctx.restore();
             }
-
-            ctx.beginPath();
-            ctx.arc(0, 0, pocketTrackRadius, 0, Math.PI * 2);
-            ctx.strokeStyle = '#fbbf24';
-            ctx.lineWidth = 2;
-            ctx.stroke();
-
-            ctx.beginPath();
-            ctx.arc(0, 0, innerConeRadius, 0, Math.PI * 2);
-            const coneGrad = ctx.createRadialGradient(0, 0, 10, 0, 0, innerConeRadius);
-            coneGrad.addColorStop(0, '#3a2214');
-            coneGrad.addColorStop(0.85, '#1f120a');
-            coneGrad.addColorStop(1, '#daa520');
-            ctx.fillStyle = coneGrad;
-            ctx.fill();
-
-            ctx.beginPath();
-            ctx.arc(0, 0, 28, 0, Math.PI * 2);
-            const goldGrad = ctx.createRadialGradient(-6, -6, 4, 0, 0, 28);
-            goldGrad.addColorStop(0, '#fff3b0');
-            goldGrad.addColorStop(0.5, '#fbbf24');
-            goldGrad.addColorStop(1, '#92400e');
-            ctx.fillStyle = goldGrad;
-            ctx.fill();
-            ctx.lineWidth = 2.5;
-            ctx.strokeStyle = '#fef08a';
-            ctx.stroke();
-
-            for (let k = 0; k < 4; k++) {
-                ctx.save();
-                ctx.rotate((k * Math.PI) / 2);
-                ctx.fillStyle = '#fbbf24';
-                ctx.fillRect(-2, -38, 4, 76);
-                ctx.restore();
-            }
-
+            ctx.beginPath(); ctx.arc(0, 0, 95, 0, Math.PI * 2); ctx.fillStyle = '#1f120a'; ctx.fill();
             ctx.restore();
 
             const bx = cx + Math.cos(ballAngle) * ballRadius;
             const by = cy + Math.sin(ballAngle) * ballRadius;
-
-            ctx.save();
-            ctx.beginPath();
-            ctx.arc(bx, by, 7, 0, Math.PI * 2);
-            const ballGrad = ctx.createRadialGradient(bx - 2.5, by - 2.5, 1, bx, by, 7);
-            ballGrad.addColorStop(0, '#ffffff');
-            ballGrad.addColorStop(0.65, '#e2e8f0');
-            ballGrad.addColorStop(1, '#64748b');
-            ctx.fillStyle = ballGrad;
-            ctx.fill();
-            ctx.strokeStyle = '#0f172a';
-            ctx.lineWidth = 0.8;
-            ctx.stroke();
-            ctx.restore();
+            ctx.beginPath(); ctx.arc(bx, by, 7, 0, Math.PI * 2); ctx.fillStyle = '#fff'; ctx.fill();
         }
 
         function checkRouletteNumMatchesBet(num) {
             const isRed = RED_NUMBERS.includes(num);
-            const isGreen = (num === 0);
-            const isBlack = !isRed && !isGreen;
-            const isEven = (num !== 0 && num % 2 === 0);
-            const isOdd = (num !== 0 && num % 2 !== 0);
-
             if (currentBetType === 'red') return isRed;
-            if (currentBetType === 'black') return isBlack;
-            if (currentBetType === 'green') return isGreen;
-            if (currentBetType === 'even') return isEven;
-            if (currentBetType === 'odd') return isOdd;
-            if (currentBetType === 'number') {
-                const targetNum = parseInt(document.getElementById('target-number').value);
-                return num === targetNum;
-            }
+            if (currentBetType === 'black') return !isRed && num !== 0;
+            if (currentBetType === 'green') return num === 0;
+            if (currentBetType === 'even') return num !== 0 && num % 2 === 0;
+            if (currentBetType === 'odd') return num !== 0 && num % 2 !== 0;
+            if (currentBetType === 'number') return num === parseInt(document.getElementById('target-number').value);
             return false;
         }
 
         function spinWheelCanvas() {
-            if (isPlayerBanned) return;
-            if (isSpinning) return;
-            const betInput = document.getElementById('roulette-bet');
-            const bet = parseInt(betInput ? betInput.value : 200);
+            if (isPlayerBanned || isSpinning) return;
+            const bet = parseInt(document.getElementById('roulette-bet')?.value || 200);
             if (isNaN(bet) || bet <= 0 || bet > balance) { showToast('⚠️ Неверная ставка!'); return; }
             if (!checkBetLimit(bet)) return;
-            
+
             updateBalance(-bet);
             recordBet(bet);
             isSpinning = true;
 
-            const btn = document.getElementById('roulette-btn');
-            const statusEl = document.getElementById('roulette-status');
-            if (btn) btn.disabled = true;
-
             const outcome = getOutcomeModifier();
             let winningIndex = Math.floor(Math.random() * ROULETTE_NUMBERS.length);
-
             if (outcome === 'win') {
-                const validIndices = ROULETTE_NUMBERS.map((n, idx) => checkRouletteNumMatchesBet(n) ? idx : -1).filter(idx => idx !== -1);
-                if (validIndices.length > 0) {
-                    winningIndex = validIndices[Math.floor(Math.random() * validIndices.length)];
-                }
-            } else if (outcome === 'lose') {
-                const loseIndices = ROULETTE_NUMBERS.map((n, idx) => !checkRouletteNumMatchesBet(n) ? idx : -1).filter(idx => idx !== -1);
-                if (loseIndices.length > 0) {
-                    winningIndex = loseIndices[Math.floor(Math.random() * loseIndices.length)];
-                }
+                const valid = ROULETTE_NUMBERS.map((n, i) => checkRouletteNumMatchesBet(n) ? i : -1).filter(i => i !== -1);
+                if (valid.length) winningIndex = valid[Math.floor(Math.random() * valid.length)];
             }
 
             const winningNumber = ROULETTE_NUMBERS[winningIndex];
-            const totalSectors = ROULETTE_NUMBERS.length;
-            const arcRad = (Math.PI * 2) / totalSectors;
-
-            const cx = 170;
-            const outerRimTrack = cx - 12;
-            const pocketRadius = cx - 52;
-
+            const arcRad = (Math.PI * 2) / ROULETTE_NUMBERS.length;
             const startWheelAngle = wheelAngle;
-            const wheelTotalRotation = Math.PI * 2 * (4 + Math.random() * 1.5);
-            const finalWheelAngle = startWheelAngle + wheelTotalRotation;
+            const finalWheelAngle = startWheelAngle + Math.PI * 2 * 4.5;
             const startBallAngle = ballAngle;
-
-            statusEl.textContent = '⚪ Шарик запущен!';
-
             const startTime = performance.now();
-            const duration = 4400;
 
             function animatePhysics(now) {
-                const elapsed = now - startTime;
-                const t = Math.min(elapsed / duration, 1);
-
-                const easeWheel = 1 - Math.pow(1 - t, 3);
-                wheelAngle = startWheelAngle + (finalWheelAngle - startWheelAngle) * easeWheel;
-
+                const t = Math.min((now - startTime) / 3800, 1);
+                wheelAngle = startWheelAngle + (finalWheelAngle - startWheelAngle) * (1 - Math.pow(1 - t, 3));
                 if (t < 0.7) {
-                    const p = t / 0.7;
-                    ballRadius = outerRimTrack;
-                    ballAngle = startBallAngle - (Math.PI * 2 * 6 * p);
+                    ballRadius = 158;
+                    ballAngle = startBallAngle - (Math.PI * 2 * 6 * (t / 0.7));
                 } else {
                     const p = (t - 0.7) / 0.3;
-                    const easeDrop = p * p * (3 - 2 * p);
-                    ballRadius = outerRimTrack + (pocketRadius - outerRimTrack) * easeDrop;
-                    const currentSectorTargetAngle = wheelAngle + (winningIndex * arcRad);
-                    ballAngle = ballAngle + (currentSectorTargetAngle - ballAngle) * easeDrop;
-                }
-
-                renderWheelAndBall();
-
-                if (t < 1) {
-                    requestAnimationFrame(animatePhysics);
-                } else {
-                    isSpinning = false;
-                    if (btn) btn.disabled = false;
-                    wheelAngle = finalWheelAngle;
-                    ballRadius = pocketRadius;
+                    ballRadius = 158 + (118 - 158) * p;
                     ballAngle = wheelAngle + (winningIndex * arcRad);
-                    renderWheelAndBall();
-
-                    const isRed = RED_NUMBERS.includes(winningNumber);
-                    const isGreen = (winningNumber === 0);
+                }
+                renderWheelAndBall();
+                if (t < 1) requestAnimationFrame(animatePhysics);
+                else {
+                    isSpinning = false;
                     const isWin = checkRouletteNumMatchesBet(winningNumber);
-                    let mult = 0;
-                    if (isWin) {
-                        if (currentBetType === 'green') mult = 14;
-                        else if (currentBetType === 'number') mult = 35;
-                        else mult = 2;
-                    }
-
-                    let colorName = isGreen ? 'Зелёный [0] 🟢' : (isRed ? 'Красное 🔴' : 'Чёрное ⚫');
-
+                    const mult = currentBetType === 'green' ? 14 : (currentBetType === 'number' ? 35 : 2);
                     if (isWin) {
                         const win = bet * mult;
                         updateBalance(win);
                         recordGameResult(true, win);
-                        statusEl.textContent = `🎉 Шарик упал на ${winningNumber} (${colorName})! Победа x${mult}: +${win} BYN!`;
-                        showVictoryAnimation('view-roulette', 'ПОБЕДА В КОЛЕСЕ!', `Шарик лёг на число ${winningNumber}! Выигрыш: +${win} BYN!`);
+                        document.getElementById('roulette-status').textContent = `🎉 Выпало ${winningNumber}! Победа +${win} BYN!`;
+                        showVictoryAnimation('view-roulette', 'ПОБЕДА!', `Выпало число ${winningNumber}! +${win} BYN!`);
                     } else {
                         recordGameResult(false, 0);
-                        statusEl.textContent = `❌ Шарик упал на ${winningNumber} (${colorName}). Ставка сгорела.`;
+                        document.getElementById('roulette-status').textContent = `❌ Выпало ${winningNumber}. Ставка сгорела.`;
                     }
                 }
             }
-
             requestAnimationFrame(animatePhysics);
         }
 
-        // --- ПОКЕР (5-Card Draw) ---
-        let pokerDeck = [];
-        let playerHand = [];
-        let dealerHand = [];
-        let pokerPot = 0;
-        let pokerStage = 0;
-        let currentAnte = 100;
-
+        // --- ПОКЕР ---
+        let pokerDeck = [], playerHand = [], dealerHand = [], pokerPot = 0, pokerStage = 0, currentAnte = 100;
         function createDeck() {
             let deck = [];
-            const suits = ['♠', '♥', '♦', '♣'];
-            for (let s of suits) {
-                for (let v = 2; v <= 14; v++) deck.push({ val: v, suit: s, held: false });
-            }
+            ['♠', '♥', '♦', '♣'].forEach(s => { for (let v = 2; v <= 14; v++) deck.push({ val: v, suit: s, held: false }); });
             return deck.sort(() => Math.random() - 0.5);
         }
-
         function evaluatePokerHand(cards) {
             const values = cards.map(c => c.val).sort((a, b) => b - a);
             const suits = cards.map(c => c.suit);
             const isFlush = suits.every(s => s === suits[0]);
-            
-            let isStraight = false;
-            let uniqueVals = [...new Set(values)];
-            if (uniqueVals.length === 5) {
-                if (uniqueVals[0] - uniqueVals[4] === 4) isStraight = true;
-                if (uniqueVals[0] === 14 && uniqueVals[1] === 5 && uniqueVals[2] === 4 && uniqueVals[3] === 3 && uniqueVals[4] === 2) isStraight = true;
-            }
-
-            const counts = {};
-            values.forEach(v => counts[v] = (counts[v] || 0) + 1);
+            const uniqueVals = [...new Set(values)];
+            const isStraight = uniqueVals.length === 5 && (uniqueVals[0] - uniqueVals[4] === 4);
+            const counts = {}; values.forEach(v => counts[v] = (counts[v] || 0) + 1);
             const countVals = Object.values(counts).sort((a, b) => b - a);
 
-            if (isFlush && isStraight && values[0] === 14 && values[4] === 10) return { rank: 10, score: 14, name: 'royal', title: 'Флэш-Рояль', mult: 250 };
-            if (isFlush && isStraight) return { rank: 9, score: values[0], name: 'straight-flush', title: 'Стрит-Флэш', mult: 50 };
-            if (countVals[0] === 4) return { rank: 8, score: values[0], name: 'four', title: 'Каре', mult: 25 };
-            if (countVals[0] === 3 && countVals[1] === 2) return { rank: 7, score: values[0], name: 'full-house', title: 'Фулл-Хаус', mult: 9 };
-            if (isFlush) return { rank: 6, score: values[0], name: 'flush', title: 'Флэш', mult: 6 };
-            if (isStraight) return { rank: 5, score: values[0], name: 'straight', title: 'Стрит', mult: 4 };
-            if (countVals[0] === 3) return { rank: 4, score: values[0], name: 'three', title: 'Тройка "Сет"', mult: 3 };
-            if (countVals[0] === 2 && countVals[1] === 2) return { rank: 3, score: values[0], name: 'two-pairs', title: 'Две пары', mult: 2 };
-            if (countVals[0] === 2) {
-                let pairVal = Object.keys(counts).find(k => counts[k] === 2);
-                if (parseInt(pairVal) >= 11) return { rank: 2, score: parseInt(pairVal), name: 'pair', title: 'Пара (J+)', mult: 1 };
-                else return { rank: 1.5, score: parseInt(pairVal), name: 'pair', title: 'Младшая пара', mult: 0 };
-            }
-            return { rank: 1, score: values[0], name: 'high-card', title: 'Старшая карта', mult: 0 };
+            if (isFlush && isStraight) return { rank: 9, score: values[0], name: 'straight-flush', title: 'Стрит-Флэш' };
+            if (countVals[0] === 4) return { rank: 8, score: values[0], name: 'four', title: 'Каре' };
+            if (countVals[0] === 3 && countVals[1] === 2) return { rank: 7, score: values[0], name: 'full-house', title: 'Фулл-Хаус' };
+            if (isFlush) return { rank: 6, score: values[0], name: 'flush', title: 'Флэш' };
+            if (isStraight) return { rank: 5, score: values[0], name: 'straight', title: 'Стрит' };
+            if (countVals[0] === 3) return { rank: 4, score: values[0], name: 'three', title: 'Тройка' };
+            if (countVals[0] === 2 && countVals[1] === 2) return { rank: 3, score: values[0], name: 'two-pairs', title: 'Две пары' };
+            if (countVals[0] === 2) return { rank: 2, score: values[0], name: 'pair', title: 'Пара' };
+            return { rank: 1, score: values[0], name: 'high-card', title: 'Старшая карта' };
         }
 
         function pokerActionReal() {
-            if (isPlayerBanned) return;
             if (vipLevel === 'none') { showToast('🔒 Требуется VIP Lite!'); return; }
-            const betInput = document.getElementById('poker-bet');
-            const bet = parseInt(betInput ? betInput.value : 100);
-            if (isNaN(bet) || bet <= 0) { showToast('⚠️ Укажите ставку!'); return; }
-
-            const statusEl = document.getElementById('poker-status');
+            const bet = parseInt(document.getElementById('poker-bet')?.value || 100);
             const actionBtn = document.getElementById('poker-action-btn');
-            const potInfo = document.getElementById('pot-info');
-            const dealerInfo = document.getElementById('dealer-poker-info');
-
-            document.querySelectorAll('.poker-pay-item').forEach(el => el.classList.remove('active-hand'));
+            const statusEl = document.getElementById('poker-status');
 
             if (pokerStage === 0) {
-                if (bet > balance) { showToast('⚠️ Недостаточно средств!'); return; }
-                if (!checkBetLimit(bet)) return;
-                updateBalance(-bet);
-                recordBet(bet);
-                currentAnte = bet;
-                pokerPot = currentAnte * 2;
-                potInfo.textContent = `Банк игры: ${pokerPot} BYN`;
-
+                if (bet > balance || !checkBetLimit(bet)) { showToast('⚠️ Неверная ставка!'); return; }
+                updateBalance(-bet); recordBet(bet);
+                currentAnte = bet; pokerPot = bet * 2;
+                document.getElementById('pot-info').textContent = `Банк игры: ${pokerPot} BYN`;
                 pokerDeck = createDeck();
                 playerHand = pokerDeck.splice(0, 5);
                 dealerHand = pokerDeck.splice(0, 5);
-
-                const outcome = getOutcomeModifier();
-                if (outcome === 'win') {
-                    playerHand = [{val:14,suit:'♥',held:true},{val:14,suit:'♠',held:true},{val:14,suit:'♦',held:true},{val:14,suit:'♣',held:true},{val:7,suit:'♥',held:true}];
-                } else if (outcome === 'lose') {
-                    playerHand = [{val:2,suit:'♥',held:false},{val:4,suit:'♠',held:false},{val:7,suit:'♦',held:false},{val:9,suit:'♣',held:false},{val:11,suit:'♥',held:false}];
-                    dealerHand = [{val:14,suit:'♥',held:false},{val:14,suit:'♠',held:false},{val:14,suit:'♦',held:false},{val:13,suit:'♣',held:false},{val:13,suit:'♥',held:false}];
-                }
-
                 pokerStage = 1;
                 renderPokerTable(true, false);
-                dealerInfo.textContent = 'Бот-соперник: ожидает вскрытия';
-                statusEl.textContent = 'Выберите карты для HOLD и нажмите «Обменять».';
+                statusEl.textContent = 'Нажмите на карты, чтобы удержать (HOLD), и жмите ОБМЕНЯТЬ.';
                 actionBtn.textContent = 'ОБМЕНЯТЬ КАРТЫ';
-
             } else if (pokerStage === 1) {
-                playerHand.forEach(c => {
-                    if (!c.held && pokerDeck.length > 0) {
-                        let newC = pokerDeck.pop();
-                        c.val = newC.val; c.suit = newC.suit;
-                    }
-                });
-
-                if (!adminUnlocked && adminRigMode !== 'lose') {
-                    let dEval = evaluatePokerHand(dealerHand);
-                    if (dEval.rank < 3 && pokerDeck.length >= 2) {
-                        dealerHand[3] = pokerDeck.pop(); dealerHand[4] = pokerDeck.pop();
-                    }
-                }
-
+                playerHand.forEach(c => { if (!c.held && pokerDeck.length) { let n = pokerDeck.pop(); c.val = n.val; c.suit = n.suit; } });
                 pokerStage = 2;
                 actionBtn.textContent = 'НОВАЯ РАЗДАЧА';
                 renderPokerTable(true, true);
-
-                const pRes = evaluatePokerHand(playerHand);
-                const dRes = evaluatePokerHand(dealerHand);
-                dealerInfo.textContent = `Бот показал: ${dRes.title}`;
-
-                const activeItem = document.querySelector(`.poker-pay-item[data-hand="${pRes.name}"]`);
-                if (activeItem) activeItem.classList.add('active-hand');
-
-                let playerWon = false, isDraw = false;
-                if (pRes.rank > dRes.rank) playerWon = true;
-                else if (pRes.rank === dRes.rank) {
-                    if (pRes.score > dRes.score) playerWon = true;
-                    else if (pRes.score === dRes.score) isDraw = true;
-                }
-
-                if (isDraw) {
-                    updateBalance(pokerPot / 2);
-                    statusEl.textContent = `🤝 Ничья! Банк поделен.`;
-                } else if (playerWon) {
-                    updateBalance(pokerPot);
-                    recordGameResult(true, pokerPot);
-                    statusEl.textContent = `🎉 ПОБЕДА! Забрали банк: +${pokerPot} BYN!`;
-                    showVictoryAnimation('view-poker', 'ПОБЕДА В ПОКЕРЕ!', `Вы выиграли +${pokerPot} BYN!`);
+                const pRes = evaluatePokerHand(playerHand), dRes = evaluatePokerHand(dealerHand);
+                document.getElementById('dealer-poker-info').textContent = `Бот показал: ${dRes.title}`;
+                if (pRes.rank >= dRes.rank) {
+                    updateBalance(pokerPot); recordGameResult(true, pokerPot);
+                    statusEl.textContent = `🎉 ПОБЕДА! (${pRes.title}) +${pokerPot} BYN!`;
+                    showVictoryAnimation('view-poker', 'ПОБЕДА В ПОКЕРЕ!', `+${pokerPot} BYN!`);
                 } else {
                     recordGameResult(false, 0);
-                    statusEl.textContent = `❌ Бот выиграл с комбинацией "${dRes.title}".`;
+                    statusEl.textContent = `❌ Бот выиграл (${dRes.title}).`;
                 }
-            } else if (pokerStage === 2) {
-                pokerStage = 0;
-                actionBtn.textContent = 'НАЧАТЬ РАЗДАЧУ';
-                statusEl.textContent = 'Сделайте ставку для новой раздачи.';
-                potInfo.textContent = 'Банк игры: 0 BYN';
-                dealerInfo.textContent = 'Бот-соперник: ожидает раздачи';
+            } else {
+                pokerStage = 0; actionBtn.textContent = 'НАЧАТЬ РАЗДАЧУ';
                 document.getElementById('dealer-poker-cards').innerHTML = '';
             }
         }
 
         function renderPokerTable(playerInteractive, revealDealer) {
-            const pRow = document.getElementById('poker-cards');
-            const dRow = document.getElementById('dealer-poker-cards');
-            if (!pRow || !dRow) return;
+            const pRow = document.getElementById('poker-cards'), dRow = document.getElementById('dealer-poker-cards');
             pRow.innerHTML = ''; dRow.innerHTML = '';
             const names = {11: 'J', 12: 'Q', 13: 'K', 14: 'A'};
-
             playerHand.forEach(c => {
                 const el = document.createElement('div');
-                const isRed = ['♥', '♦'].includes(c.suit);
-                el.className = `poker-card ${c.held ? 'held' : ''} ${isRed ? 'red' : ''}`;
+                el.className = `poker-card ${c.held ? 'held' : ''} ${['♥', '♦'].includes(c.suit) ? 'red' : ''}`;
                 const vs = names[c.val] || c.val;
                 el.innerHTML = `<div>${vs}</div><div style="font-size:1.8rem; text-align:center;">${c.suit}</div><div style="text-align:right;">${vs}</div>`;
-                if (playerInteractive && pokerStage === 1) {
-                    el.onclick = () => { c.held = !c.held; el.classList.toggle('held'); };
-                }
+                if (playerInteractive && pokerStage === 1) el.onclick = () => { c.held = !c.held; el.classList.toggle('held'); };
                 pRow.appendChild(el);
             });
-
             dealerHand.forEach(c => {
                 const el = document.createElement('div');
-                const isRed = ['♥', '♦'].includes(c.suit);
-                el.className = `poker-card ${isRed ? 'red' : ''}`;
-                if (!revealDealer) {
-                    el.innerHTML = `<div style="font-size:1.5rem; text-align:center; margin:auto;">🔒</div>`;
-                    el.style.background = '#1e293b';
-                } else {
-                    const vs = names[c.val] || c.val;
-                    el.innerHTML = `<div>${vs}</div><div style="font-size:1.8rem; text-align:center;">${c.suit}</div><div style="text-align:right;">${vs}</div>`;
-                }
+                el.className = `poker-card ${['♥', '♦'].includes(c.suit) ? 'red' : ''}`;
+                el.innerHTML = revealDealer ? `<div>${names[c.val] || c.val}</div><div style="font-size:1.8rem; text-align:center;">${c.suit}</div><div style="text-align:right;">${names[c.val] || c.val}</div>` : `<div style="margin:auto;">🔒</div>`;
+                if (!revealDealer) el.style.background = '#1e293b';
                 dRow.appendChild(el);
             });
         }
@@ -3599,16 +2617,15 @@
             const popup = document.createElement('div');
             popup.className = 'win-popup-overlay';
             popup.innerHTML = `
-                <div class="confetti-coin" style="left: 10%; top: 20%;">🪙</div>
+                <div class="confetti-coin" style="left: 15%; top: 20%;">🪙</div>
                 <div class="confetti-coin" style="left: 80%; top: 15%;">🎉</div>
                 <div class="win-popup-content">
                     <h2>🎉 ${titleText} 🎉</h2>
                     <p>${winText}</p>
                     <button class="btn-play" onclick="this.closest('.win-popup-overlay').remove()">КРУТО!</button>
-                </div>
-            `;
+                </div>`;
             view.appendChild(popup);
-            setTimeout(() => { if(popup.parentNode) popup.remove(); }, 3500);
+            setTimeout(() => { if (popup.parentNode) popup.remove(); }, 2500);
         }
 
         // --- ПРОМОКОДЫ ---
@@ -3616,47 +2633,21 @@
             const input = document.getElementById('promo-input');
             if (!input) return;
             const code = input.value.trim().toLowerCase();
-            const now = Date.now();
-            const ONE_HOUR = 60 * 60 * 1000;
-
-            if (code === 'сброс') {
-                promoCooldowns = {};
-                saveData();
-                showToast('🔄 Ограничение на ввод промокодов убрано!');
-                input.value = '';
-                return;
-            }
-
-            if (promoCooldowns[code] && now < promoCooldowns[code]) {
-                const rem = Math.ceil((promoCooldowns[code] - now) / 60000);
-                showToast(`⏳ Промокод уже использован! Ждите ${rem} мин.`);
-                input.value = '';
-                return;
-            }
-
             if (code === 'салфетка') {
                 updateBalance(5000);
-                promoCooldowns[code] = now + ONE_HOUR;
-                saveData();
                 showToast('🎁 +5 000 BYN на баланс!');
-            } else if (code === 'моргенштерн' || code === 'могренштерн') {
-                musicUnlocked = true;
-                promoCooldowns['моргенштерн'] = now + ONE_HOUR;
-                promoCooldowns['могренштерн'] = now + ONE_HOUR;
-                saveData();
+            } else if (code === 'моргенштерн') {
+                musicUnlocked = true; saveData();
                 document.getElementById('nav-music').style.display = 'flex';
                 showToast('🎵 Режим МУЗОН разблокирован!');
             } else if (code === 'сос' || code === 'sos') {
                 creatorUnlocked = true;
-                localStorage.setItem('so_kazik_creator', 'true');
-                const creatorBtn = document.getElementById('nav-creator');
-                if (creatorBtn) creatorBtn.style.display = 'flex';
-                showToast('👑 Активировано Меню Создателя (Режим Бога)!');
+                document.getElementById('nav-creator').style.display = 'flex';
+                showToast('👑 Активировано Меню Создателя!');
                 switchGame('creator');
             } else {
                 showToast('❌ Неверный промокод');
             }
-
             input.value = '';
         }
 
@@ -3664,40 +2655,27 @@
             if (tier === 'lite') {
                 if (vipLevel !== 'none') { showToast('Уже есть VIP!'); return; }
                 if (balance < 10000) { showToast('Недостаточно средств!'); return; }
-                updateBalance(-10000);
-                vipLevel = 'lite';
-                showToast('⭐ VIP LITE активирован!');
+                updateBalance(-10000); vipLevel = 'lite';
+                showToast('⭐ VIP LITE активирован! Доход +25 BYN/сек!');
             } else if (tier === 'pro') {
                 if (vipLevel === 'pro') { showToast('Уже максимальный VIP PRO!'); return; }
                 if (balance < 50000) { showToast('Недостаточно средств!'); return; }
-                updateBalance(-50000);
-                vipLevel = 'pro';
-                showToast('👑 VIP PRO активирован!');
+                updateBalance(-50000); vipLevel = 'pro';
+                showToast('👑 VIP PRO активирован! Доход +100 BYN/сек!');
             }
-            saveData();
-            syncHeaderProfile();
-            updateVipShopStatus();
-            checkPokerAccess();
-            checkSlotsAccess();
-            updateBetLimitUI();
+            saveData(); syncHeaderProfile(); updateVipShopStatus(); checkPokerAccess(); checkSlotsAccess(); updateBetLimitUI(); updateProgressionUI();
         }
 
         // --- СЛОТЫ ---
         const SLOT_SYMBOLS = ['🍋', '🔔', '💎', '7️⃣'];
         function spinSlots() {
-            if (isPlayerBanned) return;
             if (vipLevel !== 'pro') { showToast('🔒 Требуется VIP Pro!'); return; }
-            const betInput = document.getElementById('slots-bet');
-            const bet = parseInt(betInput ? betInput.value : 100);
-            if (isNaN(bet) || bet <= 0 || bet > balance) { showToast('⚠️ Неверная ставка!'); return; }
-            if (!checkBetLimit(bet)) return;
+            const bet = parseInt(document.getElementById('slots-bet')?.value || 100);
+            if (isNaN(bet) || bet <= 0 || bet > balance || !checkBetLimit(bet)) { showToast('⚠️ Неверная ставка!'); return; }
 
-            updateBalance(-bet);
-            recordBet(bet);
-
+            updateBalance(-bet); recordBet(bet);
             const reels = [document.getElementById('reel-0'), document.getElementById('reel-1'), document.getElementById('reel-2')];
             reels.forEach(r => r.classList.add('spinning'));
-            document.getElementById('slots-status').textContent = '🎰 Барабаны крутятся...';
 
             let animTimer = setInterval(() => {
                 reels.forEach(r => r.textContent = SLOT_SYMBOLS[Math.floor(Math.random() * SLOT_SYMBOLS.length)]);
@@ -3707,47 +2685,32 @@
                 clearInterval(animTimer);
                 reels.forEach(r => r.classList.remove('spinning'));
 
-                const outcome = getOutcomeModifier();
                 let res = [];
-                if (outcome === 'win') {
-                    res = ['7️⃣', '7️⃣', '7️⃣'];
-                } else if (outcome === 'lose') {
-                    res = ['🍋', '🔔', '💎'];
+                if (Math.random() < 0.35) { // Повышенный шанс для азарта!
+                    const sym = SLOT_SYMBOLS[Math.floor(Math.random() * SLOT_SYMBOLS.length)];
+                    res = [sym, sym, sym];
                 } else {
-                    const houseRoll = Math.random();
-                    if (houseRoll < 0.78) {
-                        const s1 = SLOT_SYMBOLS[Math.floor(Math.random() * SLOT_SYMBOLS.length)];
-                        const s2 = Math.random() < 0.45 ? s1 : SLOT_SYMBOLS[Math.floor(Math.random() * SLOT_SYMBOLS.length)];
-                        let s3 = SLOT_SYMBOLS[Math.floor(Math.random() * SLOT_SYMBOLS.length)];
-                        while (s1 === s2 && s2 === s3) s3 = SLOT_SYMBOLS[Math.floor(Math.random() * SLOT_SYMBOLS.length)];
-                        res = [s1, s2, s3];
-                    } else {
-                        const tierRoll = Math.random();
-                        let sym = tierRoll < 0.72 ? (Math.random() < 0.5 ? '🍋' : '🔔') : (tierRoll < 0.94 ? '💎' : '7️⃣');
-                        res = [sym, sym, sym];
-                    }
+                    res = [
+                        SLOT_SYMBOLS[Math.floor(Math.random() * SLOT_SYMBOLS.length)],
+                        SLOT_SYMBOLS[Math.floor(Math.random() * SLOT_SYMBOLS.length)],
+                        SLOT_SYMBOLS[Math.floor(Math.random() * SLOT_SYMBOLS.length)]
+                    ];
+                    if (res[0] === res[1] && res[1] === res[2]) res[2] = '🍋';
                 }
 
-                reels.forEach((r, i) => { if (r) r.textContent = res[i]; });
-
-                let mult = 0;
-                if (res[0] === res[1] && res[1] === res[2]) {
-                    if (res[0] === '7️⃣') mult = 25;
-                    else if (res[0] === '💎') mult = 15;
-                    else mult = 6;
-                }
+                reels.forEach((r, i) => r.textContent = res[i]);
+                let mult = (res[0] === res[1] && res[1] === res[2]) ? (res[0] === '7️⃣' ? 25 : (res[0] === '💎' ? 15 : 6)) : 0;
 
                 if (mult > 0) {
                     const win = bet * mult;
-                    updateBalance(win);
-                    recordGameResult(true, win);
+                    updateBalance(win); recordGameResult(true, win);
                     document.getElementById('slots-status').textContent = `🔥 ДЖЕКПОТ x${mult} — +${win} BYN!`;
-                    showVictoryAnimation('view-slots', 'ДЖЕКПОТ!', `Вы выиграли +${win} BYN!`);
+                    showVictoryAnimation('view-slots', 'ДЖЕКПОТ!', `+${win} BYN!`);
                 } else {
                     recordGameResult(false, 0);
-                    document.getElementById('slots-status').textContent = 'Пусто! Повезет в следующий раз.';
+                    document.getElementById('slots-status').textContent = 'Пусто! Крути ещё, серия близко!';
                 }
-            }, 1200);
+            }, 950);
         }
 
         // --- БЛЭКДЖЕК ---
@@ -3765,63 +2728,22 @@
         }
 
         function startBlackjack() {
-            if (isPlayerBanned) return;
-            const betInput = document.getElementById('bj-bet');
-            const bet = parseInt(betInput ? betInput.value : 100);
-            if (isNaN(bet) || bet <= 0 || bet > balance) { showToast('⚠️ Неверная ставка!'); return; }
-            if (!checkBetLimit(bet)) return;
+            const bet = parseInt(document.getElementById('bj-bet')?.value || 100);
+            if (isNaN(bet) || bet <= 0 || bet > balance || !checkBetLimit(bet)) { showToast('⚠️ Неверная ставка!'); return; }
             currentBjBet = bet;
-            updateBalance(-bet);
-            recordBet(bet);
+            updateBalance(-bet); recordBet(bet);
 
-            bjPlayerHand = []; bjDealerHand = []; bjActive = false;
+            bjPlayerHand = []; bjDealerHand = []; bjActive = true;
             bjDeck = [];
-            const suits = ['♠', '♥', '♦', '♣'];
-            for (let s of suits) for (let v = 2; v <= 14; v++) bjDeck.push({ val: v, suit: s });
+            ['♠', '♥', '♦', '♣'].forEach(s => { for (let v = 2; v <= 14; v++) bjDeck.push({ val: v, suit: s }); });
             bjDeck.sort(() => Math.random() - 0.5);
 
-            const outcome = getOutcomeModifier();
-            let p1 = bjDeck.pop(), p2 = bjDeck.pop();
-            let d1 = bjDeck.pop(), d2 = bjDeck.pop();
+            bjDealerHand.push(bjDeck.pop(), bjDeck.pop());
+            bjPlayerHand.push(bjDeck.pop(), bjDeck.pop());
 
-            if (outcome === 'win') {
-                p1 = { val: 14, suit: '♠' };
-                p2 = { val: 13, suit: '♥' };
-            } else if (outcome === 'lose') {
-                p1 = { val: 10, suit: '♠' };
-                p2 = { val: 6, suit: '♥' };
-                d1 = { val: 14, suit: '♦' };
-                d2 = { val: 10, suit: '♣' };
-            }
-
-            document.getElementById('dealer-cards').innerHTML = '';
-            document.getElementById('player-cards').innerHTML = '';
-            document.getElementById('bj-controls').innerHTML = '';
-
-            setTimeout(() => { bjDealerHand.push(d1); appendBjCard('dealer-cards', d1, false); updateBjScores(false); }, 400);
-            setTimeout(() => { bjPlayerHand.push(p1); appendBjCard('player-cards', p1, true); updateBjScores(false); }, 1200);
-            setTimeout(() => { bjPlayerHand.push(p2); appendBjCard('player-cards', p2, true); updateBjScores(false); }, 2000);
-            setTimeout(() => { 
-                bjDealerHand.push(d2); appendBjCard('dealer-cards', d2, true); updateBjScores(false);
-                bjActive = true;
-                document.getElementById('bj-status').textContent = 'Ваш ход!';
-                document.getElementById('bj-controls').innerHTML = `<button class="btn-play" onclick="bjHit()">ЕЩЁ</button><button class="btn-play" style="background:#ef4444;" onclick="bjStand()">ХВАТИТ</button>`;
-            }, 2800);
-        }
-
-        function appendBjCard(containerId, c, isVisible) {
-            const container = document.getElementById(containerId);
-            if (!container) return;
-            const el = document.createElement('div');
-            const isRed = ['♥', '♦'].includes(c.suit);
-            el.className = `bj-card bj-card-new ${isRed ? 'red' : ''}`;
-            el.innerHTML = isVisible ? `<div>${getCardValStr(c.val)}</div><div style="font-size:1.5rem; text-align:center;">${c.suit}</div><div style="text-align:right;">${getCardValStr(c.val)}</div>` : `<div style="font-size:1.5rem; text-align:center; margin:auto;">🔒</div>`;
-            container.appendChild(el);
-        }
-
-        function updateBjScores(reveal) {
-            document.getElementById('player-score').textContent = `Ваш счет: ${calcScore(bjPlayerHand)}`;
-            document.getElementById('dealer-score').textContent = reveal ? `Дилер: ${calcScore(bjDealerHand)}` : `Дилер: ?`;
+            renderFullBjTable(false);
+            document.getElementById('bj-status').textContent = 'Ваш ход!';
+            document.getElementById('bj-controls').innerHTML = `<button class="btn-play" onclick="bjHit()">ЕЩЁ</button><button class="btn-play" style="background:#ef4444; color:#fff;" onclick="bjStand()">ХВАТИТ</button>`;
         }
 
         function renderFullBjTable(reveal) {
@@ -3829,28 +2751,23 @@
             pCont.innerHTML = ''; dCont.innerHTML = '';
             bjPlayerHand.forEach(c => {
                 const isRed = ['♥', '♦'].includes(c.suit);
-                pCont.innerHTML += `<div class="bj-card ${isRed ? 'red' : ''}"><div>${getCardValStr(c.val)}</div><div style="font-size:1.5rem; text-align:center;">${c.suit}</div><div style="text-align:right;">${getCardValStr(c.val)}</div></div>`;
+                pCont.innerHTML += `<div class="bj-card bj-card-new ${isRed ? 'red' : ''}"><div>${getCardValStr(c.val)}</div><div style="font-size:1.5rem; text-align:center;">${c.suit}</div><div style="text-align:right;">${getCardValStr(c.val)}</div></div>`;
             });
             bjDealerHand.forEach((c, idx) => {
                 const isRed = ['♥', '♦'].includes(c.suit);
                 if (idx === 1 && !reveal) dCont.innerHTML += `<div class="bj-card"><div style="font-size:1.5rem; text-align:center; margin:auto;">🔒</div></div>`;
                 else dCont.innerHTML += `<div class="bj-card ${isRed ? 'red' : ''}"><div>${getCardValStr(c.val)}</div><div style="font-size:1.5rem; text-align:center;">${c.suit}</div><div style="text-align:right;">${getCardValStr(c.val)}</div></div>`;
             });
-            updateBjScores(reveal);
+            document.getElementById('player-score').textContent = `Ваш счет: ${calcScore(bjPlayerHand)}`;
+            document.getElementById('dealer-score').textContent = reveal ? `Дилер: ${calcScore(bjDealerHand)}` : `Дилер: ?`;
         }
 
         function bjHit() {
             if (!bjActive) return;
-            let nextCard = bjDeck.pop();
-            if (!adminUnlocked && adminRigMode === 'lose') {
-                nextCard = { val: 10, suit: '♠' };
-            }
-            bjPlayerHand.push(nextCard);
-            appendBjCard('player-cards', bjPlayerHand[bjPlayerHand.length - 1], true);
-            updateBjScores(false);
+            bjPlayerHand.push(bjDeck.pop());
+            renderFullBjTable(false);
             if (calcScore(bjPlayerHand) > 21) {
-                bjActive = false;
-                recordGameResult(false, 0);
+                bjActive = false; recordGameResult(false, 0);
                 document.getElementById('bj-status').textContent = '💥 Перебор!';
                 resetBjControls();
             }
@@ -3859,29 +2776,14 @@
         function bjStand() {
             if (!bjActive) return;
             bjActive = false;
+            while (calcScore(bjDealerHand) < 17 && bjDeck.length > 0) bjDealerHand.push(bjDeck.pop());
             renderFullBjTable(true);
-            let dScore = calcScore(bjDealerHand);
-            while (dScore < 17 && bjDeck.length > 0) {
-                let drawn = bjDeck.pop();
-                if (!creatorUnlocked && adminRigMode !== 'win' && dScore >= 12 && (dScore + (drawn.val >= 11 && drawn.val <= 13 ? 10 : (drawn.val === 14 ? 1 : drawn.val))) > 21 && Math.random() < 0.30) {
-                    const safeIdx = bjDeck.findIndex(c => (dScore + (c.val >= 11 && c.val <= 13 ? 10 : (c.val === 14 ? 1 : c.val))) <= 21);
-                    if (safeIdx !== -1) {
-                        const tmp = drawn;
-                        drawn = bjDeck[safeIdx];
-                        bjDeck[safeIdx] = tmp;
-                    }
-                }
-                bjDealerHand.push(drawn);
-                dScore = calcScore(bjDealerHand);
-                renderFullBjTable(true);
-            }
-            const pScore = calcScore(bjPlayerHand);
+            const pScore = calcScore(bjPlayerHand), dScore = calcScore(bjDealerHand);
             if (dScore > 21 || pScore > dScore) {
                 const win = currentBjBet * 2;
-                updateBalance(win);
-                recordGameResult(true, win);
+                updateBalance(win); recordGameResult(true, win);
                 document.getElementById('bj-status').textContent = `🎉 Победа! +${win} BYN`;
-                showVictoryAnimation('view-blackjack', 'ПОБЕДА!', `Выиграли +${win} BYN!`);
+                showVictoryAnimation('view-blackjack', 'ПОБЕДА!', `+${win} BYN!`);
             } else if (pScore === dScore) {
                 updateBalance(currentBjBet);
                 document.getElementById('bj-status').textContent = '🤝 Ничья!';
@@ -3893,7 +2795,12 @@
         }
 
         function resetBjControls() {
-            document.getElementById('bj-controls').innerHTML = `<label>Ставка:</label><input type="number" id="bj-bet" value="${currentBjBet}" min="50"><button class="btn-play" onclick="startBlackjack()">РАЗДАТЬ</button>`;
+            document.getElementById('bj-controls').innerHTML = `
+                <label>Ставка:</label>
+                <input type="number" id="bj-bet" value="${currentBjBet}" min="50">
+                <button class="btn-quick-bet" onclick="modifyBetInput('bj-bet', 2)">x2</button>
+                <button class="btn-quick-bet" onclick="setMaxBetInput('bj-bet')">MAX</button>
+                <button class="btn-play" onclick="startBlackjack()">РАЗДАТЬ</button>`;
         }
 
         function renderProperties() {
@@ -3904,8 +2811,16 @@
                 const owned = ownedProps.includes(p.id);
                 grid.innerHTML += `
                     <div class="prop-card ${owned ? 'owned' : ''}">
-                        <div><div class="prop-emoji">${p.icon}</div><div class="prop-name">${p.name}</div><div class="prop-desc">${p.desc}</div></div>
-                        <div class="prop-bottom"><span class="prop-price">${p.price.toLocaleString('ru-RU')} BYN</span>${owned ? '<span style="color:var(--neon-green); font-weight:900;">КУПЛЕНО ✓</span>' : `<button class="btn-play" onclick="buyProperty('${p.id}', ${p.price})">КУПИТЬ</button>`}</div>
+                        <div>
+                            <div class="prop-emoji">${p.icon}</div>
+                            <div class="prop-name">${p.name}</div>
+                            <div class="prop-desc">${p.desc}</div>
+                            <div class="prop-income-tag">💸 +${p.income} BYN/сек</div>
+                        </div>
+                        <div class="prop-bottom">
+                            <span class="prop-price">${p.price.toLocaleString('ru-RU')} BYN</span>
+                            ${owned ? '<span style="color:var(--neon-green); font-weight:900;">КУПЛЕНО ✓</span>' : `<button class="btn-play" onclick="buyProperty('${p.id}', ${p.price})">КУПИТЬ</button>`}
+                        </div>
                     </div>`;
             });
         }
@@ -3917,7 +2832,8 @@
             ownedProps.push(id);
             saveData();
             renderProperties();
-            showToast('🎉 Имущество куплено!');
+            updateProgressionUI();
+            showToast('🎉 Имущество куплено! Пассивный доход увеличен!');
         }
 
         function renderQuiz() {
@@ -3939,20 +2855,16 @@
                 html += `</div></div>`;
                 container.innerHTML += html;
             });
+            updateMinuteButtonTimer();
         }
 
         function answerQuiz(qId, idx) {
             if (answeredQuestions[qId] !== undefined) return;
             const q = QUIZ_QUESTIONS.find(item => item.id === qId);
             answeredQuestions[qId] = idx;
-            if (idx === q.correct) {
-                updateBalance(q.reward);
-                showToast(`🎉 Верно! +${q.reward} BYN!`);
-            } else {
-                showToast('❌ Ошибка!');
-            }
-            saveData();
-            renderQuiz();
+            if (idx === q.correct) { updateBalance(q.reward); showToast(`🎉 Верно! +${q.reward} BYN!`); }
+            else showToast('❌ Ошибка!');
+            saveData(); renderQuiz();
         }
 
         window.addEventListener('DOMContentLoaded', () => {
@@ -3960,6 +2872,7 @@
             checkInitialNicknameRequirement();
             document.getElementById('balance').textContent = balance.toLocaleString('ru-RU');
             syncHeaderProfile();
+            updateProgressionUI();
             updateBetLimitUI();
             updateJetHistoryUI();
             drawJetScene(0, false);
