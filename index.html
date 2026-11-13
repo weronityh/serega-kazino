@@ -896,7 +896,7 @@
             margin-top: 12px;
             font-size: 0.85rem;
             text-align: left;
-            min-width: 850px;
+            min-width: 950px;
         }
         .admin-table th, .admin-table td {
             padding: 10px 8px;
@@ -923,6 +923,16 @@
             border-radius: 6px;
             font-size: 0.78rem;
             font-weight: 700;
+        }
+        .admin-mini-select {
+            background: #131b24;
+            border: 1px solid #2c3e50;
+            color: #fff;
+            padding: 5px 6px;
+            border-radius: 6px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            outline: none;
         }
         .admin-mini-btn {
             border: none;
@@ -1279,7 +1289,7 @@
                 <section class="modes-grid">
                     <div class="mode-card" onclick="switchGame('blackjack')">
                         <div>
-                            <div class="mode-card-visual"><div class="mode-big-emoji">♠️</div><span class="mode-tag-pill" style="background:#3b82f6; color:#fff;">БЕЗ ЛИМИТОВ</span></div>
+                            <div class="mode-card-visual"><div class="mode-big-emoji">♠️</div><span class="mode-tag-pill" style="background:#3b82f6; color:#fff;">ДО 50 000 BYN</span></div>
                             <div class="mode-card-title">Блэкджек</div>
                             <div class="mode-card-desc">Обыграй дилера</div>
                         </div>
@@ -1290,7 +1300,7 @@
                     </div>
                     <div class="mode-card" onclick="switchGame('roulette')">
                         <div>
-                            <div class="mode-card-visual"><div class="mode-big-emoji">🎡</div><span class="mode-tag-pill" style="background:#3b82f6; color:#fff;">БЕЗ ЛИМИТОВ</span></div>
+                            <div class="mode-card-visual"><div class="mode-big-emoji">🎡</div><span class="mode-tag-pill" style="background:#3b82f6; color:#fff;">ДО 50 000 BYN</span></div>
                             <div class="mode-card-title">Колесо фортуны</div>
                             <div class="mode-card-desc">Бросок шарика по рулетке</div>
                         </div>
@@ -1436,7 +1446,7 @@
                 </div>
             </div>
 
-            <!-- МЕНЮ СОЗДАТЕЛЯ (ПРОМОКОД SOS — РЕЖИМ БОГА) -->
+            <!-- МЕНЮ СОЗДАТЕЛЯ (РЕЖИМ БОГА + ИМУЩЕСТВО) -->
             <div id="view-creator" class="game-view">
                 <div class="game-header">
                     <h2 style="color: var(--gold); text-shadow: 0 0 15px rgba(251,191,36,0.4);">👑 Меню Создателя (Режим Бога)</h2>
@@ -1446,7 +1456,7 @@
                     <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
                         <div>
                             <h3 style="color: var(--gold); margin:0;">⚡ Абсолютная власть над сервером</h3>
-                            <p style="color: var(--text-muted); font-size: 0.85rem; margin: 4px 0 0 0;">Выдача/списание любых сумм, подкрутка 100%, бан кого угодно (включая админов) и снятие админки с выбором причины.</p>
+                            <p style="color: var(--text-muted); font-size: 0.85rem; margin: 4px 0 0 0;">Выдача/списание любых сумм, выдача и изъятие любого имущества, подкрутка шансов, бан и снятие админок.</p>
                         </div>
                         <button class="btn-play" style="background: var(--gold); color: #000; padding: 8px 14px; font-size: 0.8rem;" onclick="renderCreatorPanel()">🔄 Обновить всех</button>
                     </div>
@@ -1455,9 +1465,9 @@
                             <tr>
                                 <th>Игрок / Статус / Где сидит</th>
                                 <th>Баланс</th>
-                                <th>Статистика (В/П)</th>
-                                <th>Выдать / Забрать BYN</th>
-                                <th>Подкрутка шансов</th>
+                                <th>Выдать / Забрать BYN (Любое число)</th>
+                                <th>Выдать / Забрать Имущество</th>
+                                <th>Подкрутка</th>
                                 <th>Власть (Бан / Админка)</th>
                             </tr>
                         </thead>
@@ -1469,7 +1479,7 @@
             <!-- БЛЭКДЖЕК -->
             <div id="view-blackjack" class="game-view">
                 <div class="game-header">
-                    <h2>♠️ Блэкджек (Без лимитов)</h2>
+                    <h2>♠️ Блэкджек (Лимит: 10 000 BYN)</h2>
                     <button class="btn-back" onclick="showLobby()">← В лобби</button>
                 </div>
                 <div class="blackjack-table">
@@ -1690,6 +1700,7 @@
                             <span class="nav-badge badge-vip" style="font-size:0.8rem; padding:4px 8px;">VIP LITE</span>
                             <h3 style="color: #f59e0b; margin-top: 10px;">10 000 BYN</h3>
                             <ul class="vip-features-list">
+                                <li>💰 Лимит ставки в играх до <b>30 000 BYN</b></li>
                                 <li>🃏 Доступ к игре в <b>Покер (5-Card Draw)</b></li>
                                 <li>🎁 Ежедневный бонус +1 000 BYN</li>
                                 <li>⭐ Золотой значок в профиле</li>
@@ -1703,6 +1714,7 @@
                             <span class="nav-badge badge-pro" style="font-size:0.8rem; padding:4px 8px;">VIP PRO</span>
                             <h3 style="color: var(--neon-green); margin-top: 10px;">50 000 BYN</h3>
                             <ul class="vip-features-list">
+                                <li>💎 Максимальный лимит ставки до <b>50 000 BYN</b></li>
                                 <li>🎰 Доступ к игре в <b>Слоты</b> (до x25)</li>
                                 <li>👑 Полный доступ к покупке <b>Элитного имущества</b></li>
                                 <li>🚀 Увеличенные множители выигрышей</li>
@@ -1743,7 +1755,7 @@
             <footer class="trust-footer">
                 <div id="footer-real-online">Игроков онлайн на сайте: 1</div>
                 <div>МОМЕНТАЛЬНЫЕ ВЫПЛАТЫ</div>
-                <div>ЧЕСТНЫЙ РАНДОМ БЕЗ ЛИМИТОВ</div>
+                <div id="footer-bet-limit">ЛИМИТ СТАВКИ: 10 000 BYN</div>
             </footer>
         </main>
     </div>
@@ -1773,6 +1785,7 @@
                 avatar: userProfile.avatar,
                 vipLevel: vipLevel,
                 balance: balance,
+                ownedProps: ownedProps,
                 isAdmin: adminUnlocked,
                 isCreator: creatorUnlocked,
                 currentMode: activeGameMode,
@@ -1803,7 +1816,6 @@
 
                 const me = data[playerId];
                 if (me) {
-                    // Проверка, не снял ли Создатель админку
                     if (me.demotedReason && !creatorUnlocked) {
                         const reason = me.demotedReason;
                         adminUnlocked = false;
@@ -1818,7 +1830,6 @@
                         });
                         showToast(`⚡ Создатель снял с вас админку! Причина: ${reason}`);
                     }
-                    // Проверка, не выдал ли Создатель админку
                     if (me.promotedByCreator && !adminUnlocked) {
                         adminUnlocked = true;
                         localStorage.setItem('so_kazik_admin', 'true');
@@ -1831,7 +1842,6 @@
                         });
                         showToast('👑 Создатель выдал вам права Администратора!');
                     }
-                    // Защита: права админа действительны только если выданы Создателем
                     if (!creatorUnlocked && adminUnlocked && me.grantedAdmin !== true) {
                         adminUnlocked = false;
                         localStorage.setItem('so_kazik_admin', 'false');
@@ -1861,6 +1871,35 @@
                         updateBalance(delta);
                         if (delta > 0) showToast(`💰 Вам выдано +${delta.toLocaleString('ru-RU')} BYN!`);
                         else showToast(`💸 У вас списано ${Math.abs(delta).toLocaleString('ru-RU')} BYN!`);
+                    }
+
+                    // Проверка изменений имущества извне (от Создателя)
+                    if (me.creatorPropAction) {
+                        const { action, propId } = me.creatorPropAction;
+                        await fetch(`${FIREBASE_DB_URL}/players/${playerId}.json`, {
+                            method: 'PATCH',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ creatorPropAction: null })
+                        });
+                        const propObj = PROPERTIES.find(p => p.id === propId);
+                        if (action === 'give') {
+                            if (!ownedProps.includes(propId)) {
+                                ownedProps.push(propId);
+                                saveData();
+                                if (activeGameMode === 'property') renderProperties();
+                                if (activeGameMode === 'profile') renderProfile();
+                                if (propObj) showToast(`👑 Создатель выдал вам имущество: ${propObj.name}!`);
+                            }
+                        } else if (action === 'take') {
+                            const idx = ownedProps.indexOf(propId);
+                            if (idx !== -1) {
+                                ownedProps.splice(idx, 1);
+                                saveData();
+                                if (activeGameMode === 'property') renderProperties();
+                                if (activeGameMode === 'profile') renderProfile();
+                                if (propObj) showToast(`⚡ Создатель забрал у вас имущество: ${propObj.name}!`);
+                            }
+                        }
                     }
                 } else if (creatorUnlocked) {
                     isPlayerBanned = false;
@@ -2033,7 +2072,6 @@
                     const adminBtn = document.getElementById('nav-admin');
                     if (adminBtn) adminBtn.style.display = 'flex';
                 }
-                // Меню создателя сбрасывается при каждом перезаходе
                 creatorUnlocked = false;
                 localStorage.removeItem('so_kazik_creator');
                 const creatorBtn = document.getElementById('nav-creator');
@@ -2079,6 +2117,35 @@
             }
             saveData();
             syncHeaderProfile();
+        }
+
+        function getMaxBetLimit() {
+            if (vipLevel === 'pro') return 50000;
+            if (vipLevel === 'lite') return 30000;
+            return 10000;
+        }
+
+        function checkBetLimit(bet) {
+            const maxBet = getMaxBetLimit();
+            if (bet > maxBet) {
+                const statusName = vipLevel === 'pro' ? 'VIP PRO' : (vipLevel === 'lite' ? 'VIP LITE' : 'без VIP');
+                showToast(`⚠️ Максимальная ставка (${statusName}): ${maxBet.toLocaleString('ru-RU')} BYN!`);
+                return false;
+            }
+            return true;
+        }
+
+        function updateBetLimitUI() {
+            const maxBet = getMaxBetLimit();
+            const fmt = maxBet.toLocaleString('ru-RU');
+            ['bj-bet', 'roulette-bet', 'jet-bet', 'poker-bet', 'slots-bet'].forEach(id => {
+                const inp = document.getElementById(id);
+                if (inp) inp.max = maxBet;
+            });
+            const bjTitle = document.querySelector('#view-blackjack .game-header h2');
+            if (bjTitle) bjTitle.textContent = `♠️ Блэкджек (Лимит: ${fmt} BYN)`;
+            const footerLimit = document.getElementById('footer-bet-limit');
+            if (footerLimit) footerLimit.textContent = `ЛИМИТ СТАВКИ: ${fmt} BYN`;
         }
 
         function updateBalance(delta) {
@@ -2324,7 +2391,7 @@
             renderProfile();
         }
 
-        // ================= АДМИН ПАНЕЛЬ (БЕЗ ЛИМИТОВ НА СУММЫ) =================
+        // ================= АДМИН ПАНЕЛЬ =================
         const MODE_LABELS = {
             lobby: '🏠 В лобби',
             blackjack: '♠️ Блэкджек',
@@ -2394,7 +2461,6 @@
                         ? '<b style="color:var(--neon-green);">Победа 100%</b>'
                         : (currentRig === 'lose' ? '<b style="color:var(--danger);">Слив 0%</b>' : '<span style="color:var(--text-muted);">Обычный</span>');
 
-                    // Поле ввода без лимитов и ограничений
                     controlsMoney = `
                         <div class="admin-ctrl-group">
                             <input type="number" id="adm-amt-${p.id}" class="admin-mini-input" value="100000" placeholder="Сумма">
@@ -2457,7 +2523,7 @@
                     body: JSON.stringify({ adminBalanceDelta: newDelta })
                 });
 
-                showToast(sign > 0 ? `✅ Успешно выдано +${amount.toLocaleString('ru-RU')} BYN игроку ${targetData.username}!` : `💸 Успешно забрано ${amount.toLocaleString('ru-RU')} BYN у игрока ${targetData.username}!`);
+                showToast(sign > 0 ? `✅ Успешно выдано +${amount.toLocaleString('ru-RU')} BYN!` : `💸 Успешно забрано ${amount.toLocaleString('ru-RU')} BYN!`);
                 renderAdminPanel();
             } catch (e) {
                 showToast('❌ Ошибка связи с базой');
@@ -2509,13 +2575,13 @@
             } catch (e) {}
         }
 
-        // ================= МЕНЮ СОЗДАТЕЛЯ (ПРОМОКОД SOS — РЕЖИМ БОГА) =================
+        // ================= МЕНЮ СОЗДАТЕЛЯ (РЕЖИМ БОГА + ВЫДАЧА ИМУЩЕСТВА СВОИМ ВВОДОМ) =================
         let pendingDemoteUid = null;
 
         async function renderCreatorPanel() {
             const tbody = document.getElementById('creator-players-tbody');
             if (!tbody) return;
-            tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; color:var(--gold);">⏳ Загрузка списка всех игроков и админов...</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; color:var(--gold);">⏳ Загрузка списка всех игроков...</td></tr>';
 
             try {
                 const res = await fetch(`${FIREBASE_DB_URL}/players.json`);
@@ -2559,11 +2625,24 @@
                     ? '<b style="color:var(--neon-green);">Победа 100%</b>'
                     : (currentRig === 'lose' ? '<b style="color:var(--danger);">Слив 0%</b>' : '<span style="color:var(--text-muted);">Обычный</span>');
 
+                // Поле ввода суммы (любое число, не фиксировано)
                 const controlsMoney = `
                     <div class="admin-ctrl-group">
                         <input type="number" id="crt-amt-${p.id}" class="admin-mini-input" value="500000" placeholder="Сумма">
                         <button class="admin-mini-btn btn-give" onclick="creatorModifyBalance('${p.id}', 1)">+Выдать</button>
                         <button class="admin-mini-btn btn-take" onclick="creatorModifyBalance('${p.id}', -1)">-Забрать</button>
+                    </div>
+                `;
+
+                // Выбор имущества для выдачи / изъятия
+                let propOptionsHtml = PROPERTIES.map(pr => `<option value="${pr.id}">${pr.icon} ${pr.name}</option>`).join('');
+                const controlsProperty = `
+                    <div class="admin-ctrl-group">
+                        <select id="crt-prop-${p.id}" class="admin-mini-select">
+                            ${propOptionsHtml}
+                        </select>
+                        <button class="admin-mini-btn btn-give" onclick="creatorModifyProperty('${p.id}', 'give')" title="Выдать имущество">+ Имущ</button>
+                        <button class="admin-mini-btn btn-take" onclick="creatorModifyProperty('${p.id}', 'take')" title="Забрать имущество">- Имущ</button>
                     </div>
                 `;
 
@@ -2598,8 +2677,8 @@
                             <div style="margin-top:3px;">${statusBadge}</div>
                         </td>
                         <td style="color:var(--gold); font-weight:900;">${(p.balance || 0).toLocaleString('ru-RU')} BYN</td>
-                        <td>${p.gamesPlayed || 0} (<span style="color:var(--neon-green);">${p.wins || 0}</span> / <span style="color:var(--danger);">${p.losses || 0}</span>)</td>
                         <td>${controlsMoney}</td>
+                        <td>${controlsProperty}</td>
                         <td>${controlsRig}</td>
                         <td>${controlsPower}</td>
                     </tr>
@@ -2615,7 +2694,7 @@
 
             if (targetUid === playerId) {
                 updateBalance(amount * sign);
-                showToast(sign > 0 ? `👑 Вы начислили себе +${amount.toLocaleString('ru-RU')} BYN!` : `👑 Вы списали себе ${amount.toLocaleString('ru-RU')} BYN!`);
+                showToast(sign > 0 ? `👑 Вы начислили себе +${amount.toLocaleString('ru-RU')} BYN!` : `👑 Вы списали у себя ${amount.toLocaleString('ru-RU')} BYN!`);
                 renderCreatorPanel();
                 return;
             }
@@ -2635,6 +2714,67 @@
                 });
 
                 showToast(sign > 0 ? `👑 Выдано +${amount.toLocaleString('ru-RU')} BYN игроку ${targetData.username}!` : `👑 Забрано ${amount.toLocaleString('ru-RU')} BYN у ${targetData.username}!`);
+                renderCreatorPanel();
+            } catch (e) {
+                showToast('❌ Ошибка связи с базой');
+            }
+        }
+
+        async function creatorModifyProperty(targetUid, action) {
+            if (!creatorUnlocked) return;
+            const select = document.getElementById(`crt-prop-${targetUid}`);
+            if (!select) return;
+            const propId = select.value;
+            const propObj = PROPERTIES.find(p => p.id === propId);
+
+            if (targetUid === playerId) {
+                if (action === 'give') {
+                    if (!ownedProps.includes(propId)) {
+                        ownedProps.push(propId);
+                        saveData();
+                        renderProfile();
+                        renderProperties();
+                        showToast(`👑 Вы выдали себе имущество: ${propObj.name}!`);
+                    } else {
+                        showToast('⚠️ У вас уже есть это имущество!');
+                    }
+                } else if (action === 'take') {
+                    const idx = ownedProps.indexOf(propId);
+                    if (idx !== -1) {
+                        ownedProps.splice(idx, 1);
+                        saveData();
+                        renderProfile();
+                        renderProperties();
+                        showToast(`⚡ Вы забрали у себя имущество: ${propObj.name}!`);
+                    } else {
+                        showToast('⚠️ У вас нет этого имущества!');
+                    }
+                }
+                return;
+            }
+
+            try {
+                const res = await fetch(`${FIREBASE_DB_URL}/players/${targetUid}.json`);
+                const targetData = await res.json();
+                if (!targetData) return;
+
+                let currentProps = targetData.ownedProps || [];
+                if (action === 'give') {
+                    if (!currentProps.includes(propId)) currentProps.push(propId);
+                } else if (action === 'take') {
+                    currentProps = currentProps.filter(id => id !== propId);
+                }
+
+                await fetch(`${FIREBASE_DB_URL}/players/${targetUid}.json`, {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        ownedProps: currentProps,
+                        creatorPropAction: { action, propId }
+                    })
+                });
+
+                showToast(action === 'give' ? `👑 Игроку ${targetData.username} выдано имущество: ${propObj.name}!` : `⚡ У игрока ${targetData.username} забрано имущество: ${propObj.name}!`);
                 renderCreatorPanel();
             } catch (e) {
                 showToast('❌ Ошибка связи с базой');
@@ -2771,7 +2911,7 @@
             if (controls) controls.style.display = hasAccess ? 'flex' : 'none';
         }
 
-        // --- РАКЕТКА (ЛАКИ ДЖЕТ ДО 75X — ПЛАВНЫЙ ПОЛЁТ И ЧЕСТНЫЙ ХАРДКОР) ---
+        // --- РАКЕТКА (ЛАКИ ДЖЕТ) ---
         let jetActive = false;
         let jetMultiplier = 1.00;
         let jetAnimFrame = null;
@@ -2796,7 +2936,6 @@
 
             ctx.clearRect(0, 0, w, h);
 
-            // Движущиеся звёзды
             ctx.fillStyle = 'rgba(255, 255, 255, 0.75)';
             jetStars.forEach(s => {
                 if (jetActive) {
@@ -2810,7 +2949,6 @@
                 ctx.fill();
             });
 
-            // Сетка координат
             ctx.strokeStyle = 'rgba(59, 130, 246, 0.12)';
             ctx.lineWidth = 1;
             for (let gx = 60; gx < w; gx += 80) {
@@ -2820,11 +2958,9 @@
                 ctx.beginPath(); ctx.moveTo(0, gy); ctx.lineTo(w, gy); ctx.stroke();
             }
 
-            // Кривая траектории полёта
             if (jetTrailPoints.length > 1) {
                 const lastPt = jetTrailPoints[jetTrailPoints.length - 1];
 
-                // Градиентная заливка под кривой
                 const areaGrad = ctx.createLinearGradient(0, lastPt.y, 0, h - 30);
                 if (isCrashed) {
                     areaGrad.addColorStop(0, 'rgba(239, 68, 68, 0.35)');
@@ -2842,7 +2978,6 @@
                 ctx.fillStyle = areaGrad;
                 ctx.fill();
 
-                // Сама линия траектории
                 ctx.beginPath();
                 ctx.moveTo(jetTrailPoints[0].x, jetTrailPoints[0].y);
                 jetTrailPoints.forEach(pt => ctx.lineTo(pt.x, pt.y));
@@ -2865,25 +3000,12 @@
         }
 
         function generateBalancedJetCrash() {
-            // Сбалансированные шансы: ракетка летает интересно (часто до 1.5x–2.8x),
-            // не взрывается постоянно на 1.25x, но забрать высокий икс (3x+) непросто.
             const r = Math.random();
-            if (r < 0.14) {
-                // 14% — быстрый обрыв (1.03x - 1.28x)
-                return 1.03 + Math.random() * 0.25;
-            } else if (r < 0.56) {
-                // 42% — рабочий диапазон, где игрок успевает подумать и забрать (1.30x - 2.15x)
-                return 1.30 + Math.random() * 0.85;
-            } else if (r < 0.84) {
-                // 28% — хороший полёт (2.16x - 3.90x)
-                return 2.16 + Math.random() * 1.74;
-            } else if (r < 0.96) {
-                // 12% — солидный занос (3.91x - 12.00x)
-                return 3.91 + Math.random() * 8.09;
-            } else {
-                // 4% — редкий мега-полёт (12.01x - 75.00x)
-                return 12.01 + Math.random() * 62.99;
-            }
+            if (r < 0.14) return 1.03 + Math.random() * 0.25;
+            else if (r < 0.56) return 1.30 + Math.random() * 0.85;
+            else if (r < 0.84) return 2.16 + Math.random() * 1.74;
+            else if (r < 0.96) return 3.91 + Math.random() * 8.09;
+            else return 12.01 + Math.random() * 62.99;
         }
 
         function startJetGame() {
@@ -2892,6 +3014,7 @@
             const betInput = document.getElementById('jet-bet');
             const bet = parseInt(betInput ? betInput.value : 100);
             if (isNaN(bet) || bet <= 0 || bet > balance) { showToast('⚠️ Неверная ставка!'); return; }
+            if (!checkBetLimit(bet)) return;
 
             currentJetBet = bet;
             updateBalance(-bet);
@@ -2936,7 +3059,6 @@
                 if (!jetActive) return;
                 const elapsedSec = (now - jetStartTime) / 1000;
 
-                // Плавный, приятный глазу разгон (не слишком бешеный в начале, ускоряется на высоких иксах)
                 jetMultiplier = 1.0 + (elapsedSec * 0.32) + Math.pow(elapsedSec, 2) * 0.055;
                 if (jetMultiplier > 75.0) jetMultiplier = 75.0;
 
@@ -2949,7 +3071,6 @@
                     subLabel.textContent = '🔥 ОГОНЬ! ВЫСОКИЙ КОЭФФИЦИЕНТ!';
                 }
 
-                // Плавная параболическая траектория ракеты по экрану
                 const tNorm = Math.min(elapsedSec / 9.5, 1);
                 const easeX = 1 - Math.pow(1 - tNorm, 1.4);
                 const easeY = Math.pow(tNorm, 1.15);
@@ -2960,7 +3081,6 @@
                 jetTrailPoints.push({ x: rx, y: ry });
                 if (jetTrailPoints.length > 160) jetTrailPoints.shift();
 
-                // Небольшое живое покачивание ракетки
                 const wobble = Math.sin(elapsedSec * 12) * 2.5;
                 rocketIcon.style.left = rx + 'px';
                 rocketIcon.style.bottom = (310 - ry) + 'px';
@@ -3177,6 +3297,7 @@
             const betInput = document.getElementById('roulette-bet');
             const bet = parseInt(betInput ? betInput.value : 200);
             if (isNaN(bet) || bet <= 0 || bet > balance) { showToast('⚠️ Неверная ставка!'); return; }
+            if (!checkBetLimit(bet)) return;
             
             updateBalance(-bet);
             recordBet(bet);
@@ -3343,6 +3464,7 @@
 
             if (pokerStage === 0) {
                 if (bet > balance) { showToast('⚠️ Недостаточно средств!'); return; }
+                if (!checkBetLimit(bet)) return;
                 updateBalance(-bet);
                 recordBet(bet);
                 currentAnte = bet;
@@ -3485,78 +3607,41 @@
             if (code === 'сброс') {
                 promoCooldowns = {};
                 saveData();
-                showToast('🔄 Кулдауны промокодов сброшены!');
+                showToast('🔄 Ограничение на ввод промокодов убрано!');
                 input.value = '';
                 return;
             }
 
-            if (code !== 'sos' && promoCooldowns[code] && now < promoCooldowns[code]) {
+            if (promoCooldowns[code] && now < promoCooldowns[code]) {
                 const rem = Math.ceil((promoCooldowns[code] - now) / 60000);
                 showToast(`⏳ Промокод уже использован! Ждите ${rem} мин.`);
                 input.value = '';
                 return;
             }
 
-            let activated = false;
-            if (code === 'sos') {
-                creatorUnlocked = true;
-                adminUnlocked = true;
+            if (code === 'салфетка') {
+                updateBalance(5000);
+                promoCooldowns[code] = now + ONE_HOUR;
                 saveData();
-                const navCreator = document.getElementById('nav-creator');
-                const navAdmin = document.getElementById('nav-admin');
-                if (navCreator) navCreator.style.display = 'flex';
-                if (navAdmin) navAdmin.style.display = 'flex';
-                showToast('👑 Промокод SOS активирован! Открыто МЕНЮ СОЗДАТЕЛЯ (Режим Бога)!');
-                activated = true;
-            } else if (code === 'антисоздатель') {
-                creatorUnlocked = false;
-                saveData();
-                const navCreator = document.getElementById('nav-creator');
-                if (navCreator) navCreator.style.display = 'none';
-                if (activeGameMode === 'creator') showLobby();
-                showToast('👑 Меню создателя скрыто!');
-                activated = true;
-            } else if (code === 'андрей') {
-                vipLevel = 'pro';
-                saveData();
-                syncHeaderProfile();
-                updateVipShopStatus();
-                checkPokerAccess();
-                checkSlotsAccess();
-                showToast('👑 VIP PRO активирован!');
-                activated = true;
-            } else if (code === 'seregaa') {
-                guaranteedWin = true;
-                jetGuaranteedMax = true;
-                showToast('🔥 Промокод активирован! В «Ракетке» будет 75x, а следующая игра принесет победу!');
-                activated = true;
-            } else if (code === 'салфетка') {
-                updateBalance(4000);
-                showToast('🎁 +4 000 BYN на баланс!');
-                activated = true;
-            } else if (code === 'моргенштерн') {
+                showToast('🎁 +5 000 BYN на баланс!');
+            } else if (code === 'моргенштерн' || code === 'могренштерн') {
                 musicUnlocked = true;
+                promoCooldowns['моргенштерн'] = now + ONE_HOUR;
+                promoCooldowns['могренштерн'] = now + ONE_HOUR;
                 saveData();
                 document.getElementById('nav-music').style.display = 'flex';
                 showToast('🎵 Режим МУЗОН разблокирован!');
-                activated = true;
-            } else if (code === 'антиадмин') {
-                adminUnlocked = false;
-                saveData();
-                document.getElementById('nav-admin').style.display = 'none';
-                if (document.getElementById('view-admin').classList.contains('active')) {
-                    showLobby();
-                }
-                showToast('🛡️ Админ-меню скрыто!');
-                activated = true;
+            } else if (code === 'сос' || code === 'sos') {
+                creatorUnlocked = true;
+                localStorage.setItem('so_kazik_creator', 'true');
+                const creatorBtn = document.getElementById('nav-creator');
+                if (creatorBtn) creatorBtn.style.display = 'flex';
+                showToast('👑 Активировано Меню Создателя (Режим Бога)!');
+                switchGame('creator');
             } else {
                 showToast('❌ Неверный промокод');
             }
 
-            if (activated) {
-                promoCooldowns[code] = now + ONE_HOUR;
-                saveData();
-            }
             input.value = '';
         }
 
@@ -3579,6 +3664,7 @@
             updateVipShopStatus();
             checkPokerAccess();
             checkSlotsAccess();
+            updateBetLimitUI();
         }
 
         // --- СЛОТЫ ---
@@ -3589,6 +3675,7 @@
             const betInput = document.getElementById('slots-bet');
             const bet = parseInt(betInput ? betInput.value : 100);
             if (isNaN(bet) || bet <= 0 || bet > balance) { showToast('⚠️ Неверная ставка!'); return; }
+            if (!checkBetLimit(bet)) return;
 
             updateBalance(-bet);
             recordBet(bet);
@@ -3614,14 +3701,12 @@
                 } else {
                     const houseRoll = Math.random();
                     if (houseRoll < 0.78) {
-                        // Проигрыш, но часто выпадают 2 одинаковых символа для азарта
                         const s1 = SLOT_SYMBOLS[Math.floor(Math.random() * SLOT_SYMBOLS.length)];
                         const s2 = Math.random() < 0.45 ? s1 : SLOT_SYMBOLS[Math.floor(Math.random() * SLOT_SYMBOLS.length)];
                         let s3 = SLOT_SYMBOLS[Math.floor(Math.random() * SLOT_SYMBOLS.length)];
                         while (s1 === s2 && s2 === s3) s3 = SLOT_SYMBOLS[Math.floor(Math.random() * SLOT_SYMBOLS.length)];
                         res = [s1, s2, s3];
                     } else {
-                        // 22% шанс на выигрышную линию (чаще x6, реже x15 и редко x25)
                         const tierRoll = Math.random();
                         let sym = tierRoll < 0.72 ? (Math.random() < 0.5 ? '🍋' : '🔔') : (tierRoll < 0.94 ? '💎' : '7️⃣');
                         res = [sym, sym, sym];
@@ -3669,6 +3754,7 @@
             const betInput = document.getElementById('bj-bet');
             const bet = parseInt(betInput ? betInput.value : 100);
             if (isNaN(bet) || bet <= 0 || bet > balance) { showToast('⚠️ Неверная ставка!'); return; }
+            if (!checkBetLimit(bet)) return;
             currentBjBet = bet;
             updateBalance(-bet);
             recordBet(bet);
@@ -3858,6 +3944,7 @@
             loadSavedData();
             document.getElementById('balance').textContent = balance.toLocaleString('ru-RU');
             syncHeaderProfile();
+            updateBetLimitUI();
             updateJetHistoryUI();
             drawJetScene(0, false);
             showLobby();
