@@ -275,37 +275,6 @@
             letter-spacing: 0.5px;
         }
 
-        /* КАРТОЧКИ РЕЖИМОВ */
-        .modes-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 24px; }
-        .mode-card {
-            position: relative; border-radius: 16px; padding: 20px; min-height: 175px; cursor: pointer; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; transition: 0.25s ease; border: 1.5px solid #2b3847; background: #121922;
-        }
-        .mode-card:hover { transform: translateY(-5px); border-color: var(--neon-green); }
-        .mode-card-visual { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
-        .mode-big-emoji { font-size: 2.8rem; }
-        .mode-tag-pill { background: rgba(0,0,0,0.45); border: 1px solid rgba(255,255,255,0.14); padding: 4px 10px; border-radius: 8px; font-size: 0.75rem; font-weight: 800; color: #e2e8f0; }
-        .mode-card-footer { display: flex; align-items: flex-end; justify-content: space-between; gap: 10px; }
-        .mode-card-title { font-size: 1.35rem; font-weight: 950; font-style: italic; text-transform: uppercase; color: #fff; }
-        .mode-card-desc { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; color: #9aa7b8; margin-top: 5px; }
-        .mode-arrow-btn { width: 34px; height: 34px; border-radius: 50%; background: rgba(255,255,255,0.08); display: grid; place-items: center; color: #fff; font-weight: 900; flex-shrink: 0; }
-        
-        .mode-online-badge {
-            font-size: 0.74rem;
-            color: var(--neon-green);
-            background: rgba(26, 232, 58, 0.1);
-            border: 1px solid rgba(26, 232, 58, 0.25);
-            padding: 3px 9px;
-            border-radius: 6px;
-            font-weight: 800;
-            display: inline-block;
-            margin-top: 6px;
-        }
-        .mode-online-badge.empty {
-            color: var(--text-muted);
-            background: rgba(255, 255, 255, 0.04);
-            border-color: rgba(255, 255, 255, 0.1);
-        }
-
         /* ИГРОВЫЕ ОКНА */
         .game-view { display: none; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 18px; padding: 26px; margin-bottom: 24px; position: relative; }
         .game-view.active { display: block; }
@@ -1026,9 +995,159 @@
             font-size: 2rem;
             animation: coinRain 1.5s linear infinite;
         }
+
+        /* ЭКРАН ПРИВЕТСТВИЯ / ОБЯЗАТЕЛЬНЫЙ ВЫБОР НИКА */
+        #nickname-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(circle at 50% 40%, #0f1a12 0%, #05080b 100%);
+            z-index: 100000;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 20px;
+        }
+        #nickname-overlay.active { display: flex; }
+        .nickname-box {
+            background: #101720;
+            border: 2px solid var(--neon-green);
+            border-radius: 20px;
+            padding: 34px 30px;
+            max-width: 460px;
+            width: 100%;
+            box-shadow: 0 0 50px rgba(26, 232, 58, 0.25);
+        }
+        .nickname-box h1 {
+            margin: 0 0 8px;
+            font-size: 1.6rem;
+            text-transform: uppercase;
+            color: #fff;
+            font-style: italic;
+            font-weight: 950;
+        }
+        .nickname-box p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin: 0 0 22px;
+        }
+        .nickname-box input {
+            width: 100%;
+            background: #0a1016;
+            border: 2px solid #283649;
+            border-radius: 12px;
+            padding: 14px 16px;
+            color: #fff;
+            font-size: 1.15rem;
+            font-weight: 800;
+            text-align: center;
+            outline: none;
+            letter-spacing: 1px;
+            transition: 0.2s;
+        }
+        .nickname-box input:focus { border-color: var(--neon-green); }
+        .nickname-box input.invalid { border-color: var(--danger); }
+        .nickname-hint {
+            font-size: 0.8rem;
+            margin-top: 8px;
+            min-height: 18px;
+            font-weight: 700;
+            color: var(--text-muted);
+        }
+        .nickname-hint.error { color: var(--danger); }
+        .nickname-hint.ok { color: var(--neon-green); }
+
+        /* ТОП-10 БОГАТЫХ НА ГЛАВНОЙ */
+        .top-rich-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 18px;
+            padding: 22px;
+            margin-bottom: 24px;
+        }
+        .top-rich-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+        .top-rich-title {
+            margin: 0;
+            font-size: 1.25rem;
+            text-transform: uppercase;
+            font-weight: 950;
+            font-style: italic;
+            color: var(--gold);
+            text-shadow: 0 0 14px rgba(251, 191, 36, 0.35);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .top-rich-list { display: flex; flex-direction: column; gap: 10px; }
+        .top-rich-row {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            background: #0d131a;
+            border: 1px solid #222e3d;
+            border-radius: 12px;
+            padding: 12px 16px;
+            transition: 0.2s;
+        }
+        .top-rich-row:hover { border-color: var(--gold); transform: translateX(3px); }
+        .top-rich-row.self { border-color: var(--neon-green); background: rgba(26, 232, 58, 0.08); }
+        .top-rich-place {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            font-weight: 950;
+            font-size: 0.9rem;
+            background: #1c2633;
+            color: #fff;
+            flex-shrink: 0;
+        }
+        .top-rich-place.p1 { background: linear-gradient(135deg, #fbbf24, #f59e0b); color: #000; box-shadow: 0 0 12px rgba(251, 191, 36, 0.5); }
+        .top-rich-place.p2 { background: linear-gradient(135deg, #cbd5e1, #94a3b8); color: #000; }
+        .top-rich-place.p3 { background: linear-gradient(135deg, #b45309, #92400e); color: #fff; }
+        .top-rich-name { flex: 1; font-weight: 800; font-size: 1rem; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .top-rich-time {
+            font-size: 0.82rem;
+            color: #93c5fd;
+            background: rgba(59, 130, 246, 0.12);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-weight: 800;
+            white-space: nowrap;
+        }
+        .top-rich-bal {
+            color: var(--gold);
+            font-weight: 950;
+            font-size: 1.05rem;
+            white-space: nowrap;
+            min-width: 120px;
+            text-align: right;
+        }
     </style>
 </head>
 <body>
+
+    <!-- ОБЯЗАТЕЛЬНЫЙ ЭКРАН ВЫБОРА ИГРОВОГО НИКА ПРИ ПЕРВОМ ВХОДЕ -->
+    <div id="nickname-overlay">
+        <div class="nickname-box">
+            <div style="font-size: 3.5rem; margin-bottom: 10px;">👑🎰</div>
+            <h1>ДОБРО ПОЖАЛОВАТЬ В КАЗИК!</h1>
+            <p>Вы впервые зашли на сайт. Придумайте себе уникальный игровой никнейм, чтобы продолжить.<br><b style="color: var(--neon-green);">Обязательно не менее 5 английских букв (A-Z, a-z)!</b></p>
+            <input type="text" id="first-nickname-input" maxlength="20" placeholder="Например: SeregaBoss" oninput="validateFirstNicknameInput()" onkeydown="if(event.key==='Enter') submitFirstNickname()">
+            <div class="nickname-hint" id="first-nickname-hint">Минимум 5 английских букв</div>
+            <button class="btn-play" style="width: 100%; margin-top: 16px; padding: 14px; font-size: 1rem;" onclick="submitFirstNickname()">ПОДТВЕРДИТЬ НИК И ВОЙТИ →</button>
+        </div>
+    </div>
 
     <!-- ЭКРАН БАНА -->
     <div id="ban-overlay">
@@ -1143,7 +1262,7 @@
                 <div class="topbar-profile-pill" onclick="switchGame('profile')" title="Открыть профиль">
                     <div class="topbar-avatar-mini" id="topbar-avatar-emoji">😎</div>
                     <div style="text-align: left;">
-                        <div id="topbar-username" style="font-weight: 800; font-size: 0.85rem; color: #fff;">Игрок #777</div>
+                        <div id="topbar-username" style="font-weight: 800; font-size: 0.85rem; color: #fff;">Player</div>
                         <div id="topbar-vip-label" style="font-size: 0.68rem; font-weight: 900; color: var(--text-muted);">БЕЗ VIP</div>
                     </div>
                 </div>
@@ -1168,61 +1287,14 @@
                     </div>
                 </div>
 
-                <section class="modes-grid">
-                    <div class="mode-card" onclick="switchGame('blackjack')">
-                        <div>
-                            <div class="mode-card-visual"><div class="mode-big-emoji">♠️</div><span class="mode-tag-pill" style="background:#3b82f6; color:#fff;">ДО 50 000 BYN</span></div>
-                            <div class="mode-card-title">Блэкджек</div>
-                            <div class="mode-card-desc">Обыграй дилера</div>
-                        </div>
-                        <div class="mode-card-footer">
-                            <span class="mode-online-badge empty" id="online-blackjack">👥 Играют: 0</span>
-                            <div class="mode-arrow-btn">›</div>
-                        </div>
+                <!-- ТОП-10 БОГАТЫХ ИГРОКОВ ПО BYN (ВМЕСТО РЕЖИМОВ) -->
+                <section class="top-rich-section">
+                    <div class="top-rich-header">
+                        <h2 class="top-rich-title">🏆 ТОП 10 ИГРОКОВ ПО BYN</h2>
+                        <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 700;">⏱️ Никнейм • Время на сайте • Баланс BYN</span>
                     </div>
-                    <div class="mode-card" onclick="switchGame('roulette')">
-                        <div>
-                            <div class="mode-card-visual"><div class="mode-big-emoji">🎡</div><span class="mode-tag-pill" style="background:#3b82f6; color:#fff;">ДО 50 000 BYN</span></div>
-                            <div class="mode-card-title">Колесо фортуны</div>
-                            <div class="mode-card-desc">Бросок шарика по рулетке</div>
-                        </div>
-                        <div class="mode-card-footer">
-                            <span class="mode-online-badge empty" id="online-roulette">👥 Играют: 0</span>
-                            <div class="mode-arrow-btn">›</div>
-                        </div>
-                    </div>
-                    <div class="mode-card" onclick="switchGame('jet')">
-                        <div>
-                            <div class="mode-card-visual"><div class="mode-big-emoji">🚀</div><span class="mode-tag-pill" style="background:#3b82f6; color:#fff;">ДО 75X</span></div>
-                            <div class="mode-card-title">Ракетка</div>
-                            <div class="mode-card-desc">Успей забрать иксы до 75x</div>
-                        </div>
-                        <div class="mode-card-footer">
-                            <span class="mode-online-badge empty" id="online-jet">👥 Играют: 0</span>
-                            <div class="mode-arrow-btn">›</div>
-                        </div>
-                    </div>
-                    <div class="mode-card" onclick="switchGame('poker')">
-                        <div>
-                            <div class="mode-card-visual"><div class="mode-big-emoji">🃏</div><span class="mode-tag-pill">VIP LITE</span></div>
-                            <div class="mode-card-title">Видеопокер</div>
-                            <div class="mode-card-desc">5-Card Draw Покер</div>
-                        </div>
-                        <div class="mode-card-footer">
-                            <span class="mode-online-badge empty" id="online-poker">👥 Играют: 0</span>
-                            <div class="mode-arrow-btn">›</div>
-                        </div>
-                    </div>
-                    <div class="mode-card" onclick="switchGame('slots')">
-                        <div>
-                            <div class="mode-card-visual"><div class="mode-big-emoji">🎰</div><span class="mode-tag-pill" style="background:var(--neon-green); color:#000;">VIP PRO</span></div>
-                            <div class="mode-card-title">Слоты</div>
-                            <div class="mode-card-desc">Крути барабаны до x25</div>
-                        </div>
-                        <div class="mode-card-footer">
-                            <span class="mode-online-badge empty" id="online-slots">👥 Играют: 0</span>
-                            <div class="mode-arrow-btn">›</div>
-                        </div>
+                    <div class="top-rich-list" id="top-10-players-list">
+                        <div style="text-align: center; color: var(--text-muted); padding: 18px;">⏳ Загрузка рейтинга богатейших игроков...</div>
                     </div>
                 </section>
             </div>
@@ -1239,8 +1311,8 @@
                         <div class="profile-avatar-box" id="profile-avatar-box">😎</div>
                         <div>
                             <div class="profile-name-row">
-                                <input type="text" id="profile-name-input" class="profile-name-input" maxlength="18" value="Игрок #777" oninput="changeUsername(this.value)" title="Нажмите, чтобы изменить никнейм">
-                                <span style="font-size: 0.75rem; color: var(--text-muted);">✏️ Изменить ник</span>
+                                <input type="text" id="profile-name-input" class="profile-name-input" maxlength="20" value="Player" onchange="changeUsername(this.value)" title="Нажмите, чтобы изменить никнейм (минимум 5 английских букв)">
+                                <span style="font-size: 0.75rem; color: var(--text-muted);">✏️ Изменить ник (мин. 5 англ. букв)</span>
                             </div>
                         </div>
                     </div>
@@ -1281,6 +1353,10 @@
                     <div class="stat-card">
                         <div class="stat-card-label">Куплено имущества</div>
                         <div class="stat-card-value" id="stat-props-count">0 / 6</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card-label">Время на сайте</div>
+                        <div class="stat-card-value" id="stat-time-spent" style="color: #93c5fd;">0 мин</div>
                     </div>
                 </div>
             </div>
@@ -1645,6 +1721,166 @@
         let adminRigMode = 'normal';
         let isPlayerBanned = false;
         let creatorUnlocked = false;
+        let totalTimeSpentSec = 0;
+        let nicknameConfirmed = false;
+
+        // Проверка: не менее 5 английских букв (A-Z, a-z)
+        function hasAtLeastFiveEnglishLetters(str) {
+            if (!str) return false;
+            const matches = str.match(/[a-zA-Z]/g);
+            return matches !== null && matches.length >= 5;
+        }
+
+        function formatTimeSpent(seconds) {
+            const totalSec = Math.max(0, Math.floor(seconds || 0));
+            const hrs = Math.floor(totalSec / 3600);
+            const mins = Math.floor((totalSec % 3600) / 60);
+            const secs = totalSec % 60;
+            if (hrs > 0) return `${hrs} ч ${mins} мин`;
+            if (mins > 0) return `${mins} мин ${secs} сек`;
+            return `${secs} сек`;
+        }
+
+        // Учет времени провождения на сайте каждую секунду
+        setInterval(() => {
+            if (nicknameConfirmed && !isPlayerBanned) {
+                totalTimeSpentSec += 1;
+                localStorage.setItem('so_kazik_time_sec', String(totalTimeSpentSec));
+                const statTimeEl = document.getElementById('stat-time-spent');
+                if (statTimeEl) statTimeEl.textContent = formatTimeSpent(totalTimeSpentSec);
+            }
+        }, 1000);
+
+        // Валидация первого обязательного ввода ника
+        function validateFirstNicknameInput() {
+            const inp = document.getElementById('first-nickname-input');
+            const hint = document.getElementById('first-nickname-hint');
+            if (!inp || !hint) return false;
+
+            const val = inp.value.trim();
+            const engLetters = (val.match(/[a-zA-Z]/g) || []).length;
+
+            if (val.length === 0) {
+                inp.classList.remove('invalid');
+                hint.className = 'nickname-hint';
+                hint.textContent = 'Минимум 5 английских букв';
+                return false;
+            }
+            if (engLetters < 5) {
+                inp.classList.add('invalid');
+                hint.className = 'nickname-hint error';
+                hint.textContent = `❌ Нужно минимум 5 английских букв (сейчас: ${engLetters}/5)`;
+                return false;
+            }
+            inp.classList.remove('invalid');
+            hint.className = 'nickname-hint ok';
+            hint.textContent = `✅ Отличный ник! (${engLetters} англ. букв)`;
+            return true;
+        }
+
+        function submitFirstNickname() {
+            const inp = document.getElementById('first-nickname-input');
+            if (!inp) return;
+            const clean = inp.value.trim();
+
+            if (!hasAtLeastFiveEnglishLetters(clean)) {
+                validateFirstNicknameInput();
+                showToast('⚠️ Ник должен содержать минимум 5 английских букв!');
+                inp.focus();
+                return;
+            }
+
+            userProfile.username = clean;
+            nicknameConfirmed = true;
+            localStorage.setItem('so_kazik_nick_confirmed', 'true');
+            saveData();
+            syncHeaderProfile();
+
+            const overlay = document.getElementById('nickname-overlay');
+            if (overlay) overlay.classList.remove('active');
+
+            showToast(`🎉 Добро пожаловать, ${clean}!`);
+            syncPlayerToCloud();
+        }
+
+        function checkInitialNicknameRequirement() {
+            const confirmedFlag = localStorage.getItem('so_kazik_nick_confirmed') === 'true';
+            const validExistingNick = hasAtLeastFiveEnglishLetters(userProfile.username) && !userProfile.username.startsWith('Игрок #');
+
+            if (confirmedFlag && validExistingNick) {
+                nicknameConfirmed = true;
+                document.getElementById('nickname-overlay').classList.remove('active');
+            } else {
+                nicknameConfirmed = false;
+                const overlay = document.getElementById('nickname-overlay');
+                if (overlay) overlay.classList.add('active');
+                const inp = document.getElementById('first-nickname-input');
+                if (inp) {
+                    inp.value = '';
+                    setTimeout(() => inp.focus(), 100);
+                }
+            }
+        }
+
+        function renderTop10Players(data) {
+            const container = document.getElementById('top-10-players-list');
+            if (!container) return;
+
+            let players = [];
+            if (data) {
+                players = Object.entries(data).map(([id, p]) => ({
+                    id,
+                    username: p.username || 'Player',
+                    avatar: p.avatar || '😎',
+                    balance: Number(p.balance || 0),
+                    timeSpentSec: id === playerId ? Math.max(totalTimeSpentSec, Number(p.timeSpentSec || 0)) : Number(p.timeSpentSec || 0),
+                    isBanned: Boolean(p.isBanned)
+                })).filter(p => !p.isBanned && hasAtLeastFiveEnglishLetters(p.username));
+            }
+
+            // Гарантируем, что текущий игрок с подтверждённым ником есть в списке
+            if (nicknameConfirmed && hasAtLeastFiveEnglishLetters(userProfile.username)) {
+                const meIdx = players.findIndex(p => p.id === playerId);
+                if (meIdx !== -1) {
+                    players[meIdx].username = userProfile.username;
+                    players[meIdx].balance = balance;
+                    players[meIdx].timeSpentSec = totalTimeSpentSec;
+                } else {
+                    players.push({
+                        id: playerId,
+                        username: userProfile.username,
+                        avatar: userProfile.avatar,
+                        balance: balance,
+                        timeSpentSec: totalTimeSpentSec,
+                        isBanned: false
+                    });
+                }
+            }
+
+            players.sort((a, b) => b.balance - a.balance);
+            const top10 = players.slice(0, 10);
+
+            if (top10.length === 0) {
+                container.innerHTML = '<div style="text-align: center; color: var(--text-muted); padding: 16px;">Пока нет игроков в рейтинге. Стань первым!</div>';
+                return;
+            }
+
+            container.innerHTML = top10.map((p, index) => {
+                const place = index + 1;
+                const placeCls = place === 1 ? 'p1' : (place === 2 ? 'p2' : (place === 3 ? 'p3' : ''));
+                const medal = place === 1 ? '🥇' : (place === 2 ? '🥈' : (place === 3 ? '🥉' : place));
+                const isSelf = p.id === playerId;
+
+                return `
+                    <div class="top-rich-row ${isSelf ? 'self' : ''}">
+                        <div class="top-rich-place ${placeCls}">${medal}</div>
+                        <div class="top-rich-name">${p.avatar} ${p.username} ${isSelf ? '<span style="color:var(--neon-green); font-size:0.78rem;">(Вы)</span>' : ''}</div>
+                        <div class="top-rich-time" title="Общее время провождения на сайте">⏱️ ${formatTimeSpent(p.timeSpentSec)}</div>
+                        <div class="top-rich-bal">${p.balance.toLocaleString('ru-RU')} BYN</div>
+                    </div>
+                `;
+            }).join('');
+        }
 
         async function syncPlayerToCloud() {
             if (!FIREBASE_DB_URL || FIREBASE_DB_URL.includes("ВАШ-ПРОЕКТ")) return;
@@ -1663,17 +1899,22 @@
                 losses: userStats.losses,
                 totalWagered: userStats.totalWagered,
                 totalWon: userStats.totalWon,
+                timeSpentSec: totalTimeSpentSec,
                 lastActive: Date.now()
             };
 
             try {
-                await fetch(`${FIREBASE_DB_URL}/players/${playerId}.json`, {
-                    method: 'PATCH',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
+                if (nicknameConfirmed) {
+                    await fetch(`${FIREBASE_DB_URL}/players/${playerId}.json`, {
+                        method: 'PATCH',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                }
                 await fetchCloudStateAndOnline();
-            } catch (e) {}
+            } catch (e) {
+                renderTop10Players(null);
+            }
         }
 
         async function fetchCloudStateAndOnline() {
@@ -1681,10 +1922,14 @@
             try {
                 const res = await fetch(`${FIREBASE_DB_URL}/players.json`);
                 const data = await res.json();
+                renderTop10Players(data);
                 if (!data) return;
 
                 const me = data[playerId];
                 if (me) {
+                    if (me.timeSpentSec && Number(me.timeSpentSec) > totalTimeSpentSec) {
+                        totalTimeSpentSec = Number(me.timeSpentSec);
+                    }
                     if (me.demotedReason && !creatorUnlocked) {
                         const reason = me.demotedReason;
                         adminUnlocked = false;
@@ -1730,7 +1975,6 @@
                         else banOverlay.classList.remove('active');
                     }
 
-                    // Если создатель ЗАБАНИЛ игрока: списать все деньги в 0
                     if (!wasBanned && isPlayerBanned) {
                         balance = 0;
                         saveData();
@@ -1738,7 +1982,6 @@
                         if (balanceEl) balanceEl.textContent = '0';
                     }
 
-                    // Если создатель РАЗБАНИЛ игрока: установить баланс ровно в 5000 BYN
                     if (wasBanned && !isPlayerBanned) {
                         balance = 5000;
                         saveData();
@@ -1761,7 +2004,6 @@
                         else showToast(`💸 У вас списано ${Math.abs(delta).toLocaleString('ru-RU')} BYN!`);
                     }
 
-                    // Проверка изменений имущества извне (от Создателя)
                     if (me.creatorPropAction) {
                         const { action, propId } = me.creatorPropAction;
                         await fetch(`${FIREBASE_DB_URL}/players/${playerId}.json`, {
@@ -1797,29 +2039,15 @@
                 }
 
                 const now = Date.now();
-                let onlineCounts = { blackjack: 0, roulette: 0, jet: 0, poker: 0, slots: 0, total: 0 };
+                let totalOnline = 0;
 
                 Object.values(data).forEach(p => {
                     if (p.lastActive && (now - p.lastActive < 45000)) {
-                        onlineCounts.total++;
-                        if (p.currentMode && onlineCounts[p.currentMode] !== undefined) {
-                            onlineCounts[p.currentMode]++;
-                        }
+                        totalOnline++;
                     }
                 });
 
-                const realTotal = Math.max(1, onlineCounts.total);
-
-                const modes = ['blackjack', 'roulette', 'jet', 'poker', 'slots'];
-                modes.forEach(m => {
-                    const badge = document.getElementById(`online-${m}`);
-                    if (badge) {
-                        const cnt = onlineCounts[m];
-                        badge.textContent = `👥 Играют: ${cnt}`;
-                        if (cnt > 0) badge.classList.remove('empty');
-                        else badge.classList.add('empty');
-                    }
-                });
+                const realTotal = Math.max(1, totalOnline);
                 
                 const topbarOnline = document.getElementById('topbar-real-online-count');
                 if (topbarOnline) topbarOnline.textContent = realTotal;
@@ -1833,7 +2061,9 @@
                 if (creatorUnlocked && activeGameMode === 'creator') {
                     renderCreatorTableFromData(data);
                 }
-            } catch (e) {}
+            } catch (e) {
+                renderTop10Players(null);
+            }
         }
 
         setInterval(syncPlayerToCloud, 3000);
@@ -1848,7 +2078,7 @@
             return 'normal';
         }
 
-        let balance = 5000; // Стартовый баланс 5000 BYN
+        let balance = 5000;
         let vipLevel = 'none';
         let ownedProps = [];
         let guaranteedWin = false;
@@ -1860,7 +2090,7 @@
         let promoCooldowns = {};
 
         let userProfile = {
-            username: 'Игрок #' + Math.floor(100 + Math.random() * 899),
+            username: '',
             avatar: '😎'
         };
 
@@ -1926,7 +2156,11 @@
                 if (savedBal !== null && !isNaN(parseInt(savedBal))) {
                     balance = parseInt(savedBal);
                 } else {
-                    balance = 5000; // Новый игрок сразу получает 5000 BYN
+                    balance = 5000;
+                }
+                const savedTime = localStorage.getItem('so_kazik_time_sec');
+                if (savedTime !== null && !isNaN(parseInt(savedTime))) {
+                    totalTimeSpentSec = parseInt(savedTime);
                 }
                 const savedVip = localStorage.getItem('so_kazik_vip');
                 if (savedVip) vipLevel = savedVip;
@@ -1960,6 +2194,7 @@
         function saveData() {
             try {
                 localStorage.setItem('so_kazik_balance', String(balance));
+                localStorage.setItem('so_kazik_time_sec', String(totalTimeSpentSec));
                 localStorage.setItem('so_kazik_vip', vipLevel);
                 localStorage.setItem('so_kazik_props', JSON.stringify(ownedProps));
                 localStorage.setItem('so_kazik_quiz', JSON.stringify(answeredQuestions));
@@ -2056,6 +2291,10 @@
         }
 
         function switchGame(id) {
+            if (!nicknameConfirmed) {
+                checkInitialNicknameRequirement();
+                return;
+            }
             activeGameMode = id;
             syncPlayerToCloud();
 
@@ -2090,7 +2329,7 @@
             const topAva = document.getElementById('topbar-avatar-emoji');
             const topVip = document.getElementById('topbar-vip-label');
 
-            if (topName) topName.textContent = userProfile.username;
+            if (topName) topName.textContent = userProfile.username || 'Player';
             if (topAva) topAva.textContent = userProfile.avatar;
             if (topVip) {
                 if (vipLevel === 'pro') {
@@ -2108,11 +2347,16 @@
 
         function changeUsername(newName) {
             const clean = newName.trim();
-            if (clean.length > 0) {
-                userProfile.username = clean;
-                saveData();
-                syncHeaderProfile();
+            if (!hasAtLeastFiveEnglishLetters(clean)) {
+                showToast('⚠️ Ник должен содержать не менее 5 английских букв!');
+                const nameInput = document.getElementById('profile-name-input');
+                if (nameInput) nameInput.value = userProfile.username;
+                return;
             }
+            userProfile.username = clean;
+            saveData();
+            syncHeaderProfile();
+            showToast('✅ Никнейм успешно обновлён!');
         }
 
         function renderProfile() {
@@ -2142,6 +2386,8 @@
             document.getElementById('stat-biggest-win').textContent = userStats.biggestWin.toLocaleString('ru-RU') + ' BYN';
             document.getElementById('stat-wagered').textContent = userStats.totalWagered.toLocaleString('ru-RU') + ' BYN';
             document.getElementById('stat-props-count').textContent = `${ownedProps.length} / ${PROPERTIES.length}`;
+            const statTimeEl = document.getElementById('stat-time-spent');
+            if (statTimeEl) statTimeEl.textContent = formatTimeSpent(totalTimeSpentSec);
         }
 
         // ================= АДМИН ПАНЕЛЬ =================
@@ -2317,7 +2563,6 @@
                     return;
                 }
 
-                // Логика бана списывает все деньги, разбан устанавливает 5000 BYN
                 const updatePayload = { isBanned: banState };
                 if (banState) {
                     updatePayload.balance = 0;
@@ -2568,7 +2813,6 @@
                 const targetData = await res.json();
                 if (!targetData) return;
 
-                // При бане обнуляем деньги (списываем все), при разбане ставим ровно 5000 BYN
                 const updatePayload = { isBanned: banState };
                 if (banState) {
                     updatePayload.balance = 0;
@@ -3713,6 +3957,7 @@
 
         window.addEventListener('DOMContentLoaded', () => {
             loadSavedData();
+            checkInitialNicknameRequirement();
             document.getElementById('balance').textContent = balance.toLocaleString('ru-RU');
             syncHeaderProfile();
             updateBetLimitUI();
