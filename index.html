@@ -712,7 +712,7 @@
             flex-wrap: wrap;
         }
         .admin-mini-input {
-            width: 75px;
+            width: 95px;
             background: #131b24;
             border: 1px solid #2c3e50;
             color: #fff;
@@ -1169,7 +1169,7 @@
                 <div id="profile-owned-props" style="display: flex; gap: 12px; flex-wrap: wrap;"></div>
             </div>
 
-            <!-- АДМИН-МЕНЮ (УПРАВЛЕНИЕ ИГРОКАМИ) -->
+            <!-- АДМИН-МЕНЮ (УПРАВЛЕНИЕ ИГРОКАМИ БЕЗ ЛИМИТОВ) -->
             <div id="view-admin" class="game-view">
                 <div class="game-header">
                     <h2>🛡️ Секретное Админ-Меню</h2>
@@ -1178,8 +1178,8 @@
                 <div class="admin-panel-card">
                     <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
                         <div>
-                            <h3 style="color: var(--danger); margin:0;">👥 Управление игроками в реальном времени</h3>
-                            <p style="color: var(--text-muted); font-size: 0.85rem; margin: 4px 0 0 0;">Выдавайте BYN, баньте нарушителей и настраивайте подкрутку шансов. <b>Админ админу ничего сделать не может!</b></p>
+                            <h3 style="color: var(--danger); margin:0;">👥 Управление игроками без лимитов</h3>
+                            <p style="color: var(--text-muted); font-size: 0.85rem; margin: 4px 0 0 0;">Вводи любые суммы для выдачи или сбора денег. <b>Админ админу ничего сделать не может!</b></p>
                         </div>
                         <button class="btn-play" style="padding: 8px 14px; font-size: 0.8rem;" onclick="renderAdminPanel()">🔄 Обновить список</button>
                     </div>
@@ -1189,7 +1189,7 @@
                                 <th>Игрок / Где сидит</th>
                                 <th>Баланс</th>
                                 <th>Статистика (В/П)</th>
-                                <th>Выдать / Забрать BYN</th>
+                                <th>Выдать / Забрать BYN (Любая сумма)</th>
                                 <th>Подкрутка шансов</th>
                                 <th>Бан / Доступ</th>
                             </tr>
@@ -1483,10 +1483,9 @@
         }
 
         let activeGameMode = 'lobby';
-        let adminRigMode = 'normal'; // 'normal' | 'win' | 'lose' (управляется админом из облака)
+        let adminRigMode = 'normal';
         let isPlayerBanned = false;
 
-        // Синхронизация текущего игрока в Firebase
         async function syncPlayerToCloud() {
             if (!FIREBASE_DB_URL || FIREBASE_DB_URL.includes("ВАШ-ПРОЕКТ")) return;
             
@@ -1506,7 +1505,6 @@
             };
 
             try {
-                // Используем PATCH вместо PUT, чтобы не затереть админские флаги (isBanned, rigMode, adminGift)
                 await fetch(`${FIREBASE_DB_URL}/players/${playerId}.json`, {
                     method: 'PATCH',
                     headers: { 'Content-Type': 'application/json' },
@@ -1516,7 +1514,6 @@
             } catch (e) {}
         }
 
-        // Получение реального онлайна по режимам + проверка админских команд (бан, выдача BYN, подкрутка)
         async function fetchCloudStateAndOnline() {
             if (!FIREBASE_DB_URL || FIREBASE_DB_URL.includes("ВАШ-ПРОЕКТ")) return;
             try {
@@ -1524,10 +1521,8 @@
                 const data = await res.json();
                 if (!data) return;
 
-                // 1. Проверяем админские воздействия на текущего игрока (если он НЕ админ)
                 const me = data[playerId];
                 if (me && !adminUnlocked) {
-                    // Проверка бана
                     isPlayerBanned = Boolean(me.isBanned);
                     const banOverlay = document.getElementById('ban-overlay');
                     if (banOverlay) {
@@ -1535,13 +1530,10 @@
                         else banOverlay.classList.remove('active');
                     }
 
-                    // Проверка подкрутки от админа
                     adminRigMode = me.rigMode || 'normal';
 
-                    // Проверка выдачи / списания денег админом
                     if (me.adminBalanceDelta && me.adminBalanceDelta !== 0) {
                         const delta = Number(me.adminBalanceDelta);
-                        // Сразу обнуляем дельту в облаке, чтобы не начислилось дважды
                         await fetch(`${FIREBASE_DB_URL}/players/${playerId}.json`, {
                             method: 'PATCH',
                             headers: { 'Content-Type': 'application/json' },
@@ -1552,14 +1544,12 @@
                         else showToast(`💸 Админ списал у вас ${Math.abs(delta).toLocaleString('ru-RU')} BYN!`);
                     }
                 } else if (adminUnlocked) {
-                    // Админа нельзя забанить или подкрутить
                     isPlayerBanned = false;
                     adminRigMode = 'normal';
                     const banOverlay = document.getElementById('ban-overlay');
                     if (banOverlay) banOverlay.classList.remove('active');
                 }
 
-                // 2. Честный подсчёт онлайна по конкретным режимам (активность за последние 45 секунд)
                 const now = Date.now();
                 let onlineCounts = { blackjack: 0, roulette: 0, jet: 0, poker: 0, slots: 0, total: 0 };
 
@@ -1586,17 +1576,14 @@
                 const footerOnline = document.getElementById('footer-real-online');
                 if (footerOnline) footerOnline.textContent = `Игроков онлайн на сайте: ${Math.max(1, onlineCounts.total)}`;
 
-                // Если открыта админка — обновляем таблицу
                 if (adminUnlocked && activeGameMode === 'admin') {
                     renderAdminTableFromData(data);
                 }
             } catch (e) {}
         }
 
-        // Пинг онлайна и проверка админских команд каждые 3 секунды
         setInterval(syncPlayerToCloud, 3000);
 
-        // Определяем итоговый исход с учетом промокода и админской подкрутки
         function getOutcomeModifier() {
             if (guaranteedWin) {
                 guaranteedWin = false;
@@ -1607,7 +1594,6 @@
             return 'normal';
         }
 
-        // ================= СОСТОЯНИЕ ИГРЫ =================
         let balance = 1000;
         let vipLevel = 'none';
         let ownedProps = [];
@@ -2005,7 +1991,7 @@
             renderProfile();
         }
 
-        // ================= АДМИН ПАНЕЛЬ =================
+        // ================= АДМИН ПАНЕЛЬ (БЕЗ ЛИМИТОВ НА СУММЫ) =================
         const MODE_LABELS = {
             lobby: '🏠 В лобби',
             blackjack: '♠️ Блэкджек',
@@ -2066,7 +2052,6 @@
                 let controlsBan = '';
 
                 if (isTargetAdmin) {
-                    // Админ админу ничего сделать не может!
                     controlsMoney = `<span style="color:var(--text-muted); font-size:0.78rem;">🛡️ Иммунитет админа</span>`;
                     controlsRig = `<span style="color:var(--text-muted); font-size:0.78rem;">🛡️ Недоступно</span>`;
                     controlsBan = `<span style="color:var(--text-muted); font-size:0.78rem;">🛡️ Защищён</span>`;
@@ -2076,9 +2061,10 @@
                         ? '<b style="color:var(--neon-green);">Победа 100%</b>'
                         : (currentRig === 'lose' ? '<b style="color:var(--danger);">Слив 0%</b>' : '<span style="color:var(--text-muted);">Обычный</span>');
 
+                    // Поле ввода без лимитов и ограничений
                     controlsMoney = `
                         <div class="admin-ctrl-group">
-                            <input type="number" id="adm-amt-${p.id}" class="admin-mini-input" value="5000" min="1">
+                            <input type="number" id="adm-amt-${p.id}" class="admin-mini-input" value="100000" placeholder="Сумма">
                             <button class="admin-mini-btn btn-give" onclick="adminModifyBalance('${p.id}', 1)">+Выдать</button>
                             <button class="admin-mini-btn btn-take" onclick="adminModifyBalance('${p.id}', -1)">-Забрать</button>
                         </div>
@@ -2118,7 +2104,7 @@
             if (!adminUnlocked) return;
             const input = document.getElementById(`adm-amt-${targetUid}`);
             const amount = parseInt(input ? input.value : 0);
-            if (isNaN(amount) || amount <= 0) { showToast('⚠️ Укажите корректную сумму!'); return; }
+            if (isNaN(amount) || amount === 0) { showToast('⚠️ Укажите сумму для выдачи или сбора!'); return; }
 
             try {
                 const res = await fetch(`${FIREBASE_DB_URL}/players/${targetUid}.json`);
@@ -2138,7 +2124,7 @@
                     body: JSON.stringify({ adminBalanceDelta: newDelta })
                 });
 
-                showToast(sign > 0 ? `✅ Отправлено +${amount} BYN игроку ${targetData.username}!` : `💸 Списано ${amount} BYN у игрока ${targetData.username}!`);
+                showToast(sign > 0 ? `✅ Успешно выдано +${amount.toLocaleString('ru-RU')} BYN игроку ${targetData.username}!` : `💸 Успешно забрано ${amount.toLocaleString('ru-RU')} BYN у игрока ${targetData.username}!`);
                 renderAdminPanel();
             } catch (e) {
                 showToast('❌ Ошибка связи с базой');
@@ -2249,7 +2235,7 @@
                 jetCrashAt = 75.00;
                 jetGuaranteedMax = false;
             } else if (outcome === 'lose') {
-                jetCrashAt = 1.00; // Мгновенный улет
+                jetCrashAt = 1.00;
             } else {
                 const r = Math.random();
                 if (r < 0.80) jetCrashAt = 1.00 + Math.random() * 0.24;
@@ -3020,7 +3006,7 @@
             if (!bjActive) return;
             let nextCard = bjDeck.pop();
             if (!adminUnlocked && adminRigMode === 'lose') {
-                nextCard = { val: 10, suit: '♠' }; // Гарантированный перебор при сливе
+                nextCard = { val: 10, suit: '♠' };
             }
             bjPlayerHand.push(nextCard);
             appendBjCard('player-cards', bjPlayerHand[bjPlayerHand.length - 1], true);
