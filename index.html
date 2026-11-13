@@ -32,6 +32,21 @@
             overflow-x: hidden;
         }
 
+        /* ЭКРАН БАНА */
+        #ban-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(5, 8, 12, 0.97);
+            z-index: 99999;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 20px;
+        }
+        #ban-overlay.active { display: flex; }
+
         /* ЛЕВАЯ ПАНЕЛЬ */
         .left-sidebar {
             width: 270px;
@@ -275,15 +290,20 @@
         .mode-arrow-btn { width: 34px; height: 34px; border-radius: 50%; background: rgba(255,255,255,0.08); display: grid; place-items: center; color: #fff; font-weight: 900; flex-shrink: 0; }
         
         .mode-online-badge {
-            font-size: 0.72rem;
+            font-size: 0.74rem;
             color: var(--neon-green);
             background: rgba(26, 232, 58, 0.1);
-            border: 1px solid rgba(26, 232, 58, 0.2);
-            padding: 3px 8px;
+            border: 1px solid rgba(26, 232, 58, 0.25);
+            padding: 3px 9px;
             border-radius: 6px;
             font-weight: 800;
             display: inline-block;
             margin-top: 6px;
+        }
+        .mode-online-badge.empty {
+            color: var(--text-muted);
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(255, 255, 255, 0.1);
         }
 
         /* ИГРОВЫЕ ОКНА */
@@ -662,26 +682,63 @@
             background: #0d131a;
             border: 2px solid var(--danger);
             border-radius: 16px;
-            padding: 24px;
+            padding: 20px;
             margin-bottom: 24px;
             box-shadow: 0 0 30px rgba(239, 68, 68, 0.2);
+            overflow-x: auto;
         }
         .admin-table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 12px;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             text-align: left;
+            min-width: 850px;
         }
         .admin-table th, .admin-table td {
-            padding: 10px;
+            padding: 10px 8px;
             border-bottom: 1px solid #1c2633;
+            vertical-align: middle;
         }
         .admin-table th {
             color: var(--danger);
             text-transform: uppercase;
-            font-size: 0.78rem;
+            font-size: 0.74rem;
         }
+        .admin-ctrl-group {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            flex-wrap: wrap;
+        }
+        .admin-mini-input {
+            width: 75px;
+            background: #131b24;
+            border: 1px solid #2c3e50;
+            color: #fff;
+            padding: 5px 6px;
+            border-radius: 6px;
+            font-size: 0.78rem;
+            font-weight: 700;
+        }
+        .admin-mini-btn {
+            border: none;
+            border-radius: 6px;
+            padding: 5px 8px;
+            font-size: 0.72rem;
+            font-weight: 800;
+            cursor: pointer;
+            transition: 0.15s;
+            color: #fff;
+        }
+        .admin-mini-btn:hover { filter: brightness(1.15); }
+        .btn-give { background: #16a34a; }
+        .btn-take { background: #d97706; }
+        .btn-ban { background: #dc2626; }
+        .btn-unban { background: #2563eb; }
+        .btn-rig-win { background: #10b981; color: #021a0d; }
+        .btn-rig-lose { background: #ef4444; }
+        .btn-rig-off { background: #475569; }
 
         /* ХАЛЯВА */
         .settings-container {
@@ -878,6 +935,14 @@
 </head>
 <body>
 
+    <!-- ЭКРАН БАНА -->
+    <div id="ban-overlay">
+        <div style="font-size: 4.5rem; margin-bottom: 12px;">🔨🚫</div>
+        <h1 style="color: var(--danger); font-size: 2.3rem; margin: 0 0 10px 0; text-transform: uppercase;">ВЫ ЗАБАНЕНЫ В КАЗИКЕ</h1>
+        <p style="color: var(--text-muted); max-width: 480px; font-size: 1.05rem;">Администратор ограничил вам доступ к сайту. Обратитесь к боссу в Telegram, чтобы снять блокировку.</p>
+        <a href="https://t.me/Seregablatnou" target="_blank" class="tg-boss-btn" style="margin-top: 18px;">✈️ Написать Боссу</a>
+    </div>
+
     <!-- ЛЕВАЯ ПАНЕЛЬ -->
     <aside class="left-sidebar">
         <div class="brand-logo" onclick="showLobby()">
@@ -982,7 +1047,7 @@
                             <div class="mode-card-desc">Обыграй дилера</div>
                         </div>
                         <div class="mode-card-footer">
-                            <span class="mode-online-badge" id="online-blackjack">👥 Онлайн: 1</span>
+                            <span class="mode-online-badge empty" id="online-blackjack">👥 Играют: 0</span>
                             <div class="mode-arrow-btn">›</div>
                         </div>
                     </div>
@@ -993,7 +1058,7 @@
                             <div class="mode-card-desc">Бросок шарика по рулетке</div>
                         </div>
                         <div class="mode-card-footer">
-                            <span class="mode-online-badge" id="online-roulette">👥 Онлайн: 1</span>
+                            <span class="mode-online-badge empty" id="online-roulette">👥 Играют: 0</span>
                             <div class="mode-arrow-btn">›</div>
                         </div>
                     </div>
@@ -1004,7 +1069,7 @@
                             <div class="mode-card-desc">Успей забрать иксы до 75x</div>
                         </div>
                         <div class="mode-card-footer">
-                            <span class="mode-online-badge" id="online-jet">👥 Онлайн: 1</span>
+                            <span class="mode-online-badge empty" id="online-jet">👥 Играют: 0</span>
                             <div class="mode-arrow-btn">›</div>
                         </div>
                     </div>
@@ -1015,7 +1080,7 @@
                             <div class="mode-card-desc">5-Card Draw Покер</div>
                         </div>
                         <div class="mode-card-footer">
-                            <span class="mode-online-badge" id="online-poker">👥 Онлайн: 1</span>
+                            <span class="mode-online-badge empty" id="online-poker">👥 Играют: 0</span>
                             <div class="mode-arrow-btn">›</div>
                         </div>
                     </div>
@@ -1026,7 +1091,7 @@
                             <div class="mode-card-desc">Крути барабаны до x25</div>
                         </div>
                         <div class="mode-card-footer">
-                            <span class="mode-online-badge" id="online-slots">👥 Онлайн: 1</span>
+                            <span class="mode-online-badge empty" id="online-slots">👥 Играют: 0</span>
                             <div class="mode-arrow-btn">›</div>
                         </div>
                     </div>
@@ -1040,7 +1105,6 @@
                     <button class="btn-back" onclick="showLobby()">← В лобби</button>
                 </div>
 
-                <!-- КАРТОЧКА ПРОФИЛЯ С УКРАШЕНИЯМИ -->
                 <div class="profile-banner-card" id="profile-banner-card">
                     <div class="profile-identity">
                         <div class="profile-avatar-box" id="profile-avatar-box">😎</div>
@@ -1061,7 +1125,6 @@
                     </div>
                 </div>
 
-                <!-- СТАТИСТИКА ИГРОКА -->
                 <h3 style="color: var(--neon-green); text-transform: uppercase; margin: 0 0 12px 0; font-size: 1rem;">📊 Боевая статистика</h3>
                 <div class="stats-grid">
                     <div class="stat-card">
@@ -1098,17 +1161,15 @@
                     </div>
                 </div>
 
-                <!-- МАГАЗИН УКРАШЕНИЙ ДЛЯ ПРОФИЛЯ ЗА BYN -->
                 <h3 style="color: var(--gold); text-transform: uppercase; margin: 10px 0 6px 0; font-size: 1.05rem;">✨ Магазин украшений профиля за BYN</h3>
                 <p style="color: var(--text-muted); font-size: 0.85rem; margin: 0 0 14px 0;">Копи валюту в играх и прокачивай внешний вид своего профиля: эксклюзивные рамки, фоны и титулы!</p>
                 <div class="cosmetics-grid" id="cosmetics-shop-grid"></div>
 
-                <!-- ВИТРИНА ИМУЩЕСТВА В ПРОФИЛЕ -->
                 <h3 style="color: #fff; text-transform: uppercase; margin: 10px 0 12px 0; font-size: 1rem;">🏆 Моя коллекция элитного имущества</h3>
                 <div id="profile-owned-props" style="display: flex; gap: 12px; flex-wrap: wrap;"></div>
             </div>
 
-            <!-- АДМИН-МЕНЮ (РЕАЛЬНЫЕ ИГРОКИ С FIREBASE) -->
+            <!-- АДМИН-МЕНЮ (УПРАВЛЕНИЕ ИГРОКАМИ) -->
             <div id="view-admin" class="game-view">
                 <div class="game-header">
                     <h2>🛡️ Секретное Админ-Меню</h2>
@@ -1117,20 +1178,20 @@
                 <div class="admin-panel-card">
                     <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
                         <div>
-                            <h3 style="color: var(--danger); margin:0;">👥 Мониторинг друзей на сайте</h3>
-                            <p style="color: var(--text-muted); font-size: 0.85rem; margin: 4px 0 0 0;">Активность пользователей, балансы и статистика ставок в реальном времени.</p>
+                            <h3 style="color: var(--danger); margin:0;">👥 Управление игроками в реальном времени</h3>
+                            <p style="color: var(--text-muted); font-size: 0.85rem; margin: 4px 0 0 0;">Выдавайте BYN, баньте нарушителей и настраивайте подкрутку шансов. <b>Админ админу ничего сделать не может!</b></p>
                         </div>
-                        <button class="btn-play" style="padding: 8px 14px; font-size: 0.8rem;" onclick="renderAdminPanel()">🔄 Обновить</button>
+                        <button class="btn-play" style="padding: 8px 14px; font-size: 0.8rem;" onclick="renderAdminPanel()">🔄 Обновить список</button>
                     </div>
                     <table class="admin-table">
                         <thead>
                             <tr>
-                                <th>Игрок</th>
-                                <th>VIP Статус</th>
+                                <th>Игрок / Где сидит</th>
                                 <th>Баланс</th>
-                                <th>Игр (Побед / Проигр.)</th>
-                                <th>Поставлено / Выиграно</th>
-                                <th>Профит казика</th>
+                                <th>Статистика (В/П)</th>
+                                <th>Выдать / Забрать BYN</th>
+                                <th>Подкрутка шансов</th>
+                                <th>Бан / Доступ</th>
                             </tr>
                         </thead>
                         <tbody id="admin-players-tbody"></tbody>
@@ -1412,7 +1473,7 @@
     <div class="toast" id="toast"></div>
 
     <script>
-        // ================= ОБЛАЧНАЯ БАЗА FIREBASE ДЛЯ РЕАЛЬНОГО ОНЛАЙНА =================
+        // ================= ОБЛАЧНАЯ БАЗА FIREBASE =================
         const FIREBASE_DB_URL = "https://serega-kazik-default-rtdb.firebaseio.com"; 
 
         let playerId = localStorage.getItem('so_kazik_uid');
@@ -1422,8 +1483,11 @@
         }
 
         let activeGameMode = 'lobby';
+        let adminRigMode = 'normal'; // 'normal' | 'win' | 'lose' (управляется админом из облака)
+        let isPlayerBanned = false;
 
-        function syncPlayerToCloud() {
+        // Синхронизация текущего игрока в Firebase
+        async function syncPlayerToCloud() {
             if (!FIREBASE_DB_URL || FIREBASE_DB_URL.includes("ВАШ-ПРОЕКТ")) return;
             
             const payload = {
@@ -1431,6 +1495,7 @@
                 avatar: userProfile.avatar,
                 vipLevel: vipLevel,
                 balance: balance,
+                isAdmin: adminUnlocked,
                 currentMode: activeGameMode,
                 gamesPlayed: userStats.gamesPlayed,
                 wins: userStats.wins,
@@ -1440,28 +1505,66 @@
                 lastActive: Date.now()
             };
 
-            fetch(`${FIREBASE_DB_URL}/players/${playerId}.json`, {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
-            }).then(() => {
-                fetchRealOnlineData();
-            }).catch(() => {});
+            try {
+                // Используем PATCH вместо PUT, чтобы не затереть админские флаги (isBanned, rigMode, adminGift)
+                await fetch(`${FIREBASE_DB_URL}/players/${playerId}.json`, {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                await fetchCloudStateAndOnline();
+            } catch (e) {}
         }
 
-        async function fetchRealOnlineData() {
+        // Получение реального онлайна по режимам + проверка админских команд (бан, выдача BYN, подкрутка)
+        async function fetchCloudStateAndOnline() {
             if (!FIREBASE_DB_URL || FIREBASE_DB_URL.includes("ВАШ-ПРОЕКТ")) return;
             try {
                 const res = await fetch(`${FIREBASE_DB_URL}/players.json`);
                 const data = await res.json();
                 if (!data) return;
 
+                // 1. Проверяем админские воздействия на текущего игрока (если он НЕ админ)
+                const me = data[playerId];
+                if (me && !adminUnlocked) {
+                    // Проверка бана
+                    isPlayerBanned = Boolean(me.isBanned);
+                    const banOverlay = document.getElementById('ban-overlay');
+                    if (banOverlay) {
+                        if (isPlayerBanned) banOverlay.classList.add('active');
+                        else banOverlay.classList.remove('active');
+                    }
+
+                    // Проверка подкрутки от админа
+                    adminRigMode = me.rigMode || 'normal';
+
+                    // Проверка выдачи / списания денег админом
+                    if (me.adminBalanceDelta && me.adminBalanceDelta !== 0) {
+                        const delta = Number(me.adminBalanceDelta);
+                        // Сразу обнуляем дельту в облаке, чтобы не начислилось дважды
+                        await fetch(`${FIREBASE_DB_URL}/players/${playerId}.json`, {
+                            method: 'PATCH',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ adminBalanceDelta: 0 })
+                        });
+                        updateBalance(delta);
+                        if (delta > 0) showToast(`💰 Админ выдал вам +${delta.toLocaleString('ru-RU')} BYN!`);
+                        else showToast(`💸 Админ списал у вас ${Math.abs(delta).toLocaleString('ru-RU')} BYN!`);
+                    }
+                } else if (adminUnlocked) {
+                    // Админа нельзя забанить или подкрутить
+                    isPlayerBanned = false;
+                    adminRigMode = 'normal';
+                    const banOverlay = document.getElementById('ban-overlay');
+                    if (banOverlay) banOverlay.classList.remove('active');
+                }
+
+                // 2. Честный подсчёт онлайна по конкретным режимам (активность за последние 45 секунд)
                 const now = Date.now();
                 let onlineCounts = { blackjack: 0, roulette: 0, jet: 0, poker: 0, slots: 0, total: 0 };
 
                 Object.values(data).forEach(p => {
-                    // Считаем пользователя онлайн, если он отправлял запрос за последние 3 минуты (180000 мс)
-                    if (p.lastActive && (now - p.lastActive < 180000)) {
+                    if (p.lastActive && (now - p.lastActive < 45000)) {
                         onlineCounts.total++;
                         if (p.currentMode && onlineCounts[p.currentMode] !== undefined) {
                             onlineCounts[p.currentMode]++;
@@ -1469,27 +1572,47 @@
                     }
                 });
 
-                // Обновляем бейджи на карточках в лобби
-                document.getElementById('online-blackjack').textContent = `👥 Онлайн: ${Math.max(1, onlineCounts.blackjack)}`;
-                document.getElementById('online-roulette').textContent = `👥 Онлайн: ${Math.max(1, onlineCounts.roulette)}`;
-                document.getElementById('online-jet').textContent = `👥 Онлайн: ${Math.max(1, onlineCounts.jet)}`;
-                document.getElementById('online-poker').textContent = `👥 Онлайн: ${Math.max(1, onlineCounts.poker)}`;
-                document.getElementById('online-slots').textContent = `👥 Онлайн: ${Math.max(1, onlineCounts.slots)}`;
+                const modes = ['blackjack', 'roulette', 'jet', 'poker', 'slots'];
+                modes.forEach(m => {
+                    const badge = document.getElementById(`online-${m}`);
+                    if (badge) {
+                        const cnt = onlineCounts[m];
+                        badge.textContent = `👥 Играют: ${cnt}`;
+                        if (cnt > 0) badge.classList.remove('empty');
+                        else badge.classList.add('empty');
+                    }
+                });
                 
                 const footerOnline = document.getElementById('footer-real-online');
                 if (footerOnline) footerOnline.textContent = `Игроков онлайн на сайте: ${Math.max(1, onlineCounts.total)}`;
+
+                // Если открыта админка — обновляем таблицу
+                if (adminUnlocked && activeGameMode === 'admin') {
+                    renderAdminTableFromData(data);
+                }
             } catch (e) {}
         }
 
-        // Авто-синхронизация активности каждые 10 секунд
-        setInterval(syncPlayerToCloud, 10000);
+        // Пинг онлайна и проверка админских команд каждые 3 секунды
+        setInterval(syncPlayerToCloud, 3000);
+
+        // Определяем итоговый исход с учетом промокода и админской подкрутки
+        function getOutcomeModifier() {
+            if (guaranteedWin) {
+                guaranteedWin = false;
+                return 'win';
+            }
+            if (!adminUnlocked && adminRigMode === 'win') return 'win';
+            if (!adminUnlocked && adminRigMode === 'lose') return 'lose';
+            return 'normal';
+        }
 
         // ================= СОСТОЯНИЕ ИГРЫ =================
         let balance = 1000;
         let vipLevel = 'none';
         let ownedProps = [];
         let guaranteedWin = false;
-        let jetGuaranteedMax = false; // Флаг для промокода на ракетку (75x)
+        let jetGuaranteedMax = false;
         let musicUnlocked = false;
         let adminUnlocked = false;
         let answeredQuestions = {};
@@ -1497,7 +1620,7 @@
         let promoCooldowns = {};
 
         let userProfile = {
-            username: 'Игрок #777',
+            username: 'Игрок #' + Math.floor(100 + Math.random() * 899),
             avatar: '😎',
             equippedFrame: 'none',
             equippedBg: 'none',
@@ -1638,7 +1761,6 @@
             }
             saveData();
             syncHeaderProfile();
-            if (adminUnlocked) renderAdminPanel();
         }
 
         function updateBalance(delta) {
@@ -1883,55 +2005,189 @@
             renderProfile();
         }
 
-        // --- АДМИН ПАНЕЛЬ С ПОДКЛЮЧЕНИЕМ ДРУЗЕЙ ИЗ FIREBASE ---
+        // ================= АДМИН ПАНЕЛЬ =================
+        const MODE_LABELS = {
+            lobby: '🏠 В лобби',
+            blackjack: '♠️ Блэкджек',
+            roulette: '🎡 Колесо',
+            jet: '🚀 Ракетка',
+            poker: '🃏 Покер',
+            slots: '🎰 Слоты',
+            profile: '👤 Профиль',
+            'vip-shop': '⭐ VIP Магазин',
+            property: '👑 Имущество',
+            settings: '🎁 Халява',
+            admin: '🛡️ Админка'
+        };
+
         async function renderAdminPanel() {
             const tbody = document.getElementById('admin-players-tbody');
             if (!tbody) return;
-
-            tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; color:var(--gold);">⏳ Загрузка реальных игроков из облака...</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; color:var(--gold);">⏳ Загрузка списка игроков...</td></tr>';
 
             try {
                 const res = await fetch(`${FIREBASE_DB_URL}/players.json`);
                 const data = await res.json();
-
                 if (!data) {
-                    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;">Пока нет данных в облаке. Сделайте ставку!</td></tr>';
+                    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;">Пока нет игроков в базе.</td></tr>';
+                    return;
+                }
+                renderAdminTableFromData(data);
+            } catch (e) {
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; color:var(--danger);">❌ Ошибка загрузки данных из Firebase.</td></tr>';
+            }
+        }
+
+        function renderAdminTableFromData(data) {
+            const tbody = document.getElementById('admin-players-tbody');
+            if (!tbody) return;
+
+            tbody.innerHTML = '';
+            const now = Date.now();
+            const players = Object.entries(data).map(([id, p]) => ({ id, ...p }));
+            players.sort((a, b) => (b.lastActive || 0) - (a.lastActive || 0));
+
+            players.forEach(p => {
+                const isMe = (p.id === playerId);
+                const isTargetAdmin = Boolean(p.isAdmin) || isMe;
+                const isOnline = (now - (p.lastActive || 0)) < 45000;
+                const modeLabel = MODE_LABELS[p.currentMode] || p.currentMode || '🏠 В лобби';
+
+                const statusBadge = isOnline
+                    ? `<span style="color:var(--neon-green); font-size:0.75rem;">● Онлайн (${modeLabel})</span>`
+                    : `<span style="color:var(--text-muted); font-size:0.75rem;">○ Офлайн</span>`;
+
+                const adminBadge = isTargetAdmin
+                    ? `<span style="background:var(--danger); color:#fff; font-size:0.65rem; padding:2px 5px; border-radius:4px; font-weight:900; margin-left:4px;">ADMIN</span>`
+                    : '';
+
+                let controlsMoney = '';
+                let controlsRig = '';
+                let controlsBan = '';
+
+                if (isTargetAdmin) {
+                    // Админ админу ничего сделать не может!
+                    controlsMoney = `<span style="color:var(--text-muted); font-size:0.78rem;">🛡️ Иммунитет админа</span>`;
+                    controlsRig = `<span style="color:var(--text-muted); font-size:0.78rem;">🛡️ Недоступно</span>`;
+                    controlsBan = `<span style="color:var(--text-muted); font-size:0.78rem;">🛡️ Защищён</span>`;
+                } else {
+                    const currentRig = p.rigMode || 'normal';
+                    const rigStatusText = currentRig === 'win'
+                        ? '<b style="color:var(--neon-green);">Победа 100%</b>'
+                        : (currentRig === 'lose' ? '<b style="color:var(--danger);">Слив 0%</b>' : '<span style="color:var(--text-muted);">Обычный</span>');
+
+                    controlsMoney = `
+                        <div class="admin-ctrl-group">
+                            <input type="number" id="adm-amt-${p.id}" class="admin-mini-input" value="5000" min="1">
+                            <button class="admin-mini-btn btn-give" onclick="adminModifyBalance('${p.id}', 1)">+Выдать</button>
+                            <button class="admin-mini-btn btn-take" onclick="adminModifyBalance('${p.id}', -1)">-Забрать</button>
+                        </div>
+                    `;
+
+                    controlsRig = `
+                        <div style="margin-bottom:4px; font-size:0.75rem;">Режим: ${rigStatusText}</div>
+                        <div class="admin-ctrl-group">
+                            <button class="admin-mini-btn btn-rig-win" onclick="adminSetRig('${p.id}', 'win')">Победа</button>
+                            <button class="admin-mini-btn btn-rig-lose" onclick="adminSetRig('${p.id}', 'lose')">Слив</button>
+                            <button class="admin-mini-btn btn-rig-off" onclick="adminSetRig('${p.id}', 'normal')">Сброс</button>
+                        </div>
+                    `;
+
+                    controlsBan = p.isBanned
+                        ? `<button class="admin-mini-btn btn-unban" onclick="adminToggleBan('${p.id}', false)">✅ Разбанить</button>`
+                        : `<button class="admin-mini-btn btn-ban" onclick="adminToggleBan('${p.id}', true)">🔨 Забанить</button>`;
+                }
+
+                tbody.innerHTML += `
+                    <tr style="${p.isBanned ? 'background: rgba(239, 68, 68, 0.12);' : ''}">
+                        <td>
+                            <div><b>${p.avatar || '😎'} ${p.username || 'Игрок'}</b> ${isMe ? '(Вы)' : ''} ${adminBadge}</div>
+                            <div style="margin-top:3px;">${statusBadge}</div>
+                        </td>
+                        <td style="color:var(--gold); font-weight:900;">${(p.balance || 0).toLocaleString('ru-RU')} BYN</td>
+                        <td>${p.gamesPlayed || 0} (<span style="color:var(--neon-green);">${p.wins || 0}</span> / <span style="color:var(--danger);">${p.losses || 0}</span>)</td>
+                        <td>${controlsMoney}</td>
+                        <td>${controlsRig}</td>
+                        <td>${controlsBan}</td>
+                    </tr>
+                `;
+            });
+        }
+
+        async function adminModifyBalance(targetUid, sign) {
+            if (!adminUnlocked) return;
+            const input = document.getElementById(`adm-amt-${targetUid}`);
+            const amount = parseInt(input ? input.value : 0);
+            if (isNaN(amount) || amount <= 0) { showToast('⚠️ Укажите корректную сумму!'); return; }
+
+            try {
+                const res = await fetch(`${FIREBASE_DB_URL}/players/${targetUid}.json`);
+                const targetData = await res.json();
+                if (!targetData) return;
+                if (targetData.isAdmin) {
+                    showToast('🛡️ Админ админу ничего сделать не может!');
                     return;
                 }
 
-                tbody.innerHTML = '';
-                const now = Date.now();
-                const players = Object.entries(data).map(([id, p]) => ({ id, ...p }));
-                players.sort((a, b) => (b.lastActive || 0) - (a.lastActive || 0));
+                const existingDelta = Number(targetData.adminBalanceDelta || 0);
+                const newDelta = existingDelta + (amount * sign);
 
-                players.forEach(p => {
-                    const isMe = (p.id === playerId);
-                    const isOnline = (now - (p.lastActive || 0)) < 180000;
-                    const statusBadge = isMe
-                        ? '<span style="color:var(--neon-green); font-size:0.75rem;">(Вы)</span>'
-                        : (isOnline ? '<span style="color:var(--neon-green); font-size:0.75rem;">● Онлайн</span>' : '<span style="color:var(--text-muted); font-size:0.75rem;">○ Офлайн</span>');
-
-                    const wagered = p.totalWagered || 0;
-                    const won = p.totalWon || 0;
-                    const profit = wagered - won;
-                    const profitColor = profit >= 0 ? 'var(--neon-green)' : 'var(--danger)';
-                    const vip = (p.vipLevel || 'none').toUpperCase();
-                    const vipColor = vip === 'PRO' ? 'var(--neon-green)' : (vip === 'LITE' ? '#f59e0b' : 'var(--text-muted)');
-
-                    tbody.innerHTML += `
-                        <tr>
-                            <td><b>${p.avatar || '😎'} ${p.username || 'Игрок'}</b> ${statusBadge}</td>
-                            <td><span style="color:${vipColor}; font-weight:800;">${vip}</span></td>
-                            <td style="color:var(--gold); font-weight:800;">${(p.balance || 0).toLocaleString('ru-RU')} BYN</td>
-                            <td>${p.gamesPlayed || 0} (<span style="color:var(--neon-green);">${p.wins || 0}</span> / <span style="color:var(--danger);">${p.losses || 0}</span>)</td>
-                            <td>${wagered.toLocaleString('ru-RU')} / <span style="color:var(--gold);">${won.toLocaleString('ru-RU')} BYN</span></td>
-                            <td style="color:${profitColor}; font-weight:900;">${profit >= 0 ? '+' : ''}${profit.toLocaleString('ru-RU')} BYN</td>
-                        </tr>
-                    `;
+                await fetch(`${FIREBASE_DB_URL}/players/${targetUid}.json`, {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ adminBalanceDelta: newDelta })
                 });
+
+                showToast(sign > 0 ? `✅ Отправлено +${amount} BYN игроку ${targetData.username}!` : `💸 Списано ${amount} BYN у игрока ${targetData.username}!`);
+                renderAdminPanel();
             } catch (e) {
-                tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; color:var(--danger);">❌ Ошибка подключения к базе Firebase. Проверьте ссылку!</td></tr>';
+                showToast('❌ Ошибка связи с базой');
             }
+        }
+
+        async function adminSetRig(targetUid, mode) {
+            if (!adminUnlocked) return;
+            try {
+                const res = await fetch(`${FIREBASE_DB_URL}/players/${targetUid}.json`);
+                const targetData = await res.json();
+                if (!targetData) return;
+                if (targetData.isAdmin) {
+                    showToast('🛡️ Админ админу ничего сделать не может!');
+                    return;
+                }
+
+                await fetch(`${FIREBASE_DB_URL}/players/${targetUid}.json`, {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ rigMode: mode })
+                });
+
+                const labels = { win: 'Победа 100%', lose: 'Слив 0%', normal: 'Обычный рандом' };
+                showToast(`🎛️ Для ${targetData.username} установлен режим: ${labels[mode]}`);
+                renderAdminPanel();
+            } catch (e) {}
+        }
+
+        async function adminToggleBan(targetUid, banState) {
+            if (!adminUnlocked) return;
+            try {
+                const res = await fetch(`${FIREBASE_DB_URL}/players/${targetUid}.json`);
+                const targetData = await res.json();
+                if (!targetData) return;
+                if (targetData.isAdmin) {
+                    showToast('🛡️ Админ админу ничего сделать не может!');
+                    return;
+                }
+
+                await fetch(`${FIREBASE_DB_URL}/players/${targetUid}.json`, {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ isBanned: banState })
+                });
+
+                showToast(banState ? `🔨 Игрок ${targetData.username} забанен!` : `✅ Игрок ${targetData.username} разбанен!`);
+                renderAdminPanel();
+            } catch (e) {}
         }
 
         function selectBetType(type, btn) {
@@ -1966,7 +2222,7 @@
             if (controls) controls.style.display = hasAccess ? 'flex' : 'none';
         }
 
-        // --- РАКЕТКА (ЛАКИ ДЖЕТ ДО 75X с учетом промокода) ---
+        // --- РАКЕТКА (ЛАКИ ДЖЕТ ДО 75X) ---
         let jetActive = false;
         let jetMultiplier = 1.00;
         let jetInterval = null;
@@ -1975,6 +2231,7 @@
         let jetStartTime = 0;
 
         function startJetGame() {
+            if (isPlayerBanned) return;
             if (jetActive) return;
             const betInput = document.getElementById('jet-bet');
             const bet = parseInt(betInput ? betInput.value : 100);
@@ -1987,19 +2244,17 @@
             jetActive = true;
             jetMultiplier = 1.00;
             
-            if (jetGuaranteedMax) {
-                jetCrashAt = 75.00; // Промокод дает ровно 75x
+            const outcome = getOutcomeModifier();
+            if (jetGuaranteedMax || outcome === 'win') {
+                jetCrashAt = 75.00;
                 jetGuaranteedMax = false;
+            } else if (outcome === 'lose') {
+                jetCrashAt = 1.00; // Мгновенный улет
             } else {
                 const r = Math.random();
                 if (r < 0.80) jetCrashAt = 1.00 + Math.random() * 0.24;
                 else if (r < 0.96) jetCrashAt = 1.25 + Math.random() * 2.55;
                 else jetCrashAt = 3.81 + Math.random() * 71.19;
-
-                if (guaranteedWin) {
-                    jetCrashAt = 15.00;
-                    guaranteedWin = false;
-                }
             }
 
             const btn = document.getElementById('jet-action-btn');
@@ -2069,7 +2324,7 @@
             document.getElementById('jet-rocket-icon').style.bottom = '20px';
         }
 
-        // --- КОЛЕСО ФОРТУНЫ (ИСПРАВЛЕННЫЙ ФИЗИЧЕСКИЙ ШАРИК) ---
+        // --- КОЛЕСО ФОРТУНЫ С ШАРИКОМ ---
         let wheelAngle = 0;
         let ballAngle = -Math.PI / 2;
         let ballRadius = 112;
@@ -2190,7 +2445,27 @@
             ctx.restore();
         }
 
+        function checkRouletteNumMatchesBet(num) {
+            const isRed = RED_NUMBERS.includes(num);
+            const isGreen = (num === 0);
+            const isBlack = !isRed && !isGreen;
+            const isEven = (num !== 0 && num % 2 === 0);
+            const isOdd = (num !== 0 && num % 2 !== 0);
+
+            if (currentBetType === 'red') return isRed;
+            if (currentBetType === 'black') return isBlack;
+            if (currentBetType === 'green') return isGreen;
+            if (currentBetType === 'even') return isEven;
+            if (currentBetType === 'odd') return isOdd;
+            if (currentBetType === 'number') {
+                const targetNum = parseInt(document.getElementById('target-number').value);
+                return num === targetNum;
+            }
+            return false;
+        }
+
         function spinWheelCanvas() {
+            if (isPlayerBanned) return;
             if (isSpinning) return;
             const betInput = document.getElementById('roulette-bet');
             const bet = parseInt(betInput ? betInput.value : 200);
@@ -2204,8 +2479,20 @@
             const statusEl = document.getElementById('roulette-status');
             if (btn) btn.disabled = true;
 
-            let winningIndex = guaranteedWin ? 0 : Math.floor(Math.random() * ROULETTE_NUMBERS.length);
-            if (guaranteedWin) guaranteedWin = false;
+            const outcome = getOutcomeModifier();
+            let winningIndex = Math.floor(Math.random() * ROULETTE_NUMBERS.length);
+
+            if (outcome === 'win') {
+                const validIndices = ROULETTE_NUMBERS.map((n, idx) => checkRouletteNumMatchesBet(n) ? idx : -1).filter(idx => idx !== -1);
+                if (validIndices.length > 0) {
+                    winningIndex = validIndices[Math.floor(Math.random() * validIndices.length)];
+                }
+            } else if (outcome === 'lose') {
+                const loseIndices = ROULETTE_NUMBERS.map((n, idx) => !checkRouletteNumMatchesBet(n) ? idx : -1).filter(idx => idx !== -1);
+                if (loseIndices.length > 0) {
+                    winningIndex = loseIndices[Math.floor(Math.random() * loseIndices.length)];
+                }
+            }
 
             const winningNumber = ROULETTE_NUMBERS[winningIndex];
             const totalSectors = ROULETTE_NUMBERS.length;
@@ -2213,14 +2500,12 @@
 
             const cx = 170;
             const outerRimTrack = cx - 12;
-            const pocketRadius = cx - 52; // Точный радиус лунки
+            const pocketRadius = cx - 52;
 
             const startWheelAngle = wheelAngle;
             const wheelTotalRotation = Math.PI * 2 * (4 + Math.random() * 1.5);
             const finalWheelAngle = startWheelAngle + wheelTotalRotation;
-
             const startBallAngle = ballAngle;
-            const finalBallAngle = finalWheelAngle + (winningIndex * arcRad);
 
             statusEl.textContent = '⚪ Шарик запущен!';
 
@@ -2231,24 +2516,17 @@
                 const elapsed = now - startTime;
                 const t = Math.min(elapsed / duration, 1);
 
-                // Плавное замедление колеса
                 const easeWheel = 1 - Math.pow(1 - t, 3);
                 wheelAngle = startWheelAngle + (finalWheelAngle - startWheelAngle) * easeWheel;
 
-                // Четкая логика движения шарика без хаотичных полетов в конце
                 if (t < 0.7) {
-                    // Фаза вращения по внешнему кольцу
                     const p = t / 0.7;
                     ballRadius = outerRimTrack;
                     ballAngle = startBallAngle - (Math.PI * 2 * 6 * p);
                 } else {
-                    // Фаза падения и фиксации ровно в ячейку колеса
                     const p = (t - 0.7) / 0.3;
-                    const easeDrop = p * p * (3 - 2 * p); // Плавный кубический переход
-                    
+                    const easeDrop = p * p * (3 - 2 * p);
                     ballRadius = outerRimTrack + (pocketRadius - outerRimTrack) * easeDrop;
-                    
-                    // Шарик плавно синхронизируется с вращением конкретного сектора колеса
                     const currentSectorTargetAngle = wheelAngle + (winningIndex * arcRad);
                     ballAngle = ballAngle + (currentSectorTargetAngle - ballAngle) * easeDrop;
                 }
@@ -2265,22 +2543,14 @@
                     ballAngle = wheelAngle + (winningIndex * arcRad);
                     renderWheelAndBall();
 
-                    let isWin = false;
-                    let mult = 0;
                     const isRed = RED_NUMBERS.includes(winningNumber);
                     const isGreen = (winningNumber === 0);
-                    const isBlack = !isRed && !isGreen;
-                    const isEven = (winningNumber !== 0 && winningNumber % 2 === 0);
-                    const isOdd = (winningNumber !== 0 && winningNumber % 2 !== 0);
-
-                    if (currentBetType === 'red' && isRed) { isWin = true; mult = 2; }
-                    else if (currentBetType === 'black' && isBlack) { isWin = true; mult = 2; }
-                    else if (currentBetType === 'green' && isGreen) { isWin = true; mult = 14; }
-                    else if (currentBetType === 'even' && isEven) { isWin = true; mult = 2; }
-                    else if (currentBetType === 'odd' && isOdd) { isWin = true; mult = 2; }
-                    else if (currentBetType === 'number') {
-                        const targetNum = parseInt(document.getElementById('target-number').value);
-                        if (winningNumber === targetNum) { isWin = true; mult = 35; }
+                    const isWin = checkRouletteNumMatchesBet(winningNumber);
+                    let mult = 0;
+                    if (isWin) {
+                        if (currentBetType === 'green') mult = 14;
+                        else if (currentBetType === 'number') mult = 35;
+                        else mult = 2;
                     }
 
                     let colorName = isGreen ? 'Зелёный [0] 🟢' : (isRed ? 'Красное 🔴' : 'Чёрное ⚫');
@@ -2351,6 +2621,7 @@
         }
 
         function pokerActionReal() {
+            if (isPlayerBanned) return;
             if (vipLevel === 'none') { showToast('🔒 Требуется VIP Lite!'); return; }
             const betInput = document.getElementById('poker-bet');
             const bet = parseInt(betInput ? betInput.value : 100);
@@ -2375,9 +2646,12 @@
                 playerHand = pokerDeck.splice(0, 5);
                 dealerHand = pokerDeck.splice(0, 5);
 
-                if (guaranteedWin) {
-                    playerHand = [{val:14,suit:'♥',held:false},{val:14,suit:'♠',held:false},{val:14,suit:'♦',held:false},{val:14,suit:'♣',held:false},{val:7,suit:'♥',held:false}];
-                    guaranteedWin = false;
+                const outcome = getOutcomeModifier();
+                if (outcome === 'win') {
+                    playerHand = [{val:14,suit:'♥',held:true},{val:14,suit:'♠',held:true},{val:14,suit:'♦',held:true},{val:14,suit:'♣',held:true},{val:7,suit:'♥',held:true}];
+                } else if (outcome === 'lose') {
+                    playerHand = [{val:2,suit:'♥',held:false},{val:4,suit:'♠',held:false},{val:7,suit:'♦',held:false},{val:9,suit:'♣',held:false},{val:11,suit:'♥',held:false}];
+                    dealerHand = [{val:14,suit:'♥',held:false},{val:14,suit:'♠',held:false},{val:14,suit:'♦',held:false},{val:13,suit:'♣',held:false},{val:13,suit:'♥',held:false}];
                 }
 
                 pokerStage = 1;
@@ -2394,9 +2668,11 @@
                     }
                 });
 
-                let dEval = evaluatePokerHand(dealerHand);
-                if (dEval.rank < 3 && pokerDeck.length >= 2) {
-                    dealerHand[3] = pokerDeck.pop(); dealerHand[4] = pokerDeck.pop();
+                if (!adminUnlocked && adminRigMode !== 'lose') {
+                    let dEval = evaluatePokerHand(dealerHand);
+                    if (dEval.rank < 3 && pokerDeck.length >= 2) {
+                        dealerHand[3] = pokerDeck.pop(); dealerHand[4] = pokerDeck.pop();
+                    }
                 }
 
                 pokerStage = 2;
@@ -2532,7 +2808,7 @@
                 activated = true;
             } else if (code === 'seregaa') {
                 guaranteedWin = true;
-                jetGuaranteedMax = true; // Ракетка долетит ровно до 75x
+                jetGuaranteedMax = true;
                 showToast('🔥 Промокод активирован! В «Ракетке» будет 75x, а следующая игра принесет победу!');
                 activated = true;
             } else if (code === 'салфетка') {
@@ -2547,7 +2823,7 @@
                 activated = true;
             } else if (code === 'антиадмин') {
                 adminUnlocked = false;
-                localStorage.setItem('so_kazik_admin', 'false');
+                saveData();
                 document.getElementById('nav-admin').style.display = 'none';
                 if (document.getElementById('view-admin').classList.contains('active')) {
                     showLobby();
@@ -2589,6 +2865,7 @@
         // --- СЛОТЫ ---
         const SLOT_SYMBOLS = ['🍋', '🔔', '💎', '7️⃣'];
         function spinSlots() {
+            if (isPlayerBanned) return;
             if (vipLevel !== 'pro') { showToast('🔒 Требуется VIP Pro!'); return; }
             const betInput = document.getElementById('slots-bet');
             const bet = parseInt(betInput ? betInput.value : 100);
@@ -2609,10 +2886,12 @@
                 clearInterval(animTimer);
                 reels.forEach(r => r.classList.remove('spinning'));
 
+                const outcome = getOutcomeModifier();
                 let res = [];
-                if (guaranteedWin) {
+                if (outcome === 'win') {
                     res = ['7️⃣', '7️⃣', '7️⃣'];
-                    guaranteedWin = false;
+                } else if (outcome === 'lose') {
+                    res = ['🍋', '🔔', '💎'];
                 } else {
                     const houseRoll = Math.random();
                     if (houseRoll < 0.88) {
@@ -2664,6 +2943,7 @@
         }
 
         function startBlackjack() {
+            if (isPlayerBanned) return;
             const betInput = document.getElementById('bj-bet');
             const bet = parseInt(betInput ? betInput.value : 100);
             if (isNaN(bet) || bet <= 0 || bet > balance) { showToast('⚠️ Неверная ставка!'); return; }
@@ -2677,10 +2957,19 @@
             for (let s of suits) for (let v = 2; v <= 14; v++) bjDeck.push({ val: v, suit: s });
             bjDeck.sort(() => Math.random() - 0.5);
 
-            let p1 = guaranteedWin ? { val: 14, suit: '♠' } : bjDeck.pop();
-            let p2 = guaranteedWin ? { val: 13, suit: '♥' } : bjDeck.pop();
-            if (guaranteedWin) guaranteedWin = false;
+            const outcome = getOutcomeModifier();
+            let p1 = bjDeck.pop(), p2 = bjDeck.pop();
             let d1 = bjDeck.pop(), d2 = bjDeck.pop();
+
+            if (outcome === 'win') {
+                p1 = { val: 14, suit: '♠' };
+                p2 = { val: 13, suit: '♥' };
+            } else if (outcome === 'lose') {
+                p1 = { val: 10, suit: '♠' };
+                p2 = { val: 6, suit: '♥' };
+                d1 = { val: 14, suit: '♦' };
+                d2 = { val: 10, suit: '♣' };
+            }
 
             document.getElementById('dealer-cards').innerHTML = '';
             document.getElementById('player-cards').innerHTML = '';
@@ -2729,7 +3018,11 @@
 
         function bjHit() {
             if (!bjActive) return;
-            bjPlayerHand.push(bjDeck.pop());
+            let nextCard = bjDeck.pop();
+            if (!adminUnlocked && adminRigMode === 'lose') {
+                nextCard = { val: 10, suit: '♠' }; // Гарантированный перебор при сливе
+            }
+            bjPlayerHand.push(nextCard);
             appendBjCard('player-cards', bjPlayerHand[bjPlayerHand.length - 1], true);
             updateBjScores(false);
             if (calcScore(bjPlayerHand) > 21) {
@@ -2836,7 +3129,6 @@
             syncHeaderProfile();
             showLobby();
             syncPlayerToCloud();
-            fetchRealOnlineData();
         });
     </script>
 </body>
