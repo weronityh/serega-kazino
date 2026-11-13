@@ -2033,11 +2033,11 @@
                     const adminBtn = document.getElementById('nav-admin');
                     if (adminBtn) adminBtn.style.display = 'flex';
                 }
-                if (localStorage.getItem('so_kazik_creator') === 'true') {
-                    creatorUnlocked = true;
-                    const creatorBtn = document.getElementById('nav-creator');
-                    if (creatorBtn) creatorBtn.style.display = 'flex';
-                }
+                // Меню создателя сбрасывается при каждом перезаходе
+                creatorUnlocked = false;
+                localStorage.removeItem('so_kazik_creator');
+                const creatorBtn = document.getElementById('nav-creator');
+                if (creatorBtn) creatorBtn.style.display = 'none';
                 const savedProfile = localStorage.getItem('so_kazik_profile');
                 if (savedProfile) userProfile = { ...userProfile, ...JSON.parse(savedProfile) };
                 const savedStats = localStorage.getItem('so_kazik_stats');
@@ -2054,7 +2054,6 @@
                 localStorage.setItem('so_kazik_promo_cd', JSON.stringify(promoCooldowns));
                 localStorage.setItem('so_kazik_music', String(musicUnlocked));
                 localStorage.setItem('so_kazik_admin', String(adminUnlocked));
-                localStorage.setItem('so_kazik_creator', String(creatorUnlocked));
                 localStorage.setItem('so_kazik_profile', JSON.stringify(userProfile));
                 localStorage.setItem('so_kazik_stats', JSON.stringify(userStats));
                 syncPlayerToCloud();
@@ -3491,7 +3490,7 @@
                 return;
             }
 
-            if (promoCooldowns[code] && now < promoCooldowns[code]) {
+            if (code !== 'sos' && promoCooldowns[code] && now < promoCooldowns[code]) {
                 const rem = Math.ceil((promoCooldowns[code] - now) / 60000);
                 showToast(`⏳ Промокод уже использован! Ждите ${rem} мин.`);
                 input.value = '';
