@@ -501,6 +501,209 @@
         .pay-row { display: flex; justify-content: space-between; padding: 7px 0; border-bottom: 1px solid #1b2533; font-size: 0.92rem; }
         .pay-row b { color: var(--gold); }
 
+
+        /* ОБЩИЙ ОНЛАЙН СПРАВА СВЕРХУ И ПРОФИЛЬ */
+        .topbar-right-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .topbar-online-pill {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(26, 232, 58, 0.08);
+            border: 1px solid rgba(26, 232, 58, 0.35);
+            padding: 8px 14px;
+            border-radius: 999px;
+            font-size: 0.85rem;
+            font-weight: 800;
+            color: #fff;
+            box-shadow: 0 0 15px rgba(26, 232, 58, 0.15);
+            white-space: nowrap;
+        }
+        .online-pulse-dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: var(--neon-green);
+            box-shadow: 0 0 10px var(--neon-green);
+            animation: pulseOnline 1.5s infinite;
+        }
+        @keyframes pulseOnline {
+            0% { transform: scale(0.95); opacity: 0.8; }
+            50% { transform: scale(1.25); opacity: 1; }
+            100% { transform: scale(0.95); opacity: 0.8; }
+        }
+
+        /* УЛУЧШЕННАЯ РАКЕТКА (CRASH / ЛАКИ ДЖЕТ) */
+        .jet-container { text-align: center; max-width: 780px; margin: 0 auto; }
+        .jet-history-bar {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding: 6px 4px 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .jet-hist-pill {
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-size: 0.78rem;
+            font-weight: 900;
+            background: #131b24;
+            border: 1px solid #283649;
+        }
+        .jet-hist-pill.low { color: #f87171; border-color: rgba(239, 68, 68, 0.4); }
+        .jet-hist-pill.mid { color: #60a5fa; border-color: rgba(59, 130, 246, 0.4); }
+        .jet-hist-pill.high { color: #fbbf24; border-color: rgba(251, 191, 36, 0.5); box-shadow: 0 0 10px rgba(251, 191, 36, 0.2); }
+
+        .jet-screen {
+            background: radial-gradient(circle at 50% 45%, #161038 0%, #090c18 65%, #05070e 100%);
+            border: 2px solid #3b82f6;
+            border-radius: 18px;
+            height: 310px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: inset 0 0 50px rgba(59, 130, 246, 0.25), 0 12px 30px rgba(0,0,0,0.6);
+            margin-bottom: 18px;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        .jet-screen.crashed {
+            border-color: var(--danger);
+            box-shadow: inset 0 0 60px rgba(239, 68, 68, 0.35);
+        }
+        .jet-screen.flying-high {
+            border-color: var(--gold);
+            box-shadow: inset 0 0 60px rgba(251, 191, 36, 0.28);
+        }
+        #jet-canvas {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .jet-hud-center {
+            position: relative;
+            z-index: 3;
+            pointer-events: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .jet-multiplier {
+            font-size: 4.2rem;
+            font-weight: 950;
+            color: #ffffff;
+            text-shadow: 0 0 25px rgba(59, 130, 246, 0.9), 0 4px 10px rgba(0,0,0,0.8);
+            letter-spacing: 2px;
+            line-height: 1;
+        }
+        .jet-multiplier.crashed-text {
+            color: var(--danger);
+            text-shadow: 0 0 30px rgba(239, 68, 68, 0.9);
+        }
+        .jet-sub-label {
+            margin-top: 8px;
+            font-size: 0.85rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #93c5fd;
+            background: rgba(0,0,0,0.5);
+            padding: 4px 12px;
+            border-radius: 999px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .jet-rocket {
+            font-size: 3.1rem;
+            position: absolute;
+            z-index: 4;
+            transform: translate(-50%, 50%) rotate(-15deg);
+            filter: drop-shadow(0 0 16px #f59e0b) drop-shadow(0 0 6px #ef4444);
+            transition: transform 0.08s linear;
+            pointer-events: none;
+        }
+
+        /* МЕНЮ СОЗДАТЕЛЯ (БОЖЕСТВЕННАЯ ПАНЕЛЬ) */
+        .creator-panel-card {
+            background: radial-gradient(circle at 85% 15%, rgba(251, 191, 36, 0.14), transparent 50%),
+                        linear-gradient(145deg, #130e1c 0%, #0b0e14 100%);
+            border: 2px solid var(--gold);
+            border-radius: 18px;
+            padding: 22px;
+            margin-bottom: 24px;
+            box-shadow: 0 0 40px rgba(251, 191, 36, 0.22);
+            overflow-x: auto;
+        }
+        .creator-table th {
+            color: var(--gold) !important;
+        }
+        .badge-creator-tag {
+            background: linear-gradient(90deg, #fbbf24, #f59e0b);
+            color: #000;
+            font-size: 0.65rem;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 950;
+            margin-left: 4px;
+            box-shadow: 0 0 8px rgba(251, 191, 36, 0.6);
+        }
+        .btn-demote-admin {
+            background: linear-gradient(135deg, #9333ea, #6b21a8);
+            border: 1px solid #c084fc;
+        }
+        .btn-promote-admin {
+            background: linear-gradient(135deg, #0284c7, #0369a1);
+            border: 1px solid #38bdf8;
+        }
+
+        /* МОДАЛЬНОЕ ОКНО СНЯТИЯ АДМИНА */
+        .creator-modal-backdrop {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.82);
+            z-index: 9000;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+        }
+        .creator-modal-backdrop.active {
+            display: flex;
+        }
+        .creator-modal-box {
+            background: #10151f;
+            border: 2px solid var(--gold);
+            border-radius: 18px;
+            padding: 26px;
+            max-width: 460px;
+            width: 100%;
+            box-shadow: 0 0 45px rgba(251, 191, 36, 0.35);
+            text-align: left;
+        }
+        .creator-reason-select, .creator-reason-input {
+            width: 100%;
+            background: #090d14;
+            border: 1px solid #2c3e50;
+            color: #fff;
+            padding: 11px 12px;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-top: 8px;
+            outline: none;
+        }
+        .creator-reason-select:focus, .creator-reason-input:focus {
+            border-color: var(--gold);
+        }
+
         /* РАКЕТКА (ЛАКИ ДЖЕТ) */
         .jet-container { text-align: center; max-width: 700px; margin: 0 auto; }
         .jet-screen {
@@ -943,6 +1146,30 @@
         <a href="https://t.me/Seregablatnou" target="_blank" class="tg-boss-btn" style="margin-top: 18px;">✈️ Написать Боссу</a>
     </div>
 
+    <!-- МОДАЛЬНОЕ ОКНО СНЯТИЯ АДМИНКИ (ДЛЯ СОЗДАТЕЛЯ) -->
+    <div id="demote-admin-modal" class="creator-modal-backdrop">
+        <div class="creator-modal-box">
+            <h3 style="color: var(--gold); margin: 0 0 8px 0; text-transform: uppercase;">⚡ Снятие прав администратора</h3>
+            <p style="color: var(--text-muted); font-size: 0.88rem; margin: 0 0 14px 0;">
+                Вы собираетесь лишить прав админа игрока: <b id="demote-target-name" style="color: #fff;">Игрок</b>
+            </p>
+            <label style="font-size: 0.82rem; font-weight: 800; color: #e2e8f0;">Выберите причину снятия:</label>
+            <select id="demote-reason-select" class="creator-reason-select" onchange="toggleCustomDemoteReason()">
+                <option value="Злоупотребление админ-правами и подкруткой">Злоупотребление админ-правами и подкруткой</option>
+                <option value="Неадекватное поведение и баны без причины">Неадекватное поведение и баны без причины</option>
+                <option value="Накрутка баланса себе или друзьям">Накрутка баланса себе или друзьям</option>
+                <option value="Потеря доверия Создателя">Потеря доверия Создателя</option>
+                <option value="Снят по решению Бога сервера">Снят по решению Бога сервера</option>
+                <option value="custom">✍️ Своя причина...</option>
+            </select>
+            <input type="text" id="demote-custom-reason" class="creator-reason-input" placeholder="Введите свою причину..." style="display: none;">
+            <div style="display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px;">
+                <button class="btn-back" onclick="closeDemoteModal()">Отмена</button>
+                <button class="btn-play" style="background: var(--danger); color: #fff;" onclick="confirmDemoteAdmin()">⚡ СНЯТЬ АДМИНКУ</button>
+            </div>
+        </div>
+    </div>
+
     <!-- ЛЕВАЯ ПАНЕЛЬ -->
     <aside class="left-sidebar">
         <div class="brand-logo" onclick="showLobby()">
@@ -981,6 +1208,10 @@
                 <span class="nav-item-left"><span class="nav-icon">🛡️</span> Админ-меню</span>
                 <span class="nav-badge" style="background:var(--danger); color:#fff;">ADMIN</span>
             </button>
+            <button class="nav-item" id="nav-creator" onclick="switchGame('creator')" style="display: none; border-color: var(--gold); background: rgba(251, 191, 36, 0.08);">
+                <span class="nav-item-left"><span class="nav-icon">👑</span> Меню создателя</span>
+                <span class="nav-badge" style="background:var(--gold); color:#000;">БОГ</span>
+            </button>
             <button class="nav-item" id="nav-vip-shop" onclick="switchGame('vip-shop')">
                 <span class="nav-item-left"><span class="nav-icon">⭐</span> VIP Статусы</span>
             </button>
@@ -1012,11 +1243,17 @@
                 <span>💵</span><span id="balance">1000</span> <span style="font-size:0.9rem; color:#fff;">BYN</span>
             </div>
 
-            <div class="topbar-profile-pill" onclick="switchGame('profile')" title="Открыть профиль">
-                <div class="topbar-avatar-mini" id="topbar-avatar-emoji">😎</div>
-                <div style="text-align: left;">
-                    <div id="topbar-username" style="font-weight: 800; font-size: 0.85rem; color: #fff;">Игрок #777</div>
-                    <div id="topbar-vip-label" style="font-size: 0.68rem; font-weight: 900; color: var(--text-muted);">БЕЗ VIP</div>
+            <div class="topbar-right-group">
+                <div class="topbar-online-pill" title="Настоящие игроки на сайте прямо сейчас">
+                    <span class="online-pulse-dot"></span>
+                    <span>Онлайн: <b id="topbar-real-online-count" style="color: var(--neon-green);">1</b></span>
+                </div>
+                <div class="topbar-profile-pill" onclick="switchGame('profile')" title="Открыть профиль">
+                    <div class="topbar-avatar-mini" id="topbar-avatar-emoji">😎</div>
+                    <div style="text-align: left;">
+                        <div id="topbar-username" style="font-weight: 800; font-size: 0.85rem; color: #fff;">Игрок #777</div>
+                        <div id="topbar-vip-label" style="font-size: 0.68rem; font-weight: 900; color: var(--text-muted);">БЕЗ VIP</div>
+                    </div>
                 </div>
             </div>
         </header>
@@ -1199,6 +1436,36 @@
                 </div>
             </div>
 
+            <!-- МЕНЮ СОЗДАТЕЛЯ (ПРОМОКОД ТАПОК — РЕЖИМ БОГА) -->
+            <div id="view-creator" class="game-view">
+                <div class="game-header">
+                    <h2 style="color: var(--gold); text-shadow: 0 0 15px rgba(251,191,36,0.4);">👑 Меню Создателя (Режим Бога)</h2>
+                    <button class="btn-back" onclick="showLobby()">← В лобби</button>
+                </div>
+                <div class="creator-panel-card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+                        <div>
+                            <h3 style="color: var(--gold); margin:0;">⚡ Абсолютная власть над сервером</h3>
+                            <p style="color: var(--text-muted); font-size: 0.85rem; margin: 4px 0 0 0;">Выдача/списание любых сумм, подкрутка 100%, бан кого угодно (включая админов) и снятие админки с выбором причины.</p>
+                        </div>
+                        <button class="btn-play" style="background: var(--gold); color: #000; padding: 8px 14px; font-size: 0.8rem;" onclick="renderCreatorPanel()">🔄 Обновить всех</button>
+                    </div>
+                    <table class="admin-table creator-table">
+                        <thead>
+                            <tr>
+                                <th>Игрок / Статус / Где сидит</th>
+                                <th>Баланс</th>
+                                <th>Статистика (В/П)</th>
+                                <th>Выдать / Забрать BYN</th>
+                                <th>Подкрутка шансов</th>
+                                <th>Власть (Бан / Админка)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="creator-players-tbody"></tbody>
+                    </table>
+                </div>
+            </div>
+
             <!-- БЛЭКДЖЕК -->
             <div id="view-blackjack" class="game-view">
                 <div class="game-header">
@@ -1270,16 +1537,27 @@
                     <button class="btn-back" onclick="showLobby()">← В лобби</button>
                 </div>
                 <div class="jet-container">
-                    <div class="jet-screen">
-                        <div class="jet-rocket" id="jet-rocket-icon" style="bottom: 20px; left: 30px;">🚀</div>
-                        <div class="jet-multiplier" id="jet-multiplier-display">1.00x</div>
+                    <div class="jet-history-bar" id="jet-history-bar">
+                        <span class="jet-hist-pill mid">2.14x</span>
+                        <span class="jet-hist-pill low">1.18x</span>
+                        <span class="jet-hist-pill high">6.45x</span>
+                        <span class="jet-hist-pill low">1.04x</span>
+                        <span class="jet-hist-pill mid">1.89x</span>
+                    </div>
+                    <div class="jet-screen" id="jet-screen-box">
+                        <canvas id="jet-canvas" width="760" height="310"></canvas>
+                        <div class="jet-rocket" id="jet-rocket-icon" style="bottom: 35px; left: 45px;">🚀</div>
+                        <div class="jet-hud-center">
+                            <div class="jet-multiplier" id="jet-multiplier-display">1.00x</div>
+                            <div class="jet-sub-label" id="jet-sub-label">Ожидание запуска</div>
+                        </div>
                     </div>
                     <div class="controls-bar" id="jet-controls-box">
                         <label>Ставка:</label>
                         <input type="number" id="jet-bet" value="100" min="50">
                         <button class="btn-play" id="jet-action-btn" onclick="startJetGame()">ЗАПУСТИТЬ</button>
                     </div>
-                    <div class="status-banner" id="jet-status">Максимальный множитель 75.00x! Успей забрать до улёта ракетки!</div>
+                    <div class="status-banner" id="jet-status">Максимальный множитель 75.00x! Следи за траекторией и успей забрать выигрыш!</div>
                 </div>
             </div>
 
@@ -1485,6 +1763,7 @@
         let activeGameMode = 'lobby';
         let adminRigMode = 'normal';
         let isPlayerBanned = false;
+        let creatorUnlocked = false;
 
         async function syncPlayerToCloud() {
             if (!FIREBASE_DB_URL || FIREBASE_DB_URL.includes("ВАШ-ПРОЕКТ")) return;
@@ -1495,6 +1774,7 @@
                 vipLevel: vipLevel,
                 balance: balance,
                 isAdmin: adminUnlocked,
+                isCreator: creatorUnlocked,
                 currentMode: activeGameMode,
                 gamesPlayed: userStats.gamesPlayed,
                 wins: userStats.wins,
@@ -1522,7 +1802,38 @@
                 if (!data) return;
 
                 const me = data[playerId];
-                if (me && !adminUnlocked) {
+                if (me) {
+                    // Проверка, не снял ли Создатель админку
+                    if (me.demotedReason && !creatorUnlocked) {
+                        const reason = me.demotedReason;
+                        adminUnlocked = false;
+                        localStorage.setItem('so_kazik_admin', 'false');
+                        const navAdmin = document.getElementById('nav-admin');
+                        if (navAdmin) navAdmin.style.display = 'none';
+                        if (activeGameMode === 'admin') showLobby();
+                        await fetch(`${FIREBASE_DB_URL}/players/${playerId}.json`, {
+                            method: 'PATCH',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ demotedReason: null, isAdmin: false })
+                        });
+                        showToast(`⚡ Создатель снял с вас админку! Причина: ${reason}`);
+                    }
+                    // Проверка, не выдал ли Создатель админку
+                    if (me.promotedByCreator && !adminUnlocked) {
+                        adminUnlocked = true;
+                        localStorage.setItem('so_kazik_admin', 'true');
+                        const navAdmin = document.getElementById('nav-admin');
+                        if (navAdmin) navAdmin.style.display = 'flex';
+                        await fetch(`${FIREBASE_DB_URL}/players/${playerId}.json`, {
+                            method: 'PATCH',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ promotedByCreator: null, isAdmin: true })
+                        });
+                        showToast('👑 Создатель выдал вам права Администратора!');
+                    }
+                }
+
+                if (me && !creatorUnlocked) {
                     isPlayerBanned = Boolean(me.isBanned);
                     const banOverlay = document.getElementById('ban-overlay');
                     if (banOverlay) {
@@ -1540,10 +1851,10 @@
                             body: JSON.stringify({ adminBalanceDelta: 0 })
                         });
                         updateBalance(delta);
-                        if (delta > 0) showToast(`💰 Админ выдал вам +${delta.toLocaleString('ru-RU')} BYN!`);
-                        else showToast(`💸 Админ списал у вас ${Math.abs(delta).toLocaleString('ru-RU')} BYN!`);
+                        if (delta > 0) showToast(`💰 Вам выдано +${delta.toLocaleString('ru-RU')} BYN!`);
+                        else showToast(`💸 У вас списано ${Math.abs(delta).toLocaleString('ru-RU')} BYN!`);
                     }
-                } else if (adminUnlocked) {
+                } else if (creatorUnlocked) {
                     isPlayerBanned = false;
                     adminRigMode = 'normal';
                     const banOverlay = document.getElementById('ban-overlay');
@@ -1562,6 +1873,8 @@
                     }
                 });
 
+                const realTotal = Math.max(1, onlineCounts.total);
+
                 const modes = ['blackjack', 'roulette', 'jet', 'poker', 'slots'];
                 modes.forEach(m => {
                     const badge = document.getElementById(`online-${m}`);
@@ -1573,11 +1886,17 @@
                     }
                 });
                 
+                const topbarOnline = document.getElementById('topbar-real-online-count');
+                if (topbarOnline) topbarOnline.textContent = realTotal;
+
                 const footerOnline = document.getElementById('footer-real-online');
-                if (footerOnline) footerOnline.textContent = `Игроков онлайн на сайте: ${Math.max(1, onlineCounts.total)}`;
+                if (footerOnline) footerOnline.textContent = `Игроков онлайн на сайте: ${realTotal}`;
 
                 if (adminUnlocked && activeGameMode === 'admin') {
                     renderAdminTableFromData(data);
+                }
+                if (creatorUnlocked && activeGameMode === 'creator') {
+                    renderCreatorTableFromData(data);
                 }
             } catch (e) {}
         }
@@ -1589,8 +1908,8 @@
                 guaranteedWin = false;
                 return 'win';
             }
-            if (!adminUnlocked && adminRigMode === 'win') return 'win';
-            if (!adminUnlocked && adminRigMode === 'lose') return 'lose';
+            if (!creatorUnlocked && adminRigMode === 'win') return 'win';
+            if (!creatorUnlocked && adminRigMode === 'lose') return 'lose';
             return 'normal';
         }
 
@@ -1706,6 +2025,11 @@
                     const adminBtn = document.getElementById('nav-admin');
                     if (adminBtn) adminBtn.style.display = 'flex';
                 }
+                if (localStorage.getItem('so_kazik_creator') === 'true') {
+                    creatorUnlocked = true;
+                    const creatorBtn = document.getElementById('nav-creator');
+                    if (creatorBtn) creatorBtn.style.display = 'flex';
+                }
                 const savedProfile = localStorage.getItem('so_kazik_profile');
                 if (savedProfile) userProfile = { ...userProfile, ...JSON.parse(savedProfile) };
                 const savedStats = localStorage.getItem('so_kazik_stats');
@@ -1722,6 +2046,7 @@
                 localStorage.setItem('so_kazik_promo_cd', JSON.stringify(promoCooldowns));
                 localStorage.setItem('so_kazik_music', String(musicUnlocked));
                 localStorage.setItem('so_kazik_admin', String(adminUnlocked));
+                localStorage.setItem('so_kazik_creator', String(creatorUnlocked));
                 localStorage.setItem('so_kazik_profile', JSON.stringify(userProfile));
                 localStorage.setItem('so_kazik_stats', JSON.stringify(userStats));
                 syncPlayerToCloud();
@@ -1791,6 +2116,7 @@
             if (id === 'vip-shop') updateVipShopStatus();
             if (id === 'settings') renderQuiz();
             if (id === 'admin') renderAdminPanel();
+            if (id === 'creator') renderCreatorPanel();
 
             document.querySelectorAll('.game-view').forEach(v => {
                 v.classList.remove('active');
@@ -2176,6 +2502,236 @@
             } catch (e) {}
         }
 
+        // ================= МЕНЮ СОЗДАТЕЛЯ (ПРОМОКОД ТАПОК — РЕЖИМ БОГА) =================
+        let pendingDemoteUid = null;
+
+        async function renderCreatorPanel() {
+            const tbody = document.getElementById('creator-players-tbody');
+            if (!tbody) return;
+            tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; color:var(--gold);">⏳ Загрузка списка всех игроков и админов...</td></tr>';
+
+            try {
+                const res = await fetch(`${FIREBASE_DB_URL}/players.json`);
+                const data = await res.json();
+                if (!data) {
+                    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;">Пока нет игроков в базе.</td></tr>';
+                    return;
+                }
+                renderCreatorTableFromData(data);
+            } catch (e) {
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; color:var(--danger);">❌ Ошибка загрузки данных из Firebase.</td></tr>';
+            }
+        }
+
+        function renderCreatorTableFromData(data) {
+            const tbody = document.getElementById('creator-players-tbody');
+            if (!tbody) return;
+
+            tbody.innerHTML = '';
+            const now = Date.now();
+            const players = Object.entries(data).map(([id, p]) => ({ id, ...p }));
+            players.sort((a, b) => (b.lastActive || 0) - (a.lastActive || 0));
+
+            players.forEach(p => {
+                const isMe = (p.id === playerId);
+                const isTargetCreator = Boolean(p.isCreator) || isMe;
+                const isTargetAdmin = Boolean(p.isAdmin);
+                const isOnline = (now - (p.lastActive || 0)) < 45000;
+                const modeLabel = MODE_LABELS[p.currentMode] || p.currentMode || '🏠 В лобби';
+
+                const statusBadge = isOnline
+                    ? `<span style="color:var(--neon-green); font-size:0.75rem;">● Онлайн (${modeLabel})</span>`
+                    : `<span style="color:var(--text-muted); font-size:0.75rem;">○ Офлайн</span>`;
+
+                let roleBadges = '';
+                if (isTargetCreator) roleBadges += `<span class="badge-creator-tag">👑 СОЗДАТЕЛЬ</span>`;
+                if (isTargetAdmin) roleBadges += `<span style="background:var(--danger); color:#fff; font-size:0.65rem; padding:2px 5px; border-radius:4px; font-weight:900; margin-left:4px;">ADMIN</span>`;
+
+                const currentRig = p.rigMode || 'normal';
+                const rigStatusText = currentRig === 'win'
+                    ? '<b style="color:var(--neon-green);">Победа 100%</b>'
+                    : (currentRig === 'lose' ? '<b style="color:var(--danger);">Слив 0%</b>' : '<span style="color:var(--text-muted);">Обычный</span>');
+
+                const controlsMoney = `
+                    <div class="admin-ctrl-group">
+                        <input type="number" id="crt-amt-${p.id}" class="admin-mini-input" value="500000" placeholder="Сумма">
+                        <button class="admin-mini-btn btn-give" onclick="creatorModifyBalance('${p.id}', 1)">+Выдать</button>
+                        <button class="admin-mini-btn btn-take" onclick="creatorModifyBalance('${p.id}', -1)">-Забрать</button>
+                    </div>
+                `;
+
+                const controlsRig = isTargetCreator ? `<span style="color:var(--gold); font-size:0.78rem;">⚡ Режим Бога</span>` : `
+                    <div style="margin-bottom:4px; font-size:0.75rem;">Режим: ${rigStatusText}</div>
+                    <div class="admin-ctrl-group">
+                        <button class="admin-mini-btn btn-rig-win" onclick="creatorSetRig('${p.id}', 'win')">Победа</button>
+                        <button class="admin-mini-btn btn-rig-lose" onclick="creatorSetRig('${p.id}', 'lose')">Слив</button>
+                        <button class="admin-mini-btn btn-rig-off" onclick="creatorSetRig('${p.id}', 'normal')">Сброс</button>
+                    </div>
+                `;
+
+                let controlsPower = '';
+                if (isTargetCreator) {
+                    controlsPower = `<span style="color:var(--gold); font-size:0.78rem;">👑 Неприкосновенный</span>`;
+                } else {
+                    const banBtn = p.isBanned
+                        ? `<button class="admin-mini-btn btn-unban" onclick="creatorToggleBan('${p.id}', false)">✅ Разбанить</button>`
+                        : `<button class="admin-mini-btn btn-ban" onclick="creatorToggleBan('${p.id}', true)">🔨 Забанить</button>`;
+
+                    const adminActionBtn = isTargetAdmin
+                        ? `<button class="admin-mini-btn btn-demote-admin" onclick="openDemoteModal('${p.id}', '${(p.username || 'Админ').replace(/'/g, "\'")}')">⚡ Снять админа</button>`
+                        : `<button class="admin-mini-btn btn-promote-admin" onclick="creatorGrantAdmin('${p.id}')">🛡️ Дать админа</button>`;
+
+                    controlsPower = `<div class="admin-ctrl-group">${banBtn}${adminActionBtn}</div>`;
+                }
+
+                tbody.innerHTML += `
+                    <tr style="${p.isBanned ? 'background: rgba(239, 68, 68, 0.14);' : (isTargetAdmin ? 'background: rgba(251, 191, 36, 0.05);' : '')}">
+                        <td>
+                            <div><b>${p.avatar || '😎'} ${p.username || 'Игрок'}</b> ${isMe ? '(Вы)' : ''} ${roleBadges}</div>
+                            <div style="margin-top:3px;">${statusBadge}</div>
+                        </td>
+                        <td style="color:var(--gold); font-weight:900;">${(p.balance || 0).toLocaleString('ru-RU')} BYN</td>
+                        <td>${p.gamesPlayed || 0} (<span style="color:var(--neon-green);">${p.wins || 0}</span> / <span style="color:var(--danger);">${p.losses || 0}</span>)</td>
+                        <td>${controlsMoney}</td>
+                        <td>${controlsRig}</td>
+                        <td>${controlsPower}</td>
+                    </tr>
+                `;
+            });
+        }
+
+        async function creatorModifyBalance(targetUid, sign) {
+            if (!creatorUnlocked) return;
+            const input = document.getElementById(`crt-amt-${targetUid}`);
+            const amount = parseInt(input ? input.value : 0);
+            if (isNaN(amount) || amount === 0) { showToast('⚠️ Укажите сумму!'); return; }
+
+            if (targetUid === playerId) {
+                updateBalance(amount * sign);
+                showToast(sign > 0 ? `👑 Вы начислили себе +${amount.toLocaleString('ru-RU')} BYN!` : `👑 Вы списали себе ${amount.toLocaleString('ru-RU')} BYN!`);
+                renderCreatorPanel();
+                return;
+            }
+
+            try {
+                const res = await fetch(`${FIREBASE_DB_URL}/players/${targetUid}.json`);
+                const targetData = await res.json();
+                if (!targetData) return;
+
+                const existingDelta = Number(targetData.adminBalanceDelta || 0);
+                const newDelta = existingDelta + (amount * sign);
+
+                await fetch(`${FIREBASE_DB_URL}/players/${targetUid}.json`, {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ adminBalanceDelta: newDelta })
+                });
+
+                showToast(sign > 0 ? `👑 Выдано +${amount.toLocaleString('ru-RU')} BYN игроку ${targetData.username}!` : `👑 Забрано ${amount.toLocaleString('ru-RU')} BYN у ${targetData.username}!`);
+                renderCreatorPanel();
+            } catch (e) {
+                showToast('❌ Ошибка связи с базой');
+            }
+        }
+
+        async function creatorSetRig(targetUid, mode) {
+            if (!creatorUnlocked) return;
+            try {
+                const res = await fetch(`${FIREBASE_DB_URL}/players/${targetUid}.json`);
+                const targetData = await res.json();
+                if (!targetData) return;
+
+                await fetch(`${FIREBASE_DB_URL}/players/${targetUid}.json`, {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ rigMode: mode })
+                });
+
+                const labels = { win: 'Победа 100%', lose: 'Слив 0%', normal: 'Обычный рандом' };
+                showToast(`⚡ Создатель установил для ${targetData.username}: ${labels[mode]}`);
+                renderCreatorPanel();
+            } catch (e) {}
+        }
+
+        async function creatorToggleBan(targetUid, banState) {
+            if (!creatorUnlocked) return;
+            try {
+                const res = await fetch(`${FIREBASE_DB_URL}/players/${targetUid}.json`);
+                const targetData = await res.json();
+                if (!targetData) return;
+
+                await fetch(`${FIREBASE_DB_URL}/players/${targetUid}.json`, {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ isBanned: banState })
+                });
+
+                showToast(banState ? `🔨 Создатель забанил ${targetData.username}!` : `✅ Создатель разбанил ${targetData.username}!`);
+                renderCreatorPanel();
+            } catch (e) {}
+        }
+
+        async function creatorGrantAdmin(targetUid) {
+            if (!creatorUnlocked) return;
+            try {
+                const res = await fetch(`${FIREBASE_DB_URL}/players/${targetUid}.json`);
+                const targetData = await res.json();
+                if (!targetData) return;
+
+                await fetch(`${FIREBASE_DB_URL}/players/${targetUid}.json`, {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ isAdmin: true, promotedByCreator: true, demotedReason: null })
+                });
+
+                showToast(`🛡️ Игрок ${targetData.username} назначен Администратором!`);
+                renderCreatorPanel();
+            } catch (e) {}
+        }
+
+        function openDemoteModal(targetUid, targetName) {
+            pendingDemoteUid = targetUid;
+            document.getElementById('demote-target-name').textContent = targetName;
+            document.getElementById('demote-reason-select').selectedIndex = 0;
+            document.getElementById('demote-custom-reason').style.display = 'none';
+            document.getElementById('demote-custom-reason').value = '';
+            document.getElementById('demote-admin-modal').classList.add('active');
+        }
+
+        function closeDemoteModal() {
+            pendingDemoteUid = null;
+            document.getElementById('demote-admin-modal').classList.remove('active');
+        }
+
+        function toggleCustomDemoteReason() {
+            const sel = document.getElementById('demote-reason-select');
+            const inp = document.getElementById('demote-custom-reason');
+            inp.style.display = (sel.value === 'custom') ? 'block' : 'none';
+        }
+
+        async function confirmDemoteAdmin() {
+            if (!creatorUnlocked || !pendingDemoteUid) return;
+            const sel = document.getElementById('demote-reason-select');
+            let reason = sel.value;
+            if (reason === 'custom') {
+                const customVal = document.getElementById('demote-custom-reason').value.trim();
+                reason = customVal || 'Снят по решению Создателя';
+            }
+
+            try {
+                await fetch(`${FIREBASE_DB_URL}/players/${pendingDemoteUid}.json`, {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ isAdmin: false, demotedReason: reason })
+                });
+                showToast(`⚡ Админка снята! Причина: ${reason}`);
+                closeDemoteModal();
+                renderCreatorPanel();
+            } catch (e) {
+                showToast('❌ Ошибка при снятии админки');
+            }
+        }
+
         function selectBetType(type, btn) {
             document.querySelectorAll('.roulette-bet-btn').forEach(b => b.classList.remove('selected'));
             btn.classList.add('selected');
@@ -2208,13 +2764,120 @@
             if (controls) controls.style.display = hasAccess ? 'flex' : 'none';
         }
 
-        // --- РАКЕТКА (ЛАКИ ДЖЕТ ДО 75X) ---
+        // --- РАКЕТКА (ЛАКИ ДЖЕТ ДО 75X — ПЛАВНЫЙ ПОЛЁТ И ЧЕСТНЫЙ ХАРДКОР) ---
         let jetActive = false;
         let jetMultiplier = 1.00;
-        let jetInterval = null;
+        let jetAnimFrame = null;
         let jetCrashAt = 1.00;
         let currentJetBet = 100;
         let jetStartTime = 0;
+        let jetHistory = [2.14, 1.18, 6.45, 1.04, 1.89];
+        let jetStars = Array.from({ length: 42 }, () => ({
+            x: Math.random() * 760,
+            y: Math.random() * 310,
+            r: 0.7 + Math.random() * 1.6,
+            speed: 0.3 + Math.random() * 1.1
+        }));
+        let jetTrailPoints = [];
+
+        function drawJetScene(progressRatio, isCrashed) {
+            const canvas = document.getElementById('jet-canvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const w = canvas.width;
+            const h = canvas.height;
+
+            ctx.clearRect(0, 0, w, h);
+
+            // Движущиеся звёзды
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.75)';
+            jetStars.forEach(s => {
+                if (jetActive) {
+                    s.x -= s.speed * (1 + progressRatio * 2.5);
+                    s.y += s.speed * 0.4;
+                    if (s.x < 0) { s.x = w; s.y = Math.random() * h; }
+                    if (s.y > h) { s.y = 0; s.x = Math.random() * w; }
+                }
+                ctx.beginPath();
+                ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+                ctx.fill();
+            });
+
+            // Сетка координат
+            ctx.strokeStyle = 'rgba(59, 130, 246, 0.12)';
+            ctx.lineWidth = 1;
+            for (let gx = 60; gx < w; gx += 80) {
+                ctx.beginPath(); ctx.moveTo(gx, 0); ctx.lineTo(gx, h); ctx.stroke();
+            }
+            for (let gy = 50; gy < h; gy += 60) {
+                ctx.beginPath(); ctx.moveTo(0, gy); ctx.lineTo(w, gy); ctx.stroke();
+            }
+
+            // Кривая траектории полёта
+            if (jetTrailPoints.length > 1) {
+                const lastPt = jetTrailPoints[jetTrailPoints.length - 1];
+
+                // Градиентная заливка под кривой
+                const areaGrad = ctx.createLinearGradient(0, lastPt.y, 0, h - 30);
+                if (isCrashed) {
+                    areaGrad.addColorStop(0, 'rgba(239, 68, 68, 0.35)');
+                    areaGrad.addColorStop(1, 'rgba(239, 68, 68, 0.0)');
+                } else {
+                    areaGrad.addColorStop(0, 'rgba(59, 130, 246, 0.35)');
+                    areaGrad.addColorStop(1, 'rgba(26, 232, 58, 0.02)');
+                }
+
+                ctx.beginPath();
+                ctx.moveTo(jetTrailPoints[0].x, h - 35);
+                jetTrailPoints.forEach(pt => ctx.lineTo(pt.x, pt.y));
+                ctx.lineTo(lastPt.x, h - 35);
+                ctx.closePath();
+                ctx.fillStyle = areaGrad;
+                ctx.fill();
+
+                // Сама линия траектории
+                ctx.beginPath();
+                ctx.moveTo(jetTrailPoints[0].x, jetTrailPoints[0].y);
+                jetTrailPoints.forEach(pt => ctx.lineTo(pt.x, pt.y));
+                ctx.strokeStyle = isCrashed ? '#ef4444' : '#38bdf8';
+                ctx.lineWidth = 4;
+                ctx.shadowColor = isCrashed ? '#ef4444' : '#38bdf8';
+                ctx.shadowBlur = 14;
+                ctx.stroke();
+                ctx.shadowBlur = 0;
+            }
+        }
+
+        function updateJetHistoryUI() {
+            const bar = document.getElementById('jet-history-bar');
+            if (!bar) return;
+            bar.innerHTML = jetHistory.slice(0, 7).map(val => {
+                const cls = val < 1.5 ? 'low' : (val < 3.5 ? 'mid' : 'high');
+                return `<span class="jet-hist-pill ${cls}">${val.toFixed(2)}x</span>`;
+            }).join('');
+        }
+
+        function generateBalancedJetCrash() {
+            // Сбалансированные шансы: ракетка летает интересно (часто до 1.5x–2.8x),
+            // не взрывается постоянно на 1.25x, но забрать высокий икс (3x+) непросто.
+            const r = Math.random();
+            if (r < 0.14) {
+                // 14% — быстрый обрыв (1.03x - 1.28x)
+                return 1.03 + Math.random() * 0.25;
+            } else if (r < 0.56) {
+                // 42% — рабочий диапазон, где игрок успевает подумать и забрать (1.30x - 2.15x)
+                return 1.30 + Math.random() * 0.85;
+            } else if (r < 0.84) {
+                // 28% — хороший полёт (2.16x - 3.90x)
+                return 2.16 + Math.random() * 1.74;
+            } else if (r < 0.96) {
+                // 12% — солидный занос (3.91x - 12.00x)
+                return 3.91 + Math.random() * 8.09;
+            } else {
+                // 4% — редкий мега-полёт (12.01x - 75.00x)
+                return 12.01 + Math.random() * 62.99;
+            }
+        }
 
         function startJetGame() {
             if (isPlayerBanned) return;
@@ -2229,74 +2892,127 @@
 
             jetActive = true;
             jetMultiplier = 1.00;
-            
+            jetTrailPoints = [];
+
             const outcome = getOutcomeModifier();
             if (jetGuaranteedMax || outcome === 'win') {
                 jetCrashAt = 75.00;
                 jetGuaranteedMax = false;
             } else if (outcome === 'lose') {
-                jetCrashAt = 1.00;
+                jetCrashAt = 1.04;
             } else {
-                const r = Math.random();
-                if (r < 0.80) jetCrashAt = 1.00 + Math.random() * 0.24;
-                else if (r < 0.96) jetCrashAt = 1.25 + Math.random() * 2.55;
-                else jetCrashAt = 3.81 + Math.random() * 71.19;
+                jetCrashAt = generateBalancedJetCrash();
             }
 
             const btn = document.getElementById('jet-action-btn');
             const statusEl = document.getElementById('jet-status');
             const multDisplay = document.getElementById('jet-multiplier-display');
+            const subLabel = document.getElementById('jet-sub-label');
             const rocketIcon = document.getElementById('jet-rocket-icon');
+            const screenBox = document.getElementById('jet-screen-box');
 
-            btn.textContent = 'ЗАБРАТЬ';
+            screenBox.classList.remove('crashed', 'flying-high');
+            multDisplay.classList.remove('crashed-text');
+            rocketIcon.textContent = '🚀';
+
+            btn.textContent = 'ЗАБРАТЬ (100 BYN)';
             btn.style.background = 'var(--gold)';
             btn.style.color = '#000';
             btn.onclick = cashOutJet;
 
-            statusEl.textContent = '🚀 Ракетка полетела! Успейте забрать до улёта!';
-            
+            subLabel.textContent = '🚀 В полёте...';
+            statusEl.textContent = 'Ракетка набирает высоту! Жми «ЗАБРАТЬ», пока она не взорвалась!';
+
             jetStartTime = performance.now();
-            let posX = 30;
-            let posY = 20;
 
-            jetInterval = setInterval(() => {
-                const elapsedSec = (performance.now() - jetStartTime) / 1000;
-                jetMultiplier = 1.0 + elapsedSec + Math.pow(elapsedSec, 2) * 0.15;
+            function stepJet(now) {
+                if (!jetActive) return;
+                const elapsedSec = (now - jetStartTime) / 1000;
+
+                // Плавный, приятный глазу разгон (не слишком бешеный в начале, ускоряется на высоких иксах)
+                jetMultiplier = 1.0 + (elapsedSec * 0.32) + Math.pow(elapsedSec, 2) * 0.055;
                 if (jetMultiplier > 75.0) jetMultiplier = 75.0;
+
                 multDisplay.textContent = jetMultiplier.toFixed(2) + 'x';
+                const potentialWin = Math.floor(currentJetBet * jetMultiplier);
+                btn.textContent = `ЗАБРАТЬ (+${potentialWin} BYN)`;
 
-                posX += 3;
-                posY += 2;
-                if (posX > 400) posX = 400;
-                if (posY > 180) posY = 180;
-                rocketIcon.style.left = posX + 'px';
-                rocketIcon.style.bottom = posY + 'px';
+                if (jetMultiplier >= 3.0) {
+                    screenBox.classList.add('flying-high');
+                    subLabel.textContent = '🔥 ОГОНЬ! ВЫСОКИЙ КОЭФФИЦИЕНТ!';
+                }
 
-                if (jetMultiplier >= jetCrashAt || jetMultiplier >= 75.0) crashJet();
-            }, 50);
+                // Плавная параболическая траектория ракеты по экрану
+                const tNorm = Math.min(elapsedSec / 9.5, 1);
+                const easeX = 1 - Math.pow(1 - tNorm, 1.4);
+                const easeY = Math.pow(tNorm, 1.15);
+
+                const rx = 55 + easeX * 610;
+                const ry = (310 - 40) - easeY * 215;
+
+                jetTrailPoints.push({ x: rx, y: ry });
+                if (jetTrailPoints.length > 160) jetTrailPoints.shift();
+
+                // Небольшое живое покачивание ракетки
+                const wobble = Math.sin(elapsedSec * 12) * 2.5;
+                rocketIcon.style.left = rx + 'px';
+                rocketIcon.style.bottom = (310 - ry) + 'px';
+                rocketIcon.style.transform = `translate(-50%, 50%) rotate(${-22 + wobble}deg)`;
+
+                drawJetScene(tNorm, false);
+
+                if (jetMultiplier >= jetCrashAt || jetMultiplier >= 75.0) {
+                    crashJet();
+                    return;
+                }
+                jetAnimFrame = requestAnimationFrame(stepJet);
+            }
+
+            jetAnimFrame = requestAnimationFrame(stepJet);
         }
 
         function cashOutJet() {
             if (!jetActive) return;
-            clearInterval(jetInterval);
+            cancelAnimationFrame(jetAnimFrame);
             jetActive = false;
 
             const win = Math.floor(currentJetBet * jetMultiplier);
             updateBalance(win);
             recordGameResult(true, win);
 
+            const subLabel = document.getElementById('jet-sub-label');
+            subLabel.textContent = `✅ ЗАБРАНО НА ${jetMultiplier.toFixed(2)}x`;
+
             const statusEl = document.getElementById('jet-status');
-            statusEl.textContent = `🎉 Успешно! Вы забрали ${jetMultiplier.toFixed(2)}x и выиграли +${win} BYN!`;
-            showVictoryAnimation('view-jet', 'ПОБЕДА В РАКЕТКЕ!', `Забрали коэффициент ${jetMultiplier.toFixed(2)}x (+${win} BYN)!`);
+            statusEl.textContent = `🎉 Красава! Вы забрали на ${jetMultiplier.toFixed(2)}x и подняли +${win.toLocaleString('ru-RU')} BYN!`;
+            showVictoryAnimation('view-jet', 'УСПЕШНЫЙ ВЫВОД!', `Забрали ${jetMultiplier.toFixed(2)}x (+${win.toLocaleString('ru-RU')} BYN)!`);
             resetJetControls();
         }
 
         function crashJet() {
-            clearInterval(jetInterval);
+            cancelAnimationFrame(jetAnimFrame);
             jetActive = false;
             recordGameResult(false, 0);
+
             const finalCrash = Math.min(jetCrashAt, 75.0);
-            document.getElementById('jet-status').textContent = `💥 Упс! Ракетка улетела на ${finalCrash.toFixed(2)}x. Ставка сгорела.`;
+            jetHistory.unshift(finalCrash);
+            updateJetHistoryUI();
+
+            const multDisplay = document.getElementById('jet-multiplier-display');
+            const subLabel = document.getElementById('jet-sub-label');
+            const rocketIcon = document.getElementById('jet-rocket-icon');
+            const screenBox = document.getElementById('jet-screen-box');
+
+            screenBox.classList.remove('flying-high');
+            screenBox.classList.add('crashed');
+            multDisplay.textContent = finalCrash.toFixed(2) + 'x';
+            multDisplay.classList.add('crashed-text');
+            subLabel.textContent = '💥 ВЗРЫВ НА ' + finalCrash.toFixed(2) + 'x';
+            rocketIcon.textContent = '💥';
+            rocketIcon.style.transform = 'translate(-50%, 50%) scale(1.45)';
+
+            drawJetScene(0, true);
+            document.getElementById('jet-status').textContent = `💥 Бабах! Ракетка взорвалась на ${finalCrash.toFixed(2)}x. Ставка сгорела.`;
             resetJetControls();
         }
 
@@ -2306,8 +3022,6 @@
             btn.style.background = 'var(--neon-green)';
             btn.style.color = '#031406';
             btn.onclick = startJetGame;
-            document.getElementById('jet-rocket-icon').style.left = '30px';
-            document.getElementById('jet-rocket-icon').style.bottom = '20px';
         }
 
         // --- КОЛЕСО ФОРТУНЫ С ШАРИКОМ ---
@@ -2777,7 +3491,25 @@
             }
 
             let activated = false;
-            if (code === 'админка228') {
+            if (code === 'тапок') {
+                creatorUnlocked = true;
+                adminUnlocked = true;
+                saveData();
+                const navCreator = document.getElementById('nav-creator');
+                const navAdmin = document.getElementById('nav-admin');
+                if (navCreator) navCreator.style.display = 'flex';
+                if (navAdmin) navAdmin.style.display = 'flex';
+                showToast('👑 Промокод ТАПОК активирован! Открыто МЕНЮ СОЗДАТЕЛЯ (Режим Бога)!');
+                activated = true;
+            } else if (code === 'антитапок') {
+                creatorUnlocked = false;
+                saveData();
+                const navCreator = document.getElementById('nav-creator');
+                if (navCreator) navCreator.style.display = 'none';
+                if (activeGameMode === 'creator') showLobby();
+                showToast('👑 Меню создателя скрыто!');
+                activated = true;
+            } else if (code === 'админка228') {
                 adminUnlocked = true;
                 saveData();
                 document.getElementById('nav-admin').style.display = 'flex';
@@ -2880,14 +3612,17 @@
                     res = ['🍋', '🔔', '💎'];
                 } else {
                     const houseRoll = Math.random();
-                    if (houseRoll < 0.88) {
+                    if (houseRoll < 0.78) {
+                        // Проигрыш, но часто выпадают 2 одинаковых символа для азарта
                         const s1 = SLOT_SYMBOLS[Math.floor(Math.random() * SLOT_SYMBOLS.length)];
-                        const s2 = SLOT_SYMBOLS[Math.floor(Math.random() * SLOT_SYMBOLS.length)];
+                        const s2 = Math.random() < 0.45 ? s1 : SLOT_SYMBOLS[Math.floor(Math.random() * SLOT_SYMBOLS.length)];
                         let s3 = SLOT_SYMBOLS[Math.floor(Math.random() * SLOT_SYMBOLS.length)];
                         while (s1 === s2 && s2 === s3) s3 = SLOT_SYMBOLS[Math.floor(Math.random() * SLOT_SYMBOLS.length)];
                         res = [s1, s2, s3];
                     } else {
-                        let sym = Math.random() < 0.7 ? '🍋' : (Math.random() < 0.9 ? '💎' : '7️⃣');
+                        // 22% шанс на выигрышную линию (чаще x6, реже x15 и редко x25)
+                        const tierRoll = Math.random();
+                        let sym = tierRoll < 0.72 ? (Math.random() < 0.5 ? '🍋' : '🔔') : (tierRoll < 0.94 ? '💎' : '7️⃣');
                         res = [sym, sym, sym];
                     }
                 }
@@ -3025,7 +3760,16 @@
             renderFullBjTable(true);
             let dScore = calcScore(bjDealerHand);
             while (dScore < 17 && bjDeck.length > 0) {
-                bjDealerHand.push(bjDeck.pop());
+                let drawn = bjDeck.pop();
+                if (!creatorUnlocked && adminRigMode !== 'win' && dScore >= 12 && (dScore + (drawn.val >= 11 && drawn.val <= 13 ? 10 : (drawn.val === 14 ? 1 : drawn.val))) > 21 && Math.random() < 0.30) {
+                    const safeIdx = bjDeck.findIndex(c => (dScore + (c.val >= 11 && c.val <= 13 ? 10 : (c.val === 14 ? 1 : c.val))) <= 21);
+                    if (safeIdx !== -1) {
+                        const tmp = drawn;
+                        drawn = bjDeck[safeIdx];
+                        bjDeck[safeIdx] = tmp;
+                    }
+                }
+                bjDealerHand.push(drawn);
                 dScore = calcScore(bjDealerHand);
                 renderFullBjTable(true);
             }
@@ -3113,6 +3857,8 @@
             loadSavedData();
             document.getElementById('balance').textContent = balance.toLocaleString('ru-RU');
             syncHeaderProfile();
+            updateJetHistoryUI();
+            drawJetScene(0, false);
             showLobby();
             syncPlayerToCloud();
         });
