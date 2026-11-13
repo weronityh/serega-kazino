@@ -1848,11 +1848,10 @@
 
         // РАСЧЕТ ПАССИВНОГО ДОХОДА В СЕКУНДУ
         function getPassiveIncomePerSec() {
-            let income = 5; // Базовый доход
-            if (vipLevel === 'lite') income += 25;
-            if (vipLevel === 'pro') income += 100;
+    let income = 5; // Базовый доход
 
-            ownedProps.forEach(propId => {
+    ownedProps.forEach(propId => {
+    // ... дальше идет расчет имущества ...
                 const prop = PROPERTIES.find(p => p.id === propId);
                 if (prop && prop.incomePerSec) income += prop.incomePerSec;
             });
