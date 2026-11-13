@@ -4,119 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>СЕРЁГА И ОЛЯМБУС КАЗИК — Игровой портал</title>
-    /* ЭКРАН ПРИВЕТСТВИЯ / ВЫБОР НИКА */
-#nickname-overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: radial-gradient(circle at 50% 40%, #0f1a12 0%, #05080b 100%);
-    z-index: 100000;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 20px;
-}
-#nickname-overlay.active { display: flex; }
-.nickname-box {
-    background: #101720;
-    border: 2px solid var(--neon-green);
-    border-radius: 20px;
-    padding: 34px 30px;
-    max-width: 460px;
-    width: 100%;
-    box-shadow: 0 0 50px rgba(26, 232, 58, 0.25);
-}
-.nickname-box h1 {
-    margin: 0 0 8px;
-    font-size: 1.6rem;
-    text-transform: uppercase;
-    color: #fff;
-    font-style: italic;
-    font-weight: 950;
-}
-.nickname-box p {
-    color: var(--text-muted);
-    font-size: 0.9rem;
-    margin: 0 0 22px;
-}
-.nickname-box input {
-    width: 100%;
-    background: #0a1016;
-    border: 2px solid #283649;
-    border-radius: 12px;
-    padding: 14px 16px;
-    color: #fff;
-    font-size: 1.15rem;
-    font-weight: 800;
-    text-align: center;
-    outline: none;
-    letter-spacing: 1px;
-    transition: 0.2s;
-}
-.nickname-box input:focus { border-color: var(--neon-green); }
-.nickname-box input.invalid { border-color: var(--danger); }
-.nickname-hint {
-    font-size: 0.78rem;
-    margin-top: 8px;
-    min-height: 16px;
-    font-weight: 700;
-    color: var(--text-muted);
-}
-.nickname-hint.error { color: var(--danger); }
-.nickname-hint.ok { color: var(--neon-green); }
-
-/* ТОП-10 БОГАТЫХ */
-.top-rich-section {
-    background: var(--bg-card);
-    border: 1px solid var(--border-color);
-    border-radius: 18px;
-    padding: 22px;
-    margin-bottom: 24px;
-}
-.top-rich-title {
-    margin: 0 0 16px;
-    font-size: 1.15rem;
-    text-transform: uppercase;
-    font-weight: 950;
-    font-style: italic;
-    color: var(--gold);
-    text-shadow: 0 0 14px rgba(251, 191, 36, 0.35);
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-.top-rich-list { display: flex; flex-direction: column; gap: 8px; }
-.top-rich-row {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    background: #0d131a;
-    border: 1px solid #222e3d;
-    border-radius: 12px;
-    padding: 10px 14px;
-    transition: 0.2s;
-}
-.top-rich-row:hover { border-color: var(--gold); }
-.top-rich-row.self { border-color: var(--neon-green); background: rgba(26, 232, 58, 0.06); }
-.top-rich-place {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    display: grid;
-    place-items: center;
-    font-weight: 950;
-    font-size: 0.85rem;
-    background: #1c2633;
-    color: #fff;
-    flex-shrink: 0;
-}
-.top-rich-place.p1 { background: linear-gradient(135deg, #fbbf24, #f59e0b); color: #000; }
-.top-rich-place.p2 { background: linear-gradient(135deg, #cbd5e1, #94a3b8); color: #000; }
-.top-rich-place.p3 { background: linear-gradient(135deg, #b45309, #92400e); color: #fff; }
-.top-rich-name { flex: 1; font-weight: 800; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.top-rich-hours { font-size: 0.78rem; color: var(--text-muted); font-weight: 700; white-space: nowrap; }
-.top-rich-bal { color: var(--gold); font-weight: 950; font-size: 0.95rem; white-space: nowrap; }
     <style>
         :root {
             --bg-main: #090d11;
@@ -1139,6 +1026,119 @@
             font-size: 2rem;
             animation: coinRain 1.5s linear infinite;
         }
+        /* ЭКРАН ПРИВЕТСТВИЯ / ВЫБОР НИКА */
+#nickname-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(circle at 50% 40%, #0f1a12 0%, #05080b 100%);
+    z-index: 100000;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+}
+#nickname-overlay.active { display: flex; }
+.nickname-box {
+    background: #101720;
+    border: 2px solid var(--neon-green);
+    border-radius: 20px;
+    padding: 34px 30px;
+    max-width: 460px;
+    width: 100%;
+    box-shadow: 0 0 50px rgba(26, 232, 58, 0.25);
+}
+.nickname-box h1 {
+    margin: 0 0 8px;
+    font-size: 1.6rem;
+    text-transform: uppercase;
+    color: #fff;
+    font-style: italic;
+    font-weight: 950;
+}
+.nickname-box p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin: 0 0 22px;
+}
+.nickname-box input {
+    width: 100%;
+    background: #0a1016;
+    border: 2px solid #283649;
+    border-radius: 12px;
+    padding: 14px 16px;
+    color: #fff;
+    font-size: 1.15rem;
+    font-weight: 800;
+    text-align: center;
+    outline: none;
+    letter-spacing: 1px;
+    transition: 0.2s;
+}
+.nickname-box input:focus { border-color: var(--neon-green); }
+.nickname-box input.invalid { border-color: var(--danger); }
+.nickname-hint {
+    font-size: 0.78rem;
+    margin-top: 8px;
+    min-height: 16px;
+    font-weight: 700;
+    color: var(--text-muted);
+}
+.nickname-hint.error { color: var(--danger); }
+.nickname-hint.ok { color: var(--neon-green); }
+
+/* ТОП-10 БОГАТЫХ */
+.top-rich-section {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 18px;
+    padding: 22px;
+    margin-bottom: 24px;
+}
+.top-rich-title {
+    margin: 0 0 16px;
+    font-size: 1.15rem;
+    text-transform: uppercase;
+    font-weight: 950;
+    font-style: italic;
+    color: var(--gold);
+    text-shadow: 0 0 14px rgba(251, 191, 36, 0.35);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.top-rich-list { display: flex; flex-direction: column; gap: 8px; }
+.top-rich-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #0d131a;
+    border: 1px solid #222e3d;
+    border-radius: 12px;
+    padding: 10px 14px;
+    transition: 0.2s;
+}
+.top-rich-row:hover { border-color: var(--gold); }
+.top-rich-row.self { border-color: var(--neon-green); background: rgba(26, 232, 58, 0.06); }
+.top-rich-place {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font-weight: 950;
+    font-size: 0.85rem;
+    background: #1c2633;
+    color: #fff;
+    flex-shrink: 0;
+}
+.top-rich-place.p1 { background: linear-gradient(135deg, #fbbf24, #f59e0b); color: #000; }
+.top-rich-place.p2 { background: linear-gradient(135deg, #cbd5e1, #94a3b8); color: #000; }
+.top-rich-place.p3 { background: linear-gradient(135deg, #b45309, #92400e); color: #fff; }
+.top-rich-name { flex: 1; font-weight: 800; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.top-rich-hours { font-size: 0.78rem; color: var(--text-muted); font-weight: 700; white-space: nowrap; }
+.top-rich-bal { color: var(--gold); font-weight: 950; font-size: 0.95rem; white-space: nowrap; }
     </style>
 </head>
 <body>
