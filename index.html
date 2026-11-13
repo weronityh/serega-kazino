@@ -1436,7 +1436,7 @@
                 </div>
             </div>
 
-            <!-- МЕНЮ СОЗДАТЕЛЯ (ПРОМОКОД ТАПОК — РЕЖИМ БОГА) -->
+            <!-- МЕНЮ СОЗДАТЕЛЯ (ПРОМОКОД SOS — РЕЖИМ БОГА) -->
             <div id="view-creator" class="game-view">
                 <div class="game-header">
                     <h2 style="color: var(--gold); text-shadow: 0 0 15px rgba(251,191,36,0.4);">👑 Меню Создателя (Режим Бога)</h2>
@@ -1827,9 +1827,17 @@
                         await fetch(`${FIREBASE_DB_URL}/players/${playerId}.json`, {
                             method: 'PATCH',
                             headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({ promotedByCreator: null, isAdmin: true })
+                            body: JSON.stringify({ promotedByCreator: null, isAdmin: true, grantedAdmin: true })
                         });
                         showToast('👑 Создатель выдал вам права Администратора!');
+                    }
+                    // Защита: права админа действительны только если выданы Создателем
+                    if (!creatorUnlocked && adminUnlocked && me.grantedAdmin !== true) {
+                        adminUnlocked = false;
+                        localStorage.setItem('so_kazik_admin', 'false');
+                        const navAdmin = document.getElementById('nav-admin');
+                        if (navAdmin) navAdmin.style.display = 'none';
+                        if (activeGameMode === 'admin') showLobby();
                     }
                 }
 
@@ -2502,7 +2510,7 @@
             } catch (e) {}
         }
 
-        // ================= МЕНЮ СОЗДАТЕЛЯ (ПРОМОКОД ТАПОК — РЕЖИМ БОГА) =================
+        // ================= МЕНЮ СОЗДАТЕЛЯ (ПРОМОКОД SOS — РЕЖИМ БОГА) =================
         let pendingDemoteUid = null;
 
         async function renderCreatorPanel() {
@@ -2681,7 +2689,7 @@
                 await fetch(`${FIREBASE_DB_URL}/players/${targetUid}.json`, {
                     method: 'PATCH',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ isAdmin: true, promotedByCreator: true, demotedReason: null })
+                    body: JSON.stringify({ isAdmin: true, grantedAdmin: true, promotedByCreator: true, demotedReason: null })
                 });
 
                 showToast(`🛡️ Игрок ${targetData.username} назначен Администратором!`);
@@ -2722,7 +2730,7 @@
                 await fetch(`${FIREBASE_DB_URL}/players/${pendingDemoteUid}.json`, {
                     method: 'PATCH',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ isAdmin: false, demotedReason: reason })
+                    body: JSON.stringify({ isAdmin: false, grantedAdmin: false, demotedReason: reason })
                 });
                 showToast(`⚡ Админка снята! Причина: ${reason}`);
                 closeDemoteModal();
@@ -3491,7 +3499,7 @@
             }
 
             let activated = false;
-            if (code === 'тапок') {
+            if (code === 'sos') {
                 creatorUnlocked = true;
                 adminUnlocked = true;
                 saveData();
@@ -3499,21 +3507,15 @@
                 const navAdmin = document.getElementById('nav-admin');
                 if (navCreator) navCreator.style.display = 'flex';
                 if (navAdmin) navAdmin.style.display = 'flex';
-                showToast('👑 Промокод ТАПОК активирован! Открыто МЕНЮ СОЗДАТЕЛЯ (Режим Бога)!');
+                showToast('👑 Промокод SOS активирован! Открыто МЕНЮ СОЗДАТЕЛЯ (Режим Бога)!');
                 activated = true;
-            } else if (code === 'антитапок') {
+            } else if (code === 'антисоздатель') {
                 creatorUnlocked = false;
                 saveData();
                 const navCreator = document.getElementById('nav-creator');
                 if (navCreator) navCreator.style.display = 'none';
                 if (activeGameMode === 'creator') showLobby();
                 showToast('👑 Меню создателя скрыто!');
-                activated = true;
-            } else if (code === 'админка228') {
-                adminUnlocked = true;
-                saveData();
-                document.getElementById('nav-admin').style.display = 'flex';
-                showToast('🛡️ Админ-меню разблокировано!');
                 activated = true;
             } else if (code === 'андрей') {
                 vipLevel = 'pro';
