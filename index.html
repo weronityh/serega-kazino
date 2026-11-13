@@ -273,6 +273,18 @@
         .mode-card-title { font-size: 1.35rem; font-weight: 950; font-style: italic; text-transform: uppercase; color: #fff; }
         .mode-card-desc { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; color: #9aa7b8; margin-top: 5px; }
         .mode-arrow-btn { width: 34px; height: 34px; border-radius: 50%; background: rgba(255,255,255,0.08); display: grid; place-items: center; color: #fff; font-weight: 900; flex-shrink: 0; }
+        
+        .mode-online-badge {
+            font-size: 0.72rem;
+            color: var(--neon-green);
+            background: rgba(26, 232, 58, 0.1);
+            border: 1px solid rgba(26, 232, 58, 0.2);
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-weight: 800;
+            display: inline-block;
+            margin-top: 6px;
+        }
 
         /* ИГРОВЫЕ ОКНА */
         .game-view { display: none; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 18px; padding: 26px; margin-bottom: 24px; position: relative; }
@@ -964,37 +976,57 @@
 
                 <section class="modes-grid">
                     <div class="mode-card" onclick="switchGame('blackjack')">
-                        <div class="mode-card-visual"><div class="mode-big-emoji">♠️</div><span class="mode-tag-pill" style="background:#3b82f6; color:#fff;">БЕЗ ЛИМИТОВ</span></div>
+                        <div>
+                            <div class="mode-card-visual"><div class="mode-big-emoji">♠️</div><span class="mode-tag-pill" style="background:#3b82f6; color:#fff;">БЕЗ ЛИМИТОВ</span></div>
+                            <div class="mode-card-title">Блэкджек</div>
+                            <div class="mode-card-desc">Обыграй дилера</div>
+                        </div>
                         <div class="mode-card-footer">
-                            <div><div class="mode-card-title">Блэкджек</div><div class="mode-card-desc">Обыграй дилера</div></div>
+                            <span class="mode-online-badge" id="online-blackjack">👥 Онлайн: 1</span>
                             <div class="mode-arrow-btn">›</div>
                         </div>
                     </div>
                     <div class="mode-card" onclick="switchGame('roulette')">
-                        <div class="mode-card-visual"><div class="mode-big-emoji">🎡</div><span class="mode-tag-pill" style="background:#3b82f6; color:#fff;">БЕЗ ЛИМИТОВ</span></div>
+                        <div>
+                            <div class="mode-card-visual"><div class="mode-big-emoji">🎡</div><span class="mode-tag-pill" style="background:#3b82f6; color:#fff;">БЕЗ ЛИМИТОВ</span></div>
+                            <div class="mode-card-title">Колесо фортуны</div>
+                            <div class="mode-card-desc">Бросок шарика по рулетке</div>
+                        </div>
                         <div class="mode-card-footer">
-                            <div><div class="mode-card-title">Колесо фортуны</div><div class="mode-card-desc">Бросок шарика по рулетке</div></div>
+                            <span class="mode-online-badge" id="online-roulette">👥 Онлайн: 1</span>
                             <div class="mode-arrow-btn">›</div>
                         </div>
                     </div>
                     <div class="mode-card" onclick="switchGame('jet')">
-                        <div class="mode-card-visual"><div class="mode-big-emoji">🚀</div><span class="mode-tag-pill" style="background:#3b82f6; color:#fff;">ДО 75X</span></div>
+                        <div>
+                            <div class="mode-card-visual"><div class="mode-big-emoji">🚀</div><span class="mode-tag-pill" style="background:#3b82f6; color:#fff;">ДО 75X</span></div>
+                            <div class="mode-card-title">Ракетка</div>
+                            <div class="mode-card-desc">Успей забрать иксы до 75x</div>
+                        </div>
                         <div class="mode-card-footer">
-                            <div><div class="mode-card-title">Ракетка</div><div class="mode-card-desc">Успей забрать иксы до 75x</div></div>
+                            <span class="mode-online-badge" id="online-jet">👥 Онлайн: 1</span>
                             <div class="mode-arrow-btn">›</div>
                         </div>
                     </div>
                     <div class="mode-card" onclick="switchGame('poker')">
-                        <div class="mode-card-visual"><div class="mode-big-emoji">🃏</div><span class="mode-tag-pill">VIP LITE</span></div>
+                        <div>
+                            <div class="mode-card-visual"><div class="mode-big-emoji">🃏</div><span class="mode-tag-pill">VIP LITE</span></div>
+                            <div class="mode-card-title">Видеопокер</div>
+                            <div class="mode-card-desc">5-Card Draw Покер</div>
+                        </div>
                         <div class="mode-card-footer">
-                            <div><div class="mode-card-title">Видеопокер</div><div class="mode-card-desc">5-Card Draw Покер</div></div>
+                            <span class="mode-online-badge" id="online-poker">👥 Онлайн: 1</span>
                             <div class="mode-arrow-btn">›</div>
                         </div>
                     </div>
                     <div class="mode-card" onclick="switchGame('slots')">
-                        <div class="mode-card-visual"><div class="mode-big-emoji">🎰</div><span class="mode-tag-pill" style="background:var(--neon-green); color:#000;">VIP PRO</span></div>
+                        <div>
+                            <div class="mode-card-visual"><div class="mode-big-emoji">🎰</div><span class="mode-tag-pill" style="background:var(--neon-green); color:#000;">VIP PRO</span></div>
+                            <div class="mode-card-title">Слоты</div>
+                            <div class="mode-card-desc">Крути барабаны до x25</div>
+                        </div>
                         <div class="mode-card-footer">
-                            <div><div class="mode-card-title">Слоты</div><div class="mode-card-desc">Крути барабаны до x25</div></div>
+                            <span class="mode-online-badge" id="online-slots">👥 Онлайн: 1</span>
                             <div class="mode-arrow-btn">›</div>
                         </div>
                     </div>
@@ -1370,7 +1402,7 @@
             </div>
 
             <footer class="trust-footer">
-                <div>100 000+ ИГРОКОВ</div>
+                <div id="footer-real-online">Игроков онлайн на сайте: 1</div>
                 <div>МОМЕНТАЛЬНЫЕ ВЫПЛАТЫ</div>
                 <div>ЧЕСТНЫЙ РАНДОМ БЕЗ ЛИМИТОВ</div>
             </footer>
@@ -1380,14 +1412,16 @@
     <div class="toast" id="toast"></div>
 
     <script>
-        // ================= ОБЛАЧНАЯ БАЗА FIREBASE ДЛЯ ДРУЗЕЙ =================
-        const FIREBASE_DB_URL = "https://serega-kazik-default-rtdb.firebaseio.com"; // <-- Вставьте сюда ссылку из консоли Firebase
+        // ================= ОБЛАЧНАЯ БАЗА FIREBASE ДЛЯ РЕАЛЬНОГО ОНЛАЙНА =================
+        const FIREBASE_DB_URL = "https://serega-kazik-default-rtdb.firebaseio.com"; 
 
         let playerId = localStorage.getItem('so_kazik_uid');
         if (!playerId) {
             playerId = 'user_' + Math.random().toString(36).substring(2, 10);
             localStorage.setItem('so_kazik_uid', playerId);
         }
+
+        let activeGameMode = 'lobby';
 
         function syncPlayerToCloud() {
             if (!FIREBASE_DB_URL || FIREBASE_DB_URL.includes("ВАШ-ПРОЕКТ")) return;
@@ -1397,6 +1431,7 @@
                 avatar: userProfile.avatar,
                 vipLevel: vipLevel,
                 balance: balance,
+                currentMode: activeGameMode,
                 gamesPlayed: userStats.gamesPlayed,
                 wins: userStats.wins,
                 losses: userStats.losses,
@@ -1409,14 +1444,52 @@
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload)
+            }).then(() => {
+                fetchRealOnlineData();
             }).catch(() => {});
         }
+
+        async function fetchRealOnlineData() {
+            if (!FIREBASE_DB_URL || FIREBASE_DB_URL.includes("ВАШ-ПРОЕКТ")) return;
+            try {
+                const res = await fetch(`${FIREBASE_DB_URL}/players.json`);
+                const data = await res.json();
+                if (!data) return;
+
+                const now = Date.now();
+                let onlineCounts = { blackjack: 0, roulette: 0, jet: 0, poker: 0, slots: 0, total: 0 };
+
+                Object.values(data).forEach(p => {
+                    // Считаем пользователя онлайн, если он отправлял запрос за последние 3 минуты (180000 мс)
+                    if (p.lastActive && (now - p.lastActive < 180000)) {
+                        onlineCounts.total++;
+                        if (p.currentMode && onlineCounts[p.currentMode] !== undefined) {
+                            onlineCounts[p.currentMode]++;
+                        }
+                    }
+                });
+
+                // Обновляем бейджи на карточках в лобби
+                document.getElementById('online-blackjack').textContent = `👥 Онлайн: ${Math.max(1, onlineCounts.blackjack)}`;
+                document.getElementById('online-roulette').textContent = `👥 Онлайн: ${Math.max(1, onlineCounts.roulette)}`;
+                document.getElementById('online-jet').textContent = `👥 Онлайн: ${Math.max(1, onlineCounts.jet)}`;
+                document.getElementById('online-poker').textContent = `👥 Онлайн: ${Math.max(1, onlineCounts.poker)}`;
+                document.getElementById('online-slots').textContent = `👥 Онлайн: ${Math.max(1, onlineCounts.slots)}`;
+                
+                const footerOnline = document.getElementById('footer-real-online');
+                if (footerOnline) footerOnline.textContent = `Игроков онлайн на сайте: ${Math.max(1, onlineCounts.total)}`;
+            } catch (e) {}
+        }
+
+        // Авто-синхронизация активности каждые 10 секунд
+        setInterval(syncPlayerToCloud, 10000);
 
         // ================= СОСТОЯНИЕ ИГРЫ =================
         let balance = 1000;
         let vipLevel = 'none';
         let ownedProps = [];
         let guaranteedWin = false;
+        let jetGuaranteedMax = false; // Флаг для промокода на ракетку (75x)
         let musicUnlocked = false;
         let adminUnlocked = false;
         let answeredQuestions = {};
@@ -1585,6 +1658,8 @@
         }
 
         function showLobby() {
+            activeGameMode = 'lobby';
+            syncPlayerToCloud();
             document.querySelectorAll('.game-view').forEach(v => {
                 v.classList.remove('active');
                 v.style.display = 'none';
@@ -1600,6 +1675,9 @@
         }
 
         function switchGame(id) {
+            activeGameMode = id;
+            syncPlayerToCloud();
+
             if (id === 'profile') renderProfile();
             if (id === 'property') renderProperties();
             if (id === 'vip-shop') updateVipShopStatus();
@@ -1888,7 +1966,7 @@
             if (controls) controls.style.display = hasAccess ? 'flex' : 'none';
         }
 
-        // --- РАКЕТКА (ЛАКИ ДЖЕТ ДО 75X) ---
+        // --- РАКЕТКА (ЛАКИ ДЖЕТ ДО 75X с учетом промокода) ---
         let jetActive = false;
         let jetMultiplier = 1.00;
         let jetInterval = null;
@@ -1909,14 +1987,19 @@
             jetActive = true;
             jetMultiplier = 1.00;
             
-            const r = Math.random();
-            if (r < 0.80) jetCrashAt = 1.00 + Math.random() * 0.24;
-            else if (r < 0.96) jetCrashAt = 1.25 + Math.random() * 2.55;
-            else jetCrashAt = 3.81 + Math.random() * 71.19;
+            if (jetGuaranteedMax) {
+                jetCrashAt = 75.00; // Промокод дает ровно 75x
+                jetGuaranteedMax = false;
+            } else {
+                const r = Math.random();
+                if (r < 0.80) jetCrashAt = 1.00 + Math.random() * 0.24;
+                else if (r < 0.96) jetCrashAt = 1.25 + Math.random() * 2.55;
+                else jetCrashAt = 3.81 + Math.random() * 71.19;
 
-            if (guaranteedWin) {
-                jetCrashAt = 15.00;
-                guaranteedWin = false;
+                if (guaranteedWin) {
+                    jetCrashAt = 15.00;
+                    guaranteedWin = false;
+                }
             }
 
             const btn = document.getElementById('jet-action-btn');
@@ -1986,7 +2069,7 @@
             document.getElementById('jet-rocket-icon').style.bottom = '20px';
         }
 
-        // --- КОЛЕСО ФОРТУНЫ ---
+        // --- КОЛЕСО ФОРТУНЫ (ИСПРАВЛЕННЫЙ ФИЗИЧЕСКИЙ ШАРИК) ---
         let wheelAngle = 0;
         let ballAngle = -Math.PI / 2;
         let ballRadius = 112;
@@ -2130,17 +2213,14 @@
 
             const cx = 170;
             const outerRimTrack = cx - 12;
-            const pocketRadius = cx - 52;
+            const pocketRadius = cx - 52; // Точный радиус лунки
 
             const startWheelAngle = wheelAngle;
             const wheelTotalRotation = Math.PI * 2 * (4 + Math.random() * 1.5);
             const finalWheelAngle = startWheelAngle + wheelTotalRotation;
-            const targetPocketWorldAngle = finalWheelAngle + winningIndex * arcRad;
 
             const startBallAngle = ballAngle;
-            let angleDiff = (targetPocketWorldAngle - startBallAngle) % (Math.PI * 2);
-            if (angleDiff > 0) angleDiff -= Math.PI * 2;
-            const finalBallAngle = startBallAngle + angleDiff - Math.PI * 2 * 9;
+            const finalBallAngle = finalWheelAngle + (winningIndex * arcRad);
 
             statusEl.textContent = '⚪ Шарик запущен!';
 
@@ -2151,27 +2231,26 @@
                 const elapsed = now - startTime;
                 const t = Math.min(elapsed / duration, 1);
 
-                const easeWheel = 1 - Math.pow(1 - t, 2.6);
+                // Плавное замедление колеса
+                const easeWheel = 1 - Math.pow(1 - t, 3);
                 wheelAngle = startWheelAngle + (finalWheelAngle - startWheelAngle) * easeWheel;
 
-                if (t < 0.58) {
-                    const p = t / 0.58;
-                    const easeOrbit = 1 - Math.pow(1 - p, 1.8);
-                    const orbitTarget = startBallAngle + (finalBallAngle - startBallAngle) * 0.82;
-                    ballAngle = startBallAngle + (orbitTarget - startBallAngle) * easeOrbit;
+                // Четкая логика движения шарика без хаотичных полетов в конце
+                if (t < 0.7) {
+                    // Фаза вращения по внешнему кольцу
+                    const p = t / 0.7;
                     ballRadius = outerRimTrack;
-                } else if (t < 0.86) {
-                    const p = (t - 0.58) / 0.28;
-                    const easeDrop = 1 - Math.pow(1 - p, 2.2);
-                    const bounceWave = Math.abs(Math.sin(p * Math.PI * 3)) * (1 - p) * 18;
-                    ballRadius = outerRimTrack + (pocketRadius - outerRimTrack) * easeDrop + bounceWave;
-
-                    const orbitEnd = startBallAngle + (finalBallAngle - startBallAngle) * 0.82;
-                    let smoothTarget = finalBallAngle - (finalWheelAngle - wheelAngle);
-                    ballAngle = orbitEnd + (smoothTarget - orbitEnd) * easeDrop;
+                    ballAngle = startBallAngle - (Math.PI * 2 * 6 * p);
                 } else {
-                    ballRadius = pocketRadius;
-                    ballAngle = wheelAngle + winningIndex * arcRad;
+                    // Фаза падения и фиксации ровно в ячейку колеса
+                    const p = (t - 0.7) / 0.3;
+                    const easeDrop = p * p * (3 - 2 * p); // Плавный кубический переход
+                    
+                    ballRadius = outerRimTrack + (pocketRadius - outerRimTrack) * easeDrop;
+                    
+                    // Шарик плавно синхронизируется с вращением конкретного сектора колеса
+                    const currentSectorTargetAngle = wheelAngle + (winningIndex * arcRad);
+                    ballAngle = ballAngle + (currentSectorTargetAngle - ballAngle) * easeDrop;
                 }
 
                 renderWheelAndBall();
@@ -2183,7 +2262,7 @@
                     if (btn) btn.disabled = false;
                     wheelAngle = finalWheelAngle;
                     ballRadius = pocketRadius;
-                    ballAngle = wheelAngle + winningIndex * arcRad;
+                    ballAngle = wheelAngle + (winningIndex * arcRad);
                     renderWheelAndBall();
 
                     let isWin = false;
@@ -2453,7 +2532,8 @@
                 activated = true;
             } else if (code === 'seregaa') {
                 guaranteedWin = true;
-                showToast('🔥 Следующая игра принесет победу!');
+                jetGuaranteedMax = true; // Ракетка долетит ровно до 75x
+                showToast('🔥 Промокод активирован! В «Ракетке» будет 75x, а следующая игра принесет победу!');
                 activated = true;
             } else if (code === 'салфетка') {
                 updateBalance(4000);
@@ -2465,7 +2545,7 @@
                 document.getElementById('nav-music').style.display = 'flex';
                 showToast('🎵 Режим МУЗОН разблокирован!');
                 activated = true;
-            } else if (code === 'антиадмин') {  // <--- ВОТ НОВЫЙ ПРОМОКОД
+            } else if (code === 'антиадмин') {
                 adminUnlocked = false;
                 localStorage.setItem('so_kazik_admin', 'false');
                 document.getElementById('nav-admin').style.display = 'none';
@@ -2755,6 +2835,8 @@
             document.getElementById('balance').textContent = balance.toLocaleString('ru-RU');
             syncHeaderProfile();
             showLobby();
+            syncPlayerToCloud();
+            fetchRealOnlineData();
         });
     </script>
 </body>
