@@ -525,7 +525,7 @@
         }
 
         /* ========================================== */
-        /* GATES OF OLYMPUS (ЗЕВС СПРАВА В СЕРЕДИНЕ ПО ВАШЕМУ МАРКЕРУ) */
+        /* GATES OF OLYMPUS (ЗЕВС СПРАВА В СЕРЕДИНЕ) */
         /* ========================================== */
         #view-olympus {
             padding: 0;
@@ -623,7 +623,7 @@
             box-shadow: 0 0 25px rgba(34, 197, 94, 0.65);
         }
 
-/* Правая зона для Зевса (смещена вправо) */
+        /* Правая зона для Зевса (исправленная чистая PNG-версия) */
         .ao-right-zeus-zone {
             display: flex;
             flex-direction: column;
@@ -679,7 +679,6 @@
             100% { transform: translate(0, 0) scale(1) rotate(0deg); filter: brightness(1) drop-shadow(0 12px 35px rgba(245, 158, 11, 0.65)); }
         }
 
-        /* Зона жёлтого маркера (Счётчик иксов справа сверху) */
         .ao-yellow-mult-badge {
             position: absolute;
             top: 8px;
@@ -776,10 +775,7 @@
             100% { transform: scale(0) rotate(15deg); opacity: 0; }
         }
 
-        #view-olympus .ao-cell.ao-protrude-cell {
-            z-index: 20;
-            overflow: visible;
-        }
+        #view-olympus .ao-cell.ao-protrude-cell { z-index: 20; overflow: visible; }
         #view-olympus .ao-multiplier-sphere {
             width: 122%;
             height: 122%;
@@ -1000,7 +996,7 @@
         .dh-spin-circle-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
         /* ========================================== */
-        /* SWEET BONANZA (С ВАШИМИ КАРТИНКАМИ И ВЫПИРАЮЩИМИ БОМБАМИ/ЧУПАЧУПСАМИ) */
+        /* SWEET BONANZA */
         /* ========================================== */
         #view-bonanza {
             padding: 0; overflow: hidden; border: 2px solid #f43f5e;
@@ -1609,13 +1605,11 @@
                 </div>
 
                 <div class="ao-stage">
-                    <!-- Жёлтый маркер (Счётчик иксов справа сверху по вашему рисунку) -->
                     <div class="ao-yellow-mult-badge">
                         <div class="ao-yellow-mult-label">ОБЩИЙ ИКС</div>
                         <div class="ao-yellow-mult-value" id="ao-global-mult-display">0x</div>
                     </div>
 
-                    <!-- 1. Слева: Покупка бонуса и ставка Анте -->
                     <div class="ao-left-controls-zone">
                         <div class="ao-feature-card ao-buy-feature" onclick="buyOlympusBonus()">
                             <div style="font-size:0.75rem; font-weight:900; text-transform:uppercase; color:#fff;">КУПИТЬ БЕСПЛАТНЫЕ СПИНЫ</div>
@@ -1634,20 +1628,20 @@
                         </div>
                     </div>
 
-                    <!-- 2. По центру: Игровое поле -->
                     <div class="ao-board-wrapper">
                         <div class="ao-gold-frame">
                             <div class="ao-grid-6x5" id="ao-grid"></div>
                         </div>
                     </div>
 
-                    <!-- 3. Справа: Красный маркер (Зевс на пол-экрана + логотип сверху) -->
-<div class="ao-right-zeus-zone">
-    <img src="gatesofolympuslogo.png" onerror="this.style.display='none';" alt="Gates of Olympus Logo" class="ao-official-logo">
-    <div class="ao-zeus-hero-wrap" id="ao-zeus-avatar">
-        <img src="olympusnaprotiv.png" onerror="this.style.display='none';" alt="Великий Зевс" class="ao-zeus-hero-img">
-    </div>
-</div>
+                    <!-- Справа: Чистая PNG-версия Зевса и оригинальный логотип -->
+                    <div class="ao-right-zeus-zone">
+                        <img src="gatesofolympuslogo.png" onerror="this.style.display='none';" alt="Gates of Olympus Logo" class="ao-official-logo">
+                        <div class="ao-zeus-hero-wrap" id="ao-zeus-avatar">
+                            <img src="olympusnaprotiv.png" onerror="this.style.display='none';" alt="Великий Зевс" class="ao-zeus-hero-img">
+                        </div>
+                    </div>
+                </div>
 
                 <div class="ao-pragmatic-hud">
                     <div class="ao-hud-left-group">
@@ -1727,7 +1721,7 @@
                 </div>
             </div>
 
-            <!-- SWEET BONANZA (С ВАШИМИ КАРТИНКАМИ) -->
+            <!-- SWEET BONANZA -->
             <div id="view-bonanza" class="game-view">
                 <div class="sb-top-bar">
                     <button class="btn-back" onclick="showLobby()">← В зал</button>
@@ -2004,7 +1998,7 @@
         let dhSpinning = false, dhInFreeSpins = false, dhAutoActive = false, dhFreeSpinsLeft = 0, dhFreeSpinsTotalWin = 0, dhCurrentBet = 0.5;
 
         // ==========================================
-        // SWEET BONANZA (С ВАШИМИ ИЗОБРАЖЕНИЯМИ)
+        // SWEET BONANZA
         // ==========================================
         const SB_COLS = 6, SB_ROWS = 5;
         const SB_SYMBOLS = [
@@ -2028,7 +2022,7 @@
         let sbGrid = Array.from({ length: SB_COLS }, () => Array(SB_ROWS).fill(null));
         let sbSpinning = false, sbAnteActive = false, sbAutoActive = false, sbFreeSpinsLeft = 0, sbInFreeSpins = false, sbFreeSpinsTotalWin = 0;
 
-        // CHICKEN CROSS / CHICKEN ROAD STATE
+        // CHICKEN CROSS STATE
         let chickenActive = false;
         let chickenStepIndex = 0;
         let chickenCurrentMult = 1.0;
@@ -2179,22 +2173,17 @@
         function sleep(ms) { return new Promise(resolve => setTimeout(resolve, ms)); }
 
         function loadState() {
-    const savedBal = localStorage.getItem('kazik_real_bal');
-    if (savedBal !== null) {
-        balance = parseFloat(savedBal);
-    } else {
-        balance = 0.49;
-        localStorage.setItem('kazik_real_bal', '0.49');
-    }
-    const savedNick = localStorage.getItem('kazik_real_nick');
-    if (savedNick) username = savedNick;
-    const savedStats = localStorage.getItem('kazik_real_stats');
-    if (savedStats) stats = JSON.parse(savedStats);
-    if (localStorage.getItem('kazik_dev_unlocked') === '1') { isDevUnlocked = true; unlockDevFeatures(); }
-    updateBalanceUI();
-    if (!username || username.length < 5) document.getElementById('nickname-overlay').classList.add('active');
-    else { syncProfileUI(); initFirebaseRealtimeSync(); }
-}
+            const savedBal = localStorage.getItem('kazik_real_bal');
+            if (savedBal !== null) balance = parseFloat(savedBal);
+            const savedNick = localStorage.getItem('kazik_real_nick');
+            if (savedNick) username = savedNick;
+            const savedStats = localStorage.getItem('kazik_real_stats');
+            if (savedStats) stats = JSON.parse(savedStats);
+            if (localStorage.getItem('kazik_dev_unlocked') === '1') { isDevUnlocked = true; unlockDevFeatures(); }
+            updateBalanceUI();
+            if (!username || username.length < 5) document.getElementById('nickname-overlay').classList.add('active');
+            else { syncProfileUI(); initFirebaseRealtimeSync(); }
+        }
 
         function saveState() {
             localStorage.setItem('kazik_real_bal', balance.toFixed(2));
@@ -2958,7 +2947,7 @@
         }
 
         // ==========================================
-        // SWEET BONANZA (С ВАШИМИ КАРТИНКАМИ)
+        // SWEET BONANZA
         // ==========================================
         function initSweetBonanzaDOM() {
             const gridEl = document.getElementById('sb-grid');
