@@ -524,7 +524,9 @@
             box-shadow: 0 0 15px rgba(34, 197, 94, 0.7);
         }
 
-        /* GATES OF OLYMPUS */
+        /* ========================================== */
+        /* GATES OF OLYMPUS (ТОЧНО КАК НА СКРИНШОТЕ 1) */
+        /* ========================================== */
         #view-olympus {
             padding: 0;
             overflow: hidden;
@@ -546,18 +548,8 @@
             background: rgba(15, 8, 30, 0.7);
             backdrop-filter: blur(6px);
             border-bottom: 1px solid rgba(245, 158, 11, 0.3);
-        }
-        .ao-logo-title {
-            font-size: 1.5rem;
-            font-family: 'Unbounded', sans-serif;
-            font-weight: 900;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            background: linear-gradient(180deg, #fffbeb 0%, #fde047 55%, #f59e0b 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 2px 0 #3d1c02) drop-shadow(0 0 12px rgba(253,224,71,0.6));
-            user-select: none;
+            position: relative;
+            z-index: 10;
         }
 
         .ao-fs-banner {
@@ -575,24 +567,45 @@
         .ao-fs-banner.active { display: inline-flex; align-items: center; gap: 10px; }
         @keyframes aoPulseBanner { 0% { transform: scale(1); } 100% { transform: scale(1.04); } }
 
+        /* Шапка с надписью «ВЫИГРАЙТЕ ДО 5,000 Х ОТ СУММЫ СТАВКИ» */
+        .ao-win-banner-top {
+            background: linear-gradient(90deg, #78350f, #d97706, #b45309);
+            border-bottom: 2px solid #fde047;
+            text-align: center;
+            padding: 6px;
+            font-family: 'Unbounded', sans-serif;
+            font-size: 0.82rem;
+            font-weight: 900;
+            color: #fffbeb;
+            letter-spacing: 0.5px;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+        }
+
+        /* Основная сцена Олимпа */
         .ao-stage {
             display: grid;
-            grid-template-columns: 205px 1fr 190px;
-            gap: 14px;
-            padding: 16px 20px;
+            grid-template-columns: 210px 1fr 210px;
+            gap: 12px;
+            padding: 14px 18px;
             align-items: center;
             position: relative;
+            min-height: 470px;
         }
         @media (max-width: 980px) {
             .ao-stage { grid-template-columns: 1fr; }
-            .ao-left-features { flex-direction: row !important; justify-content: center; }
-            .ao-zeus-column { display: none; }
+            .ao-right-zeus-zone { display: none; }
         }
 
-        .ao-left-features { display: flex; flex-direction: column; gap: 14px; z-index: 5; }
+        /* Левая панель: Кнопка покупки бонуса и ставка Анте (как на скриншоте 1 слева) */
+        .ao-left-controls-zone {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            z-index: 5;
+        }
         .ao-feature-card {
-            border-radius: 16px;
-            padding: 14px 12px;
+            border-radius: 14px;
+            padding: 12px 10px;
             text-align: center;
             cursor: pointer;
             transition: all 0.2s ease;
@@ -609,49 +622,59 @@
             box-shadow: 0 0 25px rgba(34, 197, 94, 0.65);
         }
 
-        .ao-zeus-column {
+        /* Правая половина: Логотип Gates of Olympus сверху + Зевс стоящий на половину экрана слева/справа */
+        .ao-right-zeus-zone {
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            text-align: center;
-            background: rgba(25, 12, 45, 0.65);
-            border: 2px solid rgba(245, 158, 11, 0.35);
-            border-radius: 18px;
-            padding: 14px 10px;
+            justify-content: flex-end;
+            height: 100%;
             position: relative;
+            z-index: 5;
         }
-        .ao-zeus-avatar img { width: 130px; height: 130px; object-fit: contain; border-radius: 12px; }
-        .ao-zeus-avatar.lightning-strike { animation: zeusThunder 0.4s ease; }
-        @keyframes zeusThunder {
-            0% { transform: scale(1); filter: brightness(1); }
-            30% { transform: scale(1.2) rotate(-3deg); filter: brightness(1.8) drop-shadow(0 0 25px #ffffff); }
-            100% { transform: scale(1); filter: brightness(1); }
+        .ao-official-logo {
+            width: 145px;
+            height: auto;
+            object-fit: contain;
+            margin-bottom: 10px;
+            filter: drop-shadow(0 0 15px rgba(245, 158, 11, 0.6));
         }
-        .ao-global-mult-badge {
-            margin-top: 10px;
-            background: rgba(0, 0, 0, 0.5);
-            border: 1px solid #fde047;
-            border-radius: 12px;
-            padding: 8px 10px;
+        .ao-zeus-hero-wrap {
+            position: relative;
             width: 100%;
+            height: 290px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            pointer-events: none;
+        }
+        .ao-zeus-hero-img {
+            height: 310px;
+            width: auto;
+            max-width: none;
+            object-fit: contain;
+            filter: drop-shadow(0 10px 30px rgba(245, 158, 11, 0.55));
+            transform-origin: bottom center;
+        }
+
+        /* Мощная тряска Зевса при выпадении бомб-множителей */
+        .ao-zeus-hero-wrap.zeus-bomb-shake .ao-zeus-hero-img {
+            animation: zeusBombShake 0.65s cubic-bezier(.36,.07,.19,.97) both;
+        }
+        @keyframes zeusBombShake {
+            0%   { transform: translate(0, 0) scale(1) rotate(0deg); filter: brightness(1) drop-shadow(0 0 25px #facc15); }
+            12%  { transform: translate(-14px, -10px) scale(1.13) rotate(-5deg); filter: brightness(1.85) drop-shadow(0 0 45px #ffffff); }
+            25%  { transform: translate(15px, 6px) scale(1.16) rotate(5deg); filter: brightness(2.1) drop-shadow(0 0 55px #fde047); }
+            38%  { transform: translate(-14px, -8px) scale(1.14) rotate(-4deg); filter: brightness(1.7) drop-shadow(0 0 40px #f59e0b); }
+            50%  { transform: translate(12px, 5px) scale(1.12) rotate(4deg); }
+            65%  { transform: translate(-9px, -4px) scale(1.08) rotate(-3deg); }
+            80%  { transform: translate(6px, 2px) scale(1.04) rotate(2deg); }
+            100% { transform: translate(0, 0) scale(1) rotate(0deg); filter: brightness(1) drop-shadow(0 10px 30px rgba(245, 158, 11, 0.55)); }
         }
 
         .ao-board-wrapper { display: flex; flex-direction: column; align-items: center; position: relative; }
-        .ao-ticker {
-            background: linear-gradient(90deg, rgba(46, 16, 69, 0.9), rgba(91, 33, 182, 0.95), rgba(46, 16, 69, 0.9));
-            border: 2px solid #f59e0b;
-            border-bottom: none;
-            border-radius: 14px 14px 0 0;
-            padding: 6px 22px;
-            min-width: 310px;
-            text-align: center;
-            font-weight: 900;
-            font-size: 0.9rem;
-            color: #fef08a;
-        }
         .ao-gold-frame {
-            width: 100%; max-width: 720px; padding: 12px; border-radius: 20px;
+            width: 100%; max-width: 680px; padding: 12px; border-radius: 20px;
             background: linear-gradient(180deg, #ca8a04 0%, #a16207 50%, #713f12 100%);
             border: 3px solid #fde047;
             box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7);
@@ -667,18 +690,18 @@
             overflow: hidden;
         }
         .ao-cell {
-            aspect-ratio: 1.05 / 1; min-height: 58px; background: rgba(255, 255, 255, 0.05);
+            aspect-ratio: 1.05 / 1; min-height: 56px; background: rgba(255, 255, 255, 0.05);
             border-radius: 10px; border: 1px solid rgba(254, 240, 138, 0.12);
             display: flex; align-items: center; justify-content: center; position: relative;
         }
-        .ao-symbol-inner { font-size: 2.35rem; line-height: 1; display: flex; align-items: center; justify-content: center; will-change: transform, opacity; }
+        .ao-symbol-inner { font-size: 2.3rem; line-height: 1; display: flex; align-items: center; justify-content: center; will-change: transform, opacity; }
 
-        .ao-cell.cell-spinning .ao-symbol-inner { animation: aoCellScroll 0.12s infinite alternate ease-in-out; }
+        .ao-cell.cell-spinning .ao-symbol-inner { animation: aoCellScroll 0.16s infinite alternate ease-in-out; }
         @keyframes aoCellScroll {
             0% { transform: translateY(-7px) scale(0.92); opacity: 0.4; }
             100% { transform: translateY(7px) scale(1.05); opacity: 1; }
         }
-        .ao-symbol-inner.drop-in { animation: aoDropBounce 0.32s cubic-bezier(0.22, 1.25, 0.36, 1) forwards; }
+        .ao-symbol-inner.drop-in { animation: aoDropBounce 0.42s cubic-bezier(0.22, 1.25, 0.36, 1) forwards; }
         @keyframes aoDropBounce {
             0% { transform: translateY(-65px) scale(0.8); opacity: 0.2; }
             75% { transform: translateY(4px) scale(1.05); opacity: 1; }
@@ -688,7 +711,7 @@
             background: radial-gradient(circle, rgba(253, 224, 71, 0.6) 0%, rgba(202, 138, 4, 0.35) 100%);
             border-color: #fde047; box-shadow: 0 0 18px rgba(253, 224, 71, 0.8); z-index: 3;
         }
-        .ao-cell.win-pop .ao-symbol-inner { animation: aoWinExplode 0.5s ease-in-out forwards; }
+        .ao-cell.win-pop .ao-symbol-inner { animation: aoWinExplode 0.55s ease-in-out forwards; }
         @keyframes aoWinExplode {
             0% { transform: scale(1); }
             45% { transform: scale(1.3) rotate(-6deg); filter: brightness(1.4) drop-shadow(0 0 12px #fde047); }
@@ -709,7 +732,7 @@
         .ao-sphere-val { font-size: 0.95rem; font-weight: 900; color: #fff; text-shadow: 0 2px 0 #000; }
         @keyframes aoSpherePulse { 0% { transform: scale(0.96) rotate(-3deg); } 100% { transform: scale(1.04) rotate(3deg); } }
 
-        .ao-scatter-sym { font-size: 2.6rem; filter: drop-shadow(0 0 12px #38bdf8); animation: aoScatterPulse 1.1s infinite alternate; }
+        .ao-scatter-sym { font-size: 2.5rem; filter: drop-shadow(0 0 12px #38bdf8); animation: aoScatterPulse 1.1s infinite alternate; }
         @keyframes aoScatterPulse { 0% { transform: scale(0.95) rotate(-4deg); } 100% { transform: scale(1.08) rotate(4deg); } }
 
         .ao-pragmatic-hud {
@@ -747,7 +770,9 @@
         .ao-spin-circle-btn svg { width: 38px; height: 38px; fill: #fff; }
         .ao-spin-circle-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
-        /* THE DOG HOUSE */
+        /* ========================================== */
+        /* THE DOG HOUSE (Скаттеры и будки выпирают!) */
+        /* ========================================== */
         #view-doghouse {
             padding: 0; overflow: hidden; border: 2px solid #f59e0b;
             background: radial-gradient(circle at 50% 30%, #3d220f 0%, #1a100a 60%, #0d0805 100%);
@@ -788,23 +813,39 @@
         .dh-grid-5x3 {
             display: grid; grid-template-columns: repeat(5, 1fr); grid-template-rows: repeat(3, 1fr);
             gap: 8px; background: radial-gradient(circle at 50% 45%, rgba(69, 30, 10, 0.92) 0%, rgba(20, 8, 2, 0.96) 100%);
-            border-radius: 14px; padding: 12px; overflow: hidden;
+            border-radius: 14px; padding: 12px; overflow: visible;
         }
         .dh-cell {
             aspect-ratio: 1.1 / 1; min-height: 82px; background: rgba(255, 255, 255, 0.05);
             border-radius: 12px; border: 1px solid rgba(254, 240, 138, 0.15);
             display: flex; align-items: center; justify-content: center; position: relative; padding: 4px;
+            overflow: visible;
         }
-        .dh-symbol-inner { width: 100%; height: 100%; font-size: 2.8rem; display: flex; align-items: center; justify-content: center; }
+        .dh-symbol-inner { width: 100%; height: 100%; font-size: 2.8rem; display: flex; align-items: center; justify-content: center; overflow: visible; }
         .dh-symbol-inner.drop-in { animation: aoDropBounce 0.32s cubic-bezier(0.22, 1.25, 0.36, 1) forwards; }
         .dh-sym-img { width: 92%; height: 92%; max-width: 96px; max-height: 96px; object-fit: contain; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.65)); }
-        .dh-scatter-img { width: 94%; height: 94%; max-width: 100px; max-height: 100px; object-fit: contain; animation: aoScatterPulse 1.1s infinite alternate; }
+        
+        #view-doghouse .dh-cell.dh-protrude-cell { z-index: 15; overflow: visible; }
+        #view-doghouse .dh-scatter-img {
+            width: 128%; height: 128%; max-width: 136px; max-height: 136px; object-fit: contain;
+            transform: scale(1.22); filter: drop-shadow(0 8px 18px rgba(250, 204, 21, 0.95)) drop-shadow(0 0 12px #f59e0b);
+            animation: dhScatterProtrude 1.1s infinite alternate ease-in-out; position: relative; z-index: 16;
+        }
+        @keyframes dhScatterProtrude { 0% { transform: scale(1.18) rotate(-4deg); } 100% { transform: scale(1.32) rotate(4deg); } }
+
         .dh-cell.spinning .dh-symbol-inner { animation: aoCellScroll 0.12s infinite alternate ease-in-out; }
         .dh-cell.win-pop { background: radial-gradient(circle, rgba(253, 224, 71, 0.6) 0%, rgba(202, 138, 4, 0.35) 100%); border-color: #fde047; box-shadow: 0 0 18px rgba(253, 224, 71, 0.8); z-index: 3; }
-        .dh-cell.sticky-wild { background: radial-gradient(circle, rgba(239, 68, 68, 0.6) 0%, rgba(185, 28, 28, 0.4) 100%); border-color: #fca5a5; }
-        .dh-wild-badge { width: 86%; height: 86%; background: radial-gradient(circle at 30% 30%, #fef08a, #d97706 60%, #78350f 100%); border: 2px solid #fff; border-radius: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-        .dh-wild-badge::before { content: '🏠'; font-size: 1.6rem; line-height: 1; }
-        .dh-wild-mult { font-size: 0.8rem; font-weight: 900; color: #fff; text-shadow: 0 1px 2px #000; }
+        .dh-cell.sticky-wild { background: radial-gradient(circle, rgba(239, 68, 68, 0.6) 0%, rgba(185, 28, 28, 0.4) 100%); border-color: #fca5a5; z-index: 15; overflow: visible; }
+        
+        #view-doghouse .dh-wild-badge {
+            width: 118%; height: 118%; transform: scale(1.22);
+            background: radial-gradient(circle at 30% 30%, #fef08a, #d97706 60%, #78350f 100%);
+            border: 3px solid #fff; border-radius: 16px; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; box-shadow: 0 10px 24px rgba(0,0,0,0.85), 0 0 22px rgba(253, 224, 71, 0.9);
+            position: relative; z-index: 16;
+        }
+        #view-doghouse .dh-wild-badge::before { content: '🏠'; font-size: 2.2rem; line-height: 1; }
+        #view-doghouse .dh-wild-mult { font-size: 0.98rem; font-weight: 900; color: #fff; text-shadow: 0 2px 3px #000; }
 
         .dh-fs-intro-box {
             display: none; position: absolute; inset: 0; background: rgba(10, 5, 2, 0.95);
@@ -843,7 +884,9 @@
         .dh-spin-circle-btn svg { width: 38px; height: 38px; fill: #fff; }
         .dh-spin-circle-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
-        /* SWEET BONANZA */
+        /* ========================================== */
+        /* SWEET BONANZA (БОМБЫ И ЧУПА-ЧУПСЫ ВЫПИРАЮТ!) */
+        /* ========================================== */
         #view-bonanza {
             padding: 0; overflow: hidden; border: 2px solid #f43f5e;
             background: linear-gradient(180deg, #4a044e 0%, #701a75 40%, #3b0764 100%);
@@ -899,32 +942,41 @@
         .sb-grid-6x5 {
             display: grid; grid-template-columns: repeat(6, 1fr); grid-template-rows: repeat(5, 1fr);
             gap: 6px; background: radial-gradient(circle at 50% 45%, rgba(90, 20, 80, 0.92) 0%, rgba(30, 8, 40, 0.96) 100%);
-            border-radius: 14px; padding: 10px; overflow: hidden;
+            border-radius: 14px; padding: 10px; overflow: visible;
         }
         .sb-cell {
             aspect-ratio: 1.05 / 1; min-height: 58px; background: rgba(255, 255, 255, 0.05);
             border-radius: 10px; border: 1px solid rgba(254, 205, 211, 0.12);
             display: flex; align-items: center; justify-content: center; position: relative;
+            overflow: visible;
         }
-        .sb-symbol-inner { font-size: 2.35rem; line-height: 1; display: flex; align-items: center; justify-content: center; }
-        .sb-symbol-inner.drop-in { animation: aoDropBounce 0.32s cubic-bezier(0.22, 1.25, 0.36, 1) forwards; }
-        .sb-cell.cell-spinning .sb-symbol-inner { animation: aoCellScroll 0.12s infinite alternate ease-in-out; }
+        .sb-symbol-inner { font-size: 2.35rem; line-height: 1; display: flex; align-items: center; justify-content: center; overflow: visible; }
+        .sb-symbol-inner.drop-in { animation: aoDropBounce 0.42s cubic-bezier(0.22, 1.25, 0.36, 1) forwards; }
+        .sb-cell.cell-spinning .sb-symbol-inner { animation: aoCellScroll 0.16s infinite alternate ease-in-out; }
         .sb-cell.win-pop { background: radial-gradient(circle, rgba(244, 63, 94, 0.6) 0%, rgba(159, 18, 57, 0.35) 100%); border-color: #f43f5e; box-shadow: 0 0 18px rgba(244, 63, 94, 0.8); z-index: 3; }
-        .sb-cell.win-pop .sb-symbol-inner { animation: aoWinExplode 0.5s ease-in-out forwards; }
+        .sb-cell.win-pop .sb-symbol-inner { animation: aoWinExplode 0.55s ease-in-out forwards; }
 
-        .sb-bomb-badge {
-            width: 88%; height: 88%; border-radius: 50%; display: flex; flex-direction: column;
-            align-items: center; justify-content: center; position: relative;
-            background: radial-gradient(circle at 30% 30%, #f43f5e, #be185d 50%, #4a044e 100%);
-            border: 2px solid #fff; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
-            animation: aoSpherePulse 1.3s infinite alternate ease-in-out;
+        #view-bonanza .sb-cell.sb-protrude-cell { z-index: 15; overflow: visible; }
+        #view-bonanza .sb-bomb-badge {
+            width: 118%; height: 118%; transform: scale(1.24); border-radius: 50%;
+            display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; z-index: 16;
+            background: radial-gradient(circle at 30% 30%, #f43f5e, #be185d 50%, #4a044e 100%); border: 3px solid #fff;
+            box-shadow: 0 8px 22px rgba(0, 0, 0, 0.85), 0 0 20px #f43f5e; animation: sbBombProtrude 1.2s infinite alternate ease-in-out;
         }
-        .sb-bomb-badge.mega-bomb {
+        #view-bonanza .sb-bomb-badge::before { content: '💣'; font-size: 1.25rem; line-height: 1; margin-bottom: -2px; }
+        #view-bonanza .sb-bomb-badge.mega-bomb {
             background: radial-gradient(circle at 30% 30%, #fef08a, #f59e0b 45%, #e11d48 85%, #581c87 100%);
-            border-color: #fef08a; box-shadow: 0 0 20px #f43f5e, 0 0 35px #db2777;
+            border-color: #fef08a; box-shadow: 0 0 25px #f43f5e, 0 0 42px #fde047;
         }
-        .sb-bomb-val { font-size: 0.95rem; font-weight: 900; color: #fff; text-shadow: 0 2px 0 #000; }
-        .sb-scatter-sym { font-size: 2.6rem; filter: drop-shadow(0 0 12px #f43f5e); animation: aoScatterPulse 1.1s infinite alternate; }
+        #view-bonanza .sb-bomb-val { font-size: 1.05rem; font-weight: 900; color: #fff; text-shadow: 0 2px 3px #000; }
+        @keyframes sbBombProtrude { 0% { transform: scale(1.2) rotate(-4deg); } 100% { transform: scale(1.32) rotate(4deg); } }
+
+        #view-bonanza .sb-scatter-sym {
+            font-size: 3.45rem; transform: scale(1.24);
+            filter: drop-shadow(0 6px 16px #f43f5e) drop-shadow(0 0 12px #fbcfe8);
+            animation: sbScatterProtrude 1.1s infinite alternate ease-in-out; position: relative; z-index: 16;
+        }
+        @keyframes sbScatterProtrude { 0% { transform: scale(1.2) rotate(-6deg); } 100% { transform: scale(1.34) rotate(6deg); } }
         
         .sb-bottom-hud {
             background: rgba(30, 8, 25, 0.96); border-top: 2px solid #831843; padding: 10px 20px;
@@ -951,7 +1003,9 @@
         }
         .sb-spin-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
-        /* CHICKEN CROSS / CHICKEN ROAD (Crash аркада) */
+        /* ========================================== */
+        /* CHICKEN CROSS / CHICKEN ROAD (РЕАЛИСТИЧНАЯ МИНИ-ИГРА) */
+        /* ========================================== */
         #view-chicken {
             background: linear-gradient(180deg, #065f46 0%, #064e3b 50%, #022c22 100%);
             border: 2px solid #10b981;
@@ -960,46 +1014,150 @@
         }
         .chicken-container {
             display: grid;
-            grid-template-columns: 280px 1fr;
+            grid-template-columns: 270px 1fr;
             gap: 20px;
         }
-        @media(max-width: 850px){ .chicken-container { grid-template-columns: 1fr; } }
+        @media(max-width: 900px){ .chicken-container { grid-template-columns: 1fr; } }
         .chicken-sidebar {
-            background: rgba(0,0,0,0.4);
-            border: 1px solid rgba(255,255,255,0.1);
+            background: rgba(0,0,0,0.45);
+            border: 1px solid rgba(255,255,255,0.12);
             border-radius: 16px;
             padding: 18px;
             display: flex;
             flex-direction: column;
             gap: 14px;
         }
-        .chicken-road-box {
-            background: #022c22;
-            border: 2px solid #059669;
-            border-radius: 16px;
-            padding: 20px;
-            min-height: 400px;
+        .chicken-road-arena {
+            background: #14532d;
+            border: 3px solid #10b981;
+            border-radius: 18px;
+            padding: 14px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            align-items: center;
             position: relative;
             overflow: hidden;
+            box-shadow: inset 0 0 30px rgba(0,0,0,0.65);
         }
-        .chicken-lane {
-            width: 100%;
-            background: rgba(255,255,255,0.06);
-            border-bottom: 2px dashed rgba(255,255,255,0.2);
-            padding: 10px 16px;
+        .chicken-highway {
+            display: grid;
+            grid-template-columns: 74px repeat(5, 1fr) 78px;
+            height: 360px;
+            background: #1f2937;
+            border-radius: 12px;
+            border: 2px solid #374151;
+            position: relative;
+            overflow: hidden;
+            margin: 12px 0;
+        }
+        .chicken-sidewalk-start {
+            background: linear-gradient(90deg, #15803d, #166534);
+            border-right: 4px solid #fbbf24;
             display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 900;
+            color: #dcfce7;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .chicken-sidewalk-finish {
+            background: linear-gradient(90deg, #166534, #15803d);
+            border-left: 4px dashed #fde047;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 900;
+            color: #fef08a;
+            text-align: center;
+            padding: 4px;
+        }
+        .highway-lane {
+            position: relative;
+            border-right: 2px dashed rgba(255, 255, 255, 0.32);
+            background: linear-gradient(180deg, #1f2937 0%, #111827 50%, #1f2937 100%);
+            display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: space-between;
-            border-radius: 8px;
-            transition: 0.2s;
+            padding: 10px 4px;
+            overflow: hidden;
         }
-        .chicken-lane.active-lane {
-            background: rgba(16, 185, 129, 0.25);
-            border-color: #34d399;
+        .highway-lane:last-of-type { border-right: none; }
+        .highway-lane.passed-lane {
+            background: linear-gradient(180deg, rgba(16, 185, 129, 0.16), rgba(5, 150, 105, 0.24));
+        }
+        .highway-lane.current-target-lane {
+            box-shadow: inset 0 0 18px rgba(250, 204, 21, 0.35);
+        }
+        .lane-mult-pill {
+            background: rgba(0, 0, 0, 0.72);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            color: #fde047;
+            font-size: 0.78rem;
+            font-weight: 900;
+            padding: 4px 8px;
+            border-radius: 999px;
+            z-index: 4;
+        }
+        .highway-lane.passed-lane .lane-mult-pill {
+            background: #16a34a;
+            color: #fff;
+            border-color: #86efac;
+        }
+        .lane-manhole {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #374151 30%, #111827 100%);
+            border: 2px dashed #4b5563;
+            opacity: 0.55;
+            z-index: 2;
+        }
+
+        .traffic-car {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 2.3rem;
+            z-index: 6;
+            filter: drop-shadow(0 6px 8px rgba(0,0,0,0.8));
+            pointer-events: none;
+            user-select: none;
+            transition: top 0.05s linear;
+        }
+        .traffic-car.killer-car {
+            font-size: 2.8rem;
+            filter: drop-shadow(0 0 18px #ef4444);
+            z-index: 12;
+        }
+
+        .runner-chicken {
+            position: absolute;
+            top: 50%;
+            left: 37px;
+            transform: translate(-50%, -50%);
+            font-size: 2.5rem;
+            z-index: 10;
+            transition: left 0.36s cubic-bezier(0.22, 1, 0.36, 1), transform 0.25s ease;
+            filter: drop-shadow(0 6px 10px rgba(0,0,0,0.85));
+            user-select: none;
+        }
+        .runner-chicken.running-hop {
+            animation: chickenHop 0.36s ease;
+        }
+        @keyframes chickenHop {
+            0%   { transform: translate(-50%, -50%) scale(1) rotate(0deg); }
+            45%  { transform: translate(-50%, -82%) scale(1.25) rotate(12deg); }
+            100% { transform: translate(-50%, -50%) scale(1) rotate(0deg); }
+        }
+        .runner-chicken.squashed {
+            transform: translate(-50%, -50%) scale(1.35, 0.45) rotate(25deg);
+            filter: drop-shadow(0 0 16px #ef4444);
         }
 
         /* МОДАЛЬНЫЕ ОКНА */
@@ -1076,7 +1234,7 @@
         </div>
     </div>
 
-    <!-- МОДАЛЬНОЕ ОКНО ПОПОЛНЕНИЯ (Только USDT TRC-20 и QR.jpg) -->
+    <!-- МОДАЛЬНОЕ ОКНО ПОПОЛНЕНИЯ (С кнопкой Показать QR-код и корректным путем к QR.jpg) -->
     <div class="modal-overlay" id="deposit-modal">
         <div class="deposit-modal">
             <button class="modal-close-btn" onclick="closeDepositModal()">✕</button>
@@ -1087,20 +1245,26 @@
                 Сеть: TRON (TRC-20) • Курс: 1 USDT = 3.25 BYN
             </div>
 
-            <!-- Картинка QR-кода -->
-            <div style="text-align: center; margin: 16px 0;">
-                <img src="QR.jpg" alt="QR код для пополнения USDT TRC-20" style="width: 190px; height: 190px; object-fit: contain; border-radius: 14px; border: 2px solid var(--accent-gold); background: #fff; padding: 6px;">
-            </div>
-
             <div class="wallet-address-box" id="crypto-wallet-address">
                 TMVngRQdJ1XqC67GTLttnuWUZKYxtdMFWt
             </div>
 
-            <button class="btn-back" style="width: 100%; background: var(--accent-gold-gradient); color:#1a0f00; font-weight:900; margin-bottom:12px;" onclick="copyWalletAddress()">📋 СКОПИРОВАТЬ АДРЕС КОШЕЛЬКА</button>
+            <button class="btn-back" style="width: 100%; background: var(--accent-gold-gradient); color:#1a0f00; font-weight:900; margin-bottom:10px;" onclick="copyWalletAddress()">📋 СКОПИРОВАТЬ АДРЕС КОШЕЛЬКА</button>
+
+            <!-- Кнопка Показать QR-код -->
+            <button class="btn-back" id="toggle-qr-btn" style="width: 100%; background: rgba(245, 158, 11, 0.14); border: 1px solid var(--accent-gold); color: #fde047; font-weight: 900; margin-bottom: 12px;" onclick="toggleDepositQR()">
+                📷 ПОКАЗАТЬ QR-КОД
+            </button>
+
+            <!-- Контейнер с фото QR.jpg (исправлено отображение без белой заглушки) -->
+            <div id="deposit-qr-container" style="display: none; text-align: center; margin: 12px 0 16px;">
+                <img src="./QR.jpg" onerror="this.onerror=null; this.src='QR.jpg';" alt="QR код для пополнения USDT TRC-20" style="width: 210px; height: 210px; object-fit: contain; border-radius: 14px; border: 2px solid var(--accent-gold); background: #fff; padding: 6px; box-shadow: 0 0 25px rgba(245, 158, 11, 0.35);">
+                <div style="font-size: 0.76rem; color: var(--text-muted); margin-top: 6px;">Отсканируйте QR-код в вашем криптокошельке</div>
+            </div>
 
             <div class="deposit-steps">
                 <b>Инструкция по зачислению:</b><br>
-                1. Отсканируйте QR-код выше или скопируйте адрес кошелька USDT (TRC-20) и переведите нужную сумму (минимум 5 USDT).<br>
+                1. Нажмите «Показать QR-код» или скопируйте адрес кошелька USDT (TRC-20) и переведите нужную сумму (минимум 5 USDT).<br>
                 2. Сделайте скриншот успешного перевода из вашего кошелька.<br>
                 3. Отправьте скриншот и ваш ник (<b id="modal-player-nick" style="color:var(--accent-gold);">Player</b>) администратору в Telegram для мгновенного зачисления на баланс.
             </div>
@@ -1301,7 +1465,7 @@
                     <div class="slot-lobby-card chicken-featured" onclick="openChickenGame()">
                         <div class="slot-card-content">
                             <div class="slot-card-title">Chicken Cross (Crash)</div>
-                            <div class="slot-card-desc">Проведи цыпленка через полосы дороги, умножай ставку и забирай выигрыш до столкновения!</div>
+                            <div class="slot-card-desc">Реалистичная мини-игра: веди курицу через оживлённую трассу, уворачивайся от машин и забирай куш!</div>
                         </div>
                         <div class="slot-card-actions">
                             <button class="card-hover-play-btn" onclick="event.stopPropagation(); openChickenGame();">ИГРАТЬ</button>
@@ -1312,11 +1476,11 @@
                 </div>
             </div>
 
-            <!-- GATES OF OLYMPUS -->
+            <!-- GATES OF OLYMPUS (ТОЧНО КАК НА СКРИНШОТЕ 1) -->
             <div id="view-olympus" class="game-view">
                 <div class="ao-top-bar">
                     <button class="btn-back" onclick="showLobby()">← В зал</button>
-                    <div class="ao-logo-title">GATES OF OLYMPUS</div>
+                    <div style="font-size: 0.88rem; font-weight: 800; color: #fde047;">GATES OF OLYMPUS SLOT</div>
                     <div class="ao-fs-banner" id="ao-fs-banner">
                         <span>⚡ ФРИСПИНЫ: <b id="ao-fs-left">15</b></span>
                         <span>|</span>
@@ -1327,40 +1491,42 @@
                     <button class="ao-icon-btn" onclick="showToast('⚡ Сетка 6x5, выплаты от 8 символов везде!')" title="Информация">i</button>
                 </div>
 
+                <div class="ao-win-banner-top">
+                    🏆 ВЫИГРАЙТЕ ДО 5,000 Х ОТ СУММЫ СТАВКИ 🏆
+                </div>
+
                 <div class="ao-stage">
-                    <div class="ao-left-features">
+                    <!-- 1. Слева: Кнопка покупки бонуса и ставка Анте -->
+                    <div class="ao-left-controls-zone">
                         <div class="ao-feature-card ao-buy-feature" onclick="buyOlympusBonus()">
-                            <div style="font-size:0.82rem; font-weight:900; text-transform:uppercase; color:#fff;">КУПИТЬ БОНУС</div>
-                            <div style="margin-top:6px; background:rgba(0,0,0,0.35); border-radius:10px; padding:6px; font-size:1.1rem; font-weight:900; color:#fef08a;" id="ao-buy-price">50,00 BYN</div>
-                            <div style="font-size:0.65rem; color:#fde68a; font-weight:700; margin-top:4px;">100x ОТ СТАВКИ</div>
+                            <div style="font-size:0.75rem; font-weight:900; text-transform:uppercase; color:#fff;">КУПИТЬ БЕСПЛАТНЫЕ СПИНЫ</div>
+                            <div style="margin-top:6px; background:rgba(0,0,0,0.35); border-radius:10px; padding:6px; font-size:1.15rem; font-weight:900; color:#fef08a;" id="ao-buy-price">50,00 BYN</div>
+                            <div style="font-size:0.65rem; color:#fde68a; font-weight:700; margin-top:4px;">ОТ СУММЫ СТАВКИ</div>
                         </div>
 
                         <div class="ao-feature-card ao-ante-card" id="ao-ante-btn" onclick="toggleOlympusAnte()">
-                            <div style="font-size: 0.75rem; font-weight: 900; color: #fff; text-transform: uppercase;">СТАВКА АНТЕ</div>
+                            <div style="font-size: 0.72rem; font-weight: 900; color: #fff; text-transform: uppercase;">ОТ СУММЫ СТАВКИ</div>
                             <div style="font-size: 1.1rem; font-weight: 900; color: #fde047; margin: 4px 0;" id="ao-ante-val">0,62 BYN</div>
-                            <div style="font-size: 0.68rem; font-weight: 700; color: #f3e8ff; line-height: 1.25; margin-bottom: 6px;">УДВОЕННЫЙ ШАНС SCATTER</div>
-                            <div style="display:inline-flex; align-items:center; justify-content:space-between; width:90px; background:rgba(0,0,0,0.45); border-radius:999px; padding:3px 10px; font-size:0.72rem; font-weight:900; border:1px solid rgba(255,255,255,0.3);">
+                            <div style="font-size: 0.7rem; font-weight: 800; color: #f3e8ff; line-height: 1.25; margin-bottom: 6px;">ДВОЙНОЙ ШАНС ВЫИГРЫШ ФУНКЦИИ</div>
+                            <div style="display:inline-flex; align-items:center; justify-content:space-between; width:84px; background:rgba(0,0,0,0.45); border-radius:999px; padding:3px 10px; font-size:0.7rem; font-weight:900; border:1px solid rgba(255,255,255,0.3);">
                                 <span id="ao-ante-status-txt">ВЫКЛ</span>
                                 <span id="ao-ante-dot">⚪</span>
                             </div>
                         </div>
                     </div>
 
+                    <!-- 2. По центру: Игровое поле барабанов -->
                     <div class="ao-board-wrapper">
-                        <div class="ao-ticker" id="ao-ticker">PAY ANYWHERE • 8+ СИМВОЛОВ НА ПОЛЕ ДЛЯ ВЫИГРЫША</div>
                         <div class="ao-gold-frame">
                             <div class="ao-grid-6x5" id="ao-grid"></div>
                         </div>
                     </div>
 
-                    <div class="ao-zeus-column">
-                        <div class="ao-zeus-avatar" id="ao-zeus-avatar">
-                            <img src="olympusnaprotiv.png" alt="Великий Зевс">
-                        </div>
-                        <div style="font-size:0.72rem; font-weight:900; text-transform:uppercase; color:#fde047; margin-top:6px;">ВЕЛИКИЙ ЗЕВС</div>
-                        <div class="ao-global-mult-badge">
-                            <div style="font-size:0.6rem; color:#c084fc; font-weight:700; text-transform:uppercase;">ОБЩИЙ ИКС</div>
-                            <div style="font-size:1.3rem; font-weight:900; color:#fde047;" id="ao-global-mult-display">0x</div>
+                    <!-- 3. Справа: Официальный логотип Gates of Olympus + Зевс на половину экрана -->
+                    <div class="ao-right-zeus-zone">
+                        <img src="gatesofolympuslogo.png" onerror="this.style.display='none';" alt="Gates of Olympus Logo" class="ao-official-logo">
+                        <div class="ao-zeus-hero-wrap" id="ao-zeus-avatar">
+                            <img src="olympusnaprotiv.png" alt="Великий Зевс" class="ao-zeus-hero-img">
                         </div>
                     </div>
                 </div>
@@ -1372,8 +1538,8 @@
                         <div class="ao-credits-box"><span>СТАВКА</span><span><span id="ao-hud-total-bet">0,50</span> BYN</span></div>
                     </div>
                     <div class="ao-hud-center-group">
-                        <div class="ao-win-label" id="ao-win-lbl">ПОСЛЕДНИЙ ВЫИГРЫШ</div>
-                        <div class="ao-win-amount"><span id="ao-hud-win">0,00</span> BYN</div>
+                        <div style="font-size:0.62rem; color:#c084fc; font-weight:800; text-transform:uppercase;">ОБЩИЙ ИКС</div>
+                        <div style="font-size:1.15rem; font-weight:900; color:#fde047;" id="ao-global-mult-display">0x</div>
                     </div>
                     <div class="ao-hud-right-group">
                         <button class="ao-bet-adjust-btn" onclick="changeOlympusBet(-0.5)">−</button>
@@ -1516,10 +1682,10 @@
                 </div>
             </div>
 
-            <!-- CHICKEN CROSS / CHICKEN ROAD -->
+            <!-- CHICKEN CROSS / CHICKEN ROAD (РЕАЛИСТИЧНАЯ МИНИ-ИГРА С МАШИНАМИ) -->
             <div id="view-chicken" class="game-view">
                 <div class="game-header">
-                    <h2>🐔 Chicken Cross (Chicken Road) — Crash Аркада</h2>
+                    <h2>🐔 Chicken Cross (Chicken Road) — Перебеги дорогу!</h2>
                     <button class="btn-back" onclick="showLobby()">← В зал</button>
                 </div>
                 
@@ -1533,20 +1699,64 @@
                         <div>
                             <label style="font-size: 0.78rem; color: var(--text-muted);">Уровень риска:</label>
                             <select id="chicken-risk" class="dev-input" style="width:100%; margin-top:4px;">
-                                <option value="easy">Низкий (Easy) — много шагов, малый риск</option>
-                                <option value="medium" selected>Средний (Medium) — стандарт</option>
-                                <option value="hard">Высокий (Hardcore) — огромные иксы</option>
+                                <option value="easy">Низкий (Easy) — спокойный трафик</option>
+                                <option value="medium" selected>Средний (Medium) — плотный поток</option>
+                                <option value="hard">Высокий (Hardcore) — бешеные гонщики</option>
                             </select>
                         </div>
-                        <button class="btn-back" id="chicken-start-btn" style="background:#10b981; color:#000; font-weight:900; width:100%;" onclick="startChickenGame()">СТАРТ ЗАБЕГА</button>
-                        <button class="btn-back" id="chicken-step-btn" style="background:#f59e0b; color:#000; font-weight:900; width:100%; display:none;" onclick="makeChickenStep()">СДЕЛАТЬ ШАГ ➔</button>
-                        <button class="btn-back" id="chicken-cashout-btn" style="background:#3b82f6; color:#fff; font-weight:900; width:100%; display:none;" onclick="chickenCashout()">ЗАБРАТЬ ВЫИГРЫШ</button>
+                        <button class="btn-back" id="chicken-start-btn" style="background:#10b981; color:#000; font-weight:900; width:100%; padding:14px;" onclick="startChickenGame()">▶ СТАРТ ЗАБЕГА</button>
+                        <button class="btn-back" id="chicken-step-btn" style="background:#f59e0b; color:#000; font-weight:900; width:100%; padding:14px; display:none;" onclick="makeChickenStep()">🐔 ПЕРЕБЕЖАТЬ ПОЛОСУ ➔</button>
+                        <button class="btn-back" id="chicken-cashout-btn" style="background:#3b82f6; color:#fff; font-weight:900; width:100%; padding:14px; display:none;" onclick="chickenCashout()">💰 ЗАБРАТЬ ВЫИГРЫШ</button>
                     </div>
 
-                    <div class="chicken-road-box" id="chicken-road-box">
-                        <div style="text-align:center; color:#34d399; font-weight:800; font-size:1.1rem;" id="chicken-status-title">Выберите ставку и нажмите «Старт забега»</div>
-                        <div style="width:100%; display:flex; flex-direction:column; gap:6px; margin: 16px 0;" id="chicken-lanes-container"></div>
-                        <div style="font-size:0.85rem; color:#a7f3d0;" id="chicken-info-footer">Проведите цыпленка через дорогу, умножая множитель с каждым шагом!</div>
+                    <div class="chicken-road-arena">
+                        <div style="text-align:center; color:#fde047; font-weight:900; font-size:1.05rem;" id="chicken-status-title">
+                            Выберите ставку и нажмите «Старт забега»
+                        </div>
+
+                        <!-- Оживлённая трасса -->
+                        <div class="chicken-highway" id="chicken-highway">
+                            <div class="chicken-sidewalk-start">
+                                <span style="font-size:1.4rem;">🌿</span>
+                                <span>СТАРТ</span>
+                            </div>
+
+                            <div class="highway-lane" id="highway-lane-1">
+                                <div class="lane-mult-pill" id="lane-mult-1">x1.35</div>
+                                <div class="lane-manhole"></div>
+                            </div>
+                            <div class="highway-lane" id="highway-lane-2">
+                                <div class="lane-mult-pill" id="lane-mult-2">x1.85</div>
+                                <div class="lane-manhole"></div>
+                            </div>
+                            <div class="highway-lane" id="highway-lane-3">
+                                <div class="lane-mult-pill" id="lane-mult-3">x2.50</div>
+                                <div class="lane-manhole"></div>
+                            </div>
+                            <div class="highway-lane" id="highway-lane-4">
+                                <div class="lane-mult-pill" id="lane-mult-4">x3.40</div>
+                                <div class="lane-manhole"></div>
+                            </div>
+                            <div class="highway-lane" id="highway-lane-5">
+                                <div class="lane-mult-pill" id="lane-mult-5">x5.00</div>
+                                <div class="lane-manhole"></div>
+                            </div>
+
+                            <div class="chicken-sidewalk-finish">
+                                <span style="font-size:1.6rem;">🏆</span>
+                                <span>ФИНИШ<br>x7.50</span>
+                            </div>
+
+                            <!-- Слой машин -->
+                            <div id="chicken-traffic-layer" style="position:absolute; inset:0; pointer-events:none;"></div>
+
+                            <!-- Сама курица -->
+                            <div class="runner-chicken" id="runner-chicken">🐔</div>
+                        </div>
+
+                        <div style="text-align:center; font-size:0.84rem; color:#a7f3d0; font-weight:600;" id="chicken-info-footer">
+                            Жми «Перебежать полосу» — курица бежит по асфальту, но берегись несущихся машин!
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1701,6 +1911,9 @@
         let chickenStepIndex = 0;
         let chickenCurrentMult = 1.0;
         let chickenBetAmount = 10;
+        let chickenTrafficTimer = null;
+        let chickenCars = [];
+        let chickenSteppingLock = false;
 
         let balance = 1000;
         let username = '';
@@ -1899,6 +2112,7 @@
         function hideAllViews() {
             document.querySelectorAll('.game-view').forEach(v => v.classList.remove('active'));
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            stopChickenTrafficLoop();
         }
 
         function showLobby() {
@@ -1922,7 +2136,7 @@
         }
 
         // ==========================================
-        // GATES OF OLYMPUS (ПОЛНАЯ РАБОЧАЯ ВЕРСИЯ)
+        // GATES OF OLYMPUS (ЗЕВС СПРАВА ПОД ЛОГОТИПОМ + ЗАМЕДЛЕННЫЕ СПИНЫ)
         // ==========================================
         function updateOlympusMultiplierUI() {
             const label = totalMultiplier + 'x';
@@ -2061,7 +2275,12 @@
 
         function triggerZeusLighting() {
             const avatar = document.getElementById('ao-zeus-avatar');
-            if (avatar) { avatar.classList.add('lightning-strike'); setTimeout(() => avatar.classList.remove('lightning-strike'), 400); }
+            if (avatar) {
+                avatar.classList.remove('zeus-bomb-shake');
+                void avatar.offsetWidth;
+                avatar.classList.add('zeus-bomb-shake');
+                setTimeout(() => avatar.classList.remove('zeus-bomb-shake'), 700);
+            }
         }
 
         async function startOlympusBonusRound() {
@@ -2113,25 +2332,32 @@
                         }
                     }
                 }
-            }, 60);
+            }, 85);
 
             const nextGrid = Array.from({ length: AO_COLS }, () => Array(AO_ROWS).fill(null));
+            let hasDroppedBomb = false;
             for (let c = 0; c < AO_COLS; c++) {
-                for (let r = 0; r < AO_ROWS; r++) nextGrid[c][r] = generateOlympusCell(true);
+                for (let r = 0; r < AO_ROWS; r++) {
+                    nextGrid[c][r] = generateOlympusCell(true);
+                    if (nextGrid[c][r].id === 'multiplier') hasDroppedBomb = true;
+                }
             }
             if (isBonusForcedScatter) {
                 nextGrid[1][1] = { ...AO_SCATTER }; nextGrid[3][2] = { ...AO_SCATTER }; nextGrid[4][3] = { ...AO_SCATTER };
             }
 
-            await sleep(480);
+            // Замедленные спины
+            await sleep(760);
             for (let c = 0; c < AO_COLS; c++) {
                 for (let r = 0; r < AO_ROWS; r++) {
                     aoGrid[c][r] = nextGrid[c][r];
                     renderOlympusCell(c, r, true);
                 }
-                await sleep(70);
+                await sleep(115);
             }
             clearInterval(timer);
+
+            if (hasDroppedBomb) triggerZeusLighting();
 
             let spinRawWin = 0, spinMultipliersSum = 0;
             while (true) {
@@ -2161,18 +2387,24 @@
                 spinRawWin += stepWin;
                 document.getElementById('ao-hud-win').textContent = spinRawWin.toFixed(2).replace('.', ',');
                 winningCoords.forEach(({ c, r }) => document.getElementById(`ao-cell-${c}-${r}`)?.classList.add('win-pop'));
-                await sleep(550);
+                await sleep(680);
 
                 winningCoords.forEach(({ c, r }) => { aoGrid[c][r] = null; });
+                let cascadeHasBomb = false;
                 for (let c = 0; c < AO_COLS; c++) {
                     const surviving = [];
                     for (let r = AO_ROWS - 1; r >= 0; r--) if (aoGrid[c][r] !== null) surviving.push(aoGrid[c][r]);
                     const missing = AO_ROWS - surviving.length;
-                    const newTop = Array.from({ length: missing }, () => generateOlympusCell(true));
+                    const newTop = Array.from({ length: missing }, () => {
+                        const item = generateOlympusCell(true);
+                        if (item.id === 'multiplier') cascadeHasBomb = true;
+                        return item;
+                    });
                     const rebuilt = [...surviving, ...newTop].reverse();
                     for (let r = 0; r < AO_ROWS; r++) { aoGrid[c][r] = rebuilt[r]; renderOlympusCell(c, r, true); }
                 }
-                await sleep(400);
+                if (cascadeHasBomb) triggerZeusLighting();
+                await sleep(520);
             }
 
             if (spinRawWin > 0) {
@@ -2186,7 +2418,7 @@
                 if (spinMultipliersSum > 0) {
                     triggerZeusLighting();
                     multiplierCells.forEach(({ c, r }) => document.getElementById(`ao-cell-${c}-${r}`)?.classList.add('win-pop'));
-                    await sleep(450);
+                    await sleep(550);
                     if (aoInFreeSpins) { totalMultiplier += spinMultipliersSum; updateOlympusMultiplierUI(); }
                 }
             }
@@ -2239,13 +2471,13 @@
             aoSpinning = false;
             document.getElementById('ao-spin-btn').disabled = false;
 
-            if (triggeredNewBonus) { await sleep(500); await startOlympusBonusRound(); }
-            else if (aoInFreeSpins && aoFreeSpinsLeft > 0) { await sleep(700); spinGatesOfOlympus(); }
-            else if (aoAutoActive) { await sleep(600); spinGatesOfOlympus(); }
+            if (triggeredNewBonus) { await sleep(650); await startOlympusBonusRound(); }
+            else if (aoInFreeSpins && aoFreeSpinsLeft > 0) { await sleep(850); spinGatesOfOlympus(); }
+            else if (aoAutoActive) { await sleep(750); spinGatesOfOlympus(); }
         }
 
         // ==========================================
-        // THE DOG HOUSE (ПОЛНАЯ РАБОЧАЯ ВЕРСИЯ)
+        // THE DOG HOUSE (Скаттеры и будки выпирают!)
         // ==========================================
         function initDogHouseDOM() {
             const gridEl = document.getElementById('dh-grid');
@@ -2324,23 +2556,30 @@
         function renderDhCell(c, r, dropAnim = false) {
             const cell = document.getElementById(`dh-cell-${c}-${r}`);
             if (!cell) return;
-            cell.classList.remove('win-pop', 'sticky-wild', 'spinning');
+            cell.classList.remove('win-pop', 'sticky-wild', 'spinning', 'dh-protrude-cell');
             const inner = cell.querySelector('.dh-symbol-inner');
             if (!inner) return;
             inner.className = 'dh-symbol-inner';
             if (dropAnim) { void inner.offsetWidth; inner.classList.add('drop-in'); }
 
             if (dhStickyWilds[c][r] !== null) {
-                cell.classList.add('sticky-wild');
+                cell.classList.add('sticky-wild', 'dh-protrude-cell');
                 inner.innerHTML = `<div class="dh-wild-badge"><div class="dh-wild-mult">x${dhStickyWilds[c][r]}</div></div>`;
                 return;
             }
             const sym = dhGrid[c][r];
             if (!sym) { inner.innerHTML = ''; return; }
-            if (sym.id === 'wild') inner.innerHTML = `<div class="dh-wild-badge"><div class="dh-wild-mult">x${sym.mult}</div></div>`;
-            else if (sym.id === 'scatter') inner.innerHTML = `<img src="${sym.img}" alt="Bonus" class="dh-scatter-img">`;
-            else if (sym.img) inner.innerHTML = `<img src="${sym.img}" alt="${sym.name}" class="dh-sym-img">`;
-            else inner.textContent = sym.emoji;
+            if (sym.id === 'wild') {
+                cell.classList.add('dh-protrude-cell');
+                inner.innerHTML = `<div class="dh-wild-badge"><div class="dh-wild-mult">x${sym.mult}</div></div>`;
+            } else if (sym.id === 'scatter') {
+                cell.classList.add('dh-protrude-cell');
+                inner.innerHTML = `<img src="${sym.img}" alt="Bonus" class="dh-scatter-img">`;
+            } else if (sym.img) {
+                inner.innerHTML = `<img src="${sym.img}" alt="${sym.name}" class="dh-sym-img">`;
+            } else {
+                inner.textContent = sym.emoji;
+            }
         }
 
         async function buyDogHouseBonus() {
@@ -2380,7 +2619,11 @@
             for (let c = 0; c < DH_COLS; c++) {
                 for (let r = 0; r < DH_ROWS; r++) {
                     if (dhStickyWilds[c][r] !== null) continue;
-                    document.getElementById(`dh-cell-${c}-${r}`)?.classList.add('spinning');
+                    const cell = document.getElementById(`dh-cell-${c}-${r}`);
+                    if (cell) {
+                        cell.classList.remove('dh-protrude-cell');
+                        cell.classList.add('spinning');
+                    }
                 }
             }
 
@@ -2537,7 +2780,7 @@
         }
 
         // ==========================================
-        // SWEET BONANZA (ПОЛНАЯ РАБОЧАЯ ВЕРСИЯ)
+        // SWEET BONANZA (БОМБЫ И ЧУПА-ЧУПСЫ ВЫПИРАЮТ + ЗАМЕДЛЕННЫЕ СПИНЫ)
         // ==========================================
         function initSweetBonanzaDOM() {
             const gridEl = document.getElementById('sb-grid');
@@ -2602,16 +2845,18 @@
         function renderBonanzaCell(c, r, dropAnim) {
             const cell = document.getElementById(`sb-cell-${c}-${r}`);
             if (!cell) return;
-            cell.classList.remove('win-pop', 'cell-spinning');
+            cell.classList.remove('win-pop', 'cell-spinning', 'sb-protrude-cell');
             const inner = cell.querySelector('.sb-symbol-inner');
             inner.className = 'sb-symbol-inner';
             if (dropAnim) { void inner.offsetWidth; inner.classList.add('drop-in'); }
             const sym = sbGrid[c][r];
             if (!sym) { inner.innerHTML = ''; return; }
             if (sym.id === 'bomb') {
+                cell.classList.add('sb-protrude-cell');
                 const isMega = sym.mult >= 20;
                 inner.innerHTML = `<div class="sb-bomb-badge ${isMega ? 'mega-bomb' : ''}"><span class="sb-bomb-val">${sym.mult}X</span></div>`;
             } else if (sym.id === 'scatter') {
+                cell.classList.add('sb-protrude-cell');
                 inner.innerHTML = `<span class="sb-scatter-sym">${sym.emoji}</span>`;
             } else {
                 inner.textContent = sym.emoji;
@@ -2693,7 +2938,13 @@
             document.getElementById('sb-spin-btn').disabled = true;
 
             for (let c = 0; c < SB_COLS; c++) {
-                for (let r = 0; r < SB_ROWS; r++) document.getElementById(`sb-cell-${c}-${r}`)?.classList.add('cell-spinning');
+                for (let r = 0; r < SB_ROWS; r++) {
+                    const cell = document.getElementById(`sb-cell-${c}-${r}`);
+                    if (cell) {
+                        cell.classList.remove('sb-protrude-cell');
+                        cell.classList.add('cell-spinning');
+                    }
+                }
             }
 
             const allEmojiPool = [...SB_SYMBOLS.map(s => s.emoji), '🍭', ...(sbInFreeSpins ? ['💣'] : [])];
@@ -2706,7 +2957,7 @@
                         }
                     }
                 }
-            }, 65);
+            }, 90);
 
             const nextGrid = Array.from({ length: SB_COLS }, () => Array(SB_ROWS).fill(null));
             for (let c = 0; c < SB_COLS; c++) {
@@ -2718,13 +2969,14 @@
                 used.forEach(pos => { const [c, r] = pos.split('-'); nextGrid[parseInt(c)][parseInt(r)] = { ...SB_SCATTER }; });
             }
 
-            await sleep(480);
+            // Замедленные спины
+            await sleep(760);
             for (let c = 0; c < SB_COLS; c++) {
                 for (let r = 0; r < SB_ROWS; r++) {
                     sbGrid[c][r] = nextGrid[c][r];
                     renderBonanzaCell(c, r, true);
                 }
-                await sleep(75);
+                await sleep(115);
             }
             clearInterval(timer);
 
@@ -2756,7 +3008,7 @@
                 spinRawWin += stepWin;
                 document.getElementById('sb-hud-win').textContent = spinRawWin.toFixed(2).replace('.', ',');
                 winningCoords.forEach(({ c, r }) => document.getElementById(`sb-cell-${c}-${r}`)?.classList.add('win-pop'));
-                await sleep(550);
+                await sleep(680);
 
                 winningCoords.forEach(({ c, r }) => { sbGrid[c][r] = null; });
                 for (let c = 0; c < SB_COLS; c++) {
@@ -2767,7 +3019,7 @@
                     const rebuilt = [...surviving, ...newTop].reverse();
                     for (let r = 0; r < SB_ROWS; r++) { sbGrid[c][r] = rebuilt[r]; renderBonanzaCell(c, r, true); }
                 }
-                await sleep(400);
+                await sleep(520);
             }
 
             let finalSpinWin = spinRawWin;
@@ -2778,7 +3030,7 @@
                         if (sbGrid[c][r] && sbGrid[c][r].id === 'bomb') totalBombMult += sbGrid[c][r].mult;
                     }
                 }
-                if (totalBombMult > 0) { finalSpinWin = spinRawWin * totalBombMult; await sleep(600); }
+                if (totalBombMult > 0) { finalSpinWin = spinRawWin * totalBombMult; await sleep(720); }
             }
 
             let scatterCount = 0;
@@ -2823,13 +3075,20 @@
             sbSpinning = false;
             document.getElementById('sb-spin-btn').disabled = false;
 
-            if (sbInFreeSpins && sbFreeSpinsLeft > 0) { await sleep(650); spinSweetBonanza(); }
-            else if (sbAutoActive) { await sleep(600); spinSweetBonanza(); }
+            if (sbInFreeSpins && sbFreeSpinsLeft > 0) { await sleep(850); spinSweetBonanza(); }
+            else if (sbAutoActive) { await sleep(750); spinSweetBonanza(); }
         }
 
         // ==========================================
-        // CHICKEN CROSS / CHICKEN ROAD
+        // CHICKEN CROSS / CHICKEN ROAD (РЕАЛИСТИЧНАЯ МИНИ-ИГРА)
         // ==========================================
+        const CHICKEN_MULTS_BY_RISK = {
+            easy:   [1.20, 1.48, 1.85, 2.35, 3.10, 4.20],
+            medium: [1.35, 1.85, 2.50, 3.40, 5.00, 7.50],
+            hard:   [1.75, 3.10, 5.60, 10.50, 20.00, 40.00]
+        };
+        const CAR_EMOJIS = ['🚕', '🚓', '🏎️', '🚙', '🚚', '🚐'];
+
         function openChickenGame() {
             if (sbSpinning || dhSpinning || aoSpinning) return;
             hideAllViews();
@@ -2838,23 +3097,124 @@
             resetChickenBoard();
         }
 
+        function stopChickenTrafficLoop() {
+            if (chickenTrafficTimer) {
+                clearInterval(chickenTrafficTimer);
+                chickenTrafficTimer = null;
+            }
+        }
+
+        function updateLaneMultLabels() {
+            const risk = document.getElementById('chicken-risk').value;
+            const list = CHICKEN_MULTS_BY_RISK[risk] || CHICKEN_MULTS_BY_RISK.medium;
+            for (let i = 1; i <= 5; i++) {
+                const pill = document.getElementById(`lane-mult-${i}`);
+                if (pill) pill.textContent = 'x' + list[i - 1].toFixed(2);
+            }
+        }
+
+        function positionChickenAtStep(step) {
+            const highway = document.getElementById('chicken-highway');
+            const chickenEl = document.getElementById('runner-chicken');
+            if (!highway || !chickenEl) return;
+
+            if (step === 0) {
+                chickenEl.style.left = '37px';
+                return;
+            }
+            if (step >= 6) {
+                const finishEl = highway.querySelector('.chicken-sidewalk-finish');
+                if (finishEl) {
+                    chickenEl.style.left = (finishEl.offsetLeft + finishEl.offsetWidth / 2) + 'px';
+                }
+                return;
+            }
+            const laneEl = document.getElementById(`highway-lane-${step}`);
+            if (laneEl) {
+                chickenEl.style.left = (laneEl.offsetLeft + laneEl.offsetWidth / 2) + 'px';
+            }
+        }
+
+        function startChickenTrafficLoop() {
+            stopChickenTrafficLoop();
+            const trafficLayer = document.getElementById('chicken-traffic-layer');
+            const highway = document.getElementById('chicken-highway');
+            if (!trafficLayer || !highway) return;
+            trafficLayer.innerHTML = '';
+            chickenCars = [];
+
+            const risk = document.getElementById('chicken-risk').value;
+            const baseSpeed = risk === 'easy' ? 4.2 : (risk === 'medium' ? 6.2 : 8.8);
+
+            for (let lane = 1; lane <= 5; lane++) {
+                const carEl = document.createElement('div');
+                carEl.className = 'traffic-car';
+                carEl.textContent = CAR_EMOJIS[Math.floor(Math.random() * CAR_EMOJIS.length)];
+                trafficLayer.appendChild(carEl);
+
+                const dir = lane % 2 === 0 ? -1 : 1;
+                const startY = Math.random() * 340;
+                chickenCars.push({
+                    lane,
+                    el: carEl,
+                    y: startY,
+                    dir,
+                    speed: baseSpeed + Math.random() * 2.8,
+                    isKiller: false
+                });
+            }
+
+            chickenTrafficTimer = setInterval(() => {
+                const h = highway.clientHeight || 360;
+                chickenCars.forEach(car => {
+                    if (car.isKiller) return;
+                    const laneEl = document.getElementById(`highway-lane-${car.lane}`);
+                    if (!laneEl) return;
+                    car.el.style.left = (laneEl.offsetLeft + laneEl.offsetWidth / 2) + 'px';
+
+                    const chickenPassedThisLane = chickenActive && chickenStepIndex >= car.lane;
+                    if (chickenPassedThisLane && Math.abs(car.y - (h * 0.5 - 65)) < 14) {
+                        car.el.style.top = car.y + 'px';
+                        return;
+                    }
+
+                    car.y += car.speed * car.dir;
+                    if (car.dir > 0 && car.y > h + 40) {
+                        car.y = -50;
+                        car.el.textContent = CAR_EMOJIS[Math.floor(Math.random() * CAR_EMOJIS.length)];
+                    } else if (car.dir < 0 && car.y < -50) {
+                        car.y = h + 40;
+                        car.el.textContent = CAR_EMOJIS[Math.floor(Math.random() * CAR_EMOJIS.length)];
+                    }
+                    car.el.style.top = car.y + 'px';
+                });
+            }, 30);
+        }
+
         function resetChickenBoard() {
-            chickenActive = false; chickenStepIndex = 0; chickenCurrentMult = 1.0;
+            chickenActive = false;
+            chickenStepIndex = 0;
+            chickenCurrentMult = 1.0;
+            chickenSteppingLock = false;
+
             document.getElementById('chicken-start-btn').style.display = 'block';
             document.getElementById('chicken-step-btn').style.display = 'none';
             document.getElementById('chicken-cashout-btn').style.display = 'none';
             document.getElementById('chicken-status-title').textContent = 'Выберите ставку и нажмите «Старт забега»';
-            
-            const container = document.getElementById('chicken-lanes-container');
-            container.innerHTML = '';
-            for(let i=1; i<=5; i++) {
-                container.innerHTML += `
-                    <div class="chicken-lane" id="chicken-lane-${i}">
-                        <span>Полоса №${i} (Коэффициент: x${(i * 0.65 + 1.0).toFixed(2)})</span>
-                        <span id="chicken-pos-${i}">🚗</span>
-                    </div>
-                `;
+
+            for (let i = 1; i <= 5; i++) {
+                const lane = document.getElementById(`highway-lane-${i}`);
+                if (lane) lane.classList.remove('passed-lane', 'current-target-lane');
             }
+            updateLaneMultLabels();
+
+            const chickenEl = document.getElementById('runner-chicken');
+            if (chickenEl) {
+                chickenEl.classList.remove('squashed', 'running-hop');
+                chickenEl.textContent = '🐔';
+            }
+            positionChickenAtStep(0);
+            startChickenTrafficLoop();
         }
 
         function startChickenGame() {
@@ -2863,44 +3223,97 @@
             balance -= chickenBetAmount; stats.games++; stats.wagered += chickenBetAmount;
             updateBalanceUI(); saveState();
 
-            chickenActive = true; chickenStepIndex = 0; chickenCurrentMult = 1.0;
+            resetChickenBoard();
+            chickenActive = true;
+            chickenStepIndex = 0;
+            chickenCurrentMult = 1.0;
+
             document.getElementById('chicken-start-btn').style.display = 'none';
             document.getElementById('chicken-step-btn').style.display = 'block';
-            document.getElementById('chicken-cashout-btn').style.display = 'block';
-            document.getElementById('chicken-status-title').textContent = 'Цыплёнок на старте! Нажимайте «Сделать шаг».';
-            document.getElementById('chicken-lane-1').classList.add('active-lane');
-            document.getElementById('chicken-pos-1').innerHTML = '🐔';
+            document.getElementById('chicken-cashout-btn').style.display = 'none';
+            document.getElementById('highway-lane-1').classList.add('current-target-lane');
+            document.getElementById('chicken-status-title').textContent = '🐔 Курица на обочине! Жми «Перебежать полосу»!';
             showToast('🐔 Забег начался!');
         }
 
-        function makeChickenStep() {
-            if (!chickenActive) return;
+        async function makeChickenStep() {
+            if (!chickenActive || chickenSteppingLock) return;
+            chickenSteppingLock = true;
+            document.getElementById('chicken-step-btn').disabled = true;
+
             chickenStepIndex++;
             const risk = document.getElementById('chicken-risk').value;
-            let crashChance = risk === 'easy' ? 0.14 : (risk === 'medium' ? 0.25 : 0.42);
+            const mults = CHICKEN_MULTS_BY_RISK[risk] || CHICKEN_MULTS_BY_RISK.medium;
+            let crashChance = risk === 'easy' ? 0.16 : (risk === 'medium' ? 0.26 : 0.42);
 
-            if (Math.random() < crashChance || chickenStepIndex > 5) {
+            const chickenEl = document.getElementById('runner-chicken');
+            chickenEl.classList.remove('running-hop');
+            void chickenEl.offsetWidth;
+            chickenEl.classList.add('running-hop');
+            positionChickenAtStep(chickenStepIndex);
+
+            const isCrash = Math.random() < crashChance;
+
+            if (isCrash && chickenStepIndex <= 5) {
+                const laneEl = document.getElementById(`highway-lane-${chickenStepIndex}`);
+                const trafficLayer = document.getElementById('chicken-traffic-layer');
+                const killerCar = document.createElement('div');
+                killerCar.className = 'traffic-car killer-car';
+                killerCar.textContent = '🏎️';
+                killerCar.style.left = (laneEl.offsetLeft + laneEl.offsetWidth / 2) + 'px';
+                killerCar.style.top = '-60px';
+                trafficLayer.appendChild(killerCar);
+
+                let carY = -60;
+                await new Promise(resolve => {
+                    const hitInterval = setInterval(() => {
+                        carY += 22;
+                        killerCar.style.top = carY + 'px';
+                        if (carY >= 155) {
+                            clearInterval(hitInterval);
+                            resolve();
+                        }
+                    }, 18);
+                });
+
                 chickenActive = false;
-                if(chickenStepIndex <= 5) document.getElementById(`chicken-pos-${chickenStepIndex}`).innerHTML = '💥🚗';
-                document.getElementById('chicken-status-title').textContent = '💥 Цыпленка сбила машина! Ставка сгорела.';
+                chickenEl.classList.add('squashed');
+                chickenEl.textContent = '💥🍗';
+                killerCar.style.top = '185px';
+
+                document.getElementById('chicken-status-title').textContent = '💥 НАЕЗД! Машина сбила курицу — ставка сгорела!';
                 document.getElementById('chicken-step-btn').style.display = 'none';
+                document.getElementById('chicken-step-btn').disabled = false;
                 document.getElementById('chicken-cashout-btn').style.display = 'none';
                 document.getElementById('chicken-start-btn').style.display = 'block';
-                showToast('❌ Машина сбила цыпленка!');
+                chickenSteppingLock = false;
+                showToast('💥 Машина сбила курицу!');
                 return;
             }
 
-            chickenCurrentMult = Math.round((chickenCurrentMult + 0.65) * 100) / 100;
-            document.getElementById('chicken-status-title').textContent = `Успешно! Текущий множитель: x${chickenCurrentMult}`;
-            
-            if (chickenStepIndex > 1) {
-                document.getElementById(`chicken-lane-${chickenStepIndex - 1}`).classList.remove('active-lane');
-                document.getElementById(`chicken-pos-${chickenStepIndex - 1}`).innerHTML = '✅';
-            }
+            await sleep(340);
+
+            chickenCurrentMult = mults[chickenStepIndex - 1] || Math.round((chickenCurrentMult + 0.75) * 100) / 100;
+            const potentialWin = (chickenBetAmount * chickenCurrentMult).toFixed(2);
+
             if (chickenStepIndex <= 5) {
-                document.getElementById(`chicken-lane-${chickenStepIndex}`).classList.add('active-lane');
-                document.getElementById(`chicken-pos-${chickenStepIndex}`).innerHTML = '🐔';
+                document.getElementById(`highway-lane-${chickenStepIndex}`).classList.remove('current-target-lane');
+                document.getElementById(`highway-lane-${chickenStepIndex}`).classList.add('passed-lane');
+                if (chickenStepIndex < 5) {
+                    document.getElementById(`highway-lane-${chickenStepIndex + 1}`).classList.add('current-target-lane');
+                }
+                document.getElementById('chicken-cashout-btn').style.display = 'block';
+                document.getElementById('chicken-cashout-btn').textContent = `💰 ЗАБРАТЬ ${potentialWin} BYN (x${chickenCurrentMult.toFixed(2)})`;
+                document.getElementById('chicken-status-title').textContent = `✅ Полоса ${chickenStepIndex}/5 пройдена! Множитель: x${chickenCurrentMult.toFixed(2)}`;
+            } else {
+                chickenSteppingLock = false;
+                document.getElementById('chicken-step-btn').disabled = false;
+                chickenCashout();
+                return;
             }
+
+            document.getElementById('chicken-step-btn').disabled = false;
+            chickenSteppingLock = false;
         }
 
         function chickenCashout() {
@@ -2908,22 +3321,44 @@
             chickenActive = false;
             let win = Math.round(chickenBetAmount * chickenCurrentMult * 100) / 100;
             balance += win; stats.totalWon += win;
-            if(win > stats.biggestWin) stats.biggestWin = win;
+            if (win > stats.biggestWin) stats.biggestWin = win;
             updateBalanceUI(); saveState();
-            document.getElementById('chicken-status-title').textContent = `🎉 Победа! Вы забрали ${win.toFixed(2)} BYN!`;
+
+            document.getElementById('chicken-status-title').textContent = `🎉 Курица перебежала дорогу! Выигрыш: +${win.toFixed(2)} BYN!`;
             document.getElementById('chicken-step-btn').style.display = 'none';
             document.getElementById('chicken-cashout-btn').style.display = 'none';
             document.getElementById('chicken-start-btn').style.display = 'block';
             showToast(`🏆 Выигрыш забран: +${win.toFixed(2)} BYN!`);
         }
 
-        function openDepositModal() { document.getElementById('deposit-modal').classList.add('active'); syncProfileUI(); }
-        function closeDepositModal() { document.getElementById('deposit-modal').classList.remove('active'); }
+        // ==========================================
+        // ПОПОЛНЕНИЕ И КНОПКА «ПОКАЗАТЬ QR-КОД»
+        // ==========================================
+        function openDepositModal() {
+            document.getElementById('deposit-modal').classList.add('active');
+            const qrBox = document.getElementById('deposit-qr-container');
+            const qrBtn = document.getElementById('toggle-qr-btn');
+            if (qrBox) qrBox.style.display = 'none';
+            if (qrBtn) qrBtn.textContent = '📷 ПОКАЗАТЬ QR-КОД';
+            syncProfileUI();
+        }
+        function closeDepositModal() { document.getElementById('deposit-modal').classList.add('active').remove('active'); document.getElementById('deposit-modal').classList.remove('active'); }
+
+        function toggleDepositQR() {
+            const qrBox = document.getElementById('deposit-qr-container');
+            const qrBtn = document.getElementById('toggle-qr-btn');
+            if (!qrBox || !qrBtn) return;
+            const isHidden = qrBox.style.display === 'none';
+            qrBox.style.display = isHidden ? 'block' : 'none';
+            qrBtn.textContent = isHidden ? '🙈 СКРЫТЬ QR-КОД' : '📷 ПОКАЗАТЬ QR-КОД';
+        }
 
         function copyWalletAddress() {
             const addr = document.getElementById('crypto-wallet-address').textContent.trim();
             navigator.clipboard.writeText(addr).then(() => { showToast('✅ Адрес скопирован!'); });
         }
+
+        document.getElementById('chicken-risk')?.addEventListener('change', updateLaneMultLabels);
 
         window.addEventListener('DOMContentLoaded', () => {
             loadState();
