@@ -310,7 +310,7 @@
 
         .content-area {
             padding: 20px 24px 34px;
-            max-width: 1260px;
+            max-width: 1320px;
             width: 100%;
             margin: 0 auto;
             flex: 1;
@@ -525,19 +525,21 @@
         }
 
         /* ========================================== */
-        /* GATES OF OLYMPUS (ТОЧНО КАК НА СКРИНШОТЕ 1) */
+        /* GATES OF OLYMPUS (ЗЕВС НА ПОЛ-ЭКРАНА + ВЫПИРАЮЩИЕ БОМБЫ И СКАТТЕРЫ) */
         /* ========================================== */
         #view-olympus {
             padding: 0;
             overflow: hidden;
             border: 2px solid #f59e0b;
-            background: linear-gradient(180deg, #1c103b 0%, #2e1045 40%, #150824 100%);
-            box-shadow: 0 15px 45px rgba(245, 158, 11, 0.2);
+            background: radial-gradient(circle at 82% 55%, rgba(250, 204, 21, 0.22) 0%, transparent 45%),
+                        linear-gradient(180deg, #1c103b 0%, #2e1045 45%, #150824 100%);
+            box-shadow: 0 15px 45px rgba(245, 158, 11, 0.25);
         }
         #view-olympus.freespins-mode {
-            background: linear-gradient(180deg, #3b0764 0%, #581c87 45%, #701a75 85%, #831843 100%);
+            background: radial-gradient(circle at 82% 55%, rgba(250, 204, 21, 0.35) 0%, transparent 48%),
+                        linear-gradient(180deg, #3b0764 0%, #581c87 45%, #701a75 85%, #831843 100%);
             border-color: #facc15;
-            box-shadow: 0 0 50px rgba(250, 204, 21, 0.4);
+            box-shadow: 0 0 50px rgba(250, 204, 21, 0.45);
         }
 
         .ao-top-bar {
@@ -545,11 +547,11 @@
             align-items: center;
             justify-content: space-between;
             padding: 10px 18px;
-            background: rgba(15, 8, 30, 0.7);
+            background: rgba(15, 8, 30, 0.78);
             backdrop-filter: blur(6px);
             border-bottom: 1px solid rgba(245, 158, 11, 0.3);
             position: relative;
-            z-index: 10;
+            z-index: 15;
         }
 
         .ao-fs-banner {
@@ -567,7 +569,6 @@
         .ao-fs-banner.active { display: inline-flex; align-items: center; gap: 10px; }
         @keyframes aoPulseBanner { 0% { transform: scale(1); } 100% { transform: scale(1.04); } }
 
-        /* Шапка с надписью «ВЫИГРАЙТЕ ДО 5,000 Х ОТ СУММЫ СТАВКИ» */
         .ao-win-banner-top {
             background: linear-gradient(90deg, #78350f, #d97706, #b45309);
             border-bottom: 2px solid #fde047;
@@ -579,29 +580,30 @@
             color: #fffbeb;
             letter-spacing: 0.5px;
             text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+            position: relative;
+            z-index: 15;
         }
 
-        /* Основная сцена Олимпа */
+        /* Основная сцена Олимпа: справа широкая зона под Зевса на пол-экрана */
         .ao-stage {
             display: grid;
-            grid-template-columns: 210px 1fr 210px;
-            gap: 12px;
-            padding: 14px 18px;
+            grid-template-columns: 185px minmax(0, 1fr) 290px;
+            gap: 10px;
+            padding: 14px 16px;
             align-items: center;
             position: relative;
-            min-height: 470px;
+            min-height: 510px;
         }
-        @media (max-width: 980px) {
+        @media (max-width: 1050px) {
             .ao-stage { grid-template-columns: 1fr; }
             .ao-right-zeus-zone { display: none; }
         }
 
-        /* Левая панель: Кнопка покупки бонуса и ставка Анте (как на скриншоте 1 слева) */
         .ao-left-controls-zone {
             display: flex;
             flex-direction: column;
             gap: 14px;
-            z-index: 5;
+            z-index: 10;
         }
         .ao-feature-card {
             border-radius: 14px;
@@ -622,94 +624,121 @@
             box-shadow: 0 0 25px rgba(34, 197, 94, 0.65);
         }
 
-        /* Правая половина: Логотип Gates of Olympus сверху + Зевс стоящий на половину экрана слева/справа */
+        /* Правая половина экрана: Логотип сверху + Зевс по центру на пол-экрана */
         .ao-right-zeus-zone {
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: flex-end;
+            justify-content: center;
             height: 100%;
+            min-height: 490px;
             position: relative;
-            z-index: 5;
+            z-index: 8;
+            pointer-events: none;
         }
         .ao-official-logo {
-            width: 145px;
+            width: 195px;
             height: auto;
             object-fit: contain;
-            margin-bottom: 10px;
-            filter: drop-shadow(0 0 15px rgba(245, 158, 11, 0.6));
+            margin-bottom: -10px;
+            z-index: 12;
+            filter: drop-shadow(0 4px 16px rgba(245, 158, 11, 0.75));
         }
         .ao-zeus-hero-wrap {
             position: relative;
             width: 100%;
-            height: 290px;
+            height: 430px;
             display: flex;
-            align-items: flex-end;
+            align-items: center;
             justify-content: center;
-            pointer-events: none;
         }
         .ao-zeus-hero-img {
-            height: 310px;
+            height: 455px;
             width: auto;
             max-width: none;
             object-fit: contain;
-            filter: drop-shadow(0 10px 30px rgba(245, 158, 11, 0.55));
-            transform-origin: bottom center;
+            filter: drop-shadow(0 12px 35px rgba(245, 158, 11, 0.65));
+            animation: zeusFloat 3.8s ease-in-out infinite alternate;
+            transform-origin: center center;
         }
 
-        /* Мощная тряска Зевса при выпадении бомб-множителей */
+        /* Мощная тряска Зевса при выпадении бомб и скаттеров */
         .ao-zeus-hero-wrap.zeus-bomb-shake .ao-zeus-hero-img {
             animation: zeusBombShake 0.65s cubic-bezier(.36,.07,.19,.97) both;
         }
         @keyframes zeusBombShake {
             0%   { transform: translate(0, 0) scale(1) rotate(0deg); filter: brightness(1) drop-shadow(0 0 25px #facc15); }
-            12%  { transform: translate(-14px, -10px) scale(1.13) rotate(-5deg); filter: brightness(1.85) drop-shadow(0 0 45px #ffffff); }
-            25%  { transform: translate(15px, 6px) scale(1.16) rotate(5deg); filter: brightness(2.1) drop-shadow(0 0 55px #fde047); }
-            38%  { transform: translate(-14px, -8px) scale(1.14) rotate(-4deg); filter: brightness(1.7) drop-shadow(0 0 40px #f59e0b); }
-            50%  { transform: translate(12px, 5px) scale(1.12) rotate(4deg); }
-            65%  { transform: translate(-9px, -4px) scale(1.08) rotate(-3deg); }
-            80%  { transform: translate(6px, 2px) scale(1.04) rotate(2deg); }
-            100% { transform: translate(0, 0) scale(1) rotate(0deg); filter: brightness(1) drop-shadow(0 10px 30px rgba(245, 158, 11, 0.55)); }
+            12%  { transform: translate(-14px, -10px) scale(1.12) rotate(-5deg); filter: brightness(1.85) drop-shadow(0 0 45px #ffffff); }
+            25%  { transform: translate(15px, 6px) scale(1.15) rotate(5deg); filter: brightness(2.1) drop-shadow(0 0 55px #fde047); }
+            38%  { transform: translate(-14px, -8px) scale(1.13) rotate(-4deg); filter: brightness(1.7) drop-shadow(0 0 40px #f59e0b); }
+            50%  { transform: translate(12px, 5px) scale(1.11) rotate(4deg); }
+            65%  { transform: translate(-9px, -4px) scale(1.07) rotate(-3deg); }
+            80%  { transform: translate(6px, 2px) scale(1.03) rotate(2deg); }
+            100% { transform: translate(0, 0) scale(1) rotate(0deg); filter: brightness(1) drop-shadow(0 12px 35px rgba(245, 158, 11, 0.65)); }
         }
 
-        .ao-board-wrapper { display: flex; flex-direction: column; align-items: center; position: relative; }
+        .ao-board-wrapper { display: flex; flex-direction: column; align-items: center; position: relative; z-index: 10; }
         .ao-gold-frame {
-            width: 100%; max-width: 680px; padding: 12px; border-radius: 20px;
+            width: 100%;
+            max-width: 660px;
+            padding: 12px;
+            border-radius: 20px;
             background: linear-gradient(180deg, #ca8a04 0%, #a16207 50%, #713f12 100%);
             border: 3px solid #fde047;
-            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.75);
+            overflow: visible;
         }
+        /* overflow: visible чтобы бомбы и скаттеры могли выпирать за ячейки */
         .ao-grid-6x5 {
             display: grid;
             grid-template-columns: repeat(6, 1fr);
             grid-template-rows: repeat(5, 1fr);
             gap: 6px;
-            background: radial-gradient(circle at 50% 45%, rgba(60, 20, 95, 0.92) 0%, rgba(20, 8, 40, 0.96) 100%);
+            background: radial-gradient(circle at 50% 45%, rgba(60, 20, 95, 0.94) 0%, rgba(20, 8, 40, 0.98) 100%);
             border-radius: 14px;
             padding: 10px;
-            overflow: hidden;
+            overflow: visible;
         }
         .ao-cell {
-            aspect-ratio: 1.05 / 1; min-height: 56px; background: rgba(255, 255, 255, 0.05);
-            border-radius: 10px; border: 1px solid rgba(254, 240, 138, 0.12);
-            display: flex; align-items: center; justify-content: center; position: relative;
+            aspect-ratio: 1.05 / 1;
+            min-height: 60px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            border: 1px solid rgba(254, 240, 138, 0.14);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: visible;
         }
-        .ao-symbol-inner { font-size: 2.3rem; line-height: 1; display: flex; align-items: center; justify-content: center; will-change: transform, opacity; }
+        .ao-symbol-inner {
+            width: 100%;
+            height: 100%;
+            font-size: 2.3rem;
+            line-height: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            will-change: transform, opacity;
+            overflow: visible;
+        }
 
-        .ao-cell.cell-spinning .ao-symbol-inner { animation: aoCellScroll 0.16s infinite alternate ease-in-out; }
+        .ao-cell.cell-spinning .ao-symbol-inner { animation: aoCellScroll 0.15s infinite alternate ease-in-out; }
         @keyframes aoCellScroll {
-            0% { transform: translateY(-7px) scale(0.92); opacity: 0.4; }
+            0% { transform: translateY(-7px) scale(0.92); opacity: 0.45; }
             100% { transform: translateY(7px) scale(1.05); opacity: 1; }
         }
-        .ao-symbol-inner.drop-in { animation: aoDropBounce 0.42s cubic-bezier(0.22, 1.25, 0.36, 1) forwards; }
+        .ao-symbol-inner.drop-in { animation: aoDropBounce 0.4s cubic-bezier(0.22, 1.25, 0.36, 1) forwards; }
         @keyframes aoDropBounce {
-            0% { transform: translateY(-65px) scale(0.8); opacity: 0.2; }
+            0% { transform: translateY(-60px) scale(0.8); opacity: 0.2; }
             75% { transform: translateY(4px) scale(1.05); opacity: 1; }
             100% { transform: translateY(0) scale(1); opacity: 1; }
         }
         .ao-cell.win-pop {
-            background: radial-gradient(circle, rgba(253, 224, 71, 0.6) 0%, rgba(202, 138, 4, 0.35) 100%);
-            border-color: #fde047; box-shadow: 0 0 18px rgba(253, 224, 71, 0.8); z-index: 3;
+            background: radial-gradient(circle, rgba(253, 224, 71, 0.65) 0%, rgba(202, 138, 4, 0.4) 100%);
+            border-color: #fde047;
+            box-shadow: 0 0 20px rgba(253, 224, 71, 0.85);
+            z-index: 6;
         }
         .ao-cell.win-pop .ao-symbol-inner { animation: aoWinExplode 0.55s ease-in-out forwards; }
         @keyframes aoWinExplode {
@@ -718,26 +747,89 @@
             100% { transform: scale(0) rotate(15deg); opacity: 0; }
         }
 
-        .ao-multiplier-sphere {
-            width: 88%; height: 88%; border-radius: 50%; display: flex; flex-direction: column;
-            align-items: center; justify-content: center; position: relative;
-            background: radial-gradient(circle at 30% 30%, #38bdf8, #8b5cf6 50%, #ec4899 100%);
-            border: 2px solid #fff; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
-            animation: aoSpherePulse 1.3s infinite alternate ease-in-out;
+        /* ВЫПИРАЮЩИЕ БОМБЫ И СКАТТЕРЫ В ОЛИМПУСЕ */
+        #view-olympus .ao-cell.ao-protrude-cell {
+            z-index: 20;
+            overflow: visible;
+            border-color: rgba(253, 224, 71, 0.55);
+            background: radial-gradient(circle, rgba(250, 204, 21, 0.22) 0%, transparent 75%);
         }
-        .ao-multiplier-sphere.big-sphere {
-            background: radial-gradient(circle at 30% 30%, #fef08a, #f59e0b 45%, #dc2626 85%, #581c87 100%);
-            border-color: #fef08a; box-shadow: 0 0 20px #facc15, 0 0 35px #ef4444;
-        }
-        .ao-sphere-val { font-size: 0.95rem; font-weight: 900; color: #fff; text-shadow: 0 2px 0 #000; }
-        @keyframes aoSpherePulse { 0% { transform: scale(0.96) rotate(-3deg); } 100% { transform: scale(1.04) rotate(3deg); } }
 
-        .ao-scatter-sym { font-size: 2.5rem; filter: drop-shadow(0 0 12px #38bdf8); animation: aoScatterPulse 1.1s infinite alternate; }
-        @keyframes aoScatterPulse { 0% { transform: scale(0.95) rotate(-4deg); } 100% { transform: scale(1.08) rotate(4deg); } }
+        /* Крылатые сферы-бомбы больше всех остальных символов */
+        #view-olympus .ao-multiplier-sphere {
+            width: 122%;
+            height: 122%;
+            transform: scale(1.24);
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 22;
+            background: radial-gradient(circle at 30% 30%, #38bdf8, #8b5cf6 50%, #ec4899 100%);
+            border: 3px solid #fff;
+            box-shadow: 0 8px 22px rgba(0, 0, 0, 0.85), 0 0 20px #38bdf8;
+            animation: aoBombProtrude 1.2s infinite alternate ease-in-out;
+        }
+        #view-olympus .ao-multiplier-sphere::before {
+            content: '💣';
+            font-size: 1.05rem;
+            line-height: 1;
+            margin-bottom: -2px;
+        }
+        #view-olympus .ao-multiplier-sphere.big-sphere {
+            background: radial-gradient(circle at 30% 30%, #fef08a, #f59e0b 45%, #dc2626 85%, #581c87 100%);
+            border-color: #fef08a;
+            box-shadow: 0 8px 26px rgba(0, 0, 0, 0.9), 0 0 28px #facc15, 0 0 42px #ef4444;
+        }
+        #view-olympus .ao-sphere-val {
+            font-size: 1.05rem;
+            font-weight: 900;
+            color: #fff;
+            text-shadow: 0 2px 3px #000;
+        }
+        @keyframes aoBombProtrude {
+            0% { transform: scale(1.2) rotate(-4deg); }
+            100% { transform: scale(1.32) rotate(4deg); }
+        }
+
+        /* Выпирающий Scatter с картинкой scatterolymp.png */
+        #view-olympus .ao-scatter-img {
+            width: 132%;
+            height: 132%;
+            max-width: 112px;
+            max-height: 112px;
+            object-fit: contain;
+            transform: scale(1.26);
+            filter: drop-shadow(0 8px 18px rgba(250, 204, 21, 0.95)) drop-shadow(0 0 14px #38bdf8);
+            animation: aoScatterProtrude 1.1s infinite alternate ease-in-out;
+            position: relative;
+            z-index: 22;
+        }
+        #view-olympus .ao-scatter-fallback {
+            font-size: 3.3rem;
+            transform: scale(1.25);
+            filter: drop-shadow(0 0 16px #38bdf8);
+            animation: aoScatterProtrude 1.1s infinite alternate ease-in-out;
+            position: relative;
+            z-index: 22;
+        }
+        @keyframes aoScatterProtrude {
+            0% { transform: scale(1.22) rotate(-4deg); }
+            100% { transform: scale(1.35) rotate(4deg); }
+        }
 
         .ao-pragmatic-hud {
-            background: rgba(12, 6, 25, 0.96); border-top: 2px solid #581c87; padding: 10px 20px;
-            display: flex; align-items: center; justify-content: space-between; gap: 15px;
+            background: rgba(12, 6, 25, 0.96);
+            border-top: 2px solid #581c87;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            position: relative;
+            z-index: 15;
         }
         .ao-hud-left-group { display: flex; align-items: center; gap: 12px; }
         .ao-icon-btn {
@@ -753,9 +845,9 @@
         }
         .ao-credits-box span:first-child { color: var(--text-muted); font-size: 0.62rem; text-transform: uppercase; }
         .ao-credits-box span:last-child { color: #fde047; font-size: 0.92rem; }
-        .ao-hud-center-group { text-align: center; }
-        .ao-win-label { font-size: 0.68rem; color: #fef08a; text-transform: uppercase; font-weight: 700; }
-        .ao-win-amount { font-size: 1.35rem; font-weight: 900; color: #fde047; }
+        .ao-hud-center-group { display: flex; align-items: center; gap: 22px; text-align: center; }
+        .ao-win-label { font-size: 0.64rem; color: #fef08a; text-transform: uppercase; font-weight: 800; }
+        .ao-win-amount { font-size: 1.3rem; font-weight: 900; color: #fde047; }
         .ao-hud-right-group { display: flex; align-items: center; gap: 16px; }
         .ao-bet-adjust-btn {
             width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, #ca8a04, #854d0e);
@@ -771,7 +863,7 @@
         .ao-spin-circle-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
         /* ========================================== */
-        /* THE DOG HOUSE (Скаттеры и будки выпирают!) */
+        /* THE DOG HOUSE */
         /* ========================================== */
         #view-doghouse {
             padding: 0; overflow: hidden; border: 2px solid #f59e0b;
@@ -885,7 +977,7 @@
         .dh-spin-circle-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
         /* ========================================== */
-        /* SWEET BONANZA (БОМБЫ И ЧУПА-ЧУПСЫ ВЫПИРАЮТ!) */
+        /* SWEET BONANZA */
         /* ========================================== */
         #view-bonanza {
             padding: 0; overflow: hidden; border: 2px solid #f43f5e;
@@ -1004,7 +1096,7 @@
         .sb-spin-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
         /* ========================================== */
-        /* CHICKEN CROSS / CHICKEN ROAD (РЕАЛИСТИЧНАЯ МИНИ-ИГРА) */
+        /* CHICKEN CROSS / CHICKEN ROAD */
         /* ========================================== */
         #view-chicken {
             background: linear-gradient(180deg, #065f46 0%, #064e3b 50%, #022c22 100%);
@@ -1234,7 +1326,7 @@
         </div>
     </div>
 
-    <!-- МОДАЛЬНОЕ ОКНО ПОПОЛНЕНИЯ (С кнопкой Показать QR-код и корректным путем к QR.jpg) -->
+    <!-- МОДАЛЬНОЕ ОКНО ПОПОЛНЕНИЯ -->
     <div class="modal-overlay" id="deposit-modal">
         <div class="deposit-modal">
             <button class="modal-close-btn" onclick="closeDepositModal()">✕</button>
@@ -1251,12 +1343,10 @@
 
             <button class="btn-back" style="width: 100%; background: var(--accent-gold-gradient); color:#1a0f00; font-weight:900; margin-bottom:10px;" onclick="copyWalletAddress()">📋 СКОПИРОВАТЬ АДРЕС КОШЕЛЬКА</button>
 
-            <!-- Кнопка Показать QR-код -->
             <button class="btn-back" id="toggle-qr-btn" style="width: 100%; background: rgba(245, 158, 11, 0.14); border: 1px solid var(--accent-gold); color: #fde047; font-weight: 900; margin-bottom: 12px;" onclick="toggleDepositQR()">
                 📷 ПОКАЗАТЬ QR-КОД
             </button>
 
-            <!-- Контейнер с фото QR.jpg (исправлено отображение без белой заглушки) -->
             <div id="deposit-qr-container" style="display: none; text-align: center; margin: 12px 0 16px;">
                 <img src="./QR.jpg" onerror="this.onerror=null; this.src='QR.jpg';" alt="QR код для пополнения USDT TRC-20" style="width: 210px; height: 210px; object-fit: contain; border-radius: 14px; border: 2px solid var(--accent-gold); background: #fff; padding: 6px; box-shadow: 0 0 25px rgba(245, 158, 11, 0.35);">
                 <div style="font-size: 0.76rem; color: var(--text-muted); margin-top: 6px;">Отсканируйте QR-код в вашем криптокошельке</div>
@@ -1476,7 +1566,7 @@
                 </div>
             </div>
 
-            <!-- GATES OF OLYMPUS (ТОЧНО КАК НА СКРИНШОТЕ 1) -->
+            <!-- GATES OF OLYMPUS -->
             <div id="view-olympus" class="game-view">
                 <div class="ao-top-bar">
                     <button class="btn-back" onclick="showLobby()">← В зал</button>
@@ -1488,26 +1578,26 @@
                         <span>|</span>
                         <span>ВЫИГРЫШ: <b id="ao-fs-total-win">0,00</b> BYN</span>
                     </div>
-                    <button class="ao-icon-btn" onclick="showToast('⚡ Сетка 6x5, выплаты от 8 символов везде!')" title="Информация">i</button>
+                    <button class="ao-icon-btn" onclick="showToast('⚡ 4+ Scatter = 15 фриспинов с накоплением множителя!')" title="Информация">i</button>
                 </div>
 
                 <div class="ao-win-banner-top">
-                    🏆 ВЫИГРАЙТЕ ДО 5,000 Х ОТ СУММЫ СТАВКИ 🏆
+                    🏆 СИМВОЛЫ ОПЛАЧИВАЮТСЯ, ГДЕ БЫ ОНИ НИ ВЫПАЛИ • ВЫИГРАЙТЕ ДО 5,000 Х 🏆
                 </div>
 
                 <div class="ao-stage">
-                    <!-- 1. Слева: Кнопка покупки бонуса и ставка Анте -->
+                    <!-- 1. Слева: Покупка бонуса и ставка Анте -->
                     <div class="ao-left-controls-zone">
                         <div class="ao-feature-card ao-buy-feature" onclick="buyOlympusBonus()">
                             <div style="font-size:0.75rem; font-weight:900; text-transform:uppercase; color:#fff;">КУПИТЬ БЕСПЛАТНЫЕ СПИНЫ</div>
                             <div style="margin-top:6px; background:rgba(0,0,0,0.35); border-radius:10px; padding:6px; font-size:1.15rem; font-weight:900; color:#fef08a;" id="ao-buy-price">50,00 BYN</div>
-                            <div style="font-size:0.65rem; color:#fde68a; font-weight:700; margin-top:4px;">ОТ СУММЫ СТАВКИ</div>
+                            <div style="font-size:0.65rem; color:#fde68a; font-weight:700; margin-top:4px;">100x ОТ СТАВКИ</div>
                         </div>
 
                         <div class="ao-feature-card ao-ante-card" id="ao-ante-btn" onclick="toggleOlympusAnte()">
                             <div style="font-size: 0.72rem; font-weight: 900; color: #fff; text-transform: uppercase;">ОТ СУММЫ СТАВКИ</div>
                             <div style="font-size: 1.1rem; font-weight: 900; color: #fde047; margin: 4px 0;" id="ao-ante-val">0,62 BYN</div>
-                            <div style="font-size: 0.7rem; font-weight: 800; color: #f3e8ff; line-height: 1.25; margin-bottom: 6px;">ДВОЙНОЙ ШАНС ВЫИГРЫШ ФУНКЦИИ</div>
+                            <div style="font-size: 0.7rem; font-weight: 800; color: #f3e8ff; line-height: 1.25; margin-bottom: 6px;">ДВОЙНОЙ ШАНС ВЫИГРЫША ФУНКЦИИ</div>
                             <div style="display:inline-flex; align-items:center; justify-content:space-between; width:84px; background:rgba(0,0,0,0.45); border-radius:999px; padding:3px 10px; font-size:0.7rem; font-weight:900; border:1px solid rgba(255,255,255,0.3);">
                                 <span id="ao-ante-status-txt">ВЫКЛ</span>
                                 <span id="ao-ante-dot">⚪</span>
@@ -1522,11 +1612,11 @@
                         </div>
                     </div>
 
-                    <!-- 3. Справа: Официальный логотип Gates of Olympus + Зевс на половину экрана -->
+                    <!-- 3. Справа: Логотип Gates of Olympus + Зевс по центру на пол-экрана -->
                     <div class="ao-right-zeus-zone">
                         <img src="gatesofolympuslogo.png" onerror="this.style.display='none';" alt="Gates of Olympus Logo" class="ao-official-logo">
                         <div class="ao-zeus-hero-wrap" id="ao-zeus-avatar">
-                            <img src="olympusnaprotiv.png" alt="Великий Зевс" class="ao-zeus-hero-img">
+                            <img src="olympusnaprotiv.png" onerror="this.style.display='none';" alt="Великий Зевс" class="ao-zeus-hero-img">
                         </div>
                     </div>
                 </div>
@@ -1538,8 +1628,14 @@
                         <div class="ao-credits-box"><span>СТАВКА</span><span><span id="ao-hud-total-bet">0,50</span> BYN</span></div>
                     </div>
                     <div class="ao-hud-center-group">
-                        <div style="font-size:0.62rem; color:#c084fc; font-weight:800; text-transform:uppercase;">ОБЩИЙ ИКС</div>
-                        <div style="font-size:1.15rem; font-weight:900; color:#fde047;" id="ao-global-mult-display">0x</div>
+                        <div>
+                            <div class="ao-win-label" id="ao-win-lbl">ПОСЛЕДНИЙ ВЫИГРЫШ</div>
+                            <div class="ao-win-amount"><span id="ao-hud-win">0,00</span> BYN</div>
+                        </div>
+                        <div>
+                            <div style="font-size:0.64rem; color:#c084fc; font-weight:800; text-transform:uppercase;">ОБЩИЙ ИКС</div>
+                            <div style="font-size:1.3rem; font-weight:900; color:#fde047;" id="ao-global-mult-display">0x</div>
+                        </div>
                     </div>
                     <div class="ao-hud-right-group">
                         <button class="ao-bet-adjust-btn" onclick="changeOlympusBet(-0.5)">−</button>
@@ -1682,7 +1778,7 @@
                 </div>
             </div>
 
-            <!-- CHICKEN CROSS / CHICKEN ROAD (РЕАЛИСТИЧНАЯ МИНИ-ИГРА С МАШИНАМИ) -->
+            <!-- CHICKEN CROSS / CHICKEN ROAD -->
             <div id="view-chicken" class="game-view">
                 <div class="game-header">
                     <h2>🐔 Chicken Cross (Chicken Road) — Перебеги дорогу!</h2>
@@ -1714,7 +1810,6 @@
                             Выберите ставку и нажмите «Старт забега»
                         </div>
 
-                        <!-- Оживлённая трасса -->
                         <div class="chicken-highway" id="chicken-highway">
                             <div class="chicken-sidewalk-start">
                                 <span style="font-size:1.4rem;">🌿</span>
@@ -1747,10 +1842,7 @@
                                 <span>ФИНИШ<br>x7.50</span>
                             </div>
 
-                            <!-- Слой машин -->
                             <div id="chicken-traffic-layer" style="position:absolute; inset:0; pointer-events:none;"></div>
-
-                            <!-- Сама курица -->
                             <div class="runner-chicken" id="runner-chicken">🐔</div>
                         </div>
 
@@ -1815,10 +1907,16 @@
             measurementId: "G-2CJF1PZ775"
         };
 
-        firebase.initializeApp(firebaseConfig);
+        try {
+            if (!firebase.apps.length) {
+                firebase.initializeApp(firebaseConfig);
+            }
+        } catch (e) {}
         const db = firebase.firestore();
 
+        // ==========================================
         // GATES OF OLYMPUS
+        // ==========================================
         const AO_COLS = 6, AO_ROWS = 5;
         const AO_SYMBOLS = [
             { id: 'crown',    emoji: '👑', name: 'Золотая корона',    p8: 8,    p10: 20,   p12: 40,  weight: 5 },
@@ -1831,7 +1929,7 @@
             { id: 'green',    emoji: '❇️', name: 'Зеленый камень',    p8: 0.3,  p10: 0.7,  p12: 3,   weight: 25 },
             { id: 'blue',     emoji: '💎', name: 'Синий камень',      p8: 0.2,  p10: 0.5,  p12: 1.5, weight: 28 }
         ];
-        const AO_SCATTER = { id: 'scatter', emoji: '⚡', name: 'Зевс (Scatter)' };
+        const AO_SCATTER = { id: 'scatter', img: 'scatterolymp.png', emoji: '⚡', name: 'Зевс (Scatter)' };
         const AO_MULTIPLIER_WEIGHTS = [
             { val: 2, weight: 48 }, { val: 3, weight: 26 }, { val: 4, weight: 12 },
             { val: 5, weight: 7 },  { val: 6, weight: 3.5 },{ val: 8, weight: 1.8 },
@@ -2118,9 +2216,9 @@
         function showLobby() {
             if (sbSpinning || dhSpinning || aoSpinning) return;
             aoAutoActive = false; dhAutoActive = false; sbAutoActive = false;
-            document.getElementById('ao-auto-btn').classList.remove('auto-active-btn');
-            document.getElementById('dh-auto-btn').classList.remove('auto-active-btn');
-            document.getElementById('sb-auto-btn').classList.remove('auto-active-btn');
+            document.getElementById('ao-auto-btn')?.classList.remove('auto-active-btn');
+            document.getElementById('dh-auto-btn')?.classList.remove('auto-active-btn');
+            document.getElementById('sb-auto-btn')?.classList.remove('auto-active-btn');
             hideAllViews();
             document.getElementById('view-lobby').classList.add('active');
             document.getElementById('nav-lobby').classList.add('active');
@@ -2136,7 +2234,7 @@
         }
 
         // ==========================================
-        // GATES OF OLYMPUS (ЗЕВС СПРАВА ПОД ЛОГОТИПОМ + ЗАМЕДЛЕННЫЕ СПИНЫ)
+        // GATES OF OLYMPUS (ИСПРАВЛЕННЫЙ И РАБОЧИЙ)
         // ==========================================
         function updateOlympusMultiplierUI() {
             const label = totalMultiplier + 'x';
@@ -2193,12 +2291,12 @@
         }
 
         function generateOlympusCell(allowMultiplier) {
-            const scatterChance = aoInFreeSpins ? 0.008 : (aoAnteActive ? 0.04 : 0.02);
+            const scatterChance = aoInFreeSpins ? 0.012 : (aoAnteActive ? 0.045 : 0.022);
             if (Math.random() < scatterChance) return { ...AO_SCATTER };
-            const multChance = aoInFreeSpins ? 0.022 : 0.015;
+            const multChance = aoInFreeSpins ? 0.045 : 0.025;
             if (allowMultiplier && Math.random() < multChance) {
                 const val = getRandomOlympusMultiplier();
-                return { id: 'multiplier', emoji: '🔮', val: val, name: `Множитель x${val}` };
+                return { id: 'multiplier', emoji: '💣', val: val, name: `Множитель x${val}` };
             }
             return getRandomWeightedOlympusSymbol();
         }
@@ -2215,17 +2313,20 @@
         function renderOlympusCell(c, r, dropAnim) {
             const cell = document.getElementById(`ao-cell-${c}-${r}`);
             if (!cell) return;
-            cell.classList.remove('win-pop', 'cell-spinning');
+            cell.classList.remove('win-pop', 'cell-spinning', 'ao-protrude-cell');
             const inner = cell.querySelector('.ao-symbol-inner');
+            if (!inner) return;
             inner.className = 'ao-symbol-inner';
             if (dropAnim) { void inner.offsetWidth; inner.classList.add('drop-in'); }
             const sym = aoGrid[c][r];
             if (!sym) { inner.innerHTML = ''; return; }
             if (sym.id === 'multiplier') {
-                const isBig = sym.val >= 50;
+                cell.classList.add('ao-protrude-cell');
+                const isBig = sym.val >= 25;
                 inner.innerHTML = `<div class="ao-multiplier-sphere ${isBig ? 'big-sphere' : ''}"><span class="ao-sphere-val">${sym.val}X</span></div>`;
             } else if (sym.id === 'scatter') {
-                inner.innerHTML = `<span class="ao-scatter-sym">${sym.emoji}</span>`;
+                cell.classList.add('ao-protrude-cell');
+                inner.innerHTML = `<img src="${sym.img}" alt="Scatter" class="ao-scatter-img" onerror="this.outerHTML='<span class=\\'ao-scatter-fallback\\'>⚡</span>';">`;
             } else {
                 inner.textContent = sym.emoji;
             }
@@ -2235,9 +2336,12 @@
 
         function syncOlympusBetUI() {
             const total = getOlympusTotalBet();
-            document.getElementById('ao-hud-total-bet').textContent = total.toFixed(2).replace('.', ',');
-            document.getElementById('ao-ante-val').textContent = (aoCurrentBet * 1.25).toFixed(2).replace('.', ',') + ' BYN';
-            document.getElementById('ao-buy-price').textContent = (aoCurrentBet * 100).toFixed(2).replace('.', ',') + ' BYN';
+            const betEl = document.getElementById('ao-hud-total-bet');
+            const anteEl = document.getElementById('ao-ante-val');
+            const buyEl = document.getElementById('ao-buy-price');
+            if (betEl) betEl.textContent = total.toFixed(2).replace('.', ',');
+            if (anteEl) anteEl.textContent = (aoCurrentBet * 1.25).toFixed(2).replace('.', ',') + ' BYN';
+            if (buyEl) buyEl.textContent = (aoCurrentBet * 100).toFixed(2).replace('.', ',') + ' BYN';
         }
 
         function changeOlympusBet(delta) {
@@ -2250,16 +2354,18 @@
             if (aoSpinning || aoInFreeSpins) return;
             aoAnteActive = !aoAnteActive;
             const card = document.getElementById('ao-ante-btn');
-            card.classList.toggle('active', aoAnteActive);
-            document.getElementById('ao-ante-status-txt').textContent = aoAnteActive ? 'ВКЛ' : 'ВЫКЛ';
-            document.getElementById('ao-ante-dot').textContent = aoAnteActive ? '🟢' : '⚪';
+            if (card) card.classList.toggle('active', aoAnteActive);
+            const txt = document.getElementById('ao-ante-status-txt');
+            const dot = document.getElementById('ao-ante-dot');
+            if (txt) txt.textContent = aoAnteActive ? 'ВКЛ' : 'ВЫКЛ';
+            if (dot) dot.textContent = aoAnteActive ? '🟢' : '⚪';
             syncOlympusBetUI();
         }
 
         function toggleOlympusAuto() {
             aoAutoActive = !aoAutoActive;
             const btn = document.getElementById('ao-auto-btn');
-            btn.classList.toggle('auto-active-btn', aoAutoActive);
+            if (btn) btn.classList.toggle('auto-active-btn', aoAutoActive);
             showToast(aoAutoActive ? '🔄 Автоспины запущены' : '⏹️ Автоспины остановлены');
             if (aoAutoActive && !aoSpinning) spinGatesOfOlympus();
         }
@@ -2284,13 +2390,20 @@
         }
 
         async function startOlympusBonusRound() {
-            aoInFreeSpins = true; aoFreeSpinsLeft = 15; aoFreeSpinsTotalWin = 0; totalMultiplier = 0;
+            aoInFreeSpins = true;
+            aoFreeSpinsLeft = 15;
+            aoFreeSpinsTotalWin = 0;
+            totalMultiplier = 0;
             updateOlympusMultiplierUI();
-            document.getElementById('view-olympus').classList.add('freespins-mode');
-            document.getElementById('ao-fs-banner').classList.add('active');
-            document.getElementById('ao-fs-left').textContent = aoFreeSpinsLeft;
-            document.getElementById('ao-fs-total-win').textContent = '0,00';
-            showToast('⚡ Зевс дарует 15 фриспинов!');
+
+            document.getElementById('view-olympus')?.classList.add('freespins-mode');
+            document.getElementById('ao-fs-banner')?.classList.add('active');
+            const leftEl = document.getElementById('ao-fs-left');
+            const winEl = document.getElementById('ao-fs-total-win');
+            if (leftEl) leftEl.textContent = aoFreeSpinsLeft;
+            if (winEl) winEl.textContent = '0,00';
+
+            showToast('⚡ 4+ Scatter! Зевс дарует 15 фриспинов с накопительным множителем!');
             triggerZeusLighting();
             await spinGatesOfOlympus(true);
         }
@@ -2300,184 +2413,220 @@
             const totalBet = getOlympusTotalBet();
 
             if (!aoInFreeSpins) {
-                totalMultiplier = 0; updateOlympusMultiplierUI();
+                totalMultiplier = 0;
+                updateOlympusMultiplierUI();
                 if (balance < totalBet) {
-                    aoAutoActive = false; document.getElementById('ao-auto-btn').classList.remove('auto-active-btn');
-                    showToast('⚠️ Недостаточно средств!'); openDepositModal(); return;
+                    aoAutoActive = false;
+                    document.getElementById('ao-auto-btn')?.classList.remove('auto-active-btn');
+                    showToast('⚠️ Недостаточно средств!');
+                    openDepositModal();
+                    return;
                 }
-                balance -= totalBet; stats.games += 1; stats.wagered += totalBet;
-                updateBalanceUI(); saveState();
+                balance -= totalBet;
+                stats.games += 1;
+                stats.wagered += totalBet;
+                updateBalanceUI();
+                saveState();
             } else {
                 aoFreeSpinsLeft--;
-                document.getElementById('ao-fs-left').textContent = aoFreeSpinsLeft;
+                const leftEl = document.getElementById('ao-fs-left');
+                if (leftEl) leftEl.textContent = aoFreeSpinsLeft;
                 stats.games += 1;
             }
 
             aoSpinning = true;
-            document.getElementById('ao-spin-btn').disabled = true;
-            document.getElementById('ao-win-lbl').textContent = aoInFreeSpins ? 'ВЫИГРЫШ В БОНУСЕ' : 'ПОСЛЕДНИЙ ВЫИГРЫШ';
-            document.getElementById('ao-hud-win').textContent = '0,00';
+            const spinBtn = document.getElementById('ao-spin-btn');
+            if (spinBtn) spinBtn.disabled = true;
+
+            const winLblEl = document.getElementById('ao-win-lbl');
+            const hudWinEl = document.getElementById('ao-hud-win');
+            if (winLblEl) winLblEl.textContent = aoInFreeSpins ? 'ВЫИГРЫШ В БОНУСЕ' : 'ПОСЛЕДНИЙ ВЫИГРЫШ';
+            if (hudWinEl) hudWinEl.textContent = '0,00';
 
             for (let c = 0; c < AO_COLS; c++) {
-                for (let r = 0; r < AO_ROWS; r++) document.getElementById(`ao-cell-${c}-${r}`).classList.add('cell-spinning');
+                for (let r = 0; r < AO_ROWS; r++) {
+                    const cell = document.getElementById(`ao-cell-${c}-${r}`);
+                    if (cell) {
+                        cell.classList.remove('ao-protrude-cell', 'win-pop');
+                        cell.classList.add('cell-spinning');
+                    }
+                }
             }
 
-            const emojiPool = [...AO_SYMBOLS.map(s => s.emoji), '⚡', '🔮'];
+            const emojiPool = [...AO_SYMBOLS.map(s => s.emoji), '⚡', '💣'];
             const timer = setInterval(() => {
                 for (let c = 0; c < AO_COLS; c++) {
                     for (let r = 0; r < AO_ROWS; r++) {
                         const cell = document.getElementById(`ao-cell-${c}-${r}`);
                         if (cell && cell.classList.contains('cell-spinning')) {
-                            cell.querySelector('.ao-symbol-inner').textContent = emojiPool[Math.floor(Math.random() * emojiPool.length)];
+                            const inner = cell.querySelector('.ao-symbol-inner');
+                            if (inner) inner.textContent = emojiPool[Math.floor(Math.random() * emojiPool.length)];
                         }
                     }
                 }
             }, 85);
 
-            const nextGrid = Array.from({ length: AO_COLS }, () => Array(AO_ROWS).fill(null));
-            let hasDroppedBomb = false;
-            for (let c = 0; c < AO_COLS; c++) {
-                for (let r = 0; r < AO_ROWS; r++) {
-                    nextGrid[c][r] = generateOlympusCell(true);
-                    if (nextGrid[c][r].id === 'multiplier') hasDroppedBomb = true;
-                }
-            }
-            if (isBonusForcedScatter) {
-                nextGrid[1][1] = { ...AO_SCATTER }; nextGrid[3][2] = { ...AO_SCATTER }; nextGrid[4][3] = { ...AO_SCATTER };
-            }
-
-            // Замедленные спины
-            await sleep(760);
-            for (let c = 0; c < AO_COLS; c++) {
-                for (let r = 0; r < AO_ROWS; r++) {
-                    aoGrid[c][r] = nextGrid[c][r];
-                    renderOlympusCell(c, r, true);
-                }
-                await sleep(115);
-            }
-            clearInterval(timer);
-
-            if (hasDroppedBomb) triggerZeusLighting();
-
-            let spinRawWin = 0, spinMultipliersSum = 0;
-            while (true) {
-                const counts = {}, positions = {};
+            try {
+                const nextGrid = Array.from({ length: AO_COLS }, () => Array(AO_ROWS).fill(null));
+                let hasDroppedBomb = false;
                 for (let c = 0; c < AO_COLS; c++) {
                     for (let r = 0; r < AO_ROWS; r++) {
-                        const sym = aoGrid[c][r];
-                        if (!sym || sym.id === 'scatter' || sym.id === 'multiplier') continue;
-                        counts[sym.id] = (counts[sym.id] || 0) + 1;
-                        if (!positions[sym.id]) positions[sym.id] = [];
-                        positions[sym.id].push({ c, r, sym });
+                        nextGrid[c][r] = generateOlympusCell(true);
+                        if (nextGrid[c][r].id === 'multiplier') hasDroppedBomb = true;
                     }
                 }
-                let stepWin = 0;
-                const winningCoords = [];
-                for (const symId of Object.keys(counts)) {
-                    const cnt = counts[symId];
-                    if (cnt >= 8) {
-                        const sample = positions[symId][0].sym;
-                        const mult = cnt >= 12 ? sample.p12 : (cnt >= 10 ? sample.p10 : sample.p8);
-                        stepWin += aoCurrentBet * mult;
-                        winningCoords.push(...positions[symId]);
-                    }
+                if (isBonusForcedScatter) {
+                    nextGrid[0][1] = { ...AO_SCATTER };
+                    nextGrid[2][2] = { ...AO_SCATTER };
+                    nextGrid[3][1] = { ...AO_SCATTER };
+                    nextGrid[5][3] = { ...AO_SCATTER };
                 }
-                if (winningCoords.length === 0) break;
 
-                spinRawWin += stepWin;
-                document.getElementById('ao-hud-win').textContent = spinRawWin.toFixed(2).replace('.', ',');
-                winningCoords.forEach(({ c, r }) => document.getElementById(`ao-cell-${c}-${r}`)?.classList.add('win-pop'));
-                await sleep(680);
+                await sleep(620);
+                clearInterval(timer);
 
-                winningCoords.forEach(({ c, r }) => { aoGrid[c][r] = null; });
-                let cascadeHasBomb = false;
-                for (let c = 0; c < AO_COLS; c++) {
-                    const surviving = [];
-                    for (let r = AO_ROWS - 1; r >= 0; r--) if (aoGrid[c][r] !== null) surviving.push(aoGrid[c][r]);
-                    const missing = AO_ROWS - surviving.length;
-                    const newTop = Array.from({ length: missing }, () => {
-                        const item = generateOlympusCell(true);
-                        if (item.id === 'multiplier') cascadeHasBomb = true;
-                        return item;
-                    });
-                    const rebuilt = [...surviving, ...newTop].reverse();
-                    for (let r = 0; r < AO_ROWS; r++) { aoGrid[c][r] = rebuilt[r]; renderOlympusCell(c, r, true); }
-                }
-                if (cascadeHasBomb) triggerZeusLighting();
-                await sleep(520);
-            }
-
-            if (spinRawWin > 0) {
-                const multiplierCells = [];
                 for (let c = 0; c < AO_COLS; c++) {
                     for (let r = 0; r < AO_ROWS; r++) {
-                        const sym = aoGrid[c][r];
-                        if (sym && sym.id === 'multiplier') { spinMultipliersSum += sym.val; multiplierCells.push({ c, r }); }
+                        aoGrid[c][r] = nextGrid[c][r];
+                        renderOlympusCell(c, r, true);
+                    }
+                    await sleep(95);
+                }
+
+                if (hasDroppedBomb) triggerZeusLighting();
+
+                let spinRawWin = 0, spinMultipliersSum = 0;
+                while (true) {
+                    const counts = {}, positions = {};
+                    for (let c = 0; c < AO_COLS; c++) {
+                        for (let r = 0; r < AO_ROWS; r++) {
+                            const sym = aoGrid[c][r];
+                            if (!sym || sym.id === 'scatter' || sym.id === 'multiplier') continue;
+                            counts[sym.id] = (counts[sym.id] || 0) + 1;
+                            if (!positions[sym.id]) positions[sym.id] = [];
+                            positions[sym.id].push({ c, r, sym });
+                        }
+                    }
+                    let stepWin = 0;
+                    const winningCoords = [];
+                    for (const symId of Object.keys(counts)) {
+                        const cnt = counts[symId];
+                        if (cnt >= 8) {
+                            const sample = positions[symId][0].sym;
+                            const mult = cnt >= 12 ? sample.p12 : (cnt >= 10 ? sample.p10 : sample.p8);
+                            stepWin += aoCurrentBet * mult;
+                            winningCoords.push(...positions[symId]);
+                        }
+                    }
+                    if (winningCoords.length === 0) break;
+
+                    spinRawWin += stepWin;
+                    if (hudWinEl) hudWinEl.textContent = spinRawWin.toFixed(2).replace('.', ',');
+                    winningCoords.forEach(({ c, r }) => document.getElementById(`ao-cell-${c}-${r}`)?.classList.add('win-pop'));
+                    await sleep(620);
+
+                    winningCoords.forEach(({ c, r }) => { aoGrid[c][r] = null; });
+                    let cascadeHasBomb = false;
+                    for (let c = 0; c < AO_COLS; c++) {
+                        const surviving = [];
+                        for (let r = AO_ROWS - 1; r >= 0; r--) if (aoGrid[c][r] !== null) surviving.push(aoGrid[c][r]);
+                        const missing = AO_ROWS - surviving.length;
+                        const newTop = Array.from({ length: missing }, () => {
+                            const item = generateOlympusCell(true);
+                            if (item.id === 'multiplier') cascadeHasBomb = true;
+                            return item;
+                        });
+                        const rebuilt = [...surviving, ...newTop].reverse();
+                        for (let r = 0; r < AO_ROWS; r++) { aoGrid[c][r] = rebuilt[r]; renderOlympusCell(c, r, true); }
+                    }
+                    if (cascadeHasBomb) triggerZeusLighting();
+                    await sleep(480);
+                }
+
+                if (spinRawWin > 0) {
+                    const multiplierCells = [];
+                    for (let c = 0; c < AO_COLS; c++) {
+                        for (let r = 0; r < AO_ROWS; r++) {
+                            const sym = aoGrid[c][r];
+                            if (sym && sym.id === 'multiplier') { spinMultipliersSum += sym.val; multiplierCells.push({ c, r }); }
+                        }
+                    }
+                    if (spinMultipliersSum > 0) {
+                        triggerZeusLighting();
+                        multiplierCells.forEach(({ c, r }) => document.getElementById(`ao-cell-${c}-${r}`)?.classList.add('win-pop'));
+                        await sleep(520);
+                        if (aoInFreeSpins) { totalMultiplier += spinMultipliersSum; updateOlympusMultiplierUI(); }
                     }
                 }
-                if (spinMultipliersSum > 0) {
+
+                let scatterCount = 0;
+                for (let c = 0; c < AO_COLS; c++) {
+                    for (let r = 0; r < AO_ROWS; r++) if (aoGrid[c][r] && aoGrid[c][r].id === 'scatter') scatterCount++;
+                }
+
+                let scatterPayout = 0;
+                if (!isBonusForcedScatter && scatterCount >= 4) {
+                    scatterPayout = scatterCount >= 6 ? aoCurrentBet * 100 : (scatterCount === 5 ? aoCurrentBet * 5 : aoCurrentBet * 3);
                     triggerZeusLighting();
-                    multiplierCells.forEach(({ c, r }) => document.getElementById(`ao-cell-${c}-${r}`)?.classList.add('win-pop'));
-                    await sleep(550);
-                    if (aoInFreeSpins) { totalMultiplier += spinMultipliersSum; updateOlympusMultiplierUI(); }
                 }
-            }
 
-            let scatterCount = 0;
-            for (let c = 0; c < AO_COLS; c++) {
-                for (let r = 0; r < AO_ROWS; r++) if (aoGrid[c][r] && aoGrid[c][r].id === 'scatter') scatterCount++;
-            }
-
-            let scatterPayout = 0;
-            if (!isBonusForcedScatter && scatterCount >= 4) {
-                scatterPayout = scatterCount >= 6 ? aoCurrentBet * 100 : (scatterCount === 5 ? aoCurrentBet * 5 : aoCurrentBet * 3);
-                triggerZeusLighting();
-            }
-
-            let finalSpinWin = spinRawWin;
-            if (finalSpinWin > 0) {
-                if (!aoInFreeSpins && spinMultipliersSum > 0) finalSpinWin *= spinMultipliersSum;
-                else if (aoInFreeSpins && spinMultipliersSum > 0 && totalMultiplier > 0) finalSpinWin *= totalMultiplier;
-            }
-            finalSpinWin = Math.round((finalSpinWin + scatterPayout) * 100) / 100;
-
-            if (finalSpinWin > 0) {
-                document.getElementById('ao-hud-win').textContent = finalSpinWin.toFixed(2).replace('.', ',');
-                if (aoInFreeSpins) {
-                    aoFreeSpinsTotalWin = Math.round((aoFreeSpinsTotalWin + finalSpinWin) * 100) / 100;
-                    document.getElementById('ao-fs-total-win').textContent = aoFreeSpinsTotalWin.toFixed(2).replace('.', ',');
+                let finalSpinWin = spinRawWin;
+                if (finalSpinWin > 0) {
+                    if (!aoInFreeSpins && spinMultipliersSum > 0) finalSpinWin *= spinMultipliersSum;
+                    else if (aoInFreeSpins && spinMultipliersSum > 0 && totalMultiplier > 0) finalSpinWin *= totalMultiplier;
                 }
-                balance += finalSpinWin; stats.totalWon += finalSpinWin;
-                if (finalSpinWin > stats.biggestWin) stats.biggestWin = finalSpinWin;
-                updateBalanceUI(); saveState();
+                finalSpinWin = Math.round((finalSpinWin + scatterPayout) * 100) / 100;
+
+                if (finalSpinWin > 0) {
+                    if (hudWinEl) hudWinEl.textContent = finalSpinWin.toFixed(2).replace('.', ',');
+                    if (aoInFreeSpins) {
+                        aoFreeSpinsTotalWin = Math.round((aoFreeSpinsTotalWin + finalSpinWin) * 100) / 100;
+                        const fsWinEl = document.getElementById('ao-fs-total-win');
+                        if (fsWinEl) fsWinEl.textContent = aoFreeSpinsTotalWin.toFixed(2).replace('.', ',');
+                    }
+                    balance += finalSpinWin;
+                    stats.totalWon += finalSpinWin;
+                    if (finalSpinWin > stats.biggestWin) stats.biggestWin = finalSpinWin;
+                    updateBalanceUI();
+                    saveState();
+                }
+
+                let triggeredNewBonus = false;
+                if (!aoInFreeSpins && scatterCount >= 4) triggeredNewBonus = true;
+                else if (!isBonusForcedScatter && aoInFreeSpins && scatterCount >= 3) {
+                    aoFreeSpinsLeft += 5;
+                    const leftEl = document.getElementById('ao-fs-left');
+                    if (leftEl) leftEl.textContent = aoFreeSpinsLeft;
+                    showToast('⚡ 3+ Scatter в бонусе! +5 фриспинов от Зевса!');
+                }
+
+                if (aoInFreeSpins && aoFreeSpinsLeft <= 0) {
+                    aoInFreeSpins = false;
+                    const wonInBonus = Math.round(aoFreeSpinsTotalWin * 100) / 100;
+                    totalMultiplier = 0;
+                    updateOlympusMultiplierUI();
+                    document.getElementById('view-olympus')?.classList.remove('freespins-mode');
+                    document.getElementById('ao-fs-banner')?.classList.remove('active');
+                    saveState();
+                    showToast(`🏆 Бонус завершен! Выигрыш: ${wonInBonus.toFixed(2)} BYN`);
+                }
+
+                aoSpinning = false;
+                if (spinBtn) spinBtn.disabled = false;
+
+                if (triggeredNewBonus) { await sleep(650); await startOlympusBonusRound(); }
+                else if (aoInFreeSpins && aoFreeSpinsLeft > 0) { await sleep(800); spinGatesOfOlympus(); }
+                else if (aoAutoActive) { await sleep(700); spinGatesOfOlympus(); }
+            } catch (err) {
+                clearInterval(timer);
+                aoSpinning = false;
+                if (spinBtn) spinBtn.disabled = false;
+                console.error('Olympus spin error:', err);
             }
-
-            let triggeredNewBonus = false;
-            if (!aoInFreeSpins && scatterCount >= 4) triggeredNewBonus = true;
-            else if (!isBonusForcedScatter && aoInFreeSpins && scatterCount >= 3) {
-                aoFreeSpinsLeft += 5; document.getElementById('ao-fs-left').textContent = aoFreeSpinsLeft;
-                showToast('⚡ +5 фриспинов от Зевса!');
-            }
-
-            if (aoInFreeSpins && aoFreeSpinsLeft <= 0) {
-                aoInFreeSpins = false;
-                const wonInBonus = Math.round(aoFreeSpinsTotalWin * 100) / 100;
-                totalMultiplier = 0; updateOlympusMultiplierUI();
-                document.getElementById('view-olympus').classList.remove('freespins-mode');
-                document.getElementById('ao-fs-banner').classList.remove('active');
-                saveState(); showToast(`🏆 Бонус завершен! Выигрыш: ${wonInBonus.toFixed(2)} BYN`);
-            }
-
-            aoSpinning = false;
-            document.getElementById('ao-spin-btn').disabled = false;
-
-            if (triggeredNewBonus) { await sleep(650); await startOlympusBonusRound(); }
-            else if (aoInFreeSpins && aoFreeSpinsLeft > 0) { await sleep(850); spinGatesOfOlympus(); }
-            else if (aoAutoActive) { await sleep(750); spinGatesOfOlympus(); }
         }
 
         // ==========================================
-        // THE DOG HOUSE (Скаттеры и будки выпирают!)
+        // THE DOG HOUSE
         // ==========================================
         function initDogHouseDOM() {
             const gridEl = document.getElementById('dh-grid');
@@ -2780,7 +2929,7 @@
         }
 
         // ==========================================
-        // SWEET BONANZA (БОМБЫ И ЧУПА-ЧУПСЫ ВЫПИРАЮТ + ЗАМЕДЛЕННЫЕ СПИНЫ)
+        // SWEET BONANZA
         // ==========================================
         function initSweetBonanzaDOM() {
             const gridEl = document.getElementById('sb-grid');
@@ -2969,7 +3118,6 @@
                 used.forEach(pos => { const [c, r] = pos.split('-'); nextGrid[parseInt(c)][parseInt(r)] = { ...SB_SCATTER }; });
             }
 
-            // Замедленные спины
             await sleep(760);
             for (let c = 0; c < SB_COLS; c++) {
                 for (let r = 0; r < SB_ROWS; r++) {
@@ -3080,7 +3228,7 @@
         }
 
         // ==========================================
-        // CHICKEN CROSS / CHICKEN ROAD (РЕАЛИСТИЧНАЯ МИНИ-ИГРА)
+        // CHICKEN CROSS / CHICKEN ROAD
         // ==========================================
         const CHICKEN_MULTS_BY_RISK = {
             easy:   [1.20, 1.48, 1.85, 2.35, 3.10, 4.20],
@@ -3332,7 +3480,7 @@
         }
 
         // ==========================================
-        // ПОПОЛНЕНИЕ И КНОПКА «ПОКАЗАТЬ QR-КОД»
+        // ПОПОЛНЕНИЕ И QR-КОД
         // ==========================================
         function openDepositModal() {
             document.getElementById('deposit-modal').classList.add('active');
@@ -3342,7 +3490,9 @@
             if (qrBtn) qrBtn.textContent = '📷 ПОКАЗАТЬ QR-КОД';
             syncProfileUI();
         }
-        function closeDepositModal() { document.getElementById('deposit-modal').classList.add('active').remove('active'); document.getElementById('deposit-modal').classList.remove('active'); }
+        function closeDepositModal() {
+            document.getElementById('deposit-modal').classList.remove('active');
+        }
 
         function toggleDepositQR() {
             const qrBox = document.getElementById('deposit-qr-container');
