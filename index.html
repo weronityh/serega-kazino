@@ -165,19 +165,20 @@
             box-shadow: 0 0 12px var(--accent-gold-glow);
         }
 
-        .slot-nav-label {
+                .slot-nav-label {
             font-size: 0.72rem;
-            font-weight: 700;
+            font-weight: 800; /* Было 700, сделали чуть жирнее */
             text-align: center;
-            color: var(--text-muted);
+            color: var(--accent-gold); /* БЫЛО var(--text-muted), СТАЛО ЗОЛОТЫМ */
             text-transform: uppercase;
-            letter-spacing: 0.3px;
+            letter-spacing: 0.5px; /* Было 0.3px */
             transition: color 0.2s ease;
         }
 
-        .slot-nav-card:hover .slot-nav-label,
+                .slot-nav-card:hover .slot-nav-label,
         .slot-nav-card.active .slot-nav-label {
-            color: #ffffff;
+            color: #fef08a;
+            text-shadow: 0 0 8px rgba(245, 158, 11, 0.6);
         }
         /* === ВСТАВИТЬ ЗАКОНЧИТЬ ЗДЕСЬ === */
 
