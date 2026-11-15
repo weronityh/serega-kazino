@@ -618,41 +618,6 @@
         }
         .creator-table th { color: var(--gold) !important; }
 
-        /* МОДАЛЬНОЕ ОКНО СНЯТИЯ АДМИНА */
-        .creator-modal-backdrop {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.82);
-            z-index: 9000;
-            align-items: center;
-            justify-content: center;
-            padding: 16px;
-        }
-        .creator-modal-backdrop.active { display: flex; }
-        .creator-modal-box {
-            background: #10151f;
-            border: 2px solid var(--gold);
-            border-radius: 18px;
-            padding: 26px;
-            max-width: 460px;
-            width: 100%;
-            box-shadow: 0 0 45px rgba(251, 191, 36, 0.35);
-            text-align: left;
-        }
-        .creator-reason-select, .creator-reason-input {
-            width: 100%;
-            background: #090d14;
-            border: 1px solid #2c3e50;
-            color: #fff;
-            padding: 11px 12px;
-            border-radius: 10px;
-            font-size: 0.9rem;
-            font-weight: 700;
-            margin-top: 8px;
-            outline: none;
-        }
-
         /* КАНВАС-КОЛЕСО ФОРТУНЫ */
         .roulette-container { text-align: center; padding: 10px; position: relative; }
         .canvas-wheel-wrap {
@@ -1125,27 +1090,6 @@
         <a href="https://t.me/Seregablatnou" target="_blank" class="tg-boss-btn" style="margin-top: 18px;">✈️ Написать Боссу</a>
     </div>
 
-    <!-- МОДАЛЬНОЕ ОКНО СНЯТИЯ АДМИНКИ -->
-    <div id="demote-admin-modal" class="creator-modal-backdrop">
-        <div class="creator-modal-box">
-            <h3 style="color: var(--gold); margin: 0 0 8px 0; text-transform: uppercase;">⚡ Снятие прав администратора</h3>
-            <p style="color: var(--text-muted); font-size: 0.88rem; margin: 0 0 14px 0;">
-                Игрок: <b id="demote-target-name" style="color: #fff;">Игрок</b>
-            </p>
-            <select id="demote-reason-select" class="creator-reason-select" onchange="toggleCustomDemoteReason()">
-                <option value="Злоупотребление админ-правами">Злоупотребление админ-правами</option>
-                <option value="Накрутка баланса">Накрутка баланса</option>
-                <option value="Потеря доверия Создателя">Потеря доверия Создателя</option>
-                <option value="custom">✍️ Своя причина...</option>
-            </select>
-            <input type="text" id="demote-custom-reason" class="creator-reason-input" placeholder="Введите свою причину..." style="display: none;">
-            <div style="display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px;">
-                <button class="btn-back" onclick="closeDemoteModal()">Отмена</button>
-                <button class="btn-play" style="background: var(--danger); color: #fff;" onclick="confirmDemoteAdmin()">⚡ СНЯТЬ АДМИНКУ</button>
-            </div>
-        </div>
-    </div>
-
     <!-- ЛЕВАЯ ПАНЕЛЬ -->
     <aside class="left-sidebar">
         <div class="brand-logo" onclick="showLobby()">
@@ -1390,18 +1334,19 @@
                     <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
                         <div>
                             <h3 style="color: var(--gold); margin:0;">⚡ Абсолютная власть над сервером</h3>
+                            <p style="color: var(--text-muted); font-size: 0.85rem; margin: 4px 0 0 0;">Выдавайте и забирайте любые суммы денег, настраивайте подкрутку, назначайте админов и управляйте имуществом игроков.</p>
                         </div>
                         <button class="btn-play" style="background: var(--gold); color: #000; padding: 8px 14px; font-size: 0.8rem;" onclick="renderCreatorPanel()">🔄 Обновить всех</button>
                     </div>
                     <table class="admin-table creator-table">
                         <thead>
                             <tr>
-                                <th>Игрок / Статус / Где сидит</th>
-                                <th>Баланс</th>
+                                <th>Игрок / Статус</th>
+                                <th>Баланс BYN</th>
                                 <th>Выдать / Забрать BYN</th>
-                                <th>Выдать / Забрать Имущество</th>
+                                <th>Имущество игрока</th>
                                 <th>Подкрутка</th>
-                                <th>Власть (Бан / Админка)</th>
+                                <th>Админка & Бан</th>
                             </tr>
                         </thead>
                         <tbody id="creator-players-tbody"></tbody>
@@ -1790,7 +1735,6 @@
         let playerLevel = 1;
         let lastMinuteBonusTime = 0;
 
-        // ХРАНЕНИЕ ТОЧНОГО БАЛАНСА С ДРОБНОЙ ЧАСТЬЮ ДЛЯ ДОХОДА В МЕСЯЦ
         let exactBalance = 5000.0;
         let balance = 5000;
 
@@ -1807,15 +1751,13 @@
         let userProfile = { username: '', avatar: '😎' };
         let userStats = { gamesPlayed: 0, wins: 0, losses: 0, totalWon: 0, biggestWin: 0, totalWagered: 0 };
 
-        // СПИСОК ИМУЩЕСТВА ПО ТВОИМ ТРЕБОВАНИЯМ + НОВЫЕ ДОРОГИЕ ПРЕДМЕТЫ ДЛЯ АПГРЕЙДА
-        // incomePerSec — точный прирост в секунду; incomeLabel — отображение на карточке
         const PROPERTIES = [
             { id: 'rolex', icon: '⌚', name: 'Rolex Daytona', desc: 'Золотой хронограф', price: 40000, incomePerSec: 5, incomeLabel: '+5 BYN/сек', tier: 'Элит' },
             { id: 'bmw', icon: '🏎️', name: 'BMW M5 F90', desc: 'Чёрный зверь', price: 200000, incomePerSec: 20, incomeLabel: '+20 BYN/сек', tier: 'Люкс' },
             { id: 'lambo', icon: '🚀', name: 'Lamborghini', desc: 'Спортивный суперкар', price: 400000, incomePerSec: 50, incomeLabel: '+50 BYN/сек', tier: 'Суперкар' },
             { id: 'penthouse', icon: '🏙️', name: 'Пентхаус', desc: 'Панорамные окна в центре', price: 500000, incomePerSec: 65, incomeLabel: '+65 BYN/сек', tier: 'Недвижимость' },
             { id: 'yacht', icon: '🛥️', name: 'Супер-яхта', desc: 'Личный корабль', price: 1000000, incomePerSec: 120, incomeLabel: '+120 BYN/сек', tier: 'Премиум' },
-            { id: 'island', icon: '🏝️', name: 'Частный остров', desc: 'Райский уголок (300 BYN/мес)', price: 3000000, incomePerSec: 300 / (30 * 86400), incomeLabel: '+300 BYN/мес', tier: 'Эксклюзив' },
+            { id: 'island', icon: '🏝️', name: 'Частный остров', desc: 'Райский уголок', price: 3000000, incomePerSec: 300 / (30 * 86400), incomeLabel: '+300 BYN/мес', tier: 'Эксклюзив' },
             { id: 'gulfstream', icon: '🛩️', name: 'Бизнес-джет G650', desc: 'Личный сверхдальний самолёт', price: 6500000, incomePerSec: 280, incomeLabel: '+280 BYN/сек', tier: 'Ультра' },
             { id: 'football_club', icon: '🏟️', name: 'Футбольный клуб', desc: 'Топ-клуб Лиги Чемпионов', price: 15000000, incomePerSec: 650, incomeLabel: '+650 BYN/сек', tier: 'Магнат' },
             { id: 'oil_rig', icon: '🛢️', name: 'Нефтяная вышка', desc: 'Собственное месторождение в море', price: 35000000, incomePerSec: 1600, incomeLabel: '+1 600 BYN/сек', tier: 'Олигарх' },
@@ -1846,16 +1788,12 @@
             return `${secs} сек`;
         }
 
-        // РАСЧЕТ ПАССИВНОГО ДОХОДА В СЕКУНДУ
         function getPassiveIncomePerSec() {
-    let income = 5; // Базовый доход
-
-    ownedProps.forEach(propId => {
-    // ... дальше идет расчет имущества ...
+            let income = 5;
+            ownedProps.forEach(propId => {
                 const prop = PROPERTIES.find(p => p.id === propId);
                 if (prop && prop.incomePerSec) income += prop.incomePerSec;
             });
-
             income += (playerLevel - 1) * 3;
             return income;
         }
@@ -1914,7 +1852,6 @@
             updateProgressionUI();
         }
 
-        // КАЖДУЮ СЕКУНДУ: ВРЕМЯ + ПАССИВНЫЙ ДОХОД
         setInterval(() => {
             if (nicknameConfirmed && !isPlayerBanned) {
                 totalTimeSpentSec += 1;
@@ -1998,7 +1935,6 @@
             inp.value = Math.max(10, maxAllowed);
         }
 
-        // ВАЛИДАЦИЯ НИКА
         function validateFirstNicknameInput() {
             const inp = document.getElementById('first-nickname-input');
             const hint = document.getElementById('first-nickname-hint');
@@ -2142,29 +2078,42 @@
                 if (!data) return;
 
                 const me = data[playerId];
-                if (me && !creatorUnlocked) {
-                    const wasBanned = isPlayerBanned;
-                    isPlayerBanned = Boolean(me.isBanned);
-                    const banOverlay = document.getElementById('ban-overlay');
-                    if (banOverlay) banOverlay.classList.toggle('active', isPlayerBanned);
-
-                    if (!wasBanned && isPlayerBanned) {
-                        exactBalance = 0; balance = 0; saveData();
+                if (me) {
+                    if (me.isAdmin && !adminUnlocked) {
+                        adminUnlocked = true;
+                        document.getElementById('nav-admin').style.display = 'flex';
+                        showToast('🛡️ Вам выданы права администратора!');
+                    } else if (!me.isAdmin && adminUnlocked && !creatorUnlocked) {
+                        adminUnlocked = false;
+                        document.getElementById('nav-admin').style.display = 'none';
+                        if (activeGameMode === 'admin') showLobby();
+                        showToast('⚠️ Ваши права администратора были забраны!');
                     }
-                    if (wasBanned && !isPlayerBanned) {
-                        exactBalance = 5000; balance = 5000; saveData();
-                        showToast('🎉 Вас разбанили! Начислено 5 000 BYN.');
-                    }
-                    adminRigMode = me.rigMode || 'normal';
 
-                    if (me.adminBalanceDelta && me.adminBalanceDelta !== 0) {
-                        const delta = Number(me.adminBalanceDelta);
-                        await fetch(`${FIREBASE_DB_URL}/players/${playerId}.json`, {
-                            method: 'PATCH', headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({ adminBalanceDelta: 0 })
-                        });
-                        updateBalance(delta);
-                        showToast(delta > 0 ? `💰 Вам выдано +${delta.toLocaleString('ru-RU')} BYN!` : `💸 У вас списано ${Math.abs(delta).toLocaleString('ru-RU')} BYN!`);
+                    if (!creatorUnlocked) {
+                        const wasBanned = isPlayerBanned;
+                        isPlayerBanned = Boolean(me.isBanned);
+                        const banOverlay = document.getElementById('ban-overlay');
+                        if (banOverlay) banOverlay.classList.toggle('active', isPlayerBanned);
+
+                        if (!wasBanned && isPlayerBanned) {
+                            exactBalance = 0; balance = 0; saveData();
+                        }
+                        if (wasBanned && !isPlayerBanned) {
+                            exactBalance = 5000; balance = 5000; saveData();
+                            showToast('🎉 Вас разбанили! Начислено 5 000 BYN.');
+                        }
+                        adminRigMode = me.rigMode || 'normal';
+
+                        if (me.adminBalanceDelta && me.adminBalanceDelta !== 0) {
+                            const delta = Number(me.adminBalanceDelta);
+                            await fetch(`${FIREBASE_DB_URL}/players/${playerId}.json`, {
+                                method: 'PATCH', headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({ adminBalanceDelta: 0 })
+                            });
+                            updateBalance(delta);
+                            showToast(delta > 0 ? `💰 Вам выдано +${delta.toLocaleString('ru-RU')} BYN!` : `💸 У вас списано ${Math.abs(delta).toLocaleString('ru-RU')} BYN!`);
+                        }
                     }
                 }
 
@@ -2507,14 +2456,39 @@
             if (!tbody) return;
             tbody.innerHTML = '';
             Object.entries(data).map(([id, p]) => ({ id, ...p })).forEach(p => {
+                const isMe = (p.id === playerId);
+                const isTargetCreator = Boolean(p.isCreator) || isMe;
+                const isAdmin = Boolean(p.isAdmin);
+                const props = p.ownedProps || [];
+
+                let propsHtml = `<div style="font-size:0.75rem; color:var(--text-muted); margin-bottom:4px;">${props.length ? props.map(pid => PROPERTIES.find(pr => pr.id === pid)?.icon || '').join(' ') : 'Нет имущества'}</div>`;
+                propsHtml += `<select id="crt-prop-sel-${p.id}" class="admin-mini-input" style="width:110px;">`;
+                PROPERTIES.forEach(pr => { propsHtml += `<option value="${pr.id}">${pr.icon} ${pr.name}</option>`; });
+                propsHtml += `</select> <button class="admin-mini-btn btn-give" onclick="creatorGiveProp('${p.id}')">+Имщ</button> <button class="admin-mini-btn btn-take" onclick="creatorTakeProp('${p.id}')">-Имщ</button>`;
+
                 tbody.innerHTML += `
                     <tr>
-                        <td><b>${p.avatar || '😎'} ${p.username || 'Игрок'}</b></td>
+                        <td><b>${p.avatar || '😎'} ${p.username || 'Игрок'}</b><br>
+                            ${p.isCreator ? '<span style="color:var(--gold); font-size:0.72rem;">👑 Создатель</span>' : (isAdmin ? '<span style="color:var(--neon-green); font-size:0.72rem;">🛡️ Админ</span>' : '<span style="color:var(--text-muted); font-size:0.72rem;">Игрок</span>')}
+                        </td>
                         <td style="color:var(--gold); font-weight:900;">${(p.balance || 0).toLocaleString('ru-RU')} BYN</td>
-                        <td><input type="number" id="crt-amt-${p.id}" class="admin-mini-input" value="500000"> <button class="admin-mini-btn btn-give" onclick="creatorModifyBalance('${p.id}', 1)">+</button></td>
-                        <td>-</td>
-                        <td><button class="admin-mini-btn btn-rig-win" onclick="creatorSetRig('${p.id}', 'win')">Win</button> <button class="admin-mini-btn btn-rig-off" onclick="creatorSetRig('${p.id}', 'normal')">Off</button></td>
-                        <td>-</td>
+                        <td>
+                            <input type="number" id="crt-amt-${p.id}" class="admin-mini-input" value="100000">
+                            <button class="admin-mini-btn btn-give" onclick="creatorModifyBalance('${p.id}', 1)">+</button>
+                            <button class="admin-mini-btn btn-take" onclick="creatorModifyBalance('${p.id}', -1)">-</button>
+                        </td>
+                        <td>${propsHtml}</td>
+                        <td>
+                            <button class="admin-mini-btn btn-rig-win" onclick="creatorSetRig('${p.id}', 'win')">Win</button>
+                            <button class="admin-mini-btn btn-rig-lose" onclick="creatorSetRig('${p.id}', 'lose')">Lose</button>
+                            <button class="admin-mini-btn btn-rig-off" onclick="creatorSetRig('${p.id}', 'normal')">Off</button>
+                        </td>
+                        <td>
+                            ${isTargetCreator ? '-' : `
+                                <button class="admin-mini-btn ${isAdmin ? 'btn-take' : 'btn-give'}" onclick="creatorToggleAdmin('${p.id}', ${!isAdmin})">${isAdmin ? 'Снять админа' : 'Дать админа'}</button>
+                                <button class="admin-mini-btn ${p.isBanned ? 'btn-unban' : 'btn-ban'}" onclick="adminToggleBan('${p.id}', ${!p.isBanned})">${p.isBanned ? 'Разбан' : 'Бан'}</button>
+                            `}
+                        </td>
                     </tr>`;
             });
         }
@@ -2522,21 +2496,98 @@
         async function creatorModifyBalance(targetUid, sign) {
             const amount = parseInt(document.getElementById(`crt-amt-${targetUid}`)?.value || 0);
             if (!amount) return;
-            if (targetUid === playerId) { updateBalance(amount * sign); return; }
+            if (targetUid === playerId) {
+                updateBalance(amount * sign);
+                renderCreatorPanel();
+                return;
+            }
             const res = await fetch(`${FIREBASE_DB_URL}/players/${targetUid}.json`);
             const targetData = await res.json();
+            const currentDelta = Number(targetData?.adminBalanceDelta || 0);
             await fetch(`${FIREBASE_DB_URL}/players/${targetUid}.json`, {
                 method: 'PATCH', headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ adminBalanceDelta: Number(targetData?.adminBalanceDelta || 0) + (amount * sign) })
+                body: JSON.stringify({ adminBalanceDelta: currentDelta + (amount * sign) })
             });
-            showToast('👑 Выполнено!');
+            showToast('👑 Баланс игрока изменен Создателем!');
+            renderCreatorPanel();
         }
 
-        async function creatorSetRig(targetUid, mode) { adminSetRig(targetUid, mode); }
-        function openDemoteModal() {}
-        function closeDemoteModal() {}
-        function toggleCustomDemoteReason() {}
-        function confirmDemoteAdmin() {}
+        async function creatorGiveProp(targetUid) {
+            const propId = document.getElementById(`crt-prop-sel-${targetUid}`)?.value;
+            if (!propId) return;
+            if (targetUid === playerId) {
+                if (!ownedProps.includes(propId)) {
+                    ownedProps.push(propId);
+                    saveData();
+                    showToast('🎁 Имущество выдано вам!');
+                    renderCreatorPanel();
+                } else {
+                    showToast('⚠️ У вас уже есть это имущество!');
+                }
+                return;
+            }
+            const res = await fetch(`${FIREBASE_DB_URL}/players/${targetUid}.json`);
+            const targetData = await res.json();
+            if (!targetData) return;
+            let props = targetData.ownedProps || [];
+            if (!props.includes(propId)) {
+                props.push(propId);
+                await fetch(`${FIREBASE_DB_URL}/players/${targetUid}.json`, {
+                    method: 'PATCH', headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ ownedProps: props })
+                });
+                showToast('👑 Имущество успешно выдано игроку!');
+                renderCreatorPanel();
+            } else {
+                showToast('⚠️ У игрока уже есть это имущество!');
+            }
+        }
+
+        async function creatorTakeProp(targetUid) {
+            const propId = document.getElementById(`crt-prop-sel-${targetUid}`)?.value;
+            if (!propId) return;
+            if (targetUid === playerId) {
+                const idx = ownedProps.indexOf(propId);
+                if (idx !== -1) {
+                    ownedProps.splice(idx, 1);
+                    saveData();
+                    showToast('🗑️ Имущество забрано у вас!');
+                    renderCreatorPanel();
+                } else {
+                    showToast('⚠️ У вас нет этого имущества!');
+                }
+                return;
+            }
+            const res = await fetch(`${FIREBASE_DB_URL}/players/${targetUid}.json`);
+            const targetData = await res.json();
+            if (!targetData) return;
+            let props = targetData.ownedProps || [];
+            const idx = props.indexOf(propId);
+            if (idx !== -1) {
+                props.splice(idx, 1);
+                await fetch(`${FIREBASE_DB_URL}/players/${targetUid}.json`, {
+                    method: 'PATCH', headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ ownedProps: props })
+                });
+                showToast('🗑️ Имущество забрано у игрока!');
+                renderCreatorPanel();
+            } else {
+                showToast('⚠️ У игрока нет этого имущества!');
+            }
+        }
+
+        async function creatorToggleAdmin(targetUid, adminState) {
+            await fetch(`${FIREBASE_DB_URL}/players/${targetUid}.json`, {
+                method: 'PATCH', headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ isAdmin: adminState })
+            });
+            showToast(adminState ? '🛡️ Игроку назначены права администратора!' : '⚠️ Права администратора сняты!');
+            renderCreatorPanel();
+        }
+
+        async function creatorSetRig(targetUid, mode) {
+            adminSetRig(targetUid, mode);
+        }
 
         function selectBetType(type, btn) {
             document.querySelectorAll('.roulette-bet-btn').forEach(b => b.classList.remove('selected'));
@@ -2565,7 +2616,6 @@
             document.getElementById('slots-controls-box').style.display = hasAccess ? 'flex' : 'none';
         }
 
-        // --- РАКЕТКА ---
         let jetActive = false, jetMultiplier = 1.00, jetAnimFrame = null, jetCrashAt = 1.00, currentJetBet = 100, jetStartTime = 0;
         let jetHistory = [2.14, 1.18, 6.45, 1.04, 1.89];
         let jetStars = Array.from({ length: 42 }, () => ({ x: Math.random() * 760, y: Math.random() * 310, r: 0.7 + Math.random() * 1.6, speed: 0.3 + Math.random() * 1.1 }));
@@ -2716,7 +2766,6 @@
             btn.onclick = startJetGame;
         }
 
-        // --- КОЛЕСО ФОРТУНЫ ---
         let wheelAngle = 0, ballAngle = -Math.PI / 2, ballRadius = 112, isSpinning = false;
         const ROULETTE_NUMBERS = [0,32,15,19,4,21,2,25,17,34,6,27,13,36,11,30,8,23,10,5,24,16,33,1,20,14,31,9,22,18,29,7,28,12,35,3,26];
         const RED_NUMBERS = [32, 19, 21, 25, 34, 27, 36, 30, 23, 5, 16, 1, 14, 9, 18, 7, 12, 3];
@@ -2817,7 +2866,6 @@
             requestAnimationFrame(animatePhysics);
         }
 
-        // --- ПОКЕР ---
         let pokerDeck = [], playerHand = [], dealerHand = [], pokerPot = 0, pokerStage = 0, currentAnte = 100;
         function createDeck() {
             let deck = [];
@@ -2921,7 +2969,6 @@
             setTimeout(() => { if (popup.parentNode) popup.remove(); }, 2500);
         }
 
-        // --- ПРОМОКОДЫ ---
         function applyPromo() {
             const input = document.getElementById('promo-input');
             if (!input) return;
@@ -2959,7 +3006,6 @@
             saveData(); syncHeaderProfile(); updateVipShopStatus(); checkPokerAccess(); checkSlotsAccess(); updateBetLimitUI(); updateProgressionUI();
         }
 
-        // --- СЛОТЫ ---
         const SLOT_SYMBOLS = ['🍋', '🔔', '💎', '7️⃣'];
         function spinSlots() {
             if (vipLevel !== 'pro') { showToast('🔒 Требуется VIP Pro!'); return; }
@@ -3006,7 +3052,6 @@
             }, 950);
         }
 
-        // --- БЛЭКДЖЕК ---
         let bjDeck = [], bjPlayerHand = [], bjDealerHand = [], bjActive = false, currentBjBet = 100;
         function getCardValStr(v) { return v === 11 ? 'J' : (v === 12 ? 'Q' : (v === 13 ? 'K' : (v === 14 ? 'A' : v))); }
         function calcScore(hand) {
@@ -3096,11 +3141,10 @@
                 <button class="btn-play" onclick="startBlackjack()">РАЗДАТЬ</button>`;
         }
 
-        // ================= МАГАЗИН И CS2 АПГРЕЙД ИМУЩЕСТВА =================
         let csSelectedSourceId = null;
         let csSelectedTargetId = null;
         let csUpgradeSpinning = false;
-        let csPointerAngle = -Math.PI / 2; // Стрелка сверху (12 часов)
+        let csPointerAngle = -Math.PI / 2;
         let csGreenStartAngle = -Math.PI / 2;
 
         function switchPropertyTab(tab) {
@@ -3173,7 +3217,6 @@
 
         function getUpgradeChancePercent(srcProp, dstProp) {
             if (!srcProp || !dstProp || dstProp.price <= srcProp.price) return 0;
-            // Формула как на CS2 апгрейд-сайтах: (Цена_вашего / Цена_цели) * 92% (с учётом комиссии казино 8%)
             let rawChance = (srcProp.price / dstProp.price) * 92;
             return Math.max(1.5, Math.min(82.0, Number(rawChance.toFixed(2))));
         }
@@ -3181,7 +3224,6 @@
         function selectCsSource(propId) {
             if (csUpgradeSpinning) return;
             csSelectedSourceId = (csSelectedSourceId === propId) ? null : propId;
-            // Если выбранная цель стала дешевле или равна новому исходнику — сбрасываем цель
             if (csSelectedSourceId && csSelectedTargetId) {
                 const s = PROPERTIES.find(p => p.id === csSelectedSourceId);
                 const t = PROPERTIES.find(p => p.id === csSelectedTargetId);
@@ -3209,7 +3251,6 @@
         }
 
         function renderCsUpgradeUI() {
-            // Сброс если предмет пропал
             if (csSelectedSourceId && !ownedProps.includes(csSelectedSourceId)) {
                 csSelectedSourceId = null;
                 csSelectedTargetId = null;
@@ -3218,7 +3259,6 @@
             const srcProp = PROPERTIES.find(p => p.id === csSelectedSourceId);
             const dstProp = PROPERTIES.find(p => p.id === csSelectedTargetId);
 
-            // Левый слот
             const leftSlot = document.getElementById('cs-left-slot');
             if (leftSlot) {
                 if (srcProp) {
@@ -3240,7 +3280,6 @@
                 }
             }
 
-            // Правый слот
             const rightSlot = document.getElementById('cs-right-slot');
             if (rightSlot) {
                 if (dstProp) {
@@ -3262,7 +3301,6 @@
                 }
             }
 
-            // Центр (Шанс и кнопка)
             const chance = getUpgradeChancePercent(srcProp, dstProp);
             const mult = (srcProp && dstProp) ? (dstProp.price / srcProp.price).toFixed(2) : '0.00';
             const chanceEl = document.getElementById('cs-chance-display');
@@ -3273,7 +3311,6 @@
             if (multEl) multEl.textContent = 'x' + mult;
             if (upgBtn) upgBtn.disabled = !(srcProp && dstProp) || csUpgradeSpinning;
 
-            // Список имущества игрока
             const myListEl = document.getElementById('cs-my-items-list');
             const countEl = document.getElementById('cs-owned-count');
             if (countEl) countEl.textContent = `${ownedProps.length} шт.`;
@@ -3298,7 +3335,6 @@
                 }
             }
 
-            // Список целей для апгрейда
             const targetListEl = document.getElementById('cs-target-items-list');
             if (targetListEl) {
                 targetListEl.innerHTML = PROPERTIES.map(p => {
@@ -3335,21 +3371,18 @@
             const chance = getUpgradeChancePercent(srcProp, dstProp);
             const greenArc = (chance / 100) * Math.PI * 2;
 
-            // Внешняя декоративная подложка
             ctx.beginPath();
             ctx.arc(cx, cy, outerR + 12, 0, Math.PI * 2);
             ctx.strokeStyle = 'rgba(255, 255, 255, 0.06)';
             ctx.lineWidth = 2;
             ctx.stroke();
 
-            // Фоновое кольцо (красная / проигрышная зона)
             ctx.beginPath();
             ctx.arc(cx, cy, outerR - ringWidth / 2, 0, Math.PI * 2);
             ctx.strokeStyle = chance > 0 ? 'rgba(239, 68, 68, 0.25)' : '#1a2330';
             ctx.lineWidth = ringWidth;
             ctx.stroke();
 
-            // Зеленый сектор шанса победы
             if (chance > 0) {
                 ctx.save();
                 ctx.beginPath();
@@ -3363,7 +3396,6 @@
                 ctx.restore();
             }
 
-            // Риски по кругу (как на рулетке CS2)
             for (let i = 0; i < 60; i++) {
                 const a = (i / 60) * Math.PI * 2;
                 const r1 = outerR - ringWidth - 4;
@@ -3376,12 +3408,10 @@
                 ctx.stroke();
             }
 
-            // СТРЕЛКА (УКАЗАТЕЛЬ), КОТОРАЯ КРУТИТСЯ ВОКРУГ КОЛЕСА
             ctx.save();
             ctx.translate(cx, cy);
             ctx.rotate(csPointerAngle);
 
-            // Треугольная стрелка на внешнем радиусе, указывающая внутрь на сектор
             ctx.beginPath();
             ctx.moveTo(outerR - 6, 0);
             ctx.lineTo(outerR + 15, -10);
@@ -3427,14 +3457,12 @@
             const statusEl = document.getElementById('cs-upgrade-status');
             statusEl.textContent = `🎡 Крутим колесо... Шанс забрать ${dstProp.name}: ${chance.toFixed(2)}%`;
 
-            // Определяем результат с учётом админ-подкрутки или честного рандома
             const outcome = getOutcomeModifier();
             let isSuccess = false;
             if (outcome === 'win') isSuccess = true;
             else if (outcome === 'lose') isSuccess = false;
             else isSuccess = (Math.random() * 100) < chance;
 
-            // Выбираем целевой угол остановки стрелки строго внутри или вне зеленого сектора
             const padding = Math.min(0.04, greenArc * 0.12);
             let targetNormalizedAngle;
             if (isSuccess) {
@@ -3450,15 +3478,13 @@
             let delta = targetNormalizedAngle - startAngle;
             if (delta < 0) delta += Math.PI * 2;
 
-            // 6 полных оборотов + точный довод до целевого угла
             const totalRotation = (Math.PI * 2 * 6) + delta;
-            const duration = 4200; // 4.2 секунды плавного торможения как в CS2
+            const duration = 4200;
             const startTime = performance.now();
 
             function animateUpgradeWheel(now) {
                 const elapsed = now - startTime;
                 const t = Math.min(elapsed / duration, 1);
-                // Плавное замедление (easeOutQuint)
                 const ease = 1 - Math.pow(1 - t, 5);
                 csPointerAngle = startAngle + totalRotation * ease;
                 drawCsUpgradeWheel();
@@ -3469,7 +3495,6 @@
                     csUpgradeSpinning = false;
                     csPointerAngle = normalizeAngle(csPointerAngle);
 
-                    // Удаляем старое имущество из инвентаря
                     const removeIndex = ownedProps.indexOf(srcProp.id);
                     if (removeIndex !== -1) ownedProps.splice(removeIndex, 1);
 
