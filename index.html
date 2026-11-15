@@ -322,15 +322,32 @@
         }
         .hero-cta-btn:hover { transform: translateY(-2px); box-shadow: 0 0 40px rgba(245, 158, 11, 0.7); filter: brightness(1.05); }
 
+        .hero-visuals-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            z-index: 2;
+            margin-right: 10px;
+        }
+
+        .hero-bonus-visual {
+            max-height: 120px;
+            width: auto;
+            object-fit: contain;
+            filter: drop-shadow(0 0 15px rgba(245, 158, 11, 0.4));
+            animation: bonusFloat 3.5s ease-in-out infinite alternate;
+        }
+        @keyframes bonusFloat {
+            0% { transform: translateY(0) scale(1) rotate(-5deg); }
+            100% { transform: translateY(-8px) scale(1.05) rotate(5deg); }
+        }
+
         .hero-zeus-visual {
             position: relative;
-            font-size: 6.5rem;
             line-height: 1;
-            z-index: 2;
             filter: drop-shadow(0 0 30px rgba(245, 158, 11, 0.6));
             animation: zeusFloat 4s ease-in-out infinite alternate;
             user-select: none;
-            margin-right: 20px;
         }
         @keyframes zeusFloat {
             0% { transform: translateY(0) scale(1); }
@@ -1495,8 +1512,11 @@
                         <h1 class="hero-title">Серёга пушка - месси игрушка.<br>В собак залетай и баб забирай!</h1>
                         <button class="hero-cta-btn" onclick="openDogHouse()">🐶 Залететь в The Dog House</button>
                     </div>
-                    <div class="hero-zeus-visual">
-                        <img src="glavniypesdoghouse.png" alt="Главный пес" style="max-height: 180px; width: auto; object-fit: contain; filter: drop-shadow(0 0 20px rgba(245, 158, 11, 0.5));">
+                    <div class="hero-visuals-wrapper">
+                        <img src="bonusdoghouselapa.png" alt="Бонус лапа" class="hero-bonus-visual">
+                        <div class="hero-zeus-visual">
+                            <img src="glavniypesdoghouse.png" alt="Главный пес" style="max-height: 180px; width: auto; object-fit: contain; filter: drop-shadow(0 0 20px rgba(245, 158, 11, 0.5));">
+                        </div>
                     </div>
                 </div>
 
@@ -2234,7 +2254,6 @@
             setTimeout(() => avatar.classList.remove('lightning-strike'), 400);
         }
 
-        // СТАРТ БОНУСНОЙ ИГРЫ: принудительное обнуление totalMultiplier перед первым спином
         async function startOlympusBonusRound() {
             aoInFreeSpins = true;
             aoFreeSpinsLeft = 15;
