@@ -525,7 +525,7 @@
         }
 
         /* ========================================== */
-        /* GATES OF OLYMPUS (ЗЕВС НА ПОЛ-ЭКРАНА + ВЫПИРАЮЩИЕ БОМБЫ И СКАТТЕРЫ) */
+        /* GATES OF OLYMPUS (ЗЕВС СПРАВА В СЕРЕДИНЕ ПО ВАШЕМУ МАРКЕРУ) */
         /* ========================================== */
         #view-olympus {
             padding: 0;
@@ -584,7 +584,6 @@
             z-index: 15;
         }
 
-        /* Основная сцена Олимпа: справа широкая зона под Зевса на пол-экрана */
         .ao-stage {
             display: grid;
             grid-template-columns: 185px minmax(0, 1fr) 290px;
@@ -624,12 +623,12 @@
             box-shadow: 0 0 25px rgba(34, 197, 94, 0.65);
         }
 
-        /* Правая половина экрана: Логотип сверху + Зевс по центру на пол-экрана */
+        /* Правая зона по вашему красному маркеру */
         .ao-right-zeus-zone {
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-end;
             height: 100%;
             min-height: 490px;
             position: relative;
@@ -637,32 +636,33 @@
             pointer-events: none;
         }
         .ao-official-logo {
-            width: 195px;
+            position: absolute;
+            top: 6px;
+            right: 15px;
+            width: 130px;
             height: auto;
             object-fit: contain;
-            margin-bottom: -10px;
             z-index: 12;
-            filter: drop-shadow(0 4px 16px rgba(245, 158, 11, 0.75));
+            filter: drop-shadow(0 4px 12px rgba(245, 158, 11, 0.7));
         }
         .ao-zeus-hero-wrap {
             position: relative;
             width: 100%;
-            height: 430px;
+            height: 420px;
             display: flex;
-            align-items: center;
+            align-items: flex-end;
             justify-content: center;
         }
         .ao-zeus-hero-img {
-            height: 455px;
+            height: 440px;
             width: auto;
             max-width: none;
             object-fit: contain;
             filter: drop-shadow(0 12px 35px rgba(245, 158, 11, 0.65));
             animation: zeusFloat 3.8s ease-in-out infinite alternate;
-            transform-origin: center center;
+            transform-origin: bottom center;
         }
 
-        /* Мощная тряска Зевса при выпадении бомб и скаттеров */
         .ao-zeus-hero-wrap.zeus-bomb-shake .ao-zeus-hero-img {
             animation: zeusBombShake 0.65s cubic-bezier(.36,.07,.19,.97) both;
         }
@@ -677,6 +677,34 @@
             100% { transform: translate(0, 0) scale(1) rotate(0deg); filter: brightness(1) drop-shadow(0 12px 35px rgba(245, 158, 11, 0.65)); }
         }
 
+        /* Зона жёлтого маркера (Счётчик иксов справа сверху) */
+        .ao-yellow-mult-badge {
+            position: absolute;
+            top: 8px;
+            right: 20px;
+            z-index: 25;
+            background: linear-gradient(135deg, rgba(70, 20, 110, 0.92), rgba(35, 10, 60, 0.96));
+            border: 2px solid #fde047;
+            border-radius: 14px;
+            padding: 8px 18px;
+            text-align: center;
+            box-shadow: 0 0 25px rgba(250, 204, 21, 0.45);
+            backdrop-filter: blur(8px);
+        }
+        .ao-yellow-mult-label {
+            font-size: 0.65rem;
+            font-weight: 800;
+            color: #fef08a;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .ao-yellow-mult-value {
+            font-size: 1.45rem;
+            font-weight: 900;
+            color: #fde047;
+            text-shadow: 0 0 12px rgba(253, 224, 71, 0.7);
+        }
+
         .ao-board-wrapper { display: flex; flex-direction: column; align-items: center; position: relative; z-index: 10; }
         .ao-gold-frame {
             width: 100%;
@@ -688,7 +716,6 @@
             box-shadow: 0 16px 40px rgba(0, 0, 0, 0.75);
             overflow: visible;
         }
-        /* overflow: visible чтобы бомбы и скаттеры могли выпирать за ячейки */
         .ao-grid-6x5 {
             display: grid;
             grid-template-columns: repeat(6, 1fr);
@@ -747,15 +774,10 @@
             100% { transform: scale(0) rotate(15deg); opacity: 0; }
         }
 
-        /* ВЫПИРАЮЩИЕ БОМБЫ И СКАТТЕРЫ В ОЛИМПУСЕ */
         #view-olympus .ao-cell.ao-protrude-cell {
             z-index: 20;
             overflow: visible;
-            border-color: rgba(253, 224, 71, 0.55);
-            background: radial-gradient(circle, rgba(250, 204, 21, 0.22) 0%, transparent 75%);
         }
-
-        /* Крылатые сферы-бомбы больше всех остальных символов */
         #view-olympus .ao-multiplier-sphere {
             width: 122%;
             height: 122%;
@@ -794,7 +816,6 @@
             100% { transform: scale(1.32) rotate(4deg); }
         }
 
-        /* Выпирающий Scatter с картинкой scatterolymp.png */
         #view-olympus .ao-scatter-img {
             width: 132%;
             height: 132%;
@@ -845,9 +866,9 @@
         }
         .ao-credits-box span:first-child { color: var(--text-muted); font-size: 0.62rem; text-transform: uppercase; }
         .ao-credits-box span:last-child { color: #fde047; font-size: 0.92rem; }
-        .ao-hud-center-group { display: flex; align-items: center; gap: 22px; text-align: center; }
-        .ao-win-label { font-size: 0.64rem; color: #fef08a; text-transform: uppercase; font-weight: 800; }
-        .ao-win-amount { font-size: 1.3rem; font-weight: 900; color: #fde047; }
+        .ao-hud-center-group { text-align: center; }
+        .ao-win-label { font-size: 0.68rem; color: #fef08a; text-transform: uppercase; font-weight: 700; }
+        .ao-win-amount { font-size: 1.35rem; font-weight: 900; color: #fde047; }
         .ao-hud-right-group { display: flex; align-items: center; gap: 16px; }
         .ao-bet-adjust-btn {
             width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, #ca8a04, #854d0e);
@@ -977,7 +998,7 @@
         .dh-spin-circle-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
         /* ========================================== */
-        /* SWEET BONANZA */
+        /* SWEET BONANZA (С ВАШИМИ КАРТИНКАМИ И ВЫПИРАЮЩИМИ БОМБАМИ/ЧУПАЧУПСАМИ) */
         /* ========================================== */
         #view-bonanza {
             padding: 0; overflow: hidden; border: 2px solid #f43f5e;
@@ -1042,11 +1063,13 @@
             display: flex; align-items: center; justify-content: center; position: relative;
             overflow: visible;
         }
-        .sb-symbol-inner { font-size: 2.35rem; line-height: 1; display: flex; align-items: center; justify-content: center; overflow: visible; }
+        .sb-symbol-inner { font-size: 2.35rem; line-height: 1; display: flex; align-items: center; justify-content: center; overflow: visible; width: 100%; height: 100%; }
         .sb-symbol-inner.drop-in { animation: aoDropBounce 0.42s cubic-bezier(0.22, 1.25, 0.36, 1) forwards; }
         .sb-cell.cell-spinning .sb-symbol-inner { animation: aoCellScroll 0.16s infinite alternate ease-in-out; }
         .sb-cell.win-pop { background: radial-gradient(circle, rgba(244, 63, 94, 0.6) 0%, rgba(159, 18, 57, 0.35) 100%); border-color: #f43f5e; box-shadow: 0 0 18px rgba(244, 63, 94, 0.8); z-index: 3; }
         .sb-cell.win-pop .sb-symbol-inner { animation: aoWinExplode 0.55s ease-in-out forwards; }
+
+        .sb-sym-img { width: 88%; height: 88%; max-width: 58px; max-height: 58px; object-fit: contain; filter: drop-shadow(0 4px 10px rgba(0,0,0,0.65)); }
 
         #view-bonanza .sb-cell.sb-protrude-cell { z-index: 15; overflow: visible; }
         #view-bonanza .sb-bomb-badge {
@@ -1063,12 +1086,13 @@
         #view-bonanza .sb-bomb-val { font-size: 1.05rem; font-weight: 900; color: #fff; text-shadow: 0 2px 3px #000; }
         @keyframes sbBombProtrude { 0% { transform: scale(1.2) rotate(-4deg); } 100% { transform: scale(1.32) rotate(4deg); } }
 
-        #view-bonanza .sb-scatter-sym {
-            font-size: 3.45rem; transform: scale(1.24);
-            filter: drop-shadow(0 6px 16px #f43f5e) drop-shadow(0 0 12px #fbcfe8);
+        #view-bonanza .sb-scatter-img {
+            width: 134%; height: 134%; max-width: 112px; max-height: 112px; object-fit: contain;
+            transform: scale(1.26);
+            filter: drop-shadow(0 6px 16px #f43f5e) drop-shadow(0 0 14px #fbcfe8);
             animation: sbScatterProtrude 1.1s infinite alternate ease-in-out; position: relative; z-index: 16;
         }
-        @keyframes sbScatterProtrude { 0% { transform: scale(1.2) rotate(-6deg); } 100% { transform: scale(1.34) rotate(6deg); } }
+        @keyframes sbScatterProtrude { 0% { transform: scale(1.2) rotate(-6deg); } 100% { transform: scale(1.36) rotate(6deg); } }
         
         .sb-bottom-hud {
             background: rgba(30, 8, 25, 0.96); border-top: 2px solid #831843; padding: 10px 20px;
@@ -1418,13 +1442,10 @@
                     <div style="background:rgba(255,255,255,0.05); padding:8px; border-radius:10px;">🍇 <b>Виноград</b><br>12+: 4x • 10-11: 0.9x • 8-9: 0.4x</div>
                     <div style="background:rgba(255,255,255,0.05); padding:8px; border-radius:10px;">🍌 <b>Банан</b><br>12+: 2x • 10-11: 0.75x • 8-9: 0.25x</div>
                 </div>
-                <p>🍭 <b>SCATTER (Леденец)</b> — присутствует на всех барабанах. 6 символов = 100x, 5 символов = 5x, 4 символа = 3x + запуск фриспинов.</p>
+                <p>🍭 <b>SCATTER (Чупа-чупс)</b> — присутствует на всех барабанах. 6 символов = 100x, 5 символов = 5x, 4 символа = 3x + запуск фриспинов.</p>
                 <hr style="border-color: rgba(244,114,182,0.2); margin: 12px 0;">
                 <p><b>💎 Низкая волатильность:</b> в играх с низкой волатильностью чаще случаются некрупные выигрыши, но при этом сохраняется шанс на крупный выигрыш.</p>
                 <p>• Все выигрыши умножаются на значение основной ставки (в BYN).<br>
-                   • В случае выигрыша с несколькими символами, все выигрыши добавляются к общему выигрышу.<br>
-                   • Во время бесплатных спинов выигрыш присуждается игроку после завершения раунда.<br>
-                   • Максимальный процент выплат игрокам (RTP) составляет <b>96.6%</b>, минимальный — <b>96.49%</b>.<br>
                    • Клавиши <b>ПРОБЕЛ</b> и <b>ВВОД</b> на клавиатуре можно использовать для начала спина.</p>
                 <p style="color: #fde047; font-weight: 700;">Минимальная ставка: 0,50 BYN | Максимальная ставка: 50,00 BYN</p>
             </div>
@@ -1578,7 +1599,7 @@
                         <span>|</span>
                         <span>ВЫИГРЫШ: <b id="ao-fs-total-win">0,00</b> BYN</span>
                     </div>
-                    <button class="ao-icon-btn" onclick="showToast('⚡ 4+ Scatter = 15 фриспинов с накоплением множителя!')" title="Информация">i</button>
+                    <button class="ao-icon-btn" onclick="showToast('⚡ 4+ Scatter = 15 фриспинов!')" title="Информация">i</button>
                 </div>
 
                 <div class="ao-win-banner-top">
@@ -1586,6 +1607,12 @@
                 </div>
 
                 <div class="ao-stage">
+                    <!-- Жёлтый маркер (Счётчик иксов справа сверху по вашему рисунку) -->
+                    <div class="ao-yellow-mult-badge">
+                        <div class="ao-yellow-mult-label">ОБЩИЙ ИКС</div>
+                        <div class="ao-yellow-mult-value" id="ao-global-mult-display">0x</div>
+                    </div>
+
                     <!-- 1. Слева: Покупка бонуса и ставка Анте -->
                     <div class="ao-left-controls-zone">
                         <div class="ao-feature-card ao-buy-feature" onclick="buyOlympusBonus()">
@@ -1605,14 +1632,14 @@
                         </div>
                     </div>
 
-                    <!-- 2. По центру: Игровое поле барабанов -->
+                    <!-- 2. По центру: Игровое поле -->
                     <div class="ao-board-wrapper">
                         <div class="ao-gold-frame">
                             <div class="ao-grid-6x5" id="ao-grid"></div>
                         </div>
                     </div>
 
-                    <!-- 3. Справа: Логотип Gates of Olympus + Зевс по центру на пол-экрана -->
+                    <!-- 3. Справа: Красный маркер (Зевс на пол-экрана + логотип сверху) -->
                     <div class="ao-right-zeus-zone">
                         <img src="gatesofolympuslogo.png" onerror="this.style.display='none';" alt="Gates of Olympus Logo" class="ao-official-logo">
                         <div class="ao-zeus-hero-wrap" id="ao-zeus-avatar">
@@ -1628,14 +1655,8 @@
                         <div class="ao-credits-box"><span>СТАВКА</span><span><span id="ao-hud-total-bet">0,50</span> BYN</span></div>
                     </div>
                     <div class="ao-hud-center-group">
-                        <div>
-                            <div class="ao-win-label" id="ao-win-lbl">ПОСЛЕДНИЙ ВЫИГРЫШ</div>
-                            <div class="ao-win-amount"><span id="ao-hud-win">0,00</span> BYN</div>
-                        </div>
-                        <div>
-                            <div style="font-size:0.64rem; color:#c084fc; font-weight:800; text-transform:uppercase;">ОБЩИЙ ИКС</div>
-                            <div style="font-size:1.3rem; font-weight:900; color:#fde047;" id="ao-global-mult-display">0x</div>
-                        </div>
+                        <div class="ao-win-label" id="ao-win-lbl">ПОСЛЕДНИЙ ВЫИГРЫШ</div>
+                        <div class="ao-win-amount"><span id="ao-hud-win">0,00</span> BYN</div>
                     </div>
                     <div class="ao-hud-right-group">
                         <button class="ao-bet-adjust-btn" onclick="changeOlympusBet(-0.5)">−</button>
@@ -1705,7 +1726,7 @@
                 </div>
             </div>
 
-            <!-- SWEET BONANZA -->
+            <!-- SWEET BONANZA (С ВАШИМИ КАРТИНКАМИ) -->
             <div id="view-bonanza" class="game-view">
                 <div class="sb-top-bar">
                     <button class="btn-back" onclick="showLobby()">← В зал</button>
@@ -1981,20 +2002,22 @@
         let dhStickyWilds = Array.from({ length: DH_COLS }, () => Array(DH_ROWS).fill(null));
         let dhSpinning = false, dhInFreeSpins = false, dhAutoActive = false, dhFreeSpinsLeft = 0, dhFreeSpinsTotalWin = 0, dhCurrentBet = 0.5;
 
-        // SWEET BONANZA
+        // ==========================================
+        // SWEET BONANZA (С ВАШИМИ ИЗОБРАЖЕНИЯМИ)
+        // ==========================================
         const SB_COLS = 6, SB_ROWS = 5;
         const SB_SYMBOLS = [
-            { id: 'heart',  emoji: '❤️', name: 'Красное сердце',     p8: 10,   p10: 25,   p12: 50,  weight: 6 },
-            { id: 'purple', emoji: '🟪', name: 'Фиолетовый леденец', p8: 2.5,  p10: 10,   p12: 25,  weight: 8 },
-            { id: 'green',  emoji: '🟩', name: 'Зеленый леденец',    p8: 2.0,  p10: 5,    p12: 15,  weight: 10 },
-            { id: 'blue',   emoji: '🟦', name: 'Синий леденец',      p8: 1.5,  p10: 2,    p12: 12,  weight: 13 },
-            { id: 'apple',  emoji: '🍎', name: 'Яблоко',             p8: 1.0,  p10: 1.5,  p12: 10,  weight: 17 },
-            { id: 'plum',   emoji: '🍑', name: 'Слива',              p8: 0.8,  p10: 1.2,  p12: 8,   weight: 20 },
-            { id: 'melon',  emoji: '🍉', name: 'Арбуз',              p8: 0.5,  p10: 1.0,  p12: 5,   weight: 22 },
-            { id: 'grape',  emoji: '🍇', name: 'Виноград',           p8: 0.4,  p10: 0.9,  p12: 4,   weight: 25 },
-            { id: 'banana', emoji: '🍌', name: 'Банан',              p8: 0.25, p10: 0.75, p12: 2,   weight: 28 }
+            { id: 'heart',  img: 'serdcesweet-removebg-preview.png', name: 'Красное сердце',     p8: 10,   p10: 25,   p12: 50,  weight: 6 },
+            { id: 'purple', img: 'fiolsweet-removebg-preview.png',   name: 'Фиолетовый квадрат', p8: 2.5,  p10: 10,   p12: 25,  weight: 8 },
+            { id: 'green',  img: 'zelensweet-removebg-preview.png',  name: 'Зеленый пятиугольник',p8: 2.0,  p10: 5,    p12: 15,  weight: 10 },
+            { id: 'blue',   img: 'bluesweet-removebg-preview.png',   name: 'Синий овал',         p8: 1.5,  p10: 2,    p12: 12,  weight: 13 },
+            { id: 'apple',  img: 'applesweet-removebg-preview.png',  name: 'Яблоко',             p8: 1.0,  p10: 1.5,  p12: 10,  weight: 17 },
+            { id: 'plum',   img: 'slivasweet-removebg-preview.png',  name: 'Слива',              p8: 0.8,  p10: 1.2,  p12: 8,   weight: 20 },
+            { id: 'melon',  img: 'arbuzsweet.png',                   name: 'Арбуз',              p8: 0.5,  p10: 1.0,  p12: 5,   weight: 22 },
+            { id: 'grape',  img: 'winogradsweet-removebg-preview.png',name: 'Виноград',          p8: 0.4,  p10: 0.9,  p12: 4,   weight: 25 },
+            { id: 'banana', img: 'banansweet-removebg-preview.png',  name: 'Банан',              p8: 0.25, p10: 0.75, p12: 2,   weight: 28 }
         ];
-        const SB_SCATTER = { id: 'scatter', emoji: '🍭', name: 'Радужный леденец' };
+        const SB_SCATTER = { id: 'scatter', img: 'chupashupssweet-removebg-preview.png', name: 'Чупа-чупс (Scatter)' };
         const SB_BOMB_WEIGHTS = [
             { mult: 2, weight: 45 }, { mult: 3, weight: 25 }, { mult: 4, weight: 14 },
             { mult: 5, weight: 8 },  { mult: 8, weight: 4 },  { mult: 10, weight: 2.5 },
@@ -2234,7 +2257,7 @@
         }
 
         // ==========================================
-        // GATES OF OLYMPUS (ИСПРАВЛЕННЫЙ И РАБОЧИЙ)
+        // GATES OF OLYMPUS
         // ==========================================
         function updateOlympusMultiplierUI() {
             const label = totalMultiplier + 'x';
@@ -2929,7 +2952,7 @@
         }
 
         // ==========================================
-        // SWEET BONANZA
+        // SWEET BONANZA (С ВАШИМИ КАРТИНКАМИ)
         // ==========================================
         function initSweetBonanzaDOM() {
             const gridEl = document.getElementById('sb-grid');
@@ -2977,7 +3000,7 @@
             if (Math.random() < scatterChance) return { ...SB_SCATTER };
             if (allowBomb && Math.random() < 0.022) {
                 const mult = getRandomBombMultiplier();
-                return { id: 'bomb', emoji: '💣', mult: mult, name: `Бомба x${mult}` };
+                return { id: 'bomb', mult: mult, name: `Бомба x${mult}` };
             }
             return getRandomWeightedRegularSymbol();
         }
@@ -2996,6 +3019,7 @@
             if (!cell) return;
             cell.classList.remove('win-pop', 'cell-spinning', 'sb-protrude-cell');
             const inner = cell.querySelector('.sb-symbol-inner');
+            if (!inner) return;
             inner.className = 'sb-symbol-inner';
             if (dropAnim) { void inner.offsetWidth; inner.classList.add('drop-in'); }
             const sym = sbGrid[c][r];
@@ -3006,9 +3030,11 @@
                 inner.innerHTML = `<div class="sb-bomb-badge ${isMega ? 'mega-bomb' : ''}"><span class="sb-bomb-val">${sym.mult}X</span></div>`;
             } else if (sym.id === 'scatter') {
                 cell.classList.add('sb-protrude-cell');
-                inner.innerHTML = `<span class="sb-scatter-sym">${sym.emoji}</span>`;
+                inner.innerHTML = `<img src="${sym.img}" alt="Scatter" class="sb-scatter-img" onerror="this.outerHTML='<span style=\\'font-size:3.2rem;\\'>🍭</span>';">`;
+            } else if (sym.img) {
+                inner.innerHTML = `<img src="${sym.img}" alt="${sym.name}" class="sb-sym-img" onerror="this.outerHTML='<span>🍬</span>';">`;
             } else {
-                inner.textContent = sym.emoji;
+                inner.textContent = '🍬';
             }
         }
 
@@ -3096,13 +3122,13 @@
                 }
             }
 
-            const allEmojiPool = [...SB_SYMBOLS.map(s => s.emoji), '🍭', ...(sbInFreeSpins ? ['💣'] : [])];
+            const allImages = SB_SYMBOLS.map(s => `<img src="${s.img}" class="sb-sym-img">`);
             const timer = setInterval(() => {
                 for (let c = 0; c < SB_COLS; c++) {
                     for (let r = 0; r < SB_ROWS; r++) {
                         const cell = document.getElementById(`sb-cell-${c}-${r}`);
                         if (cell && cell.classList.contains('cell-spinning')) {
-                            cell.querySelector('.sb-symbol-inner').textContent = allEmojiPool[Math.floor(Math.random() * allEmojiPool.length)];
+                            cell.querySelector('.sb-symbol-inner').innerHTML = allImages[Math.floor(Math.random() * allImages.length)];
                         }
                     }
                 }
