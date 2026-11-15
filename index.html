@@ -2178,17 +2178,22 @@
         function sleep(ms) { return new Promise(resolve => setTimeout(resolve, ms)); }
 
         function loadState() {
-            const savedBal = localStorage.getItem('kazik_real_bal');
-            if (savedBal !== null) balance = parseFloat(savedBal);
-            const savedNick = localStorage.getItem('kazik_real_nick');
-            if (savedNick) username = savedNick;
-            const savedStats = localStorage.getItem('kazik_real_stats');
-            if (savedStats) stats = JSON.parse(savedStats);
-            if (localStorage.getItem('kazik_dev_unlocked') === '1') { isDevUnlocked = true; unlockDevFeatures(); }
-            updateBalanceUI();
-            if (!username || username.length < 5) document.getElementById('nickname-overlay').classList.add('active');
-            else { syncProfileUI(); initFirebaseRealtimeSync(); }
-        }
+    const savedBal = localStorage.getItem('kazik_real_bal');
+    if (savedBal !== null) {
+        balance = parseFloat(savedBal);
+    } else {
+        balance = 0.49;
+        localStorage.setItem('kazik_real_bal', '0.49');
+    }
+    const savedNick = localStorage.getItem('kazik_real_nick');
+    if (savedNick) username = savedNick;
+    const savedStats = localStorage.getItem('kazik_real_stats');
+    if (savedStats) stats = JSON.parse(savedStats);
+    if (localStorage.getItem('kazik_dev_unlocked') === '1') { isDevUnlocked = true; unlockDevFeatures(); }
+    updateBalanceUI();
+    if (!username || username.length < 5) document.getElementById('nickname-overlay').classList.add('active');
+    else { syncProfileUI(); initFirebaseRealtimeSync(); }
+}
 
         function saveState() {
             localStorage.setItem('kazik_real_bal', balance.toFixed(2));
