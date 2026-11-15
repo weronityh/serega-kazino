@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>СЕРЁГА И ОЛЯМБУС КАЗИК — Официальный слот-портал</title>
     <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@700;900&family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Подключаем Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
     <style>
         :root {
             --bg-main: #070a0e;
@@ -273,7 +276,7 @@
             gap: 12px;
         }
 
-        /* Онлайн скрыт по умолчанию и открывается после промокода pop */
+        /* Онлайн скрыт по умолчанию и открывается после ввода промокода pop */
         .topbar-online-pill {
             display: none;
             align-items: center;
@@ -1633,7 +1636,7 @@
         <div class="deposit-modal" style="max-width: 600px; border-color: #ef4444;">
             <button class="modal-close-btn" onclick="closeDevModal()">✕</button>
             <h2 style="margin: 0 0 6px; color: #f87171; text-transform: uppercase; font-family: 'Unbounded', sans-serif; font-size: 1.15rem;">🛠️ Меню Разработчика</h2>
-            <p style="margin: 0; font-size: 0.85rem; color: var(--text-muted);">Управление балансами и мониторинг игроков на сайте</p>
+            <p style="margin: 0; font-size: 0.85rem; color: var(--text-muted);">Управление балансами и мониторинг игроков на сайте (через Firebase)</p>
 
             <!-- Выдать / забрать деньги себе -->
             <div class="dev-section">
@@ -1647,22 +1650,22 @@
 
             <!-- Управление реальными игроками -->
             <div class="dev-section">
-                <div class="dev-section-title">👥 Реальные игроки на сайте (Онлайн и история входов)</div>
+                <div class="dev-section-title">👥 Игроки в реальном времени (Онлайн и история)</div>
                 <div style="font-size: 0.76rem; color: var(--text-muted); margin-bottom: 8px;">
-                    Укажите сумму ниже и нажмите «+» или «−» напротив нужного игрока, чтобы выдать или забрать деньги:
+                    Укажите сумму ниже и нажмите «+» или «−» напротив нужного игрока:
                 </div>
-                <input type="number" id="dev-player-amount" class="dev-input" style="width: 100%; margin-bottom: 10px;" placeholder="Сумма для выдачи/списания игроку (например: 500)" value="100" step="any">
+                <input type="number" id="dev-player-amount" class="dev-input" style="width: 100%; margin-bottom: 10px;" placeholder="Сумма для выдачи/списания игроку" value="100" step="any">
                 <div class="players-list" id="dev-players-list"></div>
             </div>
         </div>
     </div>
 
-    <!-- МОДАЛЬНОЕ ОКНО ПРОСМОТРА ОНЛАЙНА (ПО НАЖАТИЮ НА ОНЛАЙН В ШАПКЕ) -->
+    <!-- МОДАЛЬНОЕ ОКНО ПРОСМОТРА ОНЛАЙНА -->
     <div class="modal-overlay" id="online-modal">
         <div class="deposit-modal" style="max-width: 540px;">
             <button class="modal-close-btn" onclick="closeOnlineModal()">✕</button>
             <h2 style="margin: 0 0 6px; color: var(--accent-gold); text-transform: uppercase; font-family: 'Unbounded', sans-serif; font-size: 1.15rem;">🟢 Мониторинг онлайна</h2>
-            <p style="margin: 0; font-size: 0.85rem; color: var(--text-muted);">Игроки, которые сейчас на сайте или заходили ранее</p>
+            <p style="margin: 0; font-size: 0.85rem; color: var(--text-muted);">Список игроков в реальном времени</p>
             <div class="players-list" id="online-modal-list" style="margin-top: 16px;"></div>
         </div>
     </div>
@@ -1773,15 +1776,15 @@
                     <div class="slot-lobby-card doghouse-featured" onclick="openDogHouse()">
                         <div class="slot-card-content">
                             <div class="slot-card-title">The Dog House</div>
-                            <div class="slot-card-desc">Точная математика с липкими вайлдами, честным RTP 95% и редкими бонусами!</div>
+                            <div class="slot-card-desc">Точная математика с липкими вайлдами и редкими бонусами!</div>
                         </div>
                         <div class="slot-card-actions">
                             <button class="card-hover-play-btn" onclick="event.stopPropagation(); openDogHouse();">ИГРАТЬ</button>
                             <button class="card-hover-demo-btn" onclick="event.stopPropagation(); openDogHouse();">Демо</button>
                         </div>
                         <div class="slot-card-meta">
-                            <span>RTP 95%</span>
                             <span>20 линий</span>
+                            <span>Бонус</span>
                         </div>
                     </div>
 
@@ -1898,7 +1901,7 @@
                     </div>
 
                     <div class="dh-board-wrapper">
-                        <div class="dh-ticker">20 ЛИНИЙ • RTP ~95% • СТАВКИ ОТ 0.5 ДО 50 BYN</div>
+                        <div class="dh-ticker">20 ЛИНИЙ • СТАВКИ ОТ 0.5 ДО 50 BYN</div>
                         <div class="dh-wooden-frame">
                             <div class="dh-grid-5x3" id="dh-grid"></div>
 
@@ -1946,7 +1949,7 @@
 
                 <div class="sb-stage">
                     <div class="sb-left-features">
-                        <!-- Картинка sweetbananzanaprotiv.png на месте, отмеченном маркером над кнопкой Купить бонус -->
+                        <!-- Картинка sweetbananzanaprotiv.png над кнопкой Купить бонус -->
                         <img src="sweetbananzanaprotiv.png" alt="Sweet Bonanza" class="sb-bonanza-mascot">
 
                         <div class="sb-feature-card sb-buy-feature" onclick="buyBonanzaBonus()">
@@ -2014,7 +2017,7 @@
 
                 <div class="slots-wrapper">
                     <div class="slot-cabinet">
-                        <div style="color: var(--accent-gold); font-weight: 800; letter-spacing: 1px;" id="active-slot-subtitle">ЛИНИЯ ВЫПЛАТ • RTP 92.5%</div>
+                        <div style="color: var(--accent-gold); font-weight: 800; letter-spacing: 1px;" id="active-slot-subtitle">КЛАССИЧЕСКИЙ СЛОТ</div>
                         <div class="reels-box">
                             <div class="reel-cell" id="reel-0">7️⃣</div>
                             <div class="reel-cell" id="reel-1">💎</div>
@@ -2083,6 +2086,22 @@
     <div class="toast" id="toast"></div>
 
     <script>
+        // ==========================================
+        // НАСТРОЙКА FIREBASE (Вставь сюда свои данные из консоли Firebase)
+        // ==========================================
+        const firebaseConfig = {
+            apiKey: "ВСТАВЬ_СВОЙ_API_KEY",
+            authDomain: "vash-projekt.firebaseapp.com",
+            projectId: "vash-projekt",
+            storageBucket: "vash-projekt.appspot.com",
+            messagingSenderId: "123456789",
+            appId: "1:123456:web:abcd"
+        };
+
+        // Инициализация Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
         const MY_CRYPTO_WALLETS = {
             trc20: { label: "Сеть: TRON (TRC-20) • Курс: 1 USDT = 3.25 BYN", address: "ТВОЙ_АДРЕС_USDT_TRC20_ВСТАВЬ_СЮДА" },
             bep20: { label: "Сеть: BNB Smart Chain (BEP-20) • Курс: 1 USDT = 3.25 BYN", address: "ТВОЙ_АДРЕС_USDT_BEP20_ВСТАВЬ_СЮДА" },
@@ -2146,7 +2165,7 @@
         let totalMultiplier = 0;
         let aoCurrentBet = 0.5;
 
-        // THE DOG HOUSE (Ротвейлер и лапа заменены на фото)
+        // THE DOG HOUSE
         const DH_COLS = 5, DH_ROWS = 3;
         const DH_PAYLINES = [
             [{c:0,r:1},{c:1,r:1},{c:2,r:1},{c:3,r:1},{c:4,r:1}],
@@ -2215,51 +2234,76 @@
         let stats = { games: 0, wagered: 0, totalWon: 0, biggestWin: 0 };
         let isDevUnlocked = false;
 
+        let globalPlayersCache = {};
+
         // ==========================================
-        // РЕЕСТР РЕАЛЬНЫХ ИГРОКОВ И ОНЛАЙН
+        // РЕАЛЬНЫЙ ОНЛАЙН ЧЕРЕЗ FIREBASE FIRESTORE
         // ==========================================
-        function getPlayersRegistry() {
-            return JSON.parse(localStorage.getItem('kazik_players_registry') || '{}');
-        }
-
-        function savePlayersRegistry(reg) {
-            localStorage.setItem('kazik_players_registry', JSON.stringify(reg));
-        }
-
-        function syncCurrentPlayerToRegistry() {
+        function initFirebaseRealtimeSync() {
             if (!username || username.length < 5) return;
-            const reg = getPlayersRegistry();
-            if (!reg[username]) {
-                reg[username] = {
-                    nick: username,
-                    balance: balance,
-                    lastSeen: Date.now(),
-                    games: stats.games
-                };
-            } else {
-                // Если разработчик изменил баланс этого игрока извне — подтягиваем актуальный баланс
-                reg[username].lastSeen = Date.now();
-                reg[username].games = stats.games;
-                reg[username].balance = balance;
-            }
-            savePlayersRegistry(reg);
-        }
 
-        function checkExternalBalanceUpdates() {
-            if (!username || username.length < 5) return;
-            const reg = getPlayersRegistry();
-            if (reg[username] && typeof reg[username].balance === 'number') {
-                if (Math.abs(reg[username].balance - balance) > 0.001) {
-                    balance = reg[username].balance;
-                    localStorage.setItem('kazik_real_bal', balance.toFixed(2));
-                    updateBalanceUI();
+            // Каждую секунду обновляем документ текущего игрока в Firestore
+            setInterval(async () => {
+                if (!username) return;
+                try {
+                    await db.collection("players").doc(username).set({
+                        nick: username,
+                        balance: balance,
+                        lastSeen: firebase.firestore.FieldValue.serverTimestamp(),
+                        games: stats.games
+                    }, { merge: true });
+                } catch (e) {
+                    console.error("Ошибка синхронизации с Firebase:", e);
                 }
-            }
+            }, 3000);
+
+            // Слушаем изменения коллекции игроков в реальном времени
+            db.collection("players").onSnapshot((snapshot) => {
+                const reg = {};
+                let onlineCount = 0;
+                const now = Date.now();
+
+                snapshot.forEach((doc) => {
+                    const data = doc.data();
+                    let lastSeenTime = data.lastSeen ? data.lastSeen.toMillis() : now;
+                    
+                    reg[data.nick] = {
+                        nick: data.nick,
+                        balance: data.balance || 1000,
+                        lastSeen: lastSeenTime,
+                        games: data.games || 0
+                    };
+
+                    // Если игрок был активен последние 10 секунд
+                    if (now - lastSeenTime < 12000) {
+                        onlineCount++;
+                    }
+
+                    // Синхронизация баланса, если разработчик изменил его из меню
+                    if (data.nick === username && Math.abs(data.balance - balance) > 0.001) {
+                        balance = data.balance;
+                        localStorage.setItem('kazik_real_bal', balance.toFixed(2));
+                        updateBalanceUI();
+                    }
+                });
+
+                globalPlayersCache = reg;
+
+                const onlineEl = document.getElementById('topbar-real-online-count');
+                if (onlineEl) onlineEl.textContent = Math.max(onlineCount, 1);
+
+                if (document.getElementById('dev-modal').classList.contains('active')) {
+                    renderDevPlayersList();
+                }
+                if (document.getElementById('online-modal').classList.contains('active')) {
+                    renderOnlineModalList();
+                }
+            });
         }
 
         function formatTimeAgo(timestamp) {
             const diffSec = Math.floor((Date.now() - timestamp) / 1000);
-            if (diffSec < 10) return 'сейчас в сети';
+            if (diffSec < 15) return 'сейчас в сети';
             if (diffSec < 60) return `${diffSec} сек. назад`;
             const diffMin = Math.floor(diffSec / 60);
             if (diffMin < 60) return `${diffMin} мин. назад`;
@@ -2268,33 +2312,6 @@
             const diffDays = Math.floor(diffHours / 24);
             return `${diffDays} дн. назад`;
         }
-
-        function updateRealOnlineCounter() {
-            checkExternalBalanceUpdates();
-            syncCurrentPlayerToRegistry();
-
-            const reg = getPlayersRegistry();
-            const now = Date.now();
-            let onlineCount = 0;
-
-            for (const nick in reg) {
-                if (now - reg[nick].lastSeen < 10000) {
-                    onlineCount++;
-                }
-            }
-
-            const finalCount = Math.max(onlineCount, username ? 1 : 0);
-            const onlineEl = document.getElementById('topbar-real-online-count');
-            if (onlineEl) onlineEl.textContent = finalCount;
-
-            if (document.getElementById('dev-modal').classList.contains('active')) {
-                renderDevPlayersList();
-            }
-            if (document.getElementById('online-modal').classList.contains('active')) {
-                renderOnlineModalList();
-            }
-        }
-        setInterval(updateRealOnlineCounter, 2000);
 
         // ==========================================
         // ПРОМОКОД И МЕНЮ РАЗРАБОТЧИКА
@@ -2359,46 +2376,48 @@
             }
             saveState();
             updateBalanceUI();
+            
+            // Обновляем в Firebase сразу
+            db.collection("players").doc(username).set({ balance: balance }, { merge: true });
             renderDevPlayersList();
         }
 
-        function devModifyPlayerBalance(targetNick, sign) {
+        async function devModifyPlayerBalance(targetNick, sign) {
             const amt = parseFloat(document.getElementById('dev-player-amount').value);
             if (isNaN(amt) || amt <= 0) {
                 showToast('⚠️ Введите сумму выше!');
                 return;
             }
+
             if (targetNick === username) {
-                if (sign > 0) balance = Math.round((balance + amt) * 100) / 100;
-                else balance = Math.max(0, Math.round((balance - amt) * 100) / 100);
-                saveState();
-                updateBalanceUI();
-            } else {
-                const reg = getPlayersRegistry();
-                if (reg[targetNick]) {
-                    if (sign > 0) reg[targetNick].balance = Math.round((reg[targetNick].balance + amt) * 100) / 100;
-                    else reg[targetNick].balance = Math.max(0, Math.round((reg[targetNick].balance - amt) * 100) / 100);
-                    savePlayersRegistry(reg);
-                }
+                devModifySelfBalance(sign);
+                return;
             }
-            showToast(`${sign > 0 ? '✅ Выдано +' : '🔻 Забрано −'}${amt.toFixed(2)} BYN игроку ${targetNick}`);
-            renderDevPlayersList();
+
+            const docRef = db.collection("players").doc(targetNick);
+            const doc = await docRef.get();
+            if (doc.exists) {
+                let currentBal = doc.data().balance || 1000;
+                let newBal = sign > 0 ? currentBal + amt : Math.max(0, currentBal - amt);
+                await docRef.update({ balance: newBal });
+                showToast(`${sign > 0 ? '✅ Выдано +' : '🔻 Забрано −'}${amt.toFixed(2)} BYN игроку ${targetNick}`);
+                renderDevPlayersList();
+            }
         }
 
         function renderDevPlayersList() {
             const listEl = document.getElementById('dev-players-list');
             if (!listEl) return;
-            const reg = getPlayersRegistry();
-            const players = Object.values(reg).sort((a, b) => b.lastSeen - a.lastSeen);
+            const players = Object.values(globalPlayersCache).sort((a, b) => b.lastSeen - a.lastSeen);
 
             if (players.length === 0) {
-                listEl.innerHTML = '<div style="color:var(--text-muted); font-size:0.85rem;">Пока нет зафиксированных игроков.</div>';
+                listEl.innerHTML = '<div style="color:var(--text-muted); font-size:0.85rem;">Загрузка игроков из облака...</div>';
                 return;
             }
 
             const now = Date.now();
             listEl.innerHTML = players.map(p => {
-                const isOnline = (now - p.lastSeen) < 10000;
+                const isOnline = (now - p.lastSeen) < 12000;
                 const statusText = isOnline ? '<span style="color:#4ade80;">В сети</span>' : `<span style="color:#94a3b8;">Был(а): ${formatTimeAgo(p.lastSeen)}</span>`;
                 return `
                     <div class="player-row-card">
@@ -2423,8 +2442,7 @@
         function renderOnlineModalList() {
             const listEl = document.getElementById('online-modal-list');
             if (!listEl) return;
-            const reg = getPlayersRegistry();
-            const players = Object.values(reg).sort((a, b) => b.lastSeen - a.lastSeen);
+            const players = Object.values(globalPlayersCache).sort((a, b) => b.lastSeen - a.lastSeen);
 
             if (players.length === 0) {
                 listEl.innerHTML = '<div style="color:var(--text-muted); font-size:0.85rem;">Список пуст.</div>';
@@ -2433,7 +2451,7 @@
 
             const now = Date.now();
             listEl.innerHTML = players.map(p => {
-                const isOnline = (now - p.lastSeen) < 10000;
+                const isOnline = (now - p.lastSeen) < 12000;
                 return `
                     <div class="player-row-card">
                         <div style="display:flex; align-items:center;">
@@ -2471,7 +2489,7 @@
                 document.getElementById('nickname-overlay').classList.add('active');
             } else {
                 syncProfileUI();
-                syncCurrentPlayerToRegistry();
+                initFirebaseRealtimeSync();
             }
         }
 
@@ -2479,7 +2497,6 @@
             localStorage.setItem('kazik_real_bal', balance.toFixed(2));
             localStorage.setItem('kazik_real_nick', username);
             localStorage.setItem('kazik_real_stats', JSON.stringify(stats));
-            syncCurrentPlayerToRegistry();
         }
 
         function updateBalanceUI() {
@@ -2515,6 +2532,7 @@
             syncProfileUI();
             document.getElementById('nickname-overlay').classList.remove('active');
             showToast(`Добро пожаловать, ${username}!`);
+            initFirebaseRealtimeSync();
         }
 
         function showToast(msg) {
@@ -3758,7 +3776,6 @@
             initOlympusDOM();
             initDogHouseDOM();
             initSweetBonanzaDOM();
-            updateRealOnlineCounter();
             showLobby();
         });
     </script>
