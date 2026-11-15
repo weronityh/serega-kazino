@@ -525,7 +525,7 @@
         }
 
         /* ========================================== */
-        /* GATES OF OLYMPUS (ЗЕВС СПРАВА В СЕРЕДИНЕ) */
+        /* GATES OF OLYMPUS */
         /* ========================================== */
         #view-olympus {
             padding: 0;
@@ -623,7 +623,6 @@
             box-shadow: 0 0 25px rgba(34, 197, 94, 0.65);
         }
 
-        /* Правая зона для Зевса (исправленная чистая PNG-версия) */
         .ao-right-zeus-zone {
             display: flex;
             flex-direction: column;
@@ -996,7 +995,7 @@
         .dh-spin-circle-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
         /* ========================================== */
-        /* SWEET BONANZA */
+        /* SWEET BONANZA (КРУПНЫЕ ФИГУРЫ + БОЛЬШАЯ БОМБА БЕЗ ФИОЛЕТОВОГО КРУГА) */
         /* ========================================== */
         #view-bonanza {
             padding: 0; overflow: hidden; border: 2px solid #f43f5e;
@@ -1056,41 +1055,94 @@
             border-radius: 14px; padding: 10px; overflow: visible;
         }
         .sb-cell {
-            aspect-ratio: 1.05 / 1; min-height: 58px; background: rgba(255, 255, 255, 0.05);
+            aspect-ratio: 1.05 / 1; min-height: 62px; background: rgba(255, 255, 255, 0.05);
             border-radius: 10px; border: 1px solid rgba(254, 205, 211, 0.12);
             display: flex; align-items: center; justify-content: center; position: relative;
             overflow: visible;
         }
-        .sb-symbol-inner { font-size: 2.35rem; line-height: 1; display: flex; align-items: center; justify-content: center; overflow: visible; width: 100%; height: 100%; }
+        .sb-symbol-inner { font-size: 2.6rem; line-height: 1; display: flex; align-items: center; justify-content: center; overflow: visible; width: 100%; height: 100%; }
         .sb-symbol-inner.drop-in { animation: aoDropBounce 0.42s cubic-bezier(0.22, 1.25, 0.36, 1) forwards; }
         .sb-cell.cell-spinning .sb-symbol-inner { animation: aoCellScroll 0.16s infinite alternate ease-in-out; }
         .sb-cell.win-pop { background: radial-gradient(circle, rgba(244, 63, 94, 0.6) 0%, rgba(159, 18, 57, 0.35) 100%); border-color: #f43f5e; box-shadow: 0 0 18px rgba(244, 63, 94, 0.8); z-index: 3; }
         .sb-cell.win-pop .sb-symbol-inner { animation: aoWinExplode 0.55s ease-in-out forwards; }
 
-        .sb-sym-img { width: 88%; height: 88%; max-width: 58px; max-height: 58px; object-fit: contain; filter: drop-shadow(0 4px 10px rgba(0,0,0,0.65)); }
-
-        #view-bonanza .sb-cell.sb-protrude-cell { z-index: 15; overflow: visible; }
-        #view-bonanza .sb-bomb-badge {
-            width: 118%; height: 118%; transform: scale(1.24); border-radius: 50%;
-            display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; z-index: 16;
-            background: radial-gradient(circle at 30% 30%, #f43f5e, #be185d 50%, #4a044e 100%); border: 3px solid #fff;
-            box-shadow: 0 8px 22px rgba(0, 0, 0, 0.85), 0 0 20px #f43f5e; animation: sbBombProtrude 1.2s infinite alternate ease-in-out;
+        /* Обычные фрукты и конфеты — крупные, сочные, но визуально меньше Scatter и бомб */
+        .sb-sym-img {
+            width: 104%;
+            height: 104%;
+            max-width: 72px;
+            max-height: 72px;
+            object-fit: contain;
+            filter: drop-shadow(0 4px 10px rgba(0,0,0,0.65));
+            transition: transform 0.2s ease;
         }
-        #view-bonanza .sb-bomb-badge::before { content: '💣'; font-size: 1.25rem; line-height: 1; margin-bottom: -2px; }
-        #view-bonanza .sb-bomb-badge.mega-bomb {
-            background: radial-gradient(circle at 30% 30%, #fef08a, #f59e0b 45%, #e11d48 85%, #581c87 100%);
-            border-color: #fef08a; box-shadow: 0 0 25px #f43f5e, 0 0 42px #fde047;
-        }
-        #view-bonanza .sb-bomb-val { font-size: 1.05rem; font-weight: 900; color: #fff; text-shadow: 0 2px 3px #000; }
-        @keyframes sbBombProtrude { 0% { transform: scale(1.2) rotate(-4deg); } 100% { transform: scale(1.32) rotate(4deg); } }
 
+        #view-bonanza .sb-cell.sb-protrude-cell { z-index: 18; overflow: visible; }
+
+        /* Крупная бомба без фиолетового круга */
+        #view-bonanza .sb-bomb-wrap {
+            width: 145%;
+            height: 145%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 20;
+            animation: sbBombProtrude 1.1s infinite alternate ease-in-out;
+            pointer-events: none;
+        }
+        #view-bonanza .sb-bomb-emoji {
+            font-size: 3.45rem;
+            line-height: 1;
+            filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.9)) drop-shadow(0 0 18px #f59e0b);
+        }
+        #view-bonanza .sb-bomb-wrap.mega-bomb .sb-bomb-emoji {
+            font-size: 3.7rem;
+            filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.95)) drop-shadow(0 0 22px #fde047) drop-shadow(0 0 34px #ef4444);
+        }
+        #view-bonanza .sb-bomb-val {
+            position: absolute;
+            bottom: 8%;
+            font-family: 'Unbounded', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 900;
+            color: #fef08a;
+            background: linear-gradient(180deg, rgba(185, 28, 28, 0.92), rgba(127, 29, 29, 0.96));
+            border: 2px solid #fde047;
+            border-radius: 8px;
+            padding: 1px 6px;
+            text-shadow: 0 2px 3px #000;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.85);
+            letter-spacing: -0.5px;
+        }
+        #view-bonanza .sb-bomb-wrap.mega-bomb .sb-bomb-val {
+            color: #fff;
+            background: linear-gradient(180deg, #f59e0b, #dc2626);
+            border-color: #fff;
+            font-size: 1.12rem;
+        }
+        @keyframes sbBombProtrude {
+            0% { transform: scale(1.22) rotate(-5deg); }
+            100% { transform: scale(1.38) rotate(5deg); }
+        }
+
+        /* Scatter (чупа-чупс) — заметно крупнее обычных фигур */
         #view-bonanza .sb-scatter-img {
-            width: 134%; height: 134%; max-width: 112px; max-height: 112px; object-fit: contain;
-            transform: scale(1.26);
-            filter: drop-shadow(0 6px 16px #f43f5e) drop-shadow(0 0 14px #fbcfe8);
-            animation: sbScatterProtrude 1.1s infinite alternate ease-in-out; position: relative; z-index: 16;
+            width: 146%;
+            height: 146%;
+            max-width: 124px;
+            max-height: 124px;
+            object-fit: contain;
+            transform: scale(1.34);
+            filter: drop-shadow(0 8px 18px #f43f5e) drop-shadow(0 0 16px #fbcfe8);
+            animation: sbScatterProtrude 1.1s infinite alternate ease-in-out;
+            position: relative;
+            z-index: 20;
         }
-        @keyframes sbScatterProtrude { 0% { transform: scale(1.2) rotate(-6deg); } 100% { transform: scale(1.36) rotate(6deg); } }
+        @keyframes sbScatterProtrude {
+            0% { transform: scale(1.28) rotate(-6deg); }
+            100% { transform: scale(1.44) rotate(6deg); }
+        }
         
         .sb-bottom-hud {
             background: rgba(30, 8, 25, 0.96); border-top: 2px solid #831843; padding: 10px 20px;
@@ -1634,7 +1686,6 @@
                         </div>
                     </div>
 
-                    <!-- Справа: Чистая PNG-версия Зевса и оригинальный логотип -->
                     <div class="ao-right-zeus-zone">
                         <img src="gatesofolympuslogo.png" onerror="this.style.display='none';" alt="Gates of Olympus Logo" class="ao-official-logo">
                         <div class="ao-zeus-hero-wrap" id="ao-zeus-avatar">
@@ -2022,7 +2073,7 @@
         let sbGrid = Array.from({ length: SB_COLS }, () => Array(SB_ROWS).fill(null));
         let sbSpinning = false, sbAnteActive = false, sbAutoActive = false, sbFreeSpinsLeft = 0, sbInFreeSpins = false, sbFreeSpinsTotalWin = 0;
 
-        // CHICKEN CROSS STATE
+        // CHICKEN CROSS / CHICKEN ROAD STATE
         let chickenActive = false;
         let chickenStepIndex = 0;
         let chickenCurrentMult = 1.0;
@@ -2174,7 +2225,12 @@
 
         function loadState() {
             const savedBal = localStorage.getItem('kazik_real_bal');
-            if (savedBal !== null) balance = parseFloat(savedBal);
+            if (savedBal !== null) {
+                balance = parseFloat(savedBal);
+            } else {
+                balance = 0.49;
+                localStorage.setItem('kazik_real_bal', '0.49');
+            }
             const savedNick = localStorage.getItem('kazik_real_nick');
             if (savedNick) username = savedNick;
             const savedStats = localStorage.getItem('kazik_real_stats');
@@ -2947,7 +3003,7 @@
         }
 
         // ==========================================
-        // SWEET BONANZA
+        // SWEET BONANZA (КРУПНЫЕ ФИГУРЫ + БОЛЬШАЯ БОМБА БЕЗ ФИОЛЕТОВОГО КРУГА)
         // ==========================================
         function initSweetBonanzaDOM() {
             const gridEl = document.getElementById('sb-grid');
@@ -3022,10 +3078,14 @@
             if (sym.id === 'bomb') {
                 cell.classList.add('sb-protrude-cell');
                 const isMega = sym.mult >= 20;
-                inner.innerHTML = `<div class="sb-bomb-badge ${isMega ? 'mega-bomb' : ''}"><span class="sb-bomb-val">${sym.mult}X</span></div>`;
+                inner.innerHTML = `
+                    <div class="sb-bomb-wrap ${isMega ? 'mega-bomb' : ''}">
+                        <span class="sb-bomb-emoji">💣</span>
+                        <span class="sb-bomb-val">${sym.mult}X</span>
+                    </div>`;
             } else if (sym.id === 'scatter') {
                 cell.classList.add('sb-protrude-cell');
-                inner.innerHTML = `<img src="${sym.img}" alt="Scatter" class="sb-scatter-img" onerror="this.outerHTML='<span style=\\'font-size:3.2rem;\\'>🍭</span>';">`;
+                inner.innerHTML = `<img src="${sym.img}" alt="Scatter" class="sb-scatter-img" onerror="this.outerHTML='<span style=\\'font-size:3.5rem;\\'>🍭</span>';">`;
             } else if (sym.img) {
                 inner.innerHTML = `<img src="${sym.img}" alt="${sym.name}" class="sb-sym-img" onerror="this.outerHTML='<span>🍬</span>';">`;
             } else {
