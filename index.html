@@ -125,22 +125,77 @@
             color: #ffffff;
         }
 
-        .nav-badge {
-            font-size: 0.62rem;
-            font-weight: 800;
-            padding: 3px 7px;
-            border-radius: 6px;
-            text-transform: uppercase;
-            background: rgba(245, 158, 11, 0.15);
-            color: var(--accent-gold);
-            border: 1px solid rgba(245, 158, 11, 0.3);
+        /* Блок промокода внизу слева */
+        .sidebar-promo-box {
+            margin-top: auto;
+            padding-top: 14px;
+            border-top: 1px solid var(--border-glass);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
         }
 
-        .nav-badge-hot {
-            background: rgba(239, 68, 68, 0.15);
-            color: #f87171;
-            border: 1px solid rgba(239, 68, 68, 0.3);
+        .sidebar-promo-label {
+            font-size: 0.7rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            letter-spacing: 0.5px;
         }
+
+        .sidebar-promo-row {
+            display: flex;
+            gap: 6px;
+        }
+
+        .sidebar-promo-row input {
+            flex: 1;
+            min-width: 0;
+            background: #090d12;
+            border: 1px solid var(--border-glass);
+            border-radius: 10px;
+            padding: 9px 10px;
+            color: #fff;
+            font-size: 0.82rem;
+            font-weight: 700;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .sidebar-promo-row input:focus {
+            border-color: var(--accent-gold);
+        }
+
+        .sidebar-promo-btn {
+            background: var(--accent-gold-gradient);
+            color: #1a0f00;
+            border: none;
+            border-radius: 10px;
+            padding: 0 12px;
+            font-weight: 900;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: 0.2s;
+            flex-shrink: 0;
+        }
+        .sidebar-promo-btn:hover { filter: brightness(1.1); }
+
+        .dev-open-btn {
+            display: none;
+            width: 100%;
+            background: linear-gradient(90deg, #dc2626, #991b1b);
+            color: #fff;
+            border: 1px solid #fca5a5;
+            border-radius: 10px;
+            padding: 9px 10px;
+            font-weight: 900;
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(239, 68, 68, 0.35);
+            transition: 0.2s;
+        }
+        .dev-open-btn.visible { display: block; }
+        .dev-open-btn:hover { filter: brightness(1.12); transform: translateY(-1px); }
 
         .main-wrapper { flex: 1; display: flex; flex-direction: column; min-width: 0; }
 
@@ -218,23 +273,34 @@
             gap: 12px;
         }
 
+        /* Онлайн скрыт по умолчанию и открывается после промокода pop */
         .topbar-online-pill {
-            display: flex;
+            display: none;
             align-items: center;
             gap: 8px;
-            background: rgba(245, 158, 11, 0.06);
-            border: 1px solid rgba(245, 158, 11, 0.2);
-            padding: 8px 12px;
+            background: rgba(245, 158, 11, 0.1);
+            border: 1px solid rgba(245, 158, 11, 0.35);
+            padding: 8px 14px;
             border-radius: 999px;
             font-size: 0.82rem;
             font-weight: 700;
+            cursor: pointer;
+            transition: 0.2s;
         }
+        .topbar-online-pill.unlocked {
+            display: flex;
+        }
+        .topbar-online-pill:hover {
+            background: rgba(245, 158, 11, 0.2);
+            transform: scale(1.03);
+        }
+
         .online-pulse-dot {
             width: 8px;
             height: 8px;
             border-radius: 50%;
-            background: var(--accent-gold);
-            box-shadow: 0 0 8px var(--accent-gold);
+            background: #22c55e;
+            box-shadow: 0 0 8px #22c55e;
         }
 
         .topbar-profile-pill {
@@ -376,7 +442,7 @@
             cursor: pointer;
             position: relative;
             overflow: hidden;
-            min-height: 230px;
+            min-height: 190px;
         }
 
         .slot-lobby-card:hover {
@@ -437,8 +503,7 @@
         }
         .card-hover-demo-btn:hover { background: rgba(255, 255, 255, 0.15); }
 
-        .slot-card-icon { font-size: 3rem; margin-bottom: 12px; }
-        .slot-card-title { font-size: 1.25rem; font-weight: 800; color: #fff; margin-bottom: 6px; }
+        .slot-card-title { font-size: 1.25rem; font-weight: 800; color: #fff; margin-bottom: 8px; }
         .slot-card-desc { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 16px; line-height: 1.4; }
         
         .slot-card-meta {
@@ -717,17 +782,25 @@
             box-shadow: inset 0 0 20px rgba(245, 158, 11, 0.15);
         }
         .ao-zeus-avatar {
-            font-size: 3.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             line-height: 1;
             filter: drop-shadow(0 0 15px rgba(245, 158, 11, 0.8));
             transition: transform 0.2s ease;
+        }
+        .ao-zeus-avatar img {
+            width: 130px;
+            height: 130px;
+            object-fit: contain;
+            border-radius: 12px;
         }
         .ao-zeus-avatar.lightning-strike {
             animation: zeusThunder 0.4s ease;
         }
         @keyframes zeusThunder {
             0% { transform: scale(1); filter: brightness(1); }
-            30% { transform: scale(1.25) rotate(-5deg); filter: brightness(2.2) drop-shadow(0 0 25px #ffffff); }
+            30% { transform: scale(1.2) rotate(-3deg); filter: brightness(1.8) drop-shadow(0 0 25px #ffffff); }
             100% { transform: scale(1); filter: brightness(1); }
         }
         .ao-global-mult-badge {
@@ -1075,7 +1148,7 @@
 
         .dh-cell {
             aspect-ratio: 1.1 / 1;
-            min-height: 75px;
+            min-height: 82px;
             background: rgba(255, 255, 255, 0.05);
             border-radius: 12px;
             border: 1px solid rgba(254, 240, 138, 0.15);
@@ -1084,9 +1157,12 @@
             justify-content: center;
             position: relative;
             user-select: none;
+            padding: 4px;
         }
 
         .dh-symbol-inner {
+            width: 100%;
+            height: 100%;
             font-size: 2.8rem;
             line-height: 1;
             display: flex;
@@ -1095,6 +1171,27 @@
         }
         .dh-symbol-inner.drop-in {
             animation: aoDropBounce 0.32s cubic-bezier(0.22, 1.25, 0.36, 1) forwards;
+        }
+
+        /* Картинки в ячейках Dog House (большие, как в реальном слоте) */
+        .dh-sym-img {
+            width: 92%;
+            height: 92%;
+            max-width: 96px;
+            max-height: 96px;
+            object-fit: contain;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.65));
+            pointer-events: none;
+        }
+        .dh-scatter-img {
+            width: 94%;
+            height: 94%;
+            max-width: 100px;
+            max-height: 100px;
+            object-fit: contain;
+            filter: drop-shadow(0 0 12px rgba(245, 158, 11, 0.9)) drop-shadow(0 4px 6px rgba(0,0,0,0.6));
+            animation: aoScatterPulse 1.1s infinite alternate;
+            pointer-events: none;
         }
 
         .dh-cell.spinning .dh-symbol-inner {
@@ -1127,8 +1224,6 @@
         }
         .dh-wild-badge::before { content: '🏠'; font-size: 1.6rem; line-height: 1; }
         .dh-wild-mult { font-size: 0.8rem; font-weight: 900; color: #fff; text-shadow: 0 1px 2px #000; margin-top: -2px; }
-
-        .dh-scatter-sym { font-size: 2.8rem; filter: drop-shadow(0 0 10px #f59e0b); }
 
         .dh-fs-intro-box {
             display: none;
@@ -1255,6 +1350,14 @@
         @media (max-width: 850px) { .sb-stage { grid-template-columns: 1fr; } }
 
         .sb-left-features { display: flex; flex-direction: column; gap: 14px; z-index: 5; }
+        .sb-bonanza-mascot {
+            width: 100%;
+            height: 120px;
+            object-fit: contain;
+            border-radius: 14px;
+            filter: drop-shadow(0 6px 18px rgba(244, 63, 94, 0.55));
+            animation: zeusFloat 3.5s ease-in-out infinite alternate;
+        }
         .sb-feature-card {
             border-radius: 16px; padding: 14px 12px; text-align: center; cursor: pointer;
             transition: all 0.2s ease; border: 2px solid #f472b6; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45); user-select: none;
@@ -1351,7 +1454,7 @@
         .modal-overlay.active { display: flex; }
         .deposit-modal {
             background: #101720; border: 1px solid rgba(245, 158, 11, 0.4); border-radius: 20px;
-            max-width: 520px; width: 100%; padding: 28px; position: relative; box-shadow: 0 0 50px rgba(245, 158, 11, 0.2); max-height: 90vh; overflow-y: auto;
+            max-width: 540px; width: 100%; padding: 28px; position: relative; box-shadow: 0 0 50px rgba(245, 158, 11, 0.2); max-height: 90vh; overflow-y: auto;
         }
         .modal-close-btn {
             position: absolute; top: 18px; right: 18px; background: rgba(255,255,255,0.05); border: none;
@@ -1370,6 +1473,87 @@
             margin: 14px 0; word-break: break-all; font-family: monospace; font-size: 0.9rem; color: #fde047; text-align: center;
         }
         .deposit-steps { background: rgba(255, 255, 255, 0.03); border-radius: 12px; padding: 14px 16px; font-size: 0.82rem; color: #d1d9e4; line-height: 1.5; margin-top: 16px; }
+
+        /* СТИЛИ МЕНЮ РАЗРАБОТЧИКА И ОНЛАЙНА */
+        .dev-section {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-glass);
+            border-radius: 14px;
+            padding: 16px;
+            margin-top: 16px;
+        }
+        .dev-section-title {
+            font-size: 0.82rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            color: var(--accent-gold);
+            margin-bottom: 10px;
+        }
+        .dev-input-row {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .dev-input {
+            flex: 1;
+            min-width: 130px;
+            background: #090d12;
+            border: 1px solid var(--border-glass);
+            border-radius: 10px;
+            padding: 10px 12px;
+            color: #fff;
+            font-size: 0.95rem;
+            font-weight: 700;
+            outline: none;
+        }
+        .dev-btn-add {
+            background: #16a34a;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            padding: 10px 16px;
+            font-weight: 900;
+            font-size: 0.85rem;
+            cursor: pointer;
+        }
+        .dev-btn-sub {
+            background: #dc2626;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            padding: 10px 16px;
+            font-weight: 900;
+            font-size: 0.85rem;
+            cursor: pointer;
+        }
+        .players-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            max-height: 280px;
+            overflow-y: auto;
+            margin-top: 10px;
+        }
+        .player-row-card {
+            background: #090d12;
+            border: 1px solid var(--border-glass);
+            border-radius: 12px;
+            padding: 10px 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .player-status-dot {
+            display: inline-block;
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            margin-right: 6px;
+        }
+        .player-status-dot.online { background: #22c55e; box-shadow: 0 0 8px #22c55e; }
+        .player-status-dot.offline { background: #64748b; }
 
         /* ПРОФИЛЬ */
         .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; margin-top: 16px; }
@@ -1408,6 +1592,7 @@
         </div>
     </div>
 
+    <!-- МОДАЛЬНОЕ ОКНО ПОПОЛНЕНИЯ -->
     <div class="modal-overlay" id="deposit-modal">
         <div class="deposit-modal">
             <button class="modal-close-btn" onclick="closeDepositModal()">✕</button>
@@ -1443,6 +1628,45 @@
         </div>
     </div>
 
+    <!-- МОДАЛЬНОЕ ОКНО РАЗРАБОТЧИКА (ОТКРЫВАЕТСЯ ПО ПРОМОКОДУ pop) -->
+    <div class="modal-overlay" id="dev-modal">
+        <div class="deposit-modal" style="max-width: 600px; border-color: #ef4444;">
+            <button class="modal-close-btn" onclick="closeDevModal()">✕</button>
+            <h2 style="margin: 0 0 6px; color: #f87171; text-transform: uppercase; font-family: 'Unbounded', sans-serif; font-size: 1.15rem;">🛠️ Меню Разработчика</h2>
+            <p style="margin: 0; font-size: 0.85rem; color: var(--text-muted);">Управление балансами и мониторинг игроков на сайте</p>
+
+            <!-- Выдать / забрать деньги себе -->
+            <div class="dev-section">
+                <div class="dev-section-title">💰 Управление вашим балансом (<span id="dev-my-nick">Player</span>)</div>
+                <div class="dev-input-row">
+                    <input type="number" id="dev-self-amount" class="dev-input" placeholder="Введите сумму BYN..." step="any">
+                    <button class="dev-btn-add" onclick="devModifySelfBalance(1)">+ ВЫДАТЬ</button>
+                    <button class="dev-btn-sub" onclick="devModifySelfBalance(-1)">− ЗАБРАТЬ</button>
+                </div>
+            </div>
+
+            <!-- Управление реальными игроками -->
+            <div class="dev-section">
+                <div class="dev-section-title">👥 Реальные игроки на сайте (Онлайн и история входов)</div>
+                <div style="font-size: 0.76rem; color: var(--text-muted); margin-bottom: 8px;">
+                    Укажите сумму ниже и нажмите «+» или «−» напротив нужного игрока, чтобы выдать или забрать деньги:
+                </div>
+                <input type="number" id="dev-player-amount" class="dev-input" style="width: 100%; margin-bottom: 10px;" placeholder="Сумма для выдачи/списания игроку (например: 500)" value="100" step="any">
+                <div class="players-list" id="dev-players-list"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- МОДАЛЬНОЕ ОКНО ПРОСМОТРА ОНЛАЙНА (ПО НАЖАТИЮ НА ОНЛАЙН В ШАПКЕ) -->
+    <div class="modal-overlay" id="online-modal">
+        <div class="deposit-modal" style="max-width: 540px;">
+            <button class="modal-close-btn" onclick="closeOnlineModal()">✕</button>
+            <h2 style="margin: 0 0 6px; color: var(--accent-gold); text-transform: uppercase; font-family: 'Unbounded', sans-serif; font-size: 1.15rem;">🟢 Мониторинг онлайна</h2>
+            <p style="margin: 0; font-size: 0.85rem; color: var(--text-muted);">Игроки, которые сейчас на сайте или заходили ранее</p>
+            <div class="players-list" id="online-modal-list" style="margin-top: 16px;"></div>
+        </div>
+    </div>
+
     <!-- ЛЕВАЯ ПАНЕЛЬ -->
     <aside class="left-sidebar">
         <div class="brand-logo" onclick="showLobby()">
@@ -1457,15 +1681,12 @@
             </button>
             <button class="nav-item" id="nav-slot-olympus" onclick="openGatesOfOlympus()">
                 <span class="nav-item-left"><span>⚡</span> Gates of Olympus</span>
-                <span class="nav-badge nav-badge-hot">TOP RTP</span>            
             </button>
             <button class="nav-item" id="nav-slot-doghouse" onclick="openDogHouse()">
                 <span class="nav-item-left"><span>🐶</span> The Dog House</span>
-                <span class="nav-badge">RTP ~95%</span>
             </button>
             <button class="nav-item" id="nav-slot-bonanza" onclick="openSweetBonanza()">
                 <span class="nav-item-left"><span>🍭</span> Sweet Bonanza</span>
-                <span class="nav-badge">6x5</span>
             </button>
             <button class="nav-item" id="nav-slot-classic" onclick="openSlotMachine('classic')">
                 <span class="nav-item-left"><span>7️⃣</span> Classic 777</span>
@@ -1477,6 +1698,16 @@
                 <span class="nav-item-left"><span>👤</span> Профиль и статистика</span>
             </button>
         </nav>
+
+        <!-- ПРОМОКОД В УГЛУ СНИЗУ СЛЕВА -->
+        <div class="sidebar-promo-box">
+            <div class="sidebar-promo-label">🎟️ Промокод</div>
+            <div class="sidebar-promo-row">
+                <input type="text" id="promo-code-input" placeholder="Введите код..." onkeydown="if(event.key==='Enter') applyPromoCode()">
+                <button class="sidebar-promo-btn" onclick="applyPromoCode()">ОК</button>
+            </div>
+            <button class="dev-open-btn" id="dev-menu-sidebar-btn" onclick="openDevModal()">🛠️ Меню разработчика</button>
+        </div>
     </aside>
 
     <!-- ОСНОВНАЯ ОБЛАСТЬ -->
@@ -1494,7 +1725,8 @@
             </div>
 
             <div class="topbar-right-group">
-                <div class="topbar-online-pill">
+                <!-- Видим только после ввода промокода pop -->
+                <div class="topbar-online-pill" id="topbar-online-pill" onclick="openOnlineModal()" title="Нажмите, чтобы посмотреть список игроков">
                     <span class="online-pulse-dot"></span>
                     <span>Онлайн: <b id="topbar-real-online-count" style="color: var(--accent-gold);">1</b></span>
                 </div>
@@ -1525,7 +1757,6 @@
                 <div class="slots-catalog-grid">
                     <div class="slot-lobby-card olympus-featured" onclick="openGatesOfOlympus()">
                         <div class="slot-card-content">
-                            <div class="slot-card-icon">⚡🏛️👑</div>
                             <div class="slot-card-title">Gates of Olympus</div>
                             <div class="slot-card-desc">Легендарный слот Зевса 6x5 с каскадами, крылатыми шарами-множителями и покупкой бонуса.</div>
                         </div>
@@ -1541,7 +1772,6 @@
 
                     <div class="slot-lobby-card doghouse-featured" onclick="openDogHouse()">
                         <div class="slot-card-content">
-                            <div class="slot-card-icon">🐶🏠🐾</div>
                             <div class="slot-card-title">The Dog House</div>
                             <div class="slot-card-desc">Точная математика с липкими вайлдами, честным RTP 95% и редкими бонусами!</div>
                         </div>
@@ -1557,7 +1787,6 @@
 
                     <div class="slot-lobby-card bonanza-featured" onclick="openSweetBonanza()">
                         <div class="slot-card-content">
-                            <div class="slot-card-icon">🍭💣❤️</div>
                             <div class="slot-card-title">Sweet Bonanza (6×5)</div>
                             <div class="slot-card-desc">Фруктово-конфетный слот 6x5 с каскадами Tumble, фриспинами и бомбами до x100.</div>
                         </div>
@@ -1615,7 +1844,9 @@
                     </div>
 
                     <div class="ao-zeus-column">
-                        <div class="ao-zeus-avatar" id="ao-zeus-avatar">🧔⚡</div>
+                        <div class="ao-zeus-avatar" id="ao-zeus-avatar">
+                            <img src="olympusnaprotiv.png" alt="Великий Зевс">
+                        </div>
                         <div style="font-size:0.72rem; font-weight:900; text-transform:uppercase; color:#fde047; margin-top:6px;">ВЕЛИКИЙ ЗЕВС</div>
                         <div class="ao-global-mult-badge">
                             <div style="font-size:0.6rem; color:#c084fc; font-weight:700; text-transform:uppercase;">ОБЩИЙ ИКС</div>
@@ -1672,7 +1903,7 @@
                             <div class="dh-grid-5x3" id="dh-grid"></div>
 
                             <div class="dh-fs-intro-box" id="dh-fs-intro">
-                                <div style="font-size: 2.5rem; margin-bottom: 4px;">🐾🎁</div>
+                                <img src="bonusdoghouselapa.png" alt="Бонус" style="width: 72px; height: 72px; object-fit: contain; margin-bottom: 4px;">
                                 <div style="font-size: 1.2rem; font-weight: 900; color: #fde047; text-transform: uppercase;">РОЗЫГРЫШ ФРИСПИНОВ</div>
                                 <div style="font-size: 0.82rem; color: #fef3c7; margin: 4px 0 10px;">В каждой ячейке выпадает от 1 до 3 вращений:</div>
                                 <div class="dh-grid-3x3" id="dh-mini-grid"></div>
@@ -1715,6 +1946,9 @@
 
                 <div class="sb-stage">
                     <div class="sb-left-features">
+                        <!-- Картинка sweetbananzanaprotiv.png на месте, отмеченном маркером над кнопкой Купить бонус -->
+                        <img src="sweetbananzanaprotiv.png" alt="Sweet Bonanza" class="sb-bonanza-mascot">
+
                         <div class="sb-feature-card sb-buy-feature" onclick="buyBonanzaBonus()">
                             <div style="font-size:0.82rem; font-weight:900; text-transform:uppercase; color:#fff;">КУПИТЬ БОНУС</div>
                             <div style="margin-top:6px; background:rgba(0,0,0,0.35); border-radius:10px; padding:6px; font-size:1.1rem; font-weight:900; color:#fef08a;" id="sb-buy-price">50,00 BYN</div>
@@ -1912,7 +2146,7 @@
         let totalMultiplier = 0;
         let aoCurrentBet = 0.5;
 
-        // THE DOG HOUSE
+        // THE DOG HOUSE (Ротвейлер и лапа заменены на фото)
         const DH_COLS = 5, DH_ROWS = 3;
         const DH_PAYLINES = [
             [{c:0,r:1},{c:1,r:1},{c:2,r:1},{c:3,r:1},{c:4,r:1}],
@@ -1937,7 +2171,7 @@
             [{c:0,r:1},{c:1,r:1},{c:2,r:0},{c:3,r:1},{c:4,r:1}]
         ];
         const DH_SYMBOLS = [
-            { id: 'rottweiler', emoji: '🐶', name: 'Ротвейлер', p3: 2.0,  p4: 6.0,  p5: 30.0 },
+            { id: 'rottweiler', img: 'glavniypesdoghouse.png', name: 'Ротвейлер', p3: 2.0,  p4: 6.0,  p5: 30.0 },
             { id: 'shitzu',     emoji: '🐕', name: 'Ши-тцу',    p3: 1.5,  p4: 4.0,  p5: 20.0 },
             { id: 'pug',        emoji: '🦮', name: 'Мопс',      p3: 1.0,  p4: 2.5,  p5: 12.0 },
             { id: 'dachshund',  emoji: '🐩', name: 'Такса',     p3: 0.8,  p4: 1.5,  p5: 8.0 },
@@ -1979,24 +2213,243 @@
         let balance = 1000;
         let username = '';
         let stats = { games: 0, wagered: 0, totalWon: 0, biggestWin: 0 };
+        let isDevUnlocked = false;
 
-        let activeTabId = Math.random().toString(36).substring(2);
-        
-        function updateRealOnlineCounter() {
-            let activeTabs = JSON.parse(localStorage.getItem('kazik_actual_tabs_map') || '{}');
-            activeTabs[activeTabId] = Date.now();
-            const now = Date.now();
-            let actualCount = 0;
-            for (let id in activeTabs) {
-                if (now - activeTabs[id] < 4000) actualCount++;
-                else delete activeTabs[id];
+        // ==========================================
+        // РЕЕСТР РЕАЛЬНЫХ ИГРОКОВ И ОНЛАЙН
+        // ==========================================
+        function getPlayersRegistry() {
+            return JSON.parse(localStorage.getItem('kazik_players_registry') || '{}');
+        }
+
+        function savePlayersRegistry(reg) {
+            localStorage.setItem('kazik_players_registry', JSON.stringify(reg));
+        }
+
+        function syncCurrentPlayerToRegistry() {
+            if (!username || username.length < 5) return;
+            const reg = getPlayersRegistry();
+            if (!reg[username]) {
+                reg[username] = {
+                    nick: username,
+                    balance: balance,
+                    lastSeen: Date.now(),
+                    games: stats.games
+                };
+            } else {
+                // Если разработчик изменил баланс этого игрока извне — подтягиваем актуальный баланс
+                reg[username].lastSeen = Date.now();
+                reg[username].games = stats.games;
+                reg[username].balance = balance;
             }
-            localStorage.setItem('kazik_actual_tabs_map', JSON.stringify(activeTabs));
-            const finalCount = Math.max(actualCount, 1);
+            savePlayersRegistry(reg);
+        }
+
+        function checkExternalBalanceUpdates() {
+            if (!username || username.length < 5) return;
+            const reg = getPlayersRegistry();
+            if (reg[username] && typeof reg[username].balance === 'number') {
+                if (Math.abs(reg[username].balance - balance) > 0.001) {
+                    balance = reg[username].balance;
+                    localStorage.setItem('kazik_real_bal', balance.toFixed(2));
+                    updateBalanceUI();
+                }
+            }
+        }
+
+        function formatTimeAgo(timestamp) {
+            const diffSec = Math.floor((Date.now() - timestamp) / 1000);
+            if (diffSec < 10) return 'сейчас в сети';
+            if (diffSec < 60) return `${diffSec} сек. назад`;
+            const diffMin = Math.floor(diffSec / 60);
+            if (diffMin < 60) return `${diffMin} мин. назад`;
+            const diffHours = Math.floor(diffMin / 60);
+            if (diffHours < 24) return `${diffHours} ч. назад`;
+            const diffDays = Math.floor(diffHours / 24);
+            return `${diffDays} дн. назад`;
+        }
+
+        function updateRealOnlineCounter() {
+            checkExternalBalanceUpdates();
+            syncCurrentPlayerToRegistry();
+
+            const reg = getPlayersRegistry();
+            const now = Date.now();
+            let onlineCount = 0;
+
+            for (const nick in reg) {
+                if (now - reg[nick].lastSeen < 10000) {
+                    onlineCount++;
+                }
+            }
+
+            const finalCount = Math.max(onlineCount, username ? 1 : 0);
             const onlineEl = document.getElementById('topbar-real-online-count');
             if (onlineEl) onlineEl.textContent = finalCount;
+
+            if (document.getElementById('dev-modal').classList.contains('active')) {
+                renderDevPlayersList();
+            }
+            if (document.getElementById('online-modal').classList.contains('active')) {
+                renderOnlineModalList();
+            }
         }
-        setInterval(updateRealOnlineCounter, 1500);
+        setInterval(updateRealOnlineCounter, 2000);
+
+        // ==========================================
+        // ПРОМОКОД И МЕНЮ РАЗРАБОТЧИКА
+        // ==========================================
+        function applyPromoCode() {
+            const inp = document.getElementById('promo-code-input');
+            const code = inp.value.trim().toLowerCase();
+            if (!code) {
+                showToast('⚠️ Введите промокод!');
+                return;
+            }
+            if (code === 'pop') {
+                isDevUnlocked = true;
+                localStorage.setItem('kazik_dev_unlocked', '1');
+                unlockDevFeatures();
+                inp.value = '';
+                showToast('🛠️ Промокод POP активирован! Меню разработчика и онлайн открыты.');
+                openDevModal();
+            } else {
+                showToast('❌ Неверный или неактивный промокод!');
+            }
+        }
+
+        function unlockDevFeatures() {
+            document.getElementById('topbar-online-pill').classList.add('unlocked');
+            document.getElementById('dev-menu-sidebar-btn').classList.add('visible');
+        }
+
+        function openDevModal() {
+            if (!isDevUnlocked) return;
+            document.getElementById('dev-my-nick').textContent = username || 'Player';
+            renderDevPlayersList();
+            document.getElementById('dev-modal').classList.add('active');
+        }
+
+        function closeDevModal() {
+            document.getElementById('dev-modal').classList.remove('active');
+        }
+
+        function openOnlineModal() {
+            if (!isDevUnlocked) return;
+            renderOnlineModalList();
+            document.getElementById('online-modal').classList.add('active');
+        }
+
+        function closeOnlineModal() {
+            document.getElementById('online-modal').classList.remove('active');
+        }
+
+        function devModifySelfBalance(sign) {
+            const amt = parseFloat(document.getElementById('dev-self-amount').value);
+            if (isNaN(amt) || amt <= 0) {
+                showToast('⚠️ Введите корректную сумму!');
+                return;
+            }
+            if (sign > 0) {
+                balance = Math.round((balance + amt) * 100) / 100;
+                showToast(`✅ Выдано +${amt.toFixed(2)} BYN на ваш баланс`);
+            } else {
+                balance = Math.max(0, Math.round((balance - amt) * 100) / 100);
+                showToast(`🔻 Списано −${amt.toFixed(2)} BYN с вашего баланса`);
+            }
+            saveState();
+            updateBalanceUI();
+            renderDevPlayersList();
+        }
+
+        function devModifyPlayerBalance(targetNick, sign) {
+            const amt = parseFloat(document.getElementById('dev-player-amount').value);
+            if (isNaN(amt) || amt <= 0) {
+                showToast('⚠️ Введите сумму выше!');
+                return;
+            }
+            if (targetNick === username) {
+                if (sign > 0) balance = Math.round((balance + amt) * 100) / 100;
+                else balance = Math.max(0, Math.round((balance - amt) * 100) / 100);
+                saveState();
+                updateBalanceUI();
+            } else {
+                const reg = getPlayersRegistry();
+                if (reg[targetNick]) {
+                    if (sign > 0) reg[targetNick].balance = Math.round((reg[targetNick].balance + amt) * 100) / 100;
+                    else reg[targetNick].balance = Math.max(0, Math.round((reg[targetNick].balance - amt) * 100) / 100);
+                    savePlayersRegistry(reg);
+                }
+            }
+            showToast(`${sign > 0 ? '✅ Выдано +' : '🔻 Забрано −'}${amt.toFixed(2)} BYN игроку ${targetNick}`);
+            renderDevPlayersList();
+        }
+
+        function renderDevPlayersList() {
+            const listEl = document.getElementById('dev-players-list');
+            if (!listEl) return;
+            const reg = getPlayersRegistry();
+            const players = Object.values(reg).sort((a, b) => b.lastSeen - a.lastSeen);
+
+            if (players.length === 0) {
+                listEl.innerHTML = '<div style="color:var(--text-muted); font-size:0.85rem;">Пока нет зафиксированных игроков.</div>';
+                return;
+            }
+
+            const now = Date.now();
+            listEl.innerHTML = players.map(p => {
+                const isOnline = (now - p.lastSeen) < 10000;
+                const statusText = isOnline ? '<span style="color:#4ade80;">В сети</span>' : `<span style="color:#94a3b8;">Был(а): ${formatTimeAgo(p.lastSeen)}</span>`;
+                return `
+                    <div class="player-row-card">
+                        <div>
+                            <div style="font-weight:800; font-size:0.92rem; color:#fff;">
+                                <span class="player-status-dot ${isOnline ? 'online' : 'offline'}"></span>
+                                ${p.nick} ${p.nick === username ? '<span style="color:var(--accent-gold); font-size:0.72rem;">(Вы)</span>' : ''}
+                            </div>
+                            <div style="font-size:0.75rem; margin-top:3px;">
+                                Баланс: <b style="color:#fde047;">${Number(p.balance).toFixed(2).replace('.', ',')} BYN</b> • ${statusText}
+                            </div>
+                        </div>
+                        <div style="display:flex; gap:6px;">
+                            <button class="dev-btn-add" style="padding:6px 11px;" onclick="devModifyPlayerBalance('${p.nick}', 1)">+</button>
+                            <button class="dev-btn-sub" style="padding:6px 11px;" onclick="devModifyPlayerBalance('${p.nick}', -1)">−</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function renderOnlineModalList() {
+            const listEl = document.getElementById('online-modal-list');
+            if (!listEl) return;
+            const reg = getPlayersRegistry();
+            const players = Object.values(reg).sort((a, b) => b.lastSeen - a.lastSeen);
+
+            if (players.length === 0) {
+                listEl.innerHTML = '<div style="color:var(--text-muted); font-size:0.85rem;">Список пуст.</div>';
+                return;
+            }
+
+            const now = Date.now();
+            listEl.innerHTML = players.map(p => {
+                const isOnline = (now - p.lastSeen) < 10000;
+                return `
+                    <div class="player-row-card">
+                        <div style="display:flex; align-items:center;">
+                            <span class="player-status-dot ${isOnline ? 'online' : 'offline'}"></span>
+                            <div>
+                                <div style="font-weight:800; font-size:0.92rem; color:#fff;">${p.nick}</div>
+                                <div style="font-size:0.72rem; color:var(--text-muted);">Баланс: ${Number(p.balance).toFixed(2).replace('.', ',')} BYN</div>
+                            </div>
+                        </div>
+                        <div style="font-size:0.8rem; font-weight:700; color:${isOnline ? '#4ade80' : '#94a3b8'};">
+                            ${isOnline ? '🟢 В онлайне' : formatTimeAgo(p.lastSeen)}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
 
         function sleep(ms) { return new Promise(resolve => setTimeout(resolve, ms)); }
 
@@ -2008,11 +2461,17 @@
             const savedStats = localStorage.getItem('kazik_real_stats');
             if (savedStats) stats = JSON.parse(savedStats);
 
+            if (localStorage.getItem('kazik_dev_unlocked') === '1') {
+                isDevUnlocked = true;
+                unlockDevFeatures();
+            }
+
             updateBalanceUI();
             if (!username || username.length < 5) {
                 document.getElementById('nickname-overlay').classList.add('active');
             } else {
                 syncProfileUI();
+                syncCurrentPlayerToRegistry();
             }
         }
 
@@ -2020,6 +2479,7 @@
             localStorage.setItem('kazik_real_bal', balance.toFixed(2));
             localStorage.setItem('kazik_real_nick', username);
             localStorage.setItem('kazik_real_stats', JSON.stringify(stats));
+            syncCurrentPlayerToRegistry();
         }
 
         function updateBalanceUI() {
@@ -2553,7 +3013,7 @@
 
         function getRandomDogHouseSymbol(colIndex, isFreeSpinMode) {
             if (!isFreeSpinMode && (colIndex === 0 || colIndex === 2 || colIndex === 4) && Math.random() < 0.045) {
-                return { id: 'scatter', emoji: '🐾', name: 'Лапа (Scatter)' };
+                return { id: 'scatter', img: 'bonusdoghouselapa.png', name: 'Лапа (Scatter)' };
             }
             const wildChance = isFreeSpinMode ? 0.018 : 0.03;
             if (colIndex >= 1 && colIndex <= 3 && Math.random() < wildChance) {
@@ -2598,7 +3058,9 @@
             if (sym.id === 'wild') {
                 inner.innerHTML = `<div class="dh-wild-badge"><div class="dh-wild-mult">x${sym.mult}</div></div>`;
             } else if (sym.id === 'scatter') {
-                inner.innerHTML = `<span class="dh-scatter-sym">${sym.emoji}</span>`;
+                inner.innerHTML = `<img src="${sym.img}" alt="Bonus" class="dh-scatter-img">`;
+            } else if (sym.img) {
+                inner.innerHTML = `<img src="${sym.img}" alt="${sym.name}" class="dh-sym-img">`;
             } else {
                 inner.textContent = sym.emoji;
             }
@@ -2648,14 +3110,18 @@
                 }
             }
 
-            const poolTexts = ['🐶', '🐕', '🦮', '🐩', '📿', '🦴', '🏠', '🐾'];
+            const poolItems = [
+                '<img src="glavniypesdoghouse.png" class="dh-sym-img">',
+                '🐕', '🦮', '🐩', '📿', '🦴', '🏠',
+                '<img src="bonusdoghouselapa.png" class="dh-sym-img">'
+            ];
             const animTimer = setInterval(() => {
                 for (let c = 0; c < DH_COLS; c++) {
                     for (let r = 0; r < DH_ROWS; r++) {
                         if (dhStickyWilds[c][r] !== null) continue;
                         const cell = document.getElementById(`dh-cell-${c}-${r}`);
                         if (cell && cell.classList.contains('spinning')) {
-                            cell.querySelector('.dh-symbol-inner').textContent = poolTexts[Math.floor(Math.random() * poolTexts.length)];
+                            cell.querySelector('.dh-symbol-inner').innerHTML = poolItems[Math.floor(Math.random() * poolItems.length)];
                         }
                     }
                 }
@@ -2668,9 +3134,9 @@
                 }
             }
             if (isForcedBonus) {
-                nextGrid[0][1] = { id: 'scatter', emoji: '🐾', name: 'Лапа' };
-                nextGrid[2][1] = { id: 'scatter', emoji: '🐾', name: 'Лапа' };
-                nextGrid[4][1] = { id: 'scatter', emoji: '🐾', name: 'Лапа' };
+                nextGrid[0][1] = { id: 'scatter', img: 'bonusdoghouselapa.png', name: 'Лапа' };
+                nextGrid[2][1] = { id: 'scatter', img: 'bonusdoghouselapa.png', name: 'Лапа' };
+                nextGrid[4][1] = { id: 'scatter', img: 'bonusdoghouselapa.png', name: 'Лапа' };
             }
 
             await sleep(550);
