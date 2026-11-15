@@ -127,6 +127,63 @@
             border-color: rgba(245, 158, 11, 0.3);
             color: #ffffff;
         }
+        .nav-item.active {
+            background: linear-gradient(90deg, rgba(245, 158, 11, 0.15) 0%, rgba(245, 158, 11, 0.02) 100%);
+            border-color: rgba(245, 158, 11, 0.3);
+            color: #ffffff;
+        }
+
+        /* === ВСТАВИТЬ НАЧИНАЯ ОТСЮДА === */
+        .slot-nav-card {
+            flex-direction: column;
+            align-items: stretch;
+            justify-content: flex-start;
+            padding: 8px;
+            gap: 6px;
+            overflow: hidden;
+            min-height: auto;
+        }
+
+        .slot-nav-img {
+            width: 100%;
+            height: 54px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 1px solid var(--border-glass);
+            display: block;
+            transition: transform 0.25s ease, filter 0.25s ease;
+        }
+
+        .slot-nav-card:hover .slot-nav-img {
+            transform: scale(1.04);
+            filter: brightness(1.15);
+            border-color: rgba(245, 158, 11, 0.5);
+        }
+
+        .slot-nav-card.active .slot-nav-img {
+            border-color: var(--accent-gold);
+            box-shadow: 0 0 12px var(--accent-gold-glow);
+        }
+
+        .slot-nav-label {
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-align: center;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            transition: color 0.2s ease;
+        }
+
+        .slot-nav-card:hover .slot-nav-label,
+        .slot-nav-card.active .slot-nav-label {
+            color: #ffffff;
+        }
+        /* === ВСТАВИТЬ ЗАКОНЧИТЬ ЗДЕСЬ === */
+
+                .sidebar-promo-box {
+            margin-top: auto;
+        }
 
         .sidebar-promo-box {
             margin-top: auto;
@@ -1522,18 +1579,25 @@
             <button class="nav-item active" id="nav-lobby" onclick="showLobby()">
                 <span class="nav-item-left"><span>🏠</span> Игровой зал</span>
             </button>
-            <button class="nav-item" id="nav-slot-olympus" onclick="openGatesOfOlympus()">
-                <span class="nav-item-left"><span>⚡</span> Gates of Olympus</span>
-            </button>
-            <button class="nav-item" id="nav-slot-doghouse" onclick="openDogHouse()">
-                <span class="nav-item-left"><span>🐶</span> The Dog House</span>
-            </button>
-            <button class="nav-item" id="nav-slot-bonanza" onclick="openSweetBonanza()">
-                <span class="nav-item-left"><span>🍭</span> Sweet Bonanza</span>
-            </button>
-            <button class="nav-item" id="nav-slot-chicken" onclick="openChickenGame()">
-                <span class="nav-item-left"><span>🐔</span> Chicken Cross (Crash)</span>
-            </button>
+            <button class="nav-item slot-nav-card" id="nav-slot-olympus" onclick="openGatesOfOlympus()">
+    <img src="olympuspushka.jpg" alt="Gates of Olympus" class="slot-nav-img">
+    <span class="slot-nav-label">Gates of Olympus</span>
+</button>
+
+<button class="nav-item slot-nav-card" id="nav-slot-doghouse" onclick="openDogHouse()">
+    <img src="emblemadoghouse-removebg-preview.png" alt="The Dog House" class="slot-nav-img">
+    <span class="slot-nav-label">The Dog House</span>
+</button>
+
+<button class="nav-item slot-nav-card" id="nav-slot-bonanza" onclick="openSweetBonanza()">
+    <img src="sweetbananzaemblema.png" alt="Sweet Bonanza" class="slot-nav-img">
+    <span class="slot-nav-label">Sweet Bonanza</span>
+</button>
+
+<button class="nav-item slot-nav-card" id="nav-slot-chicken" onclick="openChickenGame()">
+    <img src="chicken.jpg" alt="Chicken Cross" class="slot-nav-img">
+    <span class="slot-nav-label">Chicken Cross</span>
+</button>
             <button class="nav-item" id="nav-profile" onclick="switchView('profile')">
                 <span class="nav-item-left"><span>👤</span> Профиль и статистика</span>
             </button>
