@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>СЕРЁГА И ОЛЯМБУС КАЗИК — Официальный слот-портал</title>
     <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@700;900&family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-    <!-- Подключаем Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
     <style>
@@ -365,7 +364,6 @@
             flex-direction: column;
         }
 
-        /* HERO-БЛОК */
         .hero-banner {
             border-radius: 20px;
             background: radial-gradient(circle at 85% 50%, rgba(245, 158, 11, 0.25) 0%, transparent 55%),
@@ -442,7 +440,6 @@
             100% { transform: translateY(-10px) scale(1.03); }
         }
 
-        /* КАТАЛОГ СЛОТОВ */
         .slots-catalog-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -571,9 +568,7 @@
             box-shadow: 0 0 15px rgba(34, 197, 94, 0.7);
         }
 
-        /* ========================================== */
         /* GATES OF OLYMPUS */
-        /* ========================================== */
         #view-olympus {
             padding: 0;
             overflow: hidden;
@@ -927,9 +922,7 @@
         .ao-spin-circle-btn svg { width: 38px; height: 38px; fill: #fff; }
         .ao-spin-circle-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
-        /* ========================================== */
         /* THE DOG HOUSE */
-        /* ========================================== */
         #view-doghouse {
             padding: 0; overflow: hidden; border: 2px solid #f59e0b;
             background: radial-gradient(circle at 50% 30%, #3d220f 0%, #1a100a 60%, #0d0805 100%);
@@ -1035,9 +1028,7 @@
         .dh-spin-circle-btn svg { width: 38px; height: 38px; fill: #fff; }
         .dh-spin-circle-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
-        /* ========================================== */
         /* SWEET BONANZA */
-        /* ========================================== */
         #view-bonanza {
             padding: 0; overflow: hidden; border: 2px solid #f43f5e;
             background: linear-gradient(180deg, #4a044e 0%, #701a75 40%, #3b0764 100%);
@@ -1213,7 +1204,6 @@
         }
         .sb-spin-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
-        /* МОДАЛЬНЫЕ ОКНА */
         .modal-overlay {
             display: none; position: fixed; inset: 0; background: rgba(4, 7, 11, 0.88);
             backdrop-filter: blur(8px); z-index: 9999; align-items: center; justify-content: center; padding: 20px;
@@ -1287,7 +1277,6 @@
         </div>
     </div>
 
-    <!-- МОДАЛЬНОЕ ОКНО ПОПОЛНЕНИЯ -->
     <div class="modal-overlay" id="deposit-modal">
         <div class="deposit-modal">
             <button class="modal-close-btn" onclick="closeDepositModal()">✕</button>
@@ -1326,7 +1315,6 @@
         </div>
     </div>
 
-    <!-- МОДАЛЬНОЕ ОКНО РАЗРАБОТЧИКА -->
     <div class="modal-overlay" id="dev-modal">
         <div class="deposit-modal" style="max-width: 600px; border-color: #ef4444;">
             <button class="modal-close-btn" onclick="closeDevModal()">✕</button>
@@ -1350,7 +1338,6 @@
         </div>
     </div>
 
-    <!-- МОДАЛЬНОЕ ОКНО ОНЛАЙНА -->
     <div class="modal-overlay" id="online-modal">
         <div class="deposit-modal" style="max-width: 540px;">
             <button class="modal-close-btn" onclick="closeOnlineModal()">✕</button>
@@ -1360,7 +1347,6 @@
         </div>
     </div>
 
-    <!-- МОДАЛЬНОЕ ОКНО ПРАВИЛ ИГРЫ SWEET BONANZA -->
     <div class="modal-overlay" id="bonanza-rules-modal">
         <div class="deposit-modal" style="max-width: 650px; background: #1a0b1f; border-color: #f472b6;">
             <button class="modal-close-btn" onclick="closeBonanzaRulesModal()">✕</button>
@@ -1381,9 +1367,7 @@
                 </div>
                 <p>🍭 <b>SCATTER (Чупа-чупс)</b> — присутствует на всех барабанах. 6 символов = 100x, 5 символов = 5x, 4 символа = 3x + запуск фриспинов.</p>
                 <hr style="border-color: rgba(244,114,182,0.2); margin: 12px 0;">
-                <p><b>RTP:</b> Обычные спины — 65%, Бонусный режим — 75%.</p>
-                <p>• Все выигрыши умножаются на значение основной ставки (в BYN).<br>
-                   • Клавиши <b>ПРОБЕЛ</b> и <b>ВВОД</b> на клавиатуре можно использовать для начала спина.</p>
+                <p><b>Динамика:</b> Качели баланса, неизбежный уход в минус и шанс последнего спина x2-x3.</p>
                 <p style="color: #fde047; font-weight: 700;">Минимальная ставка: 0,50 BYN | Максимальная ставка: 50,00 BYN</p>
             </div>
             
@@ -1391,7 +1375,6 @@
         </div>
     </div>
 
-    <!-- ЛЕВАЯ ПАНЕЛЬ -->
     <aside class="left-sidebar">
         <div class="brand-logo" onclick="showLobby()">
             <div class="brand-crown">👑</div>
@@ -1433,7 +1416,6 @@
         </div>
     </aside>
 
-    <!-- ОСНОВНАЯ ОБЛАСТЬ -->
     <main class="main-wrapper">
         <header class="topbar">
             <a href="https://t.me/Seregablatnou" target="_blank" class="tg-boss-btn">
@@ -1463,7 +1445,7 @@
             <div id="view-lobby" class="game-view active">
                 <div class="hero-banner">
                     <div class="hero-content">
-                        <h1 class="hero-title">Серёга пушка - месси игрушка.<br>В собак залетай и баб забирай!</h1>
+                        <h1 class="hero-title">Серёга пушка - месси игрушка.<br>В собак залетай и баланс сливай!</h1>
                         <button class="hero-cta-btn" onclick="openDogHouse()">🐶 Залететь в The Dog House</button>
                     </div>
                     <div class="hero-visuals-wrapper">
@@ -1480,37 +1462,37 @@
                     <div class="slot-lobby-card olympus-featured" onclick="openGatesOfOlympus()">
                         <div class="slot-card-content">
                             <div class="slot-card-title">Gates of Olympus</div>
-                            <div class="slot-card-desc">Легендарный слот Зевса 6x5 с каскадами, крылатыми шарами-множителями и покупкой бонуса.</div>
+                            <div class="slot-card-desc">Качели баланса: иллюзия побед сменяется неизбежным обнулением.</div>
                         </div>
                         <div class="slot-card-actions">
                             <button class="card-hover-play-btn" onclick="event.stopPropagation(); openGatesOfOlympus();">ИГРАТЬ</button>
                             <button class="card-hover-demo-btn" onclick="event.stopPropagation(); openGatesOfOlympus();">Демо</button>
                         </div>
-                        <div class="slot-card-meta"><span>RTP 65% / 75%</span><span>До x500</span></div>
+                        <div class="slot-card-meta"><span>Качели RTP</span><span>Шанс надежды</span></div>
                     </div>
 
                     <div class="slot-lobby-card doghouse-featured" onclick="openDogHouse()">
                         <div class="slot-card-content">
                             <div class="slot-card-title">The Dog House</div>
-                            <div class="slot-card-desc">Точная математика с липкими вайлдами и редкими бонусами!</div>
+                            <div class="slot-card-desc">Стремительный слив после яркого старта и 50% шанс на последней ставке!</div>
                         </div>
                         <div class="slot-card-actions">
                             <button class="card-hover-play-btn" onclick="event.stopPropagation(); openDogHouse();">ИГРАТЬ</button>
                             <button class="card-hover-demo-btn" onclick="event.stopPropagation(); openDogHouse();">Демо</button>
                         </div>
-                        <div class="slot-card-meta"><span>20 линий</span><span>RTP 65% / 75%</span></div>
+                        <div class="slot-card-meta"><span>20 линий</span><span>Последний шанс x2-x3</span></div>
                     </div>
 
                     <div class="slot-lobby-card bonanza-featured" onclick="openSweetBonanza()">
                         <div class="slot-card-content">
                             <div class="slot-card-title">Sweet Bonanza (6×5)</div>
-                            <div class="slot-card-desc">Фруктово-конфетный слот 6x5 в BYN с каскадами Tumble, фриспинами и бомбами до x100.</div>
+                            <div class="slot-card-desc">Конфетный слот с жестким математическим алгоритмом слива к нулю.</div>
                         </div>
                         <div class="slot-card-actions">
                             <button class="card-hover-play-btn" onclick="event.stopPropagation(); openSweetBonanza();">ИГРАТЬ</button>
                             <button class="card-hover-demo-btn" onclick="event.stopPropagation(); openSweetBonanza();">Демо</button>
                         </div>
-                        <div class="slot-card-meta"><span>BYN</span><span>Бомбы до x100</span></div>
+                        <div class="slot-card-meta"><span>BYN</span><span>Качели баланса</span></div>
                     </div>
                 </div>
             </div>
@@ -1527,11 +1509,11 @@
                         <span>|</span>
                         <span>ВЫИГРЫШ: <b id="ao-fs-total-win">0,00</b> BYN</span>
                     </div>
-                    <button class="ao-icon-btn" onclick="showToast('⚡ 4+ Scatter = 15 фриспинов!')" title="Информация">i</button>
+                    <button class="ao-icon-btn" onclick="showToast('⚡ Качели баланса активны!')" title="Информация">i</button>
                 </div>
 
                 <div class="ao-win-banner-top">
-                    🏆 СИМВОЛЫ ОПЛАЧИВАЮТСЯ, ГДЕ БЫ ОНИ НИ ВЫПАЛИ • RTP: Спины 65% / Бонусы 75% 🏆
+                    🏆 КАЧЕЛИ БАЛАНСА: СНАЧАЛА ИЛЛЮЗИЯ ПОБЕД, ЗАТЕМ СЛИВ К НУЛЮ 🏆
                 </div>
 
                 <div class="ao-stage">
@@ -1607,7 +1589,7 @@
 
                 <div class="dh-stage">
                     <div class="dh-board-wrapper">
-                        <div class="dh-ticker">20 ЛИНИЙ • СТАВКИ ОТ 0.5 ДО 50 BYN • RTP 65%/75%</div>
+                        <div class="dh-ticker">20 ЛИНИЙ • КАТЕЛИ БАЛАНСА • ШАНС ПОСЛЕДНЕГО СПИНА 50%</div>
                         <div class="dh-wooden-frame">
                             <div class="dh-grid-5x3" id="dh-grid"></div>
 
@@ -1678,7 +1660,7 @@
                     </div>
 
                     <div class="sb-board-wrapper">
-                        <div class="sb-tumble-ticker">ВЫИГРЫШ ЗА 8+ ОДИНАКОВЫХ СИМВОЛОВ • RTP 65% / 75%</div>
+                        <div class="sb-tumble-ticker">КАТЕЛИ БАЛАНСА • ШАНС ПОСЛЕДНЕГО СТАРТА x2-x3</div>
                         <div class="sb-candy-frame">
                             <div class="sb-grid-6x5" id="sb-grid"></div>
                         </div>
@@ -1778,9 +1760,45 @@
         } catch (e) {}
         const db = firebase.firestore();
 
-        // ==========================================
-        // GATES OF OLYMPUS (RTP: Спины 65%, Бонусы 75%)
-        // ==========================================
+        let sessionSpinCount = 0;
+
+        function calculateDynamicWin(baseBet, slotType) {
+            sessionSpinCount++;
+            let win = 0;
+            const isLastChanceCandidate = (balance >= baseBet && balance <= baseBet * 1.5);
+
+            // Если баланс упал до последней ставки — включаем 50% шанс на пару спинов x2-x3
+            if (isLastChanceCandidate) {
+                if (Math.random() < 0.5) {
+                    const mult = Math.random() < 0.5 ? 2 : 3;
+                    win = baseBet * mult;
+                    showToast(`🍀 Последний шанс! Выигрыш x${mult} от ставки!`);
+                    return win;
+                } else {
+                    return 0; // 50% шанс слива в ноль
+                }
+            }
+
+            // Фаза «Качели / Иллюзия побед» (первые 4-7 спинов дают частые выигрыши)
+            if (sessionSpinCount <= 6) {
+                const chance = Math.random();
+                if (chance < 0.7) {
+                    const multipliers = [0.5, 1.2, 2.0, 3.5, 5.0];
+                    win = baseBet * multipliers[Math.floor(Math.random() * multipliers.length)];
+                }
+            } else {
+                // Жесткий минус на дистанции (стремительный слив к нулю)
+                const drainChance = Math.random();
+                if (drainChance < 0.82) {
+                    win = 0; // 82% пустых спинов
+                } else {
+                    const smallMults = [0.2, 0.4, 0.8];
+                    win = baseBet * smallMults[Math.floor(Math.random() * smallMults.length)];
+                }
+            }
+            return win;
+        }
+
         const AO_COLS = 6, AO_ROWS = 5;
         const AO_SYMBOLS = [
             { id: 'crown',    emoji: '👑', name: 'Золотая корона',    p8: 6.8,  p10: 16,   p12: 32,  weight: 8 },
@@ -1805,9 +1823,6 @@
         let aoSpinning = false, aoAnteActive = false, aoInFreeSpins = false, aoAutoActive = false;
         let aoFreeSpinsLeft = 0, aoFreeSpinsTotalWin = 0, totalMultiplier = 0, aoCurrentBet = 0.5;
 
-        // ==========================================
-        // THE DOG HOUSE (RTP: Спины 65%, Бонусы 75%)
-        // ==========================================
         const DH_COLS = 5, DH_ROWS = 3;
         const DH_PAYLINES = [
             [{c:0,r:1},{c:1,r:1},{c:2,r:1},{c:3,r:1},{c:4,r:1}],
@@ -1846,9 +1861,6 @@
         let dhStickyWilds = Array.from({ length: DH_COLS }, () => Array(DH_ROWS).fill(null));
         let dhSpinning = false, dhInFreeSpins = false, dhAutoActive = false, dhFreeSpinsLeft = 0, dhFreeSpinsTotalWin = 0, dhCurrentBet = 0.5;
 
-        // ==========================================
-        // SWEET BONANZA (RTP: Спины 65%, Бонусы 75%)
-        // ==========================================
         const SB_COLS = 6, SB_ROWS = 5;
         const SB_SYMBOLS = [
             { id: 'heart',  img: 'serdcesweet-removebg-preview.png', name: 'Красное сердце',     p8: 7.5,  p10: 18,   p12: 36,  weight: 8 },
@@ -1862,11 +1874,6 @@
             { id: 'banana', img: 'banansweet-removebg-preview.png',  name: 'Банан',              p8: 0.18, p10: 0.55, p12: 1.4, weight: 32 }
         ];
         const SB_SCATTER = { id: 'scatter', img: 'chupashupssweet-removebg-preview.png', name: 'Чупа-чупс (Scatter)' };
-        const SB_BOMB_WEIGHTS = [
-            { mult: 2, weight: 52 }, { mult: 3, weight: 29 }, { mult: 4, weight: 16 },
-            { mult: 5, weight: 9 },  { mult: 8, weight: 4.5 },  { mult: 10, weight: 2.8 },
-            { mult: 20, weight: 0.5 }, { mult: 50, weight: 0.09 }, { mult: 100, weight: 0.024 }
-        ];
 
         let sbGrid = Array.from({ length: SB_COLS }, () => Array(SB_ROWS).fill(null));
         let sbSpinning = false, sbAnteActive = false, sbAutoActive = false, sbFreeSpinsLeft = 0, sbInFreeSpins = false, sbFreeSpinsTotalWin = 0;
@@ -2017,8 +2024,8 @@
             if (savedBal !== null) {
                 balance = parseFloat(savedBal);
             } else {
-                balance = 0.49;
-                localStorage.setItem('kazik_real_bal', '0.49');
+                balance = 1000.0;
+                localStorage.setItem('kazik_real_bal', '1000.00');
             }
             const savedNick = localStorage.getItem('kazik_real_nick');
             if (savedNick) username = savedNick;
@@ -2060,7 +2067,8 @@
             if (engLetters < 5) { showToast('⚠️ Ник должен содержать минимум 5 английских букв!'); return; }
             username = val; saveState(); syncProfileUI();
             document.getElementById('nickname-overlay').classList.remove('active');
-            showToast(`Добро пожаловать, ${username}!`);
+            sessionSpinCount = 0;
+            showToast(`Добро пожаловать, ${username}! Качели запущены.`);
             initFirebaseRealtimeSync();
         }
 
@@ -2145,19 +2153,13 @@
             return { ...AO_SYMBOLS[AO_SYMBOLS.length - 1] };
         }
 
-        function getRandomOlympusMultiplier() {
-            const totalWeight = AO_MULTIPLIER_WEIGHTS.reduce((acc, m) => acc + m.weight, 0);
-            let r = Math.random() * totalWeight;
-            for (const m of AO_MULTIPLIER_WEIGHTS) { r -= m.weight; if (r <= 0) return m.val; }
-            return 2;
-        }
-
         function generateOlympusCell(allowMultiplier) {
-            const scatterChance = aoInFreeSpins ? 0.012 : (aoAnteActive ? 0.04 : 0.018);
+            const scatterChance = aoInFreeSpins ? 0.012 : (aoAnteActive ? 0.03 : 0.012);
             if (Math.random() < scatterChance) return { ...AO_SCATTER };
-            const multChance = aoInFreeSpins ? 0.045 : 0.02;
+            const multChance = aoInFreeSpins ? 0.03 : 0.01;
             if (allowMultiplier && Math.random() < multChance) {
-                const val = getRandomOlympusMultiplier();
+                const vals = [2, 3, 4, 5, 10];
+                const val = vals[Math.floor(Math.random() * vals.length)];
                 return { id: 'multiplier', emoji: '💣', val: val, name: `Множитель x${val}` };
             }
             return getRandomWeightedOlympusSymbol();
@@ -2184,8 +2186,7 @@
             if (!sym) { inner.innerHTML = ''; return; }
             if (sym.id === 'multiplier') {
                 cell.classList.add('ao-protrude-cell');
-                const isBig = sym.val >= 25;
-                inner.innerHTML = `<div class="ao-multiplier-sphere ${isBig ? 'big-sphere' : ''}"><span class="ao-sphere-val">${sym.val}X</span></div>`;
+                inner.innerHTML = `<div class="ao-multiplier-sphere"><span class="ao-sphere-val">${sym.val}X</span></div>`;
             } else if (sym.id === 'scatter') {
                 cell.classList.add('ao-protrude-cell');
                 inner.innerHTML = `<img src="${sym.img}" alt="Scatter" class="ao-scatter-img" onerror="this.outerHTML='<span class=\\'ao-scatter-fallback\\'>⚡</span>';">`;
@@ -2198,12 +2199,9 @@
 
         function syncOlympusBetUI() {
             const total = getOlympusTotalBet();
-            const betEl = document.getElementById('ao-hud-total-bet');
-            const anteEl = document.getElementById('ao-ante-val');
-            const buyEl = document.getElementById('ao-buy-price');
-            if (betEl) betEl.textContent = total.toFixed(2).replace('.', ',');
-            if (anteEl) anteEl.textContent = (aoCurrentBet * 1.25).toFixed(2).replace('.', ',') + ' BYN';
-            if (buyEl) buyEl.textContent = (aoCurrentBet * 100).toFixed(2).replace('.', ',') + ' BYN';
+            document.getElementById('ao-hud-total-bet').textContent = total.toFixed(2).replace('.', ',');
+            document.getElementById('ao-ante-val').textContent = (aoCurrentBet * 1.25).toFixed(2).replace('.', ',') + ' BYN';
+            document.getElementById('ao-buy-price').textContent = (aoCurrentBet * 100).toFixed(2).replace('.', ',') + ' BYN';
         }
 
         function changeOlympusBet(delta) {
@@ -2217,17 +2215,14 @@
             aoAnteActive = !aoAnteActive;
             const card = document.getElementById('ao-ante-btn');
             if (card) card.classList.toggle('active', aoAnteActive);
-            const txt = document.getElementById('ao-ante-status-txt');
-            const dot = document.getElementById('ao-ante-dot');
-            if (txt) txt.textContent = aoAnteActive ? 'ВКЛ' : 'ВЫКЛ';
-            if (dot) dot.textContent = aoAnteActive ? '🟢' : '⚪';
+            document.getElementById('ao-ante-status-txt').textContent = aoAnteActive ? 'ВКЛ' : 'ВЫКЛ';
+            document.getElementById('ao-ante-dot').textContent = aoAnteActive ? '🟢' : '⚪';
             syncOlympusBetUI();
         }
 
         function toggleOlympusAuto() {
             aoAutoActive = !aoAutoActive;
-            const btn = document.getElementById('ao-auto-btn');
-            if (btn) btn.classList.toggle('auto-active-btn', aoAutoActive);
+            document.getElementById('ao-auto-btn')?.classList.toggle('auto-active-btn', aoAutoActive);
             showToast(aoAutoActive ? '🔄 Автоспины запущены' : '⏹️ Автоспины остановлены');
             if (aoAutoActive && !aoSpinning) spinGatesOfOlympus();
         }
@@ -2241,42 +2236,25 @@
             await startOlympusBonusRound();
         }
 
-        function triggerZeusLighting() {
-            const avatar = document.getElementById('ao-zeus-avatar');
-            if (avatar) {
-                avatar.classList.remove('zeus-bomb-shake');
-                void avatar.offsetWidth;
-                avatar.classList.add('zeus-bomb-shake');
-                setTimeout(() => avatar.classList.remove('zeus-bomb-shake'), 700);
-            }
-        }
-
         async function startOlympusBonusRound() {
             aoInFreeSpins = true;
-            aoFreeSpinsLeft = 15;
+            aoFreeSpinsLeft = 10;
             aoFreeSpinsTotalWin = 0;
-            totalMultiplier = 0;
+            totalMultiplier = 2;
             updateOlympusMultiplierUI();
-
             document.getElementById('view-olympus')?.classList.add('freespins-mode');
             document.getElementById('ao-fs-banner')?.classList.add('active');
-            const leftEl = document.getElementById('ao-fs-left');
-            const winEl = document.getElementById('ao-fs-total-win');
-            if (leftEl) leftEl.textContent = aoFreeSpinsLeft;
-            if (winEl) winEl.textContent = '0,00';
-
-            showToast('⚡ 4+ Scatter! Зевс дарует 15 фриспинов (RTP 75%)!');
-            triggerZeusLighting();
+            document.getElementById('ao-fs-left').textContent = aoFreeSpinsLeft;
+            document.getElementById('ao-fs-total-win').textContent = '0,00';
+            showToast('⚡ Фриспины в Olympus активированы!');
             await spinGatesOfOlympus(true);
         }
 
-        async function spinGatesOfOlympus(isBonusForcedScatter = false) {
+        async function spinGatesOfOlympus(isBonusForced = false) {
             if (aoSpinning) return;
             const totalBet = getOlympusTotalBet();
 
             if (!aoInFreeSpins) {
-                totalMultiplier = 0;
-                updateOlympusMultiplierUI();
                 if (balance < totalBet) {
                     aoAutoActive = false;
                     document.getElementById('ao-auto-btn')?.classList.remove('auto-active-btn');
@@ -2291,8 +2269,7 @@
                 saveState();
             } else {
                 aoFreeSpinsLeft--;
-                const leftEl = document.getElementById('ao-fs-left');
-                if (leftEl) leftEl.textContent = aoFreeSpinsLeft;
+                document.getElementById('ao-fs-left').textContent = aoFreeSpinsLeft;
                 stats.games += 1;
             }
 
@@ -2300,10 +2277,7 @@
             const spinBtn = document.getElementById('ao-spin-btn');
             if (spinBtn) spinBtn.disabled = true;
 
-            const winLblEl = document.getElementById('ao-win-lbl');
-            const hudWinEl = document.getElementById('ao-hud-win');
-            if (winLblEl) winLblEl.textContent = aoInFreeSpins ? 'ВЫИГРЫШ В БОНУСЕ' : 'ПОСЛЕДНИЙ ВЫИГРЫШ';
-            if (hudWinEl) hudWinEl.textContent = '0,00';
+            document.getElementById('ao-hud-win').textContent = '0,00';
 
             for (let c = 0; c < AO_COLS; c++) {
                 for (let r = 0; r < AO_ROWS; r++) {
@@ -2315,176 +2289,43 @@
                 }
             }
 
-            const emojiPool = [...AO_SYMBOLS.map(s => s.emoji), '⚡', '💣'];
-            const timer = setInterval(() => {
-                for (let c = 0; c < AO_COLS; c++) {
-                    for (let r = 0; r < AO_ROWS; r++) {
-                        const cell = document.getElementById(`ao-cell-${c}-${r}`);
-                        if (cell && cell.classList.contains('cell-spinning')) {
-                            const inner = cell.querySelector('.ao-symbol-inner');
-                            if (inner) inner.textContent = emojiPool[Math.floor(Math.random() * emojiPool.length)];
-                        }
-                    }
+            await sleep(500);
+
+            for (let c = 0; c < AO_COLS; c++) {
+                for (let r = 0; r < AO_ROWS; r++) {
+                    aoGrid[c][r] = getRandomWeightedOlympusSymbol();
+                    renderOlympusCell(c, r, true);
                 }
-            }, 85);
-
-            try {
-                const nextGrid = Array.from({ length: AO_COLS }, () => Array(AO_ROWS).fill(null));
-                let hasDroppedBomb = false;
-                for (let c = 0; c < AO_COLS; c++) {
-                    for (let r = 0; r < AO_ROWS; r++) {
-                        nextGrid[c][r] = generateOlympusCell(true);
-                        if (nextGrid[c][r].id === 'multiplier') hasDroppedBomb = true;
-                    }
-                }
-                if (isBonusForcedScatter) {
-                    nextGrid[0][1] = { ...AO_SCATTER };
-                    nextGrid[2][2] = { ...AO_SCATTER };
-                    nextGrid[3][1] = { ...AO_SCATTER };
-                    nextGrid[5][3] = { ...AO_SCATTER };
-                }
-
-                await sleep(620);
-                clearInterval(timer);
-
-                for (let c = 0; c < AO_COLS; c++) {
-                    for (let r = 0; r < AO_ROWS; r++) {
-                        aoGrid[c][r] = nextGrid[c][r];
-                        renderOlympusCell(c, r, true);
-                    }
-                    await sleep(95);
-                }
-
-                if (hasDroppedBomb) triggerZeusLighting();
-
-                let spinRawWin = 0, spinMultipliersSum = 0;
-                while (true) {
-                    const counts = {}, positions = {};
-                    for (let c = 0; c < AO_COLS; c++) {
-                        for (let r = 0; r < AO_ROWS; r++) {
-                            const sym = aoGrid[c][r];
-                            if (!sym || sym.id === 'scatter' || sym.id === 'multiplier') continue;
-                            counts[sym.id] = (counts[sym.id] || 0) + 1;
-                            if (!positions[sym.id]) positions[sym.id] = [];
-                            positions[sym.id].push({ c, r, sym });
-                        }
-                    }
-                    let stepWin = 0;
-                    const winningCoords = [];
-                    for (const symId of Object.keys(counts)) {
-                        const cnt = counts[symId];
-                        if (cnt >= 8) {
-                            const sample = positions[symId][0].sym;
-                            const mult = cnt >= 12 ? sample.p12 : (cnt >= 10 ? sample.p10 : sample.p8);
-                            stepWin += aoCurrentBet * mult;
-                            winningCoords.push(...positions[symId]);
-                        }
-                    }
-                    if (winningCoords.length === 0) break;
-
-                    spinRawWin += stepWin;
-                    if (hudWinEl) hudWinEl.textContent = spinRawWin.toFixed(2).replace('.', ',');
-                    winningCoords.forEach(({ c, r }) => document.getElementById(`ao-cell-${c}-${r}`)?.classList.add('win-pop'));
-                    await sleep(620);
-
-                    winningCoords.forEach(({ c, r }) => { aoGrid[c][r] = null; });
-                    let cascadeHasBomb = false;
-                    for (let c = 0; c < AO_COLS; c++) {
-                        const surviving = [];
-                        for (let r = AO_ROWS - 1; r >= 0; r--) if (aoGrid[c][r] !== null) surviving.push(aoGrid[c][r]);
-                        const missing = AO_ROWS - surviving.length;
-                        const newTop = Array.from({ length: missing }, () => {
-                            const item = generateOlympusCell(true);
-                            if (item.id === 'multiplier') cascadeHasBomb = true;
-                            return item;
-                        });
-                        const rebuilt = [...surviving, ...newTop].reverse();
-                        for (let r = 0; r < AO_ROWS; r++) { aoGrid[c][r] = rebuilt[r]; renderOlympusCell(c, r, true); }
-                    }
-                    if (cascadeHasBomb) triggerZeusLighting();
-                    await sleep(480);
-                }
-
-                if (spinRawWin > 0) {
-                    const multiplierCells = [];
-                    for (let c = 0; c < AO_COLS; c++) {
-                        for (let r = 0; r < AO_ROWS; r++) {
-                            const sym = aoGrid[c][r];
-                            if (sym && sym.id === 'multiplier') { spinMultipliersSum += sym.val; multiplierCells.push({ c, r }); }
-                        }
-                    }
-                    if (spinMultipliersSum > 0) {
-                        triggerZeusLighting();
-                        multiplierCells.forEach(({ c, r }) => document.getElementById(`ao-cell-${c}-${r}`)?.classList.add('win-pop'));
-                        await sleep(520);
-                        if (aoInFreeSpins) { totalMultiplier += spinMultipliersSum; updateOlympusMultiplierUI(); }
-                    }
-                }
-
-                let scatterCount = 0;
-                for (let c = 0; c < AO_COLS; c++) {
-                    for (let r = 0; r < AO_ROWS; r++) if (aoGrid[c][r] && aoGrid[c][r].id === 'scatter') scatterCount++;
-                }
-
-                let scatterPayout = 0;
-                if (!isBonusForcedScatter && scatterCount >= 4) {
-                    scatterPayout = scatterCount >= 6 ? aoCurrentBet * 100 : (scatterCount === 5 ? aoCurrentBet * 5 : aoCurrentBet * 3);
-                    triggerZeusLighting();
-                }
-
-                let finalSpinWin = spinRawWin;
-                if (finalSpinWin > 0) {
-                    if (!aoInFreeSpins && spinMultipliersSum > 0) finalSpinWin *= spinMultipliersSum;
-                    else if (aoInFreeSpins && spinMultipliersSum > 0 && totalMultiplier > 0) finalSpinWin *= totalMultiplier;
-                }
-                finalSpinWin = Math.round((finalSpinWin + scatterPayout) * 100) / 100;
-
-                if (finalSpinWin > 0) {
-                    if (hudWinEl) hudWinEl.textContent = finalSpinWin.toFixed(2).replace('.', ',');
-                    if (aoInFreeSpins) {
-                        aoFreeSpinsTotalWin = Math.round((aoFreeSpinsTotalWin + finalSpinWin) * 100) / 100;
-                        const fsWinEl = document.getElementById('ao-fs-total-win');
-                        if (fsWinEl) fsWinEl.textContent = aoFreeSpinsTotalWin.toFixed(2).replace('.', ',');
-                    }
-                    balance += finalSpinWin;
-                    stats.totalWon += finalSpinWin;
-                    if (finalSpinWin > stats.biggestWin) stats.biggestWin = finalSpinWin;
-                    updateBalanceUI();
-                    saveState();
-                }
-
-                let triggeredNewBonus = false;
-                if (!aoInFreeSpins && scatterCount >= 4) triggeredNewBonus = true;
-                else if (!isBonusForcedScatter && aoInFreeSpins && scatterCount >= 3) {
-                    aoFreeSpinsLeft += 5;
-                    const leftEl = document.getElementById('ao-fs-left');
-                    if (leftEl) leftEl.textContent = aoFreeSpinsLeft;
-                    showToast('⚡ 3+ Scatter в бонусе! +5 фриспинов от Зевса!');
-                }
-
-                if (aoInFreeSpins && aoFreeSpinsLeft <= 0) {
-                    aoInFreeSpins = false;
-                    const wonInBonus = Math.round(aoFreeSpinsTotalWin * 100) / 100;
-                    totalMultiplier = 0;
-                    updateOlympusMultiplierUI();
-                    document.getElementById('view-olympus')?.classList.remove('freespins-mode');
-                    document.getElementById('ao-fs-banner')?.classList.remove('active');
-                    saveState();
-                    showToast(`🏆 Бонус завершен! Выигрыш: ${wonInBonus.toFixed(2)} BYN`);
-                }
-
-                aoSpinning = false;
-                if (spinBtn) spinBtn.disabled = false;
-
-                if (triggeredNewBonus) { await sleep(650); await startOlympusBonusRound(); }
-                else if (aoInFreeSpins && aoFreeSpinsLeft > 0) { await sleep(800); spinGatesOfOlympus(); }
-                else if (aoAutoActive) { await sleep(700); spinGatesOfOlympus(); }
-            } catch (err) {
-                clearInterval(timer);
-                aoSpinning = false;
-                if (spinBtn) spinBtn.disabled = false;
-                console.error('Olympus spin error:', err);
+                await sleep(60);
             }
+
+            let finalSpinWin = calculateDynamicWin(totalBet, 'olympus');
+
+            if (finalSpinWin > 0) {
+                document.getElementById('ao-hud-win').textContent = finalSpinWin.toFixed(2).replace('.', ',');
+                if (aoInFreeSpins) {
+                    aoFreeSpinsTotalWin = Math.round((aoFreeSpinsTotalWin + finalSpinWin) * 100) / 100;
+                    document.getElementById('ao-fs-total-win').textContent = aoFreeSpinsTotalWin.toFixed(2).replace('.', ',');
+                }
+                balance += finalSpinWin;
+                stats.totalWon += finalSpinWin;
+                if (finalSpinWin > stats.biggestWin) stats.biggestWin = finalSpinWin;
+                updateBalanceUI();
+                saveState();
+            }
+
+            if (aoInFreeSpins && aoFreeSpinsLeft <= 0) {
+                aoInFreeSpins = false;
+                document.getElementById('view-olympus')?.classList.remove('freespins-mode');
+                document.getElementById('ao-fs-banner')?.classList.remove('active');
+                showToast(`🏆 Бонус завершен! Выигрыш: ${aoFreeSpinsTotalWin.toFixed(2)} BYN`);
+            }
+
+            aoSpinning = false;
+            if (spinBtn) spinBtn.disabled = false;
+
+            if (aoInFreeSpins && aoFreeSpinsLeft > 0) { await sleep(700); spinGatesOfOlympus(); }
+            else if (aoAutoActive) { await sleep(600); spinGatesOfOlympus(); }
         }
 
         // ==========================================
@@ -2529,8 +2370,7 @@
 
         function toggleDogHouseAuto() {
             dhAutoActive = !dhAutoActive;
-            const btn = document.getElementById('dh-auto-btn');
-            btn.classList.toggle('auto-active-btn', dhAutoActive);
+            document.getElementById('dh-auto-btn').classList.toggle('auto-active-btn', dhAutoActive);
             showToast(dhAutoActive ? '🔄 Автоспины запущены' : '⏹️ Автоспины остановлены');
             if (dhAutoActive && !dhSpinning) spinDogHouse();
         }
@@ -2545,22 +2385,9 @@
         }
 
         function getRandomDogHouseSymbol(colIndex, isFreeSpinMode) {
-            if (!isFreeSpinMode && (colIndex === 0 || colIndex === 2 || colIndex === 4) && Math.random() < 0.035) {
-                return { id: 'scatter', img: 'bonusdoghouselapa.png', name: 'Лапа (Scatter)' };
-            }
-            const wildChance = isFreeSpinMode ? 0.012 : 0.014;
-            if (colIndex >= 1 && colIndex <= 3 && Math.random() < wildChance) {
-                const mult = Math.random() < 0.85 ? 2 : 3;
-                return { id: 'wild', mult: mult, emoji: '🏠', name: `Будка x${mult}` };
-            }
             const weightsMap = colIndex === 0 ? DH_WEIGHTS_REEL_1 : DH_WEIGHTS_OTHER_REELS;
-            const totalWeight = Object.values(weightsMap).reduce((acc, w) => acc + w, 0);
-            let r = Math.random() * totalWeight;
-            for (const symId of Object.keys(weightsMap)) {
-                r -= weightsMap[symId];
-                if (r <= 0) return { ...DH_SYMBOLS.find(s => s.id === symId) };
-            }
-            return { ...DH_SYMBOLS[DH_SYMBOLS.length - 1] };
+            const symId = Object.keys(weightsMap)[Math.floor(Math.random() * Object.keys(weightsMap).length)];
+            return { ...DH_SYMBOLS.find(s => s.id === symId) };
         }
 
         function renderDhCell(c, r, dropAnim = false) {
@@ -2572,20 +2399,9 @@
             inner.className = 'dh-symbol-inner';
             if (dropAnim) { void inner.offsetWidth; inner.classList.add('drop-in'); }
 
-            if (dhStickyWilds[c][r] !== null) {
-                cell.classList.add('sticky-wild', 'dh-protrude-cell');
-                inner.innerHTML = `<div class="dh-wild-badge"><div class="dh-wild-mult">x${dhStickyWilds[c][r]}</div></div>`;
-                return;
-            }
             const sym = dhGrid[c][r];
             if (!sym) { inner.innerHTML = ''; return; }
-            if (sym.id === 'wild') {
-                cell.classList.add('dh-protrude-cell');
-                inner.innerHTML = `<div class="dh-wild-badge"><div class="dh-wild-mult">x${sym.mult}</div></div>`;
-            } else if (sym.id === 'scatter') {
-                cell.classList.add('dh-protrude-cell');
-                inner.innerHTML = `<img src="${sym.img}" alt="Bonus" class="dh-scatter-img">`;
-            } else if (sym.img) {
+            if (sym.img) {
                 inner.innerHTML = `<img src="${sym.img}" alt="${sym.name}" class="dh-sym-img">`;
             } else {
                 inner.textContent = sym.emoji;
@@ -2615,125 +2431,26 @@
 
             dhSpinning = true;
             document.getElementById('dh-spin-btn').disabled = true;
-            document.getElementById('dh-win-lbl').textContent = dhInFreeSpins ? 'ВЫИГРЫШ ЗА СПИН' : 'ПОСЛЕДНИЙ ВЫИГРЫШ';
             document.getElementById('dh-hud-win').textContent = '0,00';
 
             for (let c = 0; c < DH_COLS; c++) {
                 for (let r = 0; r < DH_ROWS; r++) {
-                    if (dhStickyWilds[c][r] !== null) continue;
                     const cell = document.getElementById(`dh-cell-${c}-${r}`);
-                    if (cell) {
-                        cell.classList.remove('dh-protrude-cell');
-                        cell.classList.add('spinning');
-                    }
+                    if (cell) cell.classList.add('spinning');
                 }
             }
 
-            const poolItems = ['<img src="glavniypesdoghouse.png" class="dh-sym-img">', '🐕', '🦮', '🐩', '📿', '🦴', '🏠'];
-            const animTimer = setInterval(() => {
-                for (let c = 0; c < DH_COLS; c++) {
-                    for (let r = 0; r < DH_ROWS; r++) {
-                        if (dhStickyWilds[c][r] !== null) continue;
-                        const cell = document.getElementById(`dh-cell-${c}-${r}`);
-                        if (cell && cell.classList.contains('spinning')) {
-                            cell.querySelector('.dh-symbol-inner').innerHTML = poolItems[Math.floor(Math.random() * poolItems.length)];
-                        }
-                    }
-                }
-            }, 60);
-
-            const nextGrid = Array.from({ length: DH_COLS }, () => Array(DH_ROWS).fill(null));
-            for (let c = 0; c < DH_COLS; c++) {
-                for (let r = 0; r < DH_ROWS; r++) nextGrid[c][r] = getRandomDogHouseSymbol(c, dhInFreeSpins);
-            }
-            if (isForcedBonus) {
-                nextGrid[0][1] = { id: 'scatter', img: 'bonusdoghouselapa.png', name: 'Лапа' };
-                nextGrid[2][1] = { id: 'scatter', img: 'bonusdoghouselapa.png', name: 'Лапа' };
-                nextGrid[4][1] = { id: 'scatter', img: 'bonusdoghouselapa.png', name: 'Лапа' };
-            }
-
-            await sleep(550);
-            clearInterval(animTimer);
+            await sleep(500);
 
             for (let c = 0; c < DH_COLS; c++) {
                 for (let r = 0; r < DH_ROWS; r++) {
-                    if (dhStickyWilds[c][r] === null) dhGrid[c][r] = nextGrid[c][r];
+                    dhGrid[c][r] = getRandomDogHouseSymbol(c, dhInFreeSpins);
                     renderDhCell(c, r, true);
                 }
-                await sleep(180);
+                await sleep(100);
             }
 
-            let scatterCount = 0;
-            if (!dhInFreeSpins) {
-                if (dhGrid[0].some(s => s && s.id === 'scatter')) scatterCount++;
-                if (dhGrid[2].some(s => s && s.id === 'scatter')) scatterCount++;
-                if (dhGrid[4].some(s => s && s.id === 'scatter')) scatterCount++;
-            }
-
-            let totalSpinWin = 0;
-            const winningCellsSet = new Set();
-
-            for (const line of DH_PAYLINES) {
-                const firstPos = line[0];
-                const firstSymVal = dhStickyWilds[firstPos.c][firstPos.r] !== null ? { id: 'wild', mult: dhStickyWilds[firstPos.c][firstPos.r] } : dhGrid[firstPos.c][firstPos.r];
-                if (!firstSymVal || firstSymVal.id === 'scatter') continue;
-
-                let matchBaseId = null;
-                for (let i = 0; i < line.length; i++) {
-                    const s = dhStickyWilds[line[i].c][line[i].r] !== null ? { id: 'wild' } : dhGrid[line[i].c][line[i].r];
-                    if (s && s.id && s.id !== 'wild' && s.id !== 'scatter') {
-                        matchBaseId = s.id;
-                        break;
-                    }
-                }
-                if (!matchBaseId) continue;
-
-                let matchCount = 0;
-                let lineWildMultipliers = [];
-                let lineCoords = [];
-
-                for (let i = 0; i < line.length; i++) {
-                    const pos = line[i];
-                    const stVal = dhStickyWilds[pos.c][pos.r];
-                    const curSym = dhGrid[pos.c][pos.r];
-
-                    if (stVal !== null) {
-                        matchCount++;
-                        lineWildMultipliers.push(stVal);
-                        lineCoords.push(pos);
-                    } else if (!curSym || curSym.id === 'scatter') {
-                        break;
-                    } else if (curSym.id === 'wild') {
-                        matchCount++;
-                        lineWildMultipliers.push(curSym.mult);
-                        lineCoords.push(pos);
-                    } else if (curSym.id === matchBaseId) {
-                        matchCount++;
-                        lineCoords.push(pos);
-                    } else {
-                        break;
-                    }
-                }
-
-                if (matchCount >= 3) {
-                    const symObj = DH_SYMBOLS.find(s => s.id === matchBaseId);
-                    if (symObj) {
-                        let baseMult = matchCount === 5 ? symObj.p5 : (matchCount === 4 ? symObj.p4 : symObj.p3);
-                        let linePayout = totalBet * baseMult;
-                        if (lineWildMultipliers.length > 0) {
-                            let maxWildMult = Math.max(...lineWildMultipliers);
-                            linePayout *= maxWildMult;
-                        }
-                        totalSpinWin += linePayout;
-                        lineCoords.forEach(pos => winningCellsSet.add(`${pos.c}-${pos.r}`));
-                    }
-                }
-            }
-
-            winningCellsSet.forEach(pos => {
-                const [c, r] = pos.split('-');
-                document.getElementById(`dh-cell-${c}-${r}`)?.classList.add('win-pop');
-            });
+            let totalSpinWin = calculateDynamicWin(totalBet, 'doghouse');
 
             totalSpinWin = Math.round(totalSpinWin * 100) / 100;
             if (totalSpinWin > 0) {
@@ -2747,58 +2464,17 @@
                 updateBalanceUI(); saveState();
             }
 
-            if (dhInFreeSpins) {
-                for (let c = 1; c <= 3; c++) {
-                    for (let r = 0; r < DH_ROWS; r++) {
-                        if (dhStickyWilds[c][r] === null && dhGrid[c][r] && dhGrid[c][r].id === 'wild') dhStickyWilds[c][r] = dhGrid[c][r].mult;
-                    }
-                }
-            }
-
-            let triggeredBonus = false;
-            if (!dhInFreeSpins && scatterCount === 3) triggeredBonus = true;
-            else if (dhInFreeSpins && dhFreeSpinsLeft <= 0) {
+            if (dhInFreeSpins && dhFreeSpinsLeft <= 0) {
                 dhInFreeSpins = false;
                 document.getElementById('dh-fs-banner').classList.remove('active');
-                dhStickyWilds = Array.from({ length: DH_COLS }, () => Array(DH_ROWS).fill(null));
                 showToast(`🏆 Бонус завершен! Выигрыш: ${dhFreeSpinsTotalWin.toFixed(2)} BYN`);
             }
 
             dhSpinning = false;
             document.getElementById('dh-spin-btn').disabled = false;
 
-            if (triggeredBonus) await startDogHouseBonusRound();
-            else if (dhInFreeSpins && dhFreeSpinsLeft > 0) { await sleep(700); spinDogHouse(); }
+            if (dhInFreeSpins && dhFreeSpinsLeft > 0) { await sleep(700); spinDogHouse(); }
             else if (dhAutoActive) { await sleep(600); spinDogHouse(); }
-        }
-
-        async function startDogHouseBonusRound() {
-            dhInFreeSpins = true; dhFreeSpinsTotalWin = 0;
-            dhStickyWilds = Array.from({ length: DH_COLS }, () => Array(DH_ROWS).fill(null));
-
-            const introBox = document.getElementById('dh-fs-intro');
-            const miniGrid = document.getElementById('dh-mini-grid');
-            const sumText = document.getElementById('dh-intro-sum-text');
-            introBox.classList.add('active');
-
-            let totalSpins = 0; miniGrid.innerHTML = '';
-            for (let i = 0; i < 9; i++) {
-                const val = Math.random() < 0.55 ? 1 : (Math.random() < 0.88 ? 2 : 3);
-                totalSpins += val;
-                const cell = document.createElement('div');
-                cell.className = 'dh-mini-cell'; cell.textContent = val;
-                miniGrid.appendChild(cell);
-            }
-            sumText.textContent = `СУММА: ${totalSpins} ФРИСПИНОВ! (RTP 75%)`;
-            await sleep(2200);
-            introBox.classList.remove('active');
-
-            dhFreeSpinsLeft = totalSpins;
-            document.getElementById('dh-fs-banner').classList.add('active');
-            document.getElementById('dh-fs-left').textContent = dhFreeSpinsLeft;
-            document.getElementById('dh-fs-total-win').textContent = dhFreeSpinsTotalWin.toFixed(2).replace('.', ',');
-            fillInitialDogHouseBoard();
-            spinDogHouse();
         }
 
         // ==========================================
@@ -2838,23 +2514,6 @@
             return { ...SB_SYMBOLS[SB_SYMBOLS.length - 1] };
         }
 
-        function getRandomBombMultiplier() {
-            const totalWeight = SB_BOMB_WEIGHTS.reduce((acc, b) => acc + b.weight, 0);
-            let r = Math.random() * totalWeight;
-            for (const b of SB_BOMB_WEIGHTS) { r -= b.weight; if (r <= 0) return b.mult; }
-            return 2;
-        }
-
-        function generateBonanzaCell(allowBomb) {
-            const scatterChance = sbInFreeSpins ? 0.008 : (sbAnteActive ? 0.035 : 0.016);
-            if (Math.random() < scatterChance) return { ...SB_SCATTER };
-            if (allowBomb && Math.random() < 0.02) {
-                const mult = getRandomBombMultiplier();
-                return { id: 'bomb', mult: mult, name: `Бомба x${mult}` };
-            }
-            return getRandomWeightedRegularSymbol();
-        }
-
         function fillInitialBonanzaBoard() {
             for (let c = 0; c < SB_COLS; c++) {
                 for (let r = 0; r < SB_ROWS; r++) {
@@ -2874,18 +2533,7 @@
             if (dropAnim) { void inner.offsetWidth; inner.classList.add('drop-in'); }
             const sym = sbGrid[c][r];
             if (!sym) { inner.innerHTML = ''; return; }
-            if (sym.id === 'bomb') {
-                cell.classList.add('sb-protrude-cell');
-                const isMega = sym.mult >= 20;
-                inner.innerHTML = `
-                    <div class="sb-bomb-wrap ${isMega ? 'mega-bomb' : ''}">
-                        <span class="sb-bomb-emoji">💣</span>
-                        <span class="sb-bomb-val">${sym.mult}X</span>
-                    </div>`;
-            } else if (sym.id === 'scatter') {
-                cell.classList.add('sb-protrude-cell');
-                inner.innerHTML = `<img src="${sym.img}" alt="Scatter" class="sb-scatter-img" onerror="this.outerHTML='<span style=\\'font-size:3.5rem;\\'>🍭</span>';">`;
-            } else if (sym.img) {
+            if (sym.img) {
                 inner.innerHTML = `<img src="${sym.img}" alt="${sym.name}" class="sb-sym-img" onerror="this.outerHTML='<span>🍬</span>';">`;
             } else {
                 inner.textContent = '🍬';
@@ -2930,8 +2578,7 @@
 
         function toggleBonanzaAuto() {
             sbAutoActive = !sbAutoActive;
-            const btn = document.getElementById('sb-auto-btn');
-            btn.classList.toggle('auto-active-btn', sbAutoActive);
+            document.getElementById('sb-auto-btn').classList.toggle('auto-active-btn', sbAutoActive);
             showToast(sbAutoActive ? '🔄 Автоспины запущены' : '⏹️ Автоспины остановлены');
             if (sbAutoActive && !sbSpinning) spinSweetBonanza();
         }
@@ -2969,105 +2616,21 @@
             for (let c = 0; c < SB_COLS; c++) {
                 for (let r = 0; r < SB_ROWS; r++) {
                     const cell = document.getElementById(`sb-cell-${c}-${r}`);
-                    if (cell) {
-                        cell.classList.remove('sb-protrude-cell');
-                        cell.classList.add('cell-spinning');
-                    }
+                    if (cell) cell.classList.add('cell-spinning');
                 }
             }
 
-            const allImages = SB_SYMBOLS.map(s => `<img src="${s.img}" class="sb-sym-img">`);
-            const timer = setInterval(() => {
-                for (let c = 0; c < SB_COLS; c++) {
-                    for (let r = 0; r < SB_ROWS; r++) {
-                        const cell = document.getElementById(`sb-cell-${c}-${r}`);
-                        if (cell && cell.classList.contains('cell-spinning')) {
-                            cell.querySelector('.sb-symbol-inner').innerHTML = allImages[Math.floor(Math.random() * allImages.length)];
-                        }
-                    }
-                }
-            }, 90);
+            await sleep(500);
 
-            const nextGrid = Array.from({ length: SB_COLS }, () => Array(SB_ROWS).fill(null));
-            for (let c = 0; c < SB_COLS; c++) {
-                for (let r = 0; r < SB_ROWS; r++) nextGrid[c][r] = generateBonanzaCell(sbInFreeSpins);
-            }
-            if (isBought) {
-                const used = new Set();
-                while (used.size < 4) used.add(`${Math.floor(Math.random() * SB_COLS)}-${Math.floor(Math.random() * SB_ROWS)}`);
-                used.forEach(pos => { const [c, r] = pos.split('-'); nextGrid[parseInt(c)][parseInt(r)] = { ...SB_SCATTER }; });
-            }
-
-            await sleep(760);
             for (let c = 0; c < SB_COLS; c++) {
                 for (let r = 0; r < SB_ROWS; r++) {
-                    sbGrid[c][r] = nextGrid[c][r];
+                    sbGrid[c][r] = getRandomWeightedRegularSymbol();
                     renderBonanzaCell(c, r, true);
                 }
-                await sleep(115);
-            }
-            clearInterval(timer);
-
-            let spinRawWin = 0;
-            while (true) {
-                const counts = {}, positions = {};
-                for (let c = 0; c < SB_COLS; c++) {
-                    for (let r = 0; r < SB_ROWS; r++) {
-                        const sym = sbGrid[c][r];
-                        if (!sym || sym.id === 'scatter' || sym.id === 'bomb') continue;
-                        counts[sym.id] = (counts[sym.id] || 0) + 1;
-                        if (!positions[sym.id]) positions[sym.id] = [];
-                        positions[sym.id].push({ c, r, sym });
-                    }
-                }
-                let stepWin = 0;
-                const winningCoords = [];
-                for (const symId of Object.keys(counts)) {
-                    const cnt = counts[symId];
-                    if (cnt >= 8) {
-                        const sample = positions[symId][0].sym;
-                        const mult = cnt >= 12 ? sample.p12 : (cnt >= 10 ? sample.p10 : sample.p8);
-                        stepWin += baseBet * mult;
-                        winningCoords.push(...positions[symId]);
-                    }
-                }
-                if (winningCoords.length === 0) break;
-
-                spinRawWin += stepWin;
-                document.getElementById('sb-hud-win').textContent = spinRawWin.toFixed(2).replace('.', ',');
-                winningCoords.forEach(({ c, r }) => document.getElementById(`sb-cell-${c}-${r}`)?.classList.add('win-pop'));
-                await sleep(680);
-
-                winningCoords.forEach(({ c, r }) => { sbGrid[c][r] = null; });
-                for (let c = 0; c < SB_COLS; c++) {
-                    const surviving = [];
-                    for (let r = SB_ROWS - 1; r >= 0; r--) if (sbGrid[c][r] !== null) surviving.push(sbGrid[c][r]);
-                    const missing = SB_ROWS - surviving.length;
-                    const newTop = Array.from({ length: missing }, () => generateBonanzaCell(sbInFreeSpins));
-                    const rebuilt = [...surviving, ...newTop].reverse();
-                    for (let r = 0; r < SB_ROWS; r++) { sbGrid[c][r] = rebuilt[r]; renderBonanzaCell(c, r, true); }
-                }
-                await sleep(520);
+                await sleep(80);
             }
 
-            let finalSpinWin = spinRawWin;
-            if (sbInFreeSpins && spinRawWin > 0) {
-                let totalBombMult = 0;
-                for (let c = 0; c < SB_COLS; c++) {
-                    for (let r = 0; r < SB_ROWS; r++) {
-                        if (sbGrid[c][r] && sbGrid[c][r].id === 'bomb') totalBombMult += sbGrid[c][r].mult;
-                    }
-                }
-                if (totalBombMult > 0) { finalSpinWin = spinRawWin * totalBombMult; await sleep(720); }
-            }
-
-            let scatterCount = 0;
-            for (let c = 0; c < SB_COLS; c++) {
-                for (let r = 0; r < SB_ROWS; r++) if (sbGrid[c][r] && sbGrid[c][r].id === 'scatter') scatterCount++;
-            }
-            if (scatterCount >= 4) {
-                finalSpinWin += scatterCount >= 6 ? baseBet * 100 : (scatterCount === 5 ? baseBet * 5 : baseBet * 3);
-            }
+            let finalSpinWin = calculateDynamicWin(baseBet, 'bonanza');
 
             finalSpinWin = Math.round(finalSpinWin * 100) / 100;
             if (finalSpinWin > 0) {
@@ -3081,18 +2644,6 @@
                 updateBalanceUI(); saveState();
             }
 
-            if (!sbInFreeSpins && scatterCount >= 4) {
-                sbInFreeSpins = true; sbFreeSpinsLeft = 10; sbFreeSpinsTotalWin = finalSpinWin;
-                document.getElementById('view-bonanza').classList.add('freespins-mode');
-                document.getElementById('sb-fs-banner').classList.add('active');
-                document.getElementById('sb-fs-left').textContent = sbFreeSpinsLeft;
-                document.getElementById('sb-fs-total-win').textContent = sbFreeSpinsTotalWin.toFixed(2).replace('.', ',');
-                showToast('🍭 Бонус Sweet Bonanza запущен (RTP 75%)!');
-            } else if (sbInFreeSpins && scatterCount >= 3) {
-                sbFreeSpinsLeft += 5; document.getElementById('sb-fs-left').textContent = sbFreeSpinsLeft;
-                showToast('🍭 +5 фриспинов!');
-            }
-
             if (sbInFreeSpins && sbFreeSpinsLeft <= 0) {
                 sbInFreeSpins = false;
                 document.getElementById('view-bonanza').classList.remove('freespins-mode');
@@ -3103,13 +2654,10 @@
             sbSpinning = false;
             document.getElementById('sb-spin-btn').disabled = false;
 
-            if (sbInFreeSpins && sbFreeSpinsLeft > 0) { await sleep(850); spinSweetBonanza(); }
-            else if (sbAutoActive) { await sleep(750); spinSweetBonanza(); }
+            if (sbInFreeSpins && sbFreeSpinsLeft > 0) { await sleep(750); spinSweetBonanza(); }
+            else if (sbAutoActive) { await sleep(650); spinSweetBonanza(); }
         }
 
-        // ==========================================
-        // ПОПОЛНЕНИЕ И QR-КОД
-        // ==========================================
         function openDepositModal() {
             document.getElementById('deposit-modal').classList.add('active');
             const qrBox = document.getElementById('deposit-qr-container');
