@@ -586,9 +586,10 @@
         .ao-cell {
             aspect-ratio: 1.05 / 1; min-height: 60px; background: rgba(255, 255, 255, 0.05);
             border-radius: 10px; border: 1px solid rgba(254, 240, 138, 0.14);
-            display: flex; align-items: center; justify-content: center; position: relative;
+            display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;
         }
-        .ao-symbol-inner { font-size: 2.2rem; }
+        .ao-symbol-inner { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+        .ao-sym-img { width: 100%; height: 100%; object-fit: cover; border-radius: 8px; display: block; }
         .ao-pragmatic-hud {
             background: rgba(12, 6, 25, 0.96); border-top: 2px solid #581c87; padding: 10px 20px;
             display: flex; align-items: center; justify-content: space-between; gap: 15px;
@@ -692,7 +693,7 @@
         .sb-cell {
             aspect-ratio: 1.05 / 1; min-height: 62px; background: rgba(255, 255, 255, 0.05);
             border-radius: 10px; border: 1px solid rgba(254, 205, 211, 0.12);
-            display: flex; align-items: center; justify-content: center; position: relative;
+            display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;
         }
         .sb-bottom-hud {
             background: rgba(30, 8, 25, 0.96); border-top: 2px solid #831843; padding: 10px 20px;
@@ -995,7 +996,7 @@
                 <div class="dh-top-bar">
                     <button class="btn-back" onclick="showLobby()">← В зал</button>
                     <div class="dh-logo-title">THE DOG HOUSE</div>
-                    <div class="dh-fs-banner" id="dh-fs-banner">
+                    <div class="dh-fs-banner" id="dh-fs-banner" style="display:none;">
                         <span>🐶 СЕРИЯ ПОСЛЕДНЕГО ШАНСА ACTIVE</span>
                     </div>
                 </div>
@@ -1426,7 +1427,8 @@
             if (viewName === 'profile') syncProfileUI();
         }
 
-        // Вспомогательные сетки для Олимпа и Бонцы
+        // --- GATES OF OLYMPUS (ПОЛНЫЙ ФУНКЦИОНАЛ С КАРТИНКАМИ) ---
+        const AO_SYMBOLS = ['glavniypes22.png', 'rozovoepes.png', 'mops.png', 'dibilnaesobaka.png', 'osheinik.png', 'kost.png'];
         function initGatesOfOlympusDOM() {
             const gridEl = document.getElementById('ao-grid');
             if (!gridEl || gridEl.children.length > 0) return;
@@ -1434,20 +1436,8 @@
                 for (let c = 0; c < 6; c++) {
                     const cell = document.createElement('div');
                     cell.className = 'ao-cell';
-                    cell.innerHTML = '<div class="ao-symbol-inner">💎</div>';
-                    gridEl.appendChild(cell);
-                }
-            }
-        }
-
-        function initSweetBonanzaDOM() {
-            const gridEl = document.getElementById('sb-grid');
-            if (!gridEl || gridEl.children.length > 0) return;
-            for (let r = 0; r < 5; r++) {
-                for (let c = 0; c < 6; c++) {
-                    const cell = document.createElement('div');
-                    cell.className = 'sb-cell';
-                    cell.innerHTML = '<div class="ao-symbol-inner">🍬</div>';
+                    const randomImg = AO_SYMBOLS[Math.floor(Math.random() * AO_SYMBOLS.length)];
+                    cell.innerHTML = `<div class="ao-symbol-inner"><img src="${randomImg}" class="ao-sym-img" onerror="this.outerHTML='💎';"></div>`;
                     gridEl.appendChild(cell);
                 }
             }
@@ -1466,7 +1456,31 @@
             let win = Math.random() < 0.3 ? 1.5 : 0;
             if (win > 0) { balance += win; stats.totalWon += win; if (win > stats.biggestWin) stats.biggestWin = win; }
             document.getElementById('ao-hud-win').textContent = win.toFixed(2).replace('.', ',');
+            
+            // Обновляем картинки на сетке
+            const cells = document.querySelectorAll('#ao-grid .ao-cell');
+            cells.forEach(cell => {
+                const randomImg = AO_SYMBOLS[Math.floor(Math.random() * AO_SYMBOLS.length)];
+                cell.innerHTML = `<div class="ao-symbol-inner"><img src="${randomImg}" class="ao-sym-img" onerror="this.outerHTML='💎';"></div>`;
+            });
+
             updateBalanceUI(); saveState();
+        }
+
+        // --- SWEET BONANZA (ПОЛНЫЙ ФУНКЦИОНАЛ С КАРТИНКАМИ) ---
+        const SB_SYMBOLS = ['rozovoepes.png', 'mops.png', 'dibilnaesobaka.png', 'osheinik.png', 'kost.png', '3X(2).png'];
+        function initSweetBonanzaDOM() {
+            const gridEl = document.getElementById('sb-grid');
+            if (!gridEl || gridEl.children.length > 0) return;
+            for (let r = 0; r < 5; r++) {
+                for (let c = 0; c < 6; c++) {
+                    const cell = document.createElement('div');
+                    cell.className = 'sb-cell';
+                    const randomImg = SB_SYMBOLS[Math.floor(Math.random() * SB_SYMBOLS.length)];
+                    cell.innerHTML = `<div class="ao-symbol-inner"><img src="${randomImg}" class="ao-sym-img" onerror="this.outerHTML='🍬';"></div>`;
+                    gridEl.appendChild(cell);
+                }
+            }
         }
 
         function openSweetBonanza() {
@@ -1482,12 +1496,18 @@
             let win = Math.random() < 0.3 ? 2.0 : 0;
             if (win > 0) { balance += win; stats.totalWon += win; if (win > stats.biggestWin) stats.biggestWin = win; }
             document.getElementById('sb-hud-win').textContent = win.toFixed(2).replace('.', ',');
+
+            // Обновляем картинки на сетке
+            const cells = document.querySelectorAll('#sb-grid .sb-cell');
+            cells.forEach(cell => {
+                const randomImg = SB_SYMBOLS[Math.floor(Math.random() * SB_SYMBOLS.length)];
+                cell.innerHTML = `<div class="ao-symbol-inner"><img src="${randomImg}" class="ao-sym-img" onerror="this.outerHTML='🍬';"></div>`;
+            });
+
             updateBalanceUI(); saveState();
         }
 
-        // ==========================================
-        // THE DOG HOUSE
-        // ==========================================
+        // --- THE DOG HOUSE ---
         function initDogHouseDOM() {
             const gridEl = document.getElementById('dh-grid');
             if (!gridEl) return;
