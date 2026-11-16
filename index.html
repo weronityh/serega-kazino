@@ -127,13 +127,7 @@
             border-color: rgba(245, 158, 11, 0.3);
             color: #ffffff;
         }
-        .nav-item.active {
-            background: linear-gradient(90deg, rgba(245, 158, 11, 0.15) 0%, rgba(245, 158, 11, 0.02) 100%);
-            border-color: rgba(245, 158, 11, 0.3);
-            color: #ffffff;
-        }
 
-        /* === ВСТАВИТЬ НАЧИНАЯ ОТСЮДА === */
         .slot-nav-card {
             flex-direction: column;
             align-items: stretch;
@@ -144,15 +138,15 @@
             min-height: auto;
         }
 
-                .slot-nav-img {
-    width: 100%;
-    height: 85px; /* <-- УВЕЛИЧИЛИ ВЫСОТУ (было 68px) */
-    object-fit: cover; /* <-- ИЗМЕНИЛИ НА COVER */
-    border-radius: 8px;
-    border: 1px solid var(--border-glass);
-    display: block;
-    transition: transform 0.25s ease, filter 0.25s ease;
-}
+        .slot-nav-img {
+            width: 100%;
+            height: 85px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 1px solid var(--border-glass);
+            display: block;
+            transition: transform 0.25s ease, filter 0.25s ease;
+        }
 
         .slot-nav-card:hover .slot-nav-img {
             transform: scale(1.04);
@@ -165,25 +159,20 @@
             box-shadow: 0 0 12px var(--accent-gold-glow);
         }
 
-                .slot-nav-label {
+        .slot-nav-label {
             font-size: 0.72rem;
-            font-weight: 800; /* Было 700, сделали чуть жирнее */
+            font-weight: 800;
             text-align: center;
-            color: var(--accent-gold); /* БЫЛО var(--text-muted), СТАЛО ЗОЛОТЫМ */
+            color: var(--accent-gold);
             text-transform: uppercase;
-            letter-spacing: 0.5px; /* Было 0.3px */
+            letter-spacing: 0.5px;
             transition: color 0.2s ease;
         }
 
-                .slot-nav-card:hover .slot-nav-label,
+        .slot-nav-card:hover .slot-nav-label,
         .slot-nav-card.active .slot-nav-label {
             color: #fef08a;
             text-shadow: 0 0 8px rgba(245, 158, 11, 0.6);
-        }
-        /* === ВСТАВИТЬ ЗАКОНЧИТЬ ЗДЕСЬ === */
-
-                .sidebar-promo-box {
-            margin-top: auto;
         }
 
         .sidebar-promo-box {
@@ -711,7 +700,7 @@
             align-items: flex-end;
             justify-content: flex-start;
         }
-                .ao-zeus-hero-img {
+        .ao-zeus-hero-img {
             height: 480px;
             width: auto;
             max-width: none;
@@ -959,15 +948,9 @@
             color: #fff; padding: 6px 18px; border-radius: 999px; font-weight: 900; font-size: 0.9rem; border: 2px solid #fef08a;
         }
         .dh-fs-banner.active { display: inline-flex; align-items: center; gap: 10px; }
-        .dh-stage { display: grid; grid-template-columns: 205px 1fr; gap: 14px; padding: 16px 20px; align-items: center; }
-        @media (max-width: 850px) { .dh-stage { grid-template-columns: 1fr; } }
-        .dh-left-features { display: flex; flex-direction: column; gap: 14px; z-index: 5; }
-        .dh-feature-card {
-            border-radius: 16px; padding: 14px 12px; text-align: center; cursor: pointer;
-            border: 2px solid #fde047; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45);
-        }
-        .dh-buy-feature { background: linear-gradient(180deg, #b45309 0%, #78350f 100%); }
-        .dh-board-wrapper { display: flex; flex-direction: column; align-items: center; position: relative; }
+        .dh-stage { display: flex; justify-content: center; padding: 16px 20px; align-items: center; }
+        @media (max-width: 850px) { .dh-stage { padding: 10px; } }
+        .dh-board-wrapper { display: flex; flex-direction: column; align-items: center; position: relative; width: 100%; }
         .dh-ticker {
             background: linear-gradient(90deg, rgba(61, 34, 15, 0.9), rgba(120, 53, 15, 0.95), rgba(61, 34, 15, 0.9));
             border: 2px solid #f59e0b; border-bottom: none; border-radius: 14px 14px 0 0;
@@ -1053,7 +1036,7 @@
         .dh-spin-circle-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
         /* ========================================== */
-        /* SWEET BONANZA (КРУПНЫЕ ФИГУРЫ + БОЛЬШАЯ БОМБА БЕЗ ФИОЛЕТОВОГО КРУГА) */
+        /* SWEET BONANZA */
         /* ========================================== */
         #view-bonanza {
             padding: 0; overflow: hidden; border: 2px solid #f43f5e;
@@ -1130,7 +1113,6 @@
         .sb-cell.win-pop { background: radial-gradient(circle, rgba(244, 63, 94, 0.6) 0%, rgba(159, 18, 57, 0.35) 100%); border-color: #f43f5e; box-shadow: 0 0 18px rgba(244, 63, 94, 0.8); z-index: 3; }
         .sb-cell.win-pop .sb-symbol-inner { animation: aoWinExplode 0.55s ease-in-out forwards; }
 
-        /* Обычные фрукты и конфеты — крупные, сочные, но визуально меньше Scatter и бомб */
         .sb-sym-img {
             width: 104%;
             height: 104%;
@@ -1143,7 +1125,6 @@
 
         #view-bonanza .sb-cell.sb-protrude-cell { z-index: 18; overflow: visible; }
 
-        /* Крупная бомба без фиолетового круга */
         #view-bonanza .sb-bomb-wrap {
             width: 145%;
             height: 145%;
@@ -1190,7 +1171,6 @@
             100% { transform: scale(1.38) rotate(5deg); }
         }
 
-        /* Scatter (чупа-чупс) — заметно крупнее обычных фигур */
         #view-bonanza .sb-scatter-img {
             width: 146%;
             height: 146%;
@@ -1581,24 +1561,24 @@
                 <span class="nav-item-left"><span>🏠</span> Игровой зал</span>
             </button>
             <button class="nav-item slot-nav-card" id="nav-slot-olympus" onclick="openGatesOfOlympus()">
-    <img src="olympuspushka.jpg" alt="Gates of Olympus" class="slot-nav-img">
-    <span class="slot-nav-label">Gates of Olympus</span>
-</button>
+                <img src="olympuspushka.jpg" alt="Gates of Olympus" class="slot-nav-img">
+                <span class="slot-nav-label">Gates of Olympus</span>
+            </button>
 
-<button class="nav-item slot-nav-card" id="nav-slot-doghouse" onclick="openDogHouse()">
-    <img src="emblemadoghouse-removebg-preview.png" alt="The Dog House" class="slot-nav-img">
-    <span class="slot-nav-label">The Dog House</span>
-</button>
+            <button class="nav-item slot-nav-card" id="nav-slot-doghouse" onclick="openDogHouse()">
+                <img src="emblemadoghouse-removebg-preview.png" alt="The Dog House" class="slot-nav-img">
+                <span class="slot-nav-label">The Dog House</span>
+            </button>
 
-<button class="nav-item slot-nav-card" id="nav-slot-bonanza" onclick="openSweetBonanza()">
-    <img src="sweetbananzaemblema.png" alt="Sweet Bonanza" class="slot-nav-img">
-    <span class="slot-nav-label">Sweet Bonanza</span>
-</button>
+            <button class="nav-item slot-nav-card" id="nav-slot-bonanza" onclick="openSweetBonanza()">
+                <img src="sweetbananzaemblema.png" alt="Sweet Bonanza" class="slot-nav-img">
+                <span class="slot-nav-label">Sweet Bonanza</span>
+            </button>
 
-<button class="nav-item slot-nav-card" id="nav-slot-chicken" onclick="openChickenGame()">
-    <img src="chicken.jpg" alt="Chicken Cross" class="slot-nav-img">
-    <span class="slot-nav-label">Chicken Cross</span>
-</button>
+            <button class="nav-item slot-nav-card" id="nav-slot-chicken" onclick="openChickenGame()">
+                <img src="chicken.jpg" alt="Chicken Cross" class="slot-nav-img">
+                <span class="slot-nav-label">Chicken Cross</span>
+            </button>
             <button class="nav-item" id="nav-profile" onclick="switchView('profile')">
                 <span class="nav-item-left"><span>👤</span> Профиль и статистика</span>
             </button>
@@ -1799,14 +1779,6 @@
                 </div>
 
                 <div class="dh-stage">
-                    <div class="dh-left-features">
-                        <div class="dh-feature-card dh-buy-feature" onclick="buyDogHouseBonus()">
-                            <div style="font-size:0.82rem; font-weight:900; text-transform:uppercase; color:#fff;">КУПИТЬ БОНУС</div>
-                            <div style="margin-top:6px; background:rgba(0,0,0,0.35); border-radius:10px; padding:6px; font-size:1.1rem; font-weight:900; color:#fef08a;" id="dh-buy-price">50,00 BYN</div>
-                            <div style="font-size:0.65rem; color:#fde68a; font-weight:700; margin-top:4px;">100x ОТ СТАВКИ</div>
-                        </div>
-                    </div>
-
                     <div class="dh-board-wrapper">
                         <div class="dh-ticker">20 ЛИНИЙ • СТАВКИ ОТ 0.5 ДО 50 BYN</div>
                         <div class="dh-wooden-frame">
@@ -2804,7 +2776,6 @@
 
         function syncDogHouseBetUI() {
             document.getElementById('dh-hud-total-bet').textContent = dhCurrentBet.toFixed(2).replace('.', ',');
-            document.getElementById('dh-buy-price').textContent = (dhCurrentBet * 100).toFixed(2).replace('.', ',') + ' BYN';
         }
 
         function changeDogHouseBet(delta) {
@@ -2831,10 +2802,12 @@
         }
 
         function getRandomDogHouseSymbol(colIndex, isFreeSpinMode) {
+            // Scatter выпадает ТОЛЬКО на 1, 3 и 5 барабанах (индексы 0, 2, 4)
             if (!isFreeSpinMode && (colIndex === 0 || colIndex === 2 || colIndex === 4) && Math.random() < 0.045) {
                 return { id: 'scatter', img: 'bonusdoghouselapa.png', name: 'Лапа (Scatter)' };
             }
-            const wildChance = isFreeSpinMode ? 0.018 : 0.03;
+            // Сниженный шанс вайлда (1.2% в бонусе, 1.8% в обычном спинне)
+            const wildChance = isFreeSpinMode ? 0.012 : 0.018;
             if (colIndex >= 1 && colIndex <= 3 && Math.random() < wildChance) {
                 const mult = Math.random() < 0.82 ? 2 : 3;
                 return { id: 'wild', mult: mult, emoji: '🏠', name: `Будка x${mult}` };
@@ -2876,14 +2849,6 @@
             } else {
                 inner.textContent = sym.emoji;
             }
-        }
-
-        async function buyDogHouseBonus() {
-            if (dhSpinning || dhInFreeSpins) return;
-            const cost = dhCurrentBet * 100;
-            if (balance < cost) { showToast('⚠️ Недостаточно средств!'); openDepositModal(); return; }
-            balance -= cost; stats.wagered += cost; updateBalanceUI(); saveState();
-            await startDogHouseBonusRound(true);
         }
 
         async function spinDogHouse(isForcedBonus = false) {
@@ -2967,25 +2932,44 @@
             let totalSpinWin = 0;
             const winningCellsSet = new Set();
 
+            // ИСПРАВЛЕННЫЙ РАСЧЁТ ВЫИГРЫШНЫХ ЛИНИЙ DOG HOUSE
             for (const line of DH_PAYLINES) {
                 const firstPos = line[0];
-                const rawFirst = dhStickyWilds[firstPos.c][firstPos.r] !== null ? { id: 'wild' } : dhGrid[firstPos.c][firstPos.r];
+                const rawFirst = dhStickyWilds[firstPos.c][firstPos.r] !== null ? { id: 'wild', mult: dhStickyWilds[firstPos.c][firstPos.r] } : dhGrid[firstPos.c][firstPos.r];
                 if (!rawFirst || rawFirst.id === 'scatter') continue;
 
-                let matchBaseId = rawFirst.id === 'wild' ? null : rawFirst.id;
-                let matchCount = 0, lineWildMultipliers = [], lineCoords = [];
+                let matchBaseId = null;
+                let matchCount = 0;
+                let lineWildMultipliers = [];
+                let lineCoords = [];
 
                 for (let i = 0; i < line.length; i++) {
                     const pos = line[i];
                     const stVal = dhStickyWilds[pos.c][pos.r];
                     const curSym = dhGrid[pos.c][pos.r];
 
-                    if (stVal !== null) { matchCount++; lineWildMultipliers.push(stVal); lineCoords.push(pos); continue; }
-                    if (!curSym || curSym.id === 'scatter') break;
-                    if (curSym.id === 'wild') { matchCount++; lineWildMultipliers.push(curSym.mult); lineCoords.push(pos); continue; }
-                    if (matchBaseId === null) { matchBaseId = curSym.id; matchCount++; lineCoords.push(pos); }
-                    else if (curSym.id === matchBaseId) { matchCount++; lineCoords.push(pos); }
-                    else break;
+                    if (stVal !== null) {
+                        matchCount++;
+                        lineWildMultipliers.push(stVal);
+                        lineCoords.push(pos);
+                    } else if (!curSym || curSym.id === 'scatter') {
+                        break;
+                    } else if (curSym.id === 'wild') {
+                        matchCount++;
+                        lineWildMultipliers.push(curSym.mult);
+                        lineCoords.push(pos);
+                    } else {
+                        if (matchBaseId === null) {
+                            matchBaseId = curSym.id;
+                            matchCount++;
+                            lineCoords.push(pos);
+                        } else if (curSym.id === matchBaseId) {
+                            matchCount++;
+                            lineCoords.push(pos);
+                        } else {
+                            break;
+                        }
+                    }
                 }
 
                 if (matchCount >= 3 && matchBaseId !== null) {
@@ -2993,7 +2977,10 @@
                     if (symObj) {
                         let baseMult = matchCount === 5 ? symObj.p5 : (matchCount === 4 ? symObj.p4 : symObj.p3);
                         let linePayout = totalBet * baseMult;
-                        if (lineWildMultipliers.length > 0) linePayout *= lineWildMultipliers.reduce((acc, m) => acc + m, 0);
+                        if (lineWildMultipliers.length > 0) {
+                            let maxWildMult = Math.max(...lineWildMultipliers);
+                            linePayout *= maxWildMult;
+                        }
                         totalSpinWin += linePayout;
                         lineCoords.forEach(pos => winningCellsSet.add(`${pos.c}-${pos.r}`));
                     }
@@ -3037,19 +3024,15 @@
             dhSpinning = false;
             document.getElementById('dh-spin-btn').disabled = false;
 
-            if (triggeredBonus) await startDogHouseBonusRound(false);
+            if (triggeredBonus) await startDogHouseBonusRound();
             else if (dhInFreeSpins && dhFreeSpinsLeft > 0) { await sleep(700); spinDogHouse(); }
             else if (dhAutoActive) { await sleep(600); spinDogHouse(); }
         }
 
-        async function startDogHouseBonusRound(isBought) {
+        async function startDogHouseBonusRound() {
             dhInFreeSpins = true; dhFreeSpinsTotalWin = 0;
             dhStickyWilds = Array.from({ length: DH_COLS }, () => Array(DH_ROWS).fill(null));
-            if (isBought) {
-                const instantWin = dhCurrentBet * 2;
-                balance += instantWin; dhFreeSpinsTotalWin += instantWin;
-                updateBalanceUI(); saveState();
-            }
+
             const introBox = document.getElementById('dh-fs-intro');
             const miniGrid = document.getElementById('dh-mini-grid');
             const sumText = document.getElementById('dh-intro-sum-text');
@@ -3076,7 +3059,7 @@
         }
 
         // ==========================================
-        // SWEET BONANZA (КРУПНЫЕ ФИГУРЫ + БОЛЬШАЯ БОМБА БЕЗ ФИОЛЕТОВОГО КРУГА)
+        // SWEET BONANZA
         // ==========================================
         function initSweetBonanzaDOM() {
             const gridEl = document.getElementById('sb-grid');
