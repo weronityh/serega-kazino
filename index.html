@@ -1213,163 +1213,6 @@
         }
         .sb-spin-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
-        /* ========================================== */
-        /* CHICKEN CROSS / CHICKEN ROAD */
-        /* ========================================== */
-        #view-chicken {
-            background: linear-gradient(180deg, #065f46 0%, #064e3b 50%, #022c22 100%);
-            border: 2px solid #10b981;
-            box-shadow: 0 15px 45px rgba(16, 185, 129, 0.25);
-            padding: 26px;
-        }
-        .chicken-container {
-            display: grid;
-            grid-template-columns: 270px 1fr;
-            gap: 20px;
-        }
-        @media(max-width: 900px){ .chicken-container { grid-template-columns: 1fr; } }
-        .chicken-sidebar {
-            background: rgba(0,0,0,0.45);
-            border: 1px solid rgba(255,255,255,0.12);
-            border-radius: 16px;
-            padding: 18px;
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-        }
-        .chicken-road-arena {
-            background: #14532d;
-            border: 3px solid #10b981;
-            border-radius: 18px;
-            padding: 14px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            position: relative;
-            overflow: hidden;
-            box-shadow: inset 0 0 30px rgba(0,0,0,0.65);
-        }
-        .chicken-highway {
-            display: grid;
-            grid-template-columns: 74px repeat(5, 1fr) 78px;
-            height: 360px;
-            background: #1f2937;
-            border-radius: 12px;
-            border: 2px solid #374151;
-            position: relative;
-            overflow: hidden;
-            margin: 12px 0;
-        }
-        .chicken-sidewalk-start {
-            background: linear-gradient(90deg, #15803d, #166534);
-            border-right: 4px solid #fbbf24;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.7rem;
-            font-weight: 900;
-            color: #dcfce7;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        .chicken-sidewalk-finish {
-            background: linear-gradient(90deg, #166534, #15803d);
-            border-left: 4px dashed #fde047;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.7rem;
-            font-weight: 900;
-            color: #fef08a;
-            text-align: center;
-            padding: 4px;
-        }
-        .highway-lane {
-            position: relative;
-            border-right: 2px dashed rgba(255, 255, 255, 0.32);
-            background: linear-gradient(180deg, #1f2937 0%, #111827 50%, #1f2937 100%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: space-between;
-            padding: 10px 4px;
-            overflow: hidden;
-        }
-        .highway-lane:last-of-type { border-right: none; }
-        .highway-lane.passed-lane {
-            background: linear-gradient(180deg, rgba(16, 185, 129, 0.16), rgba(5, 150, 105, 0.24));
-        }
-        .highway-lane.current-target-lane {
-            box-shadow: inset 0 0 18px rgba(250, 204, 21, 0.35);
-        }
-        .lane-mult-pill {
-            background: rgba(0, 0, 0, 0.72);
-            border: 1px solid rgba(255, 255, 255, 0.25);
-            color: #fde047;
-            font-size: 0.78rem;
-            font-weight: 900;
-            padding: 4px 8px;
-            border-radius: 999px;
-            z-index: 4;
-        }
-        .highway-lane.passed-lane .lane-mult-pill {
-            background: #16a34a;
-            color: #fff;
-            border-color: #86efac;
-        }
-        .lane-manhole {
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-            background: radial-gradient(circle, #374151 30%, #111827 100%);
-            border: 2px dashed #4b5563;
-            opacity: 0.55;
-            z-index: 2;
-        }
-
-        .traffic-car {
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 2.3rem;
-            z-index: 6;
-            filter: drop-shadow(0 6px 8px rgba(0,0,0,0.8));
-            pointer-events: none;
-            user-select: none;
-            transition: top 0.05s linear;
-        }
-        .traffic-car.killer-car {
-            font-size: 2.8rem;
-            filter: drop-shadow(0 0 18px #ef4444);
-            z-index: 12;
-        }
-
-        .runner-chicken {
-            position: absolute;
-            top: 50%;
-            left: 37px;
-            transform: translate(-50%, -50%);
-            font-size: 2.5rem;
-            z-index: 10;
-            transition: left 0.36s cubic-bezier(0.22, 1, 0.36, 1), transform 0.25s ease;
-            filter: drop-shadow(0 6px 10px rgba(0,0,0,0.85));
-            user-select: none;
-        }
-        .runner-chicken.running-hop {
-            animation: chickenHop 0.36s ease;
-        }
-        @keyframes chickenHop {
-            0%   { transform: translate(-50%, -50%) scale(1) rotate(0deg); }
-            45%  { transform: translate(-50%, -82%) scale(1.25) rotate(12deg); }
-            100% { transform: translate(-50%, -50%) scale(1) rotate(0deg); }
-        }
-        .runner-chicken.squashed {
-            transform: translate(-50%, -50%) scale(1.35, 0.45) rotate(25deg);
-            filter: drop-shadow(0 0 16px #ef4444);
-        }
-
         /* МОДАЛЬНЫЕ ОКНА */
         .modal-overlay {
             display: none; position: fixed; inset: 0; background: rgba(4, 7, 11, 0.88);
@@ -1575,10 +1418,6 @@
                 <span class="slot-nav-label">Sweet Bonanza</span>
             </button>
 
-            <button class="nav-item slot-nav-card" id="nav-slot-chicken" onclick="openChickenGame()">
-                <img src="chicken.jpg" alt="Chicken Cross" class="slot-nav-img">
-                <span class="slot-nav-label">Chicken Cross</span>
-            </button>
             <button class="nav-item" id="nav-profile" onclick="switchView('profile')">
                 <span class="nav-item-left"><span>👤</span> Профиль и статистика</span>
             </button>
@@ -1635,7 +1474,7 @@
                     </div>
                 </div>
 
-                <h3 style="color: #fff; text-transform: uppercase; margin: 0 0 16px 0; font-size: 1.05rem; font-family: 'Unbounded', sans-serif;">🎰 Популярные игровые автоматы и аркады</h3>
+                <h3 style="color: #fff; text-transform: uppercase; margin: 0 0 16px 0; font-size: 1.05rem; font-family: 'Unbounded', sans-serif;">🎰 Популярные игровые автоматы</h3>
                 
                 <div class="slots-catalog-grid">
                     <div class="slot-lobby-card olympus-featured" onclick="openGatesOfOlympus()">
@@ -1672,18 +1511,6 @@
                             <button class="card-hover-demo-btn" onclick="event.stopPropagation(); openSweetBonanza();">Демо</button>
                         </div>
                         <div class="slot-card-meta"><span>BYN</span><span>Бомбы до x100</span></div>
-                    </div>
-
-                    <div class="slot-lobby-card chicken-featured" onclick="openChickenGame()">
-                        <div class="slot-card-content">
-                            <div class="slot-card-title">Chicken Cross (Crash)</div>
-                            <div class="slot-card-desc">Реалистичная мини-игра: веди курицу через оживлённую трассу, уворачивайся от машин и забирай куш!</div>
-                        </div>
-                        <div class="slot-card-actions">
-                            <button class="card-hover-play-btn" onclick="event.stopPropagation(); openChickenGame();">ИГРАТЬ</button>
-                            <button class="card-hover-demo-btn" onclick="event.stopPropagation(); openChickenGame();">Демо</button>
-                        </div>
-                        <div class="slot-card-meta"><span>АРКАДА</span><span>Множители</span></div>
                     </div>
                 </div>
             </div>
@@ -1890,81 +1717,6 @@
                 </div>
             </div>
 
-            <!-- CHICKEN CROSS / CHICKEN ROAD -->
-            <div id="view-chicken" class="game-view">
-                <div class="game-header">
-                    <h2>🐔 Chicken Cross (Chicken Road) — Перебеги дорогу!</h2>
-                    <button class="btn-back" onclick="showLobby()">← В зал</button>
-                </div>
-                
-                <div class="chicken-container">
-                    <div class="chicken-sidebar">
-                        <div style="font-weight: 800; font-size: 0.95rem; color: #34d399;">Настройки забега</div>
-                        <div>
-                            <label style="font-size: 0.78rem; color: var(--text-muted);">Ставка (BYN):</label>
-                            <input type="number" id="chicken-bet" class="dev-input" value="10" min="1" max="1000" style="width:100%; margin-top:4px;">
-                        </div>
-                        <div>
-                            <label style="font-size: 0.78rem; color: var(--text-muted);">Уровень риска:</label>
-                            <select id="chicken-risk" class="dev-input" style="width:100%; margin-top:4px;">
-                                <option value="easy">Низкий (Easy) — спокойный трафик</option>
-                                <option value="medium" selected>Средний (Medium) — плотный поток</option>
-                                <option value="hard">Высокий (Hardcore) — бешеные гонщики</option>
-                            </select>
-                        </div>
-                        <button class="btn-back" id="chicken-start-btn" style="background:#10b981; color:#000; font-weight:900; width:100%; padding:14px;" onclick="startChickenGame()">▶ СТАРТ ЗАБЕГА</button>
-                        <button class="btn-back" id="chicken-step-btn" style="background:#f59e0b; color:#000; font-weight:900; width:100%; padding:14px; display:none;" onclick="makeChickenStep()">🐔 ПЕРЕБЕЖАТЬ ПОЛОСУ ➔</button>
-                        <button class="btn-back" id="chicken-cashout-btn" style="background:#3b82f6; color:#fff; font-weight:900; width:100%; padding:14px; display:none;" onclick="chickenCashout()">💰 ЗАБРАТЬ ВЫИГРЫШ</button>
-                    </div>
-
-                    <div class="chicken-road-arena">
-                        <div style="text-align:center; color:#fde047; font-weight:900; font-size:1.05rem;" id="chicken-status-title">
-                            Выберите ставку и нажмите «Старт забега»
-                        </div>
-
-                        <div class="chicken-highway" id="chicken-highway">
-                            <div class="chicken-sidewalk-start">
-                                <span style="font-size:1.4rem;">🌿</span>
-                                <span>СТАРТ</span>
-                            </div>
-
-                            <div class="highway-lane" id="highway-lane-1">
-                                <div class="lane-mult-pill" id="lane-mult-1">x1.35</div>
-                                <div class="lane-manhole"></div>
-                            </div>
-                            <div class="highway-lane" id="highway-lane-2">
-                                <div class="lane-mult-pill" id="lane-mult-2">x1.85</div>
-                                <div class="lane-manhole"></div>
-                            </div>
-                            <div class="highway-lane" id="highway-lane-3">
-                                <div class="lane-mult-pill" id="lane-mult-3">x2.50</div>
-                                <div class="lane-manhole"></div>
-                            </div>
-                            <div class="highway-lane" id="highway-lane-4">
-                                <div class="lane-mult-pill" id="lane-mult-4">x3.40</div>
-                                <div class="lane-manhole"></div>
-                            </div>
-                            <div class="highway-lane" id="highway-lane-5">
-                                <div class="lane-mult-pill" id="lane-mult-5">x5.00</div>
-                                <div class="lane-manhole"></div>
-                            </div>
-
-                            <div class="chicken-sidewalk-finish">
-                                <span style="font-size:1.6rem;">🏆</span>
-                                <span>ФИНИШ<br>x7.50</span>
-                            </div>
-
-                            <div id="chicken-traffic-layer" style="position:absolute; inset:0; pointer-events:none;"></div>
-                            <div class="runner-chicken" id="runner-chicken">🐔</div>
-                        </div>
-
-                        <div style="text-align:center; font-size:0.84rem; color:#a7f3d0; font-weight:600;" id="chicken-info-footer">
-                            Жми «Перебежать полосу» — курица бежит по асфальту, но берегись несущихся машин!
-                        </div>
-                    </div>
-                </div>
-            </div>
-
             <!-- ПРОФИЛЬ -->
             <div id="view-profile" class="game-view">
                 <div class="game-header">
@@ -2027,34 +1779,36 @@
         const db = firebase.firestore();
 
         // ==========================================
-        // GATES OF OLYMPUS
+        // GATES OF OLYMPUS (RTP: Base 93%, Bonus 96%)
         // ==========================================
         const AO_COLS = 6, AO_ROWS = 5;
         const AO_SYMBOLS = [
-            { id: 'crown',    emoji: '👑', name: 'Золотая корона',    p8: 8,    p10: 20,   p12: 40,  weight: 5 },
-            { id: 'hourglass',emoji: '⏳', name: 'Песочные часы',     p8: 2.0,  p10: 8,    p12: 20,  weight: 7 },
-            { id: 'ring',     emoji: '💍', name: 'Кольцо',            p8: 1.5,  p10: 4,    p12: 12,  weight: 9 },
-            { id: 'cup',      emoji: '🏆', name: 'Кубок',             p8: 1.2,  p10: 1.8,  p12: 10,  weight: 11 },
-            { id: 'red_gem',  emoji: '♦️', name: 'Красный камень',    p8: 0.8,  p10: 1.2,  p12: 8,   weight: 16 },
-            { id: 'purple',   emoji: '🔮', name: 'Фиолетовый камень', p8: 0.6,  p10: 1.0,  p12: 6,   weight: 20 },
-            { id: 'yellow',   emoji: '🔸', name: 'Желтый камень',     p8: 0.4,  p10: 0.8,  p12: 4,   weight: 22 },
-            { id: 'green',    emoji: '❇️', name: 'Зеленый камень',    p8: 0.3,  p10: 0.7,  p12: 3,   weight: 25 },
-            { id: 'blue',     emoji: '💎', name: 'Синий камень',      p8: 0.2,  p10: 0.5,  p12: 1.5, weight: 28 }
+            { id: 'crown',    emoji: '👑', name: 'Золотая корона',    p8: 8,    p10: 20,   p12: 40,  weight: 6 },
+            { id: 'hourglass',emoji: '⏳', name: 'Песочные часы',     p8: 2.0,  p10: 8,    p12: 20,  weight: 8 },
+            { id: 'ring',     emoji: '💍', name: 'Кольцо',            p8: 1.5,  p10: 4,    p12: 12,  weight: 10 },
+            { id: 'cup',      emoji: '🏆', name: 'Кубок',             p8: 1.2,  p10: 1.8,  p12: 10,  weight: 12 },
+            { id: 'red_gem',  emoji: '♦️', name: 'Красный камень',    p8: 0.8,  p10: 1.2,  p12: 8,   weight: 17 },
+            { id: 'purple',   emoji: '🔮', name: 'Фиолетовый камень', p8: 0.6,  p10: 1.0,  p12: 6,   weight: 21 },
+            { id: 'yellow',   emoji: '🔸', name: 'Желтый камень',     p8: 0.4,  p10: 0.8,  p12: 4,   weight: 23 },
+            { id: 'green',    emoji: '❇️', name: 'Зеленый камень',    p8: 0.3,  p10: 0.7,  p12: 3,   weight: 26 },
+            { id: 'blue',     emoji: '💎', name: 'Синий камень',      p8: 0.2,  p10: 0.5,  p12: 1.5, weight: 30 }
         ];
         const AO_SCATTER = { id: 'scatter', img: 'scatterolymp.png', emoji: '⚡', name: 'Зевс (Scatter)' };
         const AO_MULTIPLIER_WEIGHTS = [
-            { val: 2, weight: 48 }, { val: 3, weight: 26 }, { val: 4, weight: 12 },
-            { val: 5, weight: 7 },  { val: 6, weight: 3.5 },{ val: 8, weight: 1.8 },
-            { val: 10, weight: 0.9 },{ val: 12, weight: 0.4 },{ val: 15, weight: 0.2 },
-            { val: 20, weight: 0.1 },{ val: 25, weight: 0.05},{ val: 50, weight: 0.02 },
-            { val: 100, weight: 0.008},{ val: 250, weight: 0.002},{ val: 500, weight: 0.0005 }
+            { val: 2, weight: 52 }, { val: 3, weight: 28 }, { val: 4, weight: 13 },
+            { val: 5, weight: 7.5 },  { val: 6, weight: 3.8 },{ val: 8, weight: 1.9 },
+            { val: 10, weight: 0.95 },{ val: 12, weight: 0.42 },{ val: 15, weight: 0.21 },
+            { val: 20, weight: 0.11 },{ val: 25, weight: 0.052},{ val: 50, weight: 0.021 },
+            { val: 100, weight: 0.0085},{ val: 250, weight: 0.0021},{ val: 500, weight: 0.00055 }
         ];
 
         let aoGrid = Array.from({ length: AO_COLS }, () => Array(AO_ROWS).fill(null));
         let aoSpinning = false, aoAnteActive = false, aoInFreeSpins = false, aoAutoActive = false;
         let aoFreeSpinsLeft = 0, aoFreeSpinsTotalWin = 0, totalMultiplier = 0, aoCurrentBet = 0.5;
 
-        // THE DOG HOUSE
+        // ==========================================
+        // THE DOG HOUSE (RTP: Base 93%, Bonus 96%)
+        // ==========================================
         const DH_COLS = 5, DH_ROWS = 3;
         const DH_PAYLINES = [
             [{c:0,r:1},{c:1,r:1},{c:2,r:1},{c:3,r:1},{c:4,r:1}],
@@ -2086,46 +1840,37 @@
             { id: 'collar',     emoji: '📿', name: 'Ошейник',   p3: 0.5,  p4: 1.0,  p5: 6.0 },
             { id: 'bone',       emoji: '🦴', name: 'Косточка',  p3: 0.3,  p4: 0.8,  p5: 4.0 }
         ];
-        const DH_WEIGHTS_REEL_1 = { bone: 110, collar: 85, dachshund: 45, pug: 22, shitzu: 10, rottweiler: 4 };
-        const DH_WEIGHTS_OTHER_REELS = { bone: 115, collar: 90, dachshund: 50, pug: 25, shitzu: 12, rottweiler: 5 };
+        const DH_WEIGHTS_REEL_1 = { bone: 118, collar: 92, dachshund: 48, pug: 23, shitzu: 11, rottweiler: 4 };
+        const DH_WEIGHTS_OTHER_REELS = { bone: 122, collar: 96, dachshund: 52, pug: 26, shitzu: 12, rottweiler: 5 };
 
         let dhGrid = Array.from({ length: DH_COLS }, () => Array(DH_ROWS).fill(null));
         let dhStickyWilds = Array.from({ length: DH_COLS }, () => Array(DH_ROWS).fill(null));
         let dhSpinning = false, dhInFreeSpins = false, dhAutoActive = false, dhFreeSpinsLeft = 0, dhFreeSpinsTotalWin = 0, dhCurrentBet = 0.5;
 
         // ==========================================
-        // SWEET BONANZA
+        // SWEET BONANZA (RTP: Base 93%, Bonus 96%)
         // ==========================================
         const SB_COLS = 6, SB_ROWS = 5;
         const SB_SYMBOLS = [
-            { id: 'heart',  img: 'serdcesweet-removebg-preview.png', name: 'Красное сердце',     p8: 10,   p10: 25,   p12: 50,  weight: 6 },
-            { id: 'purple', img: 'fiolsweet-removebg-preview.png',   name: 'Фиолетовый квадрат', p8: 2.5,  p10: 10,   p12: 25,  weight: 8 },
-            { id: 'green',  img: 'zelensweet-removebg-preview.png',  name: 'Зеленый пятиугольник',p8: 2.0,  p10: 5,    p12: 15,  weight: 10 },
-            { id: 'blue',   img: 'bluesweet-removebg-preview.png',   name: 'Синий овал',         p8: 1.5,  p10: 2,    p12: 12,  weight: 13 },
-            { id: 'apple',  img: 'applesweet-removebg-preview.png',  name: 'Яблоко',             p8: 1.0,  p10: 1.5,  p12: 10,  weight: 17 },
-            { id: 'plum',   img: 'slivasweet-removebg-preview.png',  name: 'Слива',              p8: 0.8,  p10: 1.2,  p12: 8,   weight: 20 },
-            { id: 'melon',  img: 'arbuzsweet.png',                   name: 'Арбуз',              p8: 0.5,  p10: 1.0,  p12: 5,   weight: 22 },
-            { id: 'grape',  img: 'winogradsweet-removebg-preview.png',name: 'Виноград',          p8: 0.4,  p10: 0.9,  p12: 4,   weight: 25 },
-            { id: 'banana', img: 'banansweet-removebg-preview.png',  name: 'Банан',              p8: 0.25, p10: 0.75, p12: 2,   weight: 28 }
+            { id: 'heart',  img: 'serdcesweet-removebg-preview.png', name: 'Красное сердце',     p8: 10,   p10: 25,   p12: 50,  weight: 7 },
+            { id: 'purple', img: 'fiolsweet-removebg-preview.png',   name: 'Фиолетовый квадрат', p8: 2.5,  p10: 10,   p12: 25,  weight: 9 },
+            { id: 'green',  img: 'zelensweet-removebg-preview.png',  name: 'Зеленый пятиугольник',p8: 2.0,  p10: 5,    p12: 15,  weight: 11 },
+            { id: 'blue',   img: 'bluesweet-removebg-preview.png',   name: 'Синий овал',         p8: 1.5,  p10: 2,    p12: 12,  weight: 14 },
+            { id: 'apple',  img: 'applesweet-removebg-preview.png',  name: 'Яблоко',             p8: 1.0,  p10: 1.5,  p12: 10,  weight: 18 },
+            { id: 'plum',   img: 'slivasweet-removebg-preview.png',  name: 'Слива',              p8: 0.8,  p10: 1.2,  p12: 8,   weight: 21 },
+            { id: 'melon',  img: 'arbuzsweet.png',                   name: 'Арбуз',              p8: 0.5,  p10: 1.0,  p12: 5,   weight: 23 },
+            { id: 'grape',  img: 'winogradsweet-removebg-preview.png',name: 'Виноград',          p8: 0.4,  p10: 0.9,  p12: 4,   weight: 26 },
+            { id: 'banana', img: 'banansweet-removebg-preview.png',  name: 'Банан',              p8: 0.25, p10: 0.75, p12: 2,   weight: 29 }
         ];
         const SB_SCATTER = { id: 'scatter', img: 'chupashupssweet-removebg-preview.png', name: 'Чупа-чупс (Scatter)' };
         const SB_BOMB_WEIGHTS = [
-            { mult: 2, weight: 45 }, { mult: 3, weight: 25 }, { mult: 4, weight: 14 },
-            { mult: 5, weight: 8 },  { mult: 8, weight: 4 },  { mult: 10, weight: 2.5 },
-            { mult: 20, weight: 0.4 }, { mult: 50, weight: 0.08 }, { mult: 100, weight: 0.02 }
+            { mult: 2, weight: 48 }, { mult: 3, weight: 27 }, { mult: 4, weight: 15 },
+            { mult: 5, weight: 8.5 },  { mult: 8, weight: 4.2 },  { mult: 10, weight: 2.6 },
+            { mult: 20, weight: 0.45 }, { mult: 50, weight: 0.085 }, { mult: 100, weight: 0.022 }
         ];
 
         let sbGrid = Array.from({ length: SB_COLS }, () => Array(SB_ROWS).fill(null));
         let sbSpinning = false, sbAnteActive = false, sbAutoActive = false, sbFreeSpinsLeft = 0, sbInFreeSpins = false, sbFreeSpinsTotalWin = 0;
-
-        // CHICKEN CROSS / CHICKEN ROAD STATE
-        let chickenActive = false;
-        let chickenStepIndex = 0;
-        let chickenCurrentMult = 1.0;
-        let chickenBetAmount = 10;
-        let chickenTrafficTimer = null;
-        let chickenCars = [];
-        let chickenSteppingLock = false;
 
         let balance = 1000;
         let username = '';
@@ -2329,7 +2074,6 @@
         function hideAllViews() {
             document.querySelectorAll('.game-view').forEach(v => v.classList.remove('active'));
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-            stopChickenTrafficLoop();
         }
 
         function showLobby() {
@@ -2745,7 +2489,7 @@
         }
 
         // ==========================================
-        // THE DOG HOUSE
+        // THE DOG HOUSE (Исправлена замена вайлдов, правило максимума и позиция Scatter)
         // ==========================================
         function initDogHouseDOM() {
             const gridEl = document.getElementById('dh-grid');
@@ -2802,14 +2546,14 @@
         }
 
         function getRandomDogHouseSymbol(colIndex, isFreeSpinMode) {
-            // Scatter выпадает ТОЛЬКО на 1, 3 и 5 барабанах (индексы 0, 2, 4)
-            if (!isFreeSpinMode && (colIndex === 0 || colIndex === 2 || colIndex === 4) && Math.random() < 0.045) {
+            // Scatter выпадает ТОЛЬКО на 1, 3 и 5 барабанах (индексы 0, 2, 4) и не может выпасть на 2 и 4
+            if (!isFreeSpinMode && (colIndex === 0 || colIndex === 2 || colIndex === 4) && Math.random() < 0.042) {
                 return { id: 'scatter', img: 'bonusdoghouselapa.png', name: 'Лапа (Scatter)' };
             }
-            // Сниженный шанс вайлда (1.2% в бонусе, 1.8% в обычном спинне)
-            const wildChance = isFreeSpinMode ? 0.012 : 0.018;
+            // Шанс вайлда
+            const wildChance = isFreeSpinMode ? 0.011 : 0.016;
             if (colIndex >= 1 && colIndex <= 3 && Math.random() < wildChance) {
-                const mult = Math.random() < 0.82 ? 2 : 3;
+                const mult = Math.random() < 0.85 ? 2 : 3;
                 return { id: 'wild', mult: mult, emoji: '🏠', name: `Будка x${mult}` };
             }
             const weightsMap = colIndex === 0 ? DH_WEIGHTS_REEL_1 : DH_WEIGHTS_OTHER_REELS;
@@ -2932,13 +2676,25 @@
             let totalSpinWin = 0;
             const winningCellsSet = new Set();
 
-            // ИСПРАВЛЕННЫЙ РАСЧЁТ ВЫИГРЫШНЫХ ЛИНИЙ DOG HOUSE
+            // ИСПРАВЛЕННЫЙ РАСЧЁТ ЛИНИЙ DOG HOUSE:
+            // 1. Вайлды заменяют символ, а не добавляются.
+            // 2. Линия, состоящая ТОЛЬКО из вайлдов, не оплачивается (matchBaseId должен быть реальным символом).
+            // 3. Множители вайлдов на линии применяются по правилу МАКСИМУМА (а не суммы).
             for (const line of DH_PAYLINES) {
                 const firstPos = line[0];
-                const rawFirst = dhStickyWilds[firstPos.c][firstPos.r] !== null ? { id: 'wild', mult: dhStickyWilds[firstPos.c][firstPos.r] } : dhGrid[firstPos.c][firstPos.r];
-                if (!rawFirst || rawFirst.id === 'scatter') continue;
+                const firstSymVal = dhStickyWilds[firstPos.c][firstPos.r] !== null ? { id: 'wild', mult: dhStickyWilds[firstPos.c][firstPos.r] } : dhGrid[firstPos.c][firstPos.r];
+                if (!firstSymVal || firstSymVal.id === 'scatter') continue;
 
                 let matchBaseId = null;
+                for (let i = 0; i < line.length; i++) {
+                    const s = dhStickyWilds[line[i].c][line[i].r] !== null ? { id: 'wild' } : dhGrid[line[i].c][line[i].r];
+                    if (s && s.id && s.id !== 'wild' && s.id !== 'scatter') {
+                        matchBaseId = s.id;
+                        break;
+                    }
+                }
+                if (!matchBaseId) continue; // Линия только из вайлдов не оплачивается
+
                 let matchCount = 0;
                 let lineWildMultipliers = [];
                 let lineCoords = [];
@@ -2958,27 +2714,21 @@
                         matchCount++;
                         lineWildMultipliers.push(curSym.mult);
                         lineCoords.push(pos);
+                    } else if (curSym.id === matchBaseId) {
+                        matchCount++;
+                        lineCoords.push(pos);
                     } else {
-                        if (matchBaseId === null) {
-                            matchBaseId = curSym.id;
-                            matchCount++;
-                            lineCoords.push(pos);
-                        } else if (curSym.id === matchBaseId) {
-                            matchCount++;
-                            lineCoords.push(pos);
-                        } else {
-                            break;
-                        }
+                        break;
                     }
                 }
 
-                if (matchCount >= 3 && matchBaseId !== null) {
+                if (matchCount >= 3) {
                     const symObj = DH_SYMBOLS.find(s => s.id === matchBaseId);
                     if (symObj) {
                         let baseMult = matchCount === 5 ? symObj.p5 : (matchCount === 4 ? symObj.p4 : symObj.p3);
                         let linePayout = totalBet * baseMult;
                         if (lineWildMultipliers.length > 0) {
-                            let maxWildMult = Math.max(...lineWildMultipliers);
+                            let maxWildMult = Math.max(...lineWildMultipliers); // Правило максимума
                             linePayout *= maxWildMult;
                         }
                         totalSpinWin += linePayout;
@@ -3365,258 +3115,6 @@
         }
 
         // ==========================================
-        // CHICKEN CROSS / CHICKEN ROAD
-        // ==========================================
-        const CHICKEN_MULTS_BY_RISK = {
-            easy:   [1.20, 1.48, 1.85, 2.35, 3.10, 4.20],
-            medium: [1.35, 1.85, 2.50, 3.40, 5.00, 7.50],
-            hard:   [1.75, 3.10, 5.60, 10.50, 20.00, 40.00]
-        };
-        const CAR_EMOJIS = ['🚕', '🚓', '🏎️', '🚙', '🚚', '🚐'];
-
-        function openChickenGame() {
-            if (sbSpinning || dhSpinning || aoSpinning) return;
-            hideAllViews();
-            document.getElementById('view-chicken').classList.add('active');
-            document.getElementById('nav-slot-chicken').classList.add('active');
-            resetChickenBoard();
-        }
-
-        function stopChickenTrafficLoop() {
-            if (chickenTrafficTimer) {
-                clearInterval(chickenTrafficTimer);
-                chickenTrafficTimer = null;
-            }
-        }
-
-        function updateLaneMultLabels() {
-            const risk = document.getElementById('chicken-risk').value;
-            const list = CHICKEN_MULTS_BY_RISK[risk] || CHICKEN_MULTS_BY_RISK.medium;
-            for (let i = 1; i <= 5; i++) {
-                const pill = document.getElementById(`lane-mult-${i}`);
-                if (pill) pill.textContent = 'x' + list[i - 1].toFixed(2);
-            }
-        }
-
-        function positionChickenAtStep(step) {
-            const highway = document.getElementById('chicken-highway');
-            const chickenEl = document.getElementById('runner-chicken');
-            if (!highway || !chickenEl) return;
-
-            if (step === 0) {
-                chickenEl.style.left = '37px';
-                return;
-            }
-            if (step >= 6) {
-                const finishEl = highway.querySelector('.chicken-sidewalk-finish');
-                if (finishEl) {
-                    chickenEl.style.left = (finishEl.offsetLeft + finishEl.offsetWidth / 2) + 'px';
-                }
-                return;
-            }
-            const laneEl = document.getElementById(`highway-lane-${step}`);
-            if (laneEl) {
-                chickenEl.style.left = (laneEl.offsetLeft + laneEl.offsetWidth / 2) + 'px';
-            }
-        }
-
-        function startChickenTrafficLoop() {
-            stopChickenTrafficLoop();
-            const trafficLayer = document.getElementById('chicken-traffic-layer');
-            const highway = document.getElementById('chicken-highway');
-            if (!trafficLayer || !highway) return;
-            trafficLayer.innerHTML = '';
-            chickenCars = [];
-
-            const risk = document.getElementById('chicken-risk').value;
-            const baseSpeed = risk === 'easy' ? 4.2 : (risk === 'medium' ? 6.2 : 8.8);
-
-            for (let lane = 1; lane <= 5; lane++) {
-                const carEl = document.createElement('div');
-                carEl.className = 'traffic-car';
-                carEl.textContent = CAR_EMOJIS[Math.floor(Math.random() * CAR_EMOJIS.length)];
-                trafficLayer.appendChild(carEl);
-
-                const dir = lane % 2 === 0 ? -1 : 1;
-                const startY = Math.random() * 340;
-                chickenCars.push({
-                    lane,
-                    el: carEl,
-                    y: startY,
-                    dir,
-                    speed: baseSpeed + Math.random() * 2.8,
-                    isKiller: false
-                });
-            }
-
-            chickenTrafficTimer = setInterval(() => {
-                const h = highway.clientHeight || 360;
-                chickenCars.forEach(car => {
-                    if (car.isKiller) return;
-                    const laneEl = document.getElementById(`highway-lane-${car.lane}`);
-                    if (!laneEl) return;
-                    car.el.style.left = (laneEl.offsetLeft + laneEl.offsetWidth / 2) + 'px';
-
-                    const chickenPassedThisLane = chickenActive && chickenStepIndex >= car.lane;
-                    if (chickenPassedThisLane && Math.abs(car.y - (h * 0.5 - 65)) < 14) {
-                        car.el.style.top = car.y + 'px';
-                        return;
-                    }
-
-                    car.y += car.speed * car.dir;
-                    if (car.dir > 0 && car.y > h + 40) {
-                        car.y = -50;
-                        car.el.textContent = CAR_EMOJIS[Math.floor(Math.random() * CAR_EMOJIS.length)];
-                    } else if (car.dir < 0 && car.y < -50) {
-                        car.y = h + 40;
-                        car.el.textContent = CAR_EMOJIS[Math.floor(Math.random() * CAR_EMOJIS.length)];
-                    }
-                    car.el.style.top = car.y + 'px';
-                });
-            }, 30);
-        }
-
-        function resetChickenBoard() {
-            chickenActive = false;
-            chickenStepIndex = 0;
-            chickenCurrentMult = 1.0;
-            chickenSteppingLock = false;
-
-            document.getElementById('chicken-start-btn').style.display = 'block';
-            document.getElementById('chicken-step-btn').style.display = 'none';
-            document.getElementById('chicken-cashout-btn').style.display = 'none';
-            document.getElementById('chicken-status-title').textContent = 'Выберите ставку и нажмите «Старт забега»';
-
-            for (let i = 1; i <= 5; i++) {
-                const lane = document.getElementById(`highway-lane-${i}`);
-                if (lane) lane.classList.remove('passed-lane', 'current-target-lane');
-            }
-            updateLaneMultLabels();
-
-            const chickenEl = document.getElementById('runner-chicken');
-            if (chickenEl) {
-                chickenEl.classList.remove('squashed', 'running-hop');
-                chickenEl.textContent = '🐔';
-            }
-            positionChickenAtStep(0);
-            startChickenTrafficLoop();
-        }
-
-        function startChickenGame() {
-            chickenBetAmount = parseFloat(document.getElementById('chicken-bet').value) || 10;
-            if (balance < chickenBetAmount) { showToast('⚠️ Недостаточно средств!'); openDepositModal(); return; }
-            balance -= chickenBetAmount; stats.games++; stats.wagered += chickenBetAmount;
-            updateBalanceUI(); saveState();
-
-            resetChickenBoard();
-            chickenActive = true;
-            chickenStepIndex = 0;
-            chickenCurrentMult = 1.0;
-
-            document.getElementById('chicken-start-btn').style.display = 'none';
-            document.getElementById('chicken-step-btn').style.display = 'block';
-            document.getElementById('chicken-cashout-btn').style.display = 'none';
-            document.getElementById('highway-lane-1').classList.add('current-target-lane');
-            document.getElementById('chicken-status-title').textContent = '🐔 Курица на обочине! Жми «Перебежать полосу»!';
-            showToast('🐔 Забег начался!');
-        }
-
-        async function makeChickenStep() {
-            if (!chickenActive || chickenSteppingLock) return;
-            chickenSteppingLock = true;
-            document.getElementById('chicken-step-btn').disabled = true;
-
-            chickenStepIndex++;
-            const risk = document.getElementById('chicken-risk').value;
-            const mults = CHICKEN_MULTS_BY_RISK[risk] || CHICKEN_MULTS_BY_RISK.medium;
-            let crashChance = risk === 'easy' ? 0.16 : (risk === 'medium' ? 0.26 : 0.42);
-
-            const chickenEl = document.getElementById('runner-chicken');
-            chickenEl.classList.remove('running-hop');
-            void chickenEl.offsetWidth;
-            chickenEl.classList.add('running-hop');
-            positionChickenAtStep(chickenStepIndex);
-
-            const isCrash = Math.random() < crashChance;
-
-            if (isCrash && chickenStepIndex <= 5) {
-                const laneEl = document.getElementById(`highway-lane-${chickenStepIndex}`);
-                const trafficLayer = document.getElementById('chicken-traffic-layer');
-                const killerCar = document.createElement('div');
-                killerCar.className = 'traffic-car killer-car';
-                killerCar.textContent = '🏎️';
-                killerCar.style.left = (laneEl.offsetLeft + laneEl.offsetWidth / 2) + 'px';
-                killerCar.style.top = '-60px';
-                trafficLayer.appendChild(killerCar);
-
-                let carY = -60;
-                await new Promise(resolve => {
-                    const hitInterval = setInterval(() => {
-                        carY += 22;
-                        killerCar.style.top = carY + 'px';
-                        if (carY >= 155) {
-                            clearInterval(hitInterval);
-                            resolve();
-                        }
-                    }, 18);
-                });
-
-                chickenActive = false;
-                chickenEl.classList.add('squashed');
-                chickenEl.textContent = '💥🍗';
-                killerCar.style.top = '185px';
-
-                document.getElementById('chicken-status-title').textContent = '💥 НАЕЗД! Машина сбила курицу — ставка сгорела!';
-                document.getElementById('chicken-step-btn').style.display = 'none';
-                document.getElementById('chicken-step-btn').disabled = false;
-                document.getElementById('chicken-cashout-btn').style.display = 'none';
-                document.getElementById('chicken-start-btn').style.display = 'block';
-                chickenSteppingLock = false;
-                showToast('💥 Машина сбила курицу!');
-                return;
-            }
-
-            await sleep(340);
-
-            chickenCurrentMult = mults[chickenStepIndex - 1] || Math.round((chickenCurrentMult + 0.75) * 100) / 100;
-            const potentialWin = (chickenBetAmount * chickenCurrentMult).toFixed(2);
-
-            if (chickenStepIndex <= 5) {
-                document.getElementById(`highway-lane-${chickenStepIndex}`).classList.remove('current-target-lane');
-                document.getElementById(`highway-lane-${chickenStepIndex}`).classList.add('passed-lane');
-                if (chickenStepIndex < 5) {
-                    document.getElementById(`highway-lane-${chickenStepIndex + 1}`).classList.add('current-target-lane');
-                }
-                document.getElementById('chicken-cashout-btn').style.display = 'block';
-                document.getElementById('chicken-cashout-btn').textContent = `💰 ЗАБРАТЬ ${potentialWin} BYN (x${chickenCurrentMult.toFixed(2)})`;
-                document.getElementById('chicken-status-title').textContent = `✅ Полоса ${chickenStepIndex}/5 пройдена! Множитель: x${chickenCurrentMult.toFixed(2)}`;
-            } else {
-                chickenSteppingLock = false;
-                document.getElementById('chicken-step-btn').disabled = false;
-                chickenCashout();
-                return;
-            }
-
-            document.getElementById('chicken-step-btn').disabled = false;
-            chickenSteppingLock = false;
-        }
-
-        function chickenCashout() {
-            if (!chickenActive) return;
-            chickenActive = false;
-            let win = Math.round(chickenBetAmount * chickenCurrentMult * 100) / 100;
-            balance += win; stats.totalWon += win;
-            if (win > stats.biggestWin) stats.biggestWin = win;
-            updateBalanceUI(); saveState();
-
-            document.getElementById('chicken-status-title').textContent = `🎉 Курица перебежала дорогу! Выигрыш: +${win.toFixed(2)} BYN!`;
-            document.getElementById('chicken-step-btn').style.display = 'none';
-            document.getElementById('chicken-cashout-btn').style.display = 'none';
-            document.getElementById('chicken-start-btn').style.display = 'block';
-            showToast(`🏆 Выигрыш забран: +${win.toFixed(2)} BYN!`);
-        }
-
-        // ==========================================
         // ПОПОЛНЕНИЕ И QR-КОД
         // ==========================================
         function openDepositModal() {
@@ -3644,8 +3142,6 @@
             const addr = document.getElementById('crypto-wallet-address').textContent.trim();
             navigator.clipboard.writeText(addr).then(() => { showToast('✅ Адрес скопирован!'); });
         }
-
-        document.getElementById('chicken-risk')?.addEventListener('change', updateLaneMultLabels);
 
         window.addEventListener('DOMContentLoaded', () => {
             loadState();
