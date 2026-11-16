@@ -247,16 +247,17 @@
         .main-wrapper { flex: 1; display: flex; flex-direction: column; min-width: 0; }
 
         .topbar {
-            height: 70px;
+            min-height: 70px;
             background: var(--bg-topbar);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             border-bottom: 1px solid var(--border-glass);
-            padding: 0 26px;
+            padding: 8px 22px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 12px;
+            gap: 10px;
+            flex-wrap: wrap;
             position: sticky;
             top: 0;
             z-index: 25;
@@ -282,19 +283,20 @@
         .balance-center-group {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
+            flex-wrap: wrap;
         }
 
         .balance-center-box {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             background: rgba(18, 25, 34, 0.8);
             border: 1px solid var(--border-glass);
-            padding: 8px 18px;
+            padding: 8px 16px;
             border-radius: 14px;
             font-weight: 900;
-            font-size: 1.25rem;
+            font-size: 1.2rem;
             color: #ffffff;
             backdrop-filter: blur(8px);
         }
@@ -304,15 +306,30 @@
             color: #1a0f00;
             border: none;
             border-radius: 12px;
-            padding: 10px 18px;
+            padding: 10px 16px;
             font-weight: 900;
-            font-size: 0.88rem;
+            font-size: 0.85rem;
             text-transform: uppercase;
             cursor: pointer;
             box-shadow: 0 0 20px var(--accent-gold-glow);
             transition: 0.2s;
         }
         .btn-deposit-top:hover { transform: scale(1.03); filter: brightness(1.1); }
+
+        .btn-withdraw-top {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: #ffffff;
+            border: 1px solid rgba(110, 231, 183, 0.4);
+            border-radius: 12px;
+            padding: 10px 16px;
+            font-weight: 900;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            cursor: pointer;
+            box-shadow: 0 0 18px rgba(16, 185, 129, 0.35);
+            transition: 0.2s;
+        }
+        .btn-withdraw-top:hover { transform: scale(1.03); filter: brightness(1.1); }
 
         .topbar-right-group {
             display: flex;
@@ -564,6 +581,25 @@
         }
         .btn-back:hover { background: rgba(255, 255, 255, 0.08); }
 
+        .btn-paytable-help {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.25), rgba(217, 119, 6, 0.4));
+            border: 1px solid #fde047;
+            color: #fef08a;
+            padding: 7px 14px;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            font-weight: 800;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .btn-paytable-help:hover {
+            transform: scale(1.04);
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.45), rgba(217, 119, 6, 0.6));
+        }
+
         .auto-active-btn {
             background: #22c55e !important;
             color: #000 !important;
@@ -599,6 +635,8 @@
             border-bottom: 1px solid rgba(245, 158, 11, 0.3);
             position: relative;
             z-index: 15;
+            gap: 10px;
+            flex-wrap: wrap;
         }
 
         .ao-fs-banner {
@@ -895,6 +933,7 @@
             gap: 15px;
             position: relative;
             z-index: 15;
+            flex-wrap: wrap;
         }
         .ao-hud-left-group { display: flex; align-items: center; gap: 12px; }
         .ao-icon-btn {
@@ -937,6 +976,7 @@
         .dh-top-bar {
             display: flex; align-items: center; justify-content: space-between; padding: 10px 18px;
             background: rgba(20, 10, 5, 0.75); border-bottom: 1px solid rgba(245, 158, 11, 0.3);
+            gap: 10px; flex-wrap: wrap;
         }
         .dh-logo-title {
             font-size: 1.5rem; font-family: 'Unbounded', sans-serif; font-weight: 900;
@@ -989,14 +1029,21 @@
         .dh-cell.sticky-wild { background: radial-gradient(circle, rgba(239, 68, 68, 0.6) 0%, rgba(185, 28, 28, 0.4) 100%); border-color: #fca5a5; z-index: 15; overflow: visible; }
         
         #view-doghouse .dh-wild-badge {
-            width: 118%; height: 118%; transform: scale(1.22);
-            background: radial-gradient(circle at 30% 30%, #fef08a, #d97706 60%, #78350f 100%);
+            width: 118%; height: 118%; transform: scale(1.16);
+            background: radial-gradient(circle at 30% 30%, rgba(254, 240, 138, 0.92), rgba(217, 119, 6, 0.9) 60%, rgba(120, 53, 15, 0.95) 100%);
             border: 3px solid #fff; border-radius: 16px; display: flex; flex-direction: column;
             align-items: center; justify-content: center; box-shadow: 0 10px 24px rgba(0,0,0,0.85), 0 0 22px rgba(253, 224, 71, 0.9);
-            position: relative; z-index: 16;
+            position: relative; z-index: 16; padding: 2px;
         }
-        #view-doghouse .dh-wild-badge::before { content: '🏠'; font-size: 2.2rem; line-height: 1; }
-        #view-doghouse .dh-wild-mult { font-size: 0.98rem; font-weight: 900; color: #fff; text-shadow: 0 2px 3px #000; }
+        #view-doghouse .dh-wild-img {
+            width: 78%; height: 78%; object-fit: contain; filter: drop-shadow(0 2px 5px rgba(0,0,0,0.7));
+        }
+        #view-doghouse .dh-wild-mult {
+            position: absolute; bottom: 2px; right: 4px;
+            background: linear-gradient(135deg, #dc2626, #991b1b);
+            border: 1.5px solid #fde047; border-radius: 7px; padding: 1px 6px;
+            font-size: 0.92rem; font-weight: 900; color: #fff; text-shadow: 0 2px 3px #000;
+        }
 
         .dh-fs-intro-box {
             display: none; position: absolute; inset: 0; background: rgba(10, 5, 2, 0.95);
@@ -1009,7 +1056,7 @@
 
         .dh-pragmatic-hud {
             background: rgba(20, 10, 5, 0.96); border-top: 2px solid #78350f; padding: 10px 20px;
-            display: flex; align-items: center; justify-content: space-between; gap: 15px;
+            display: flex; align-items: center; justify-content: space-between; gap: 15px; flex-wrap: wrap;
         }
         .dh-hud-left-group { display: flex; align-items: center; gap: 12px; }
         .dh-credits-box {
@@ -1050,6 +1097,7 @@
         .sb-top-bar {
             display: flex; align-items: center; justify-content: space-between; padding: 10px 18px;
             background: rgba(40, 10, 30, 0.75); border-bottom: 1px solid rgba(244, 63, 94, 0.3);
+            gap: 10px; flex-wrap: wrap;
         }
         .sb-logo-title {
             display: inline-flex;
@@ -1190,7 +1238,7 @@
         
         .sb-bottom-hud {
             background: rgba(30, 8, 25, 0.96); border-top: 2px solid #831843; padding: 10px 20px;
-            display: flex; align-items: center; justify-content: space-between; gap: 15px;
+            display: flex; align-items: center; justify-content: space-between; gap: 15px; flex-wrap: wrap;
         }
         .sb-hud-left { display: flex; align-items: center; gap: 12px; }
         .sb-stat-pill { background: rgba(0,0,0,0.4); border: 1px solid #831843; padding: 4px 12px; border-radius: 8px; font-size: 0.8rem; font-weight: 700; }
@@ -1221,17 +1269,190 @@
         .modal-overlay.active { display: flex; }
         .deposit-modal {
             background: #101720; border: 1px solid rgba(245, 158, 11, 0.4); border-radius: 20px;
-            max-width: 540px; width: 100%; padding: 28px; position: relative; box-shadow: 0 0 50px rgba(245, 158, 11, 0.2); max-height: 90vh; overflow-y: auto;
+            max-width: 580px; width: 100%; padding: 26px; position: relative; box-shadow: 0 0 50px rgba(245, 158, 11, 0.2); max-height: 92vh; overflow-y: auto;
         }
         .modal-close-btn {
-            position: absolute; top: 18px; right: 18px; background: rgba(255,255,255,0.05); border: none;
+            position: absolute; top: 18px; right: 18px; background: rgba(255,255,255,0.08); border: none;
             color: #fff; width: 34px; height: 34px; border-radius: 50%; font-weight: 800; cursor: pointer;
         }
+        .modal-close-btn:hover { background: rgba(255,255,255,0.16); }
+
         .wallet-address-box {
-            background: #090d12; border: 1px dashed rgba(245, 158, 11, 0.4); border-radius: 12px; padding: 14px;
-            margin: 14px 0; word-break: break-all; font-family: monospace; font-size: 0.95rem; color: #fde047; text-align: center;
+            background: #090d12; border: 1px dashed rgba(245, 158, 11, 0.4); border-radius: 12px; padding: 12px;
+            margin: 12px 0; word-break: break-all; font-family: monospace; font-size: 0.92rem; color: #fde047; text-align: center;
         }
-        .deposit-steps { background: rgba(255, 255, 255, 0.03); border-radius: 12px; padding: 14px 16px; font-size: 0.82rem; color: #d1d9e4; line-height: 1.5; margin-top: 16px; }
+        .deposit-steps { background: rgba(255, 255, 255, 0.03); border-radius: 12px; padding: 12px 14px; font-size: 0.8rem; color: #d1d9e4; line-height: 1.5; margin-top: 12px; }
+
+        /* Стили для вкладок кассы (Пополнение и Вывод) */
+        .cashier-methods-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+            gap: 8px;
+            margin: 14px 0;
+        }
+        .cashier-method-btn {
+            background: #0b1017;
+            border: 1px solid var(--border-glass);
+            border-radius: 12px;
+            padding: 10px 8px;
+            color: var(--text-muted);
+            font-size: 0.78rem;
+            font-weight: 800;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            transition: 0.2s;
+            text-align: center;
+        }
+        .cashier-method-btn:hover { background: rgba(255,255,255,0.05); color: #fff; }
+        .cashier-method-btn.active {
+            background: rgba(245, 158, 11, 0.16);
+            border-color: var(--accent-gold);
+            color: #fde047;
+            box-shadow: 0 0 15px rgba(245, 158, 11, 0.25);
+        }
+        .cashier-method-btn.withdraw-active {
+            background: rgba(16, 185, 129, 0.18);
+            border-color: #10b981;
+            color: #6ee7b7;
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.25);
+        }
+
+        .cashier-field-group {
+            margin-top: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .cashier-field-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            display: flex;
+            justify-content: space-between;
+        }
+        .cashier-input {
+            width: 100%;
+            background: #090d12;
+            border: 1px solid var(--border-glass);
+            border-radius: 12px;
+            padding: 12px 14px;
+            color: #fff;
+            font-size: 0.95rem;
+            font-weight: 700;
+            outline: none;
+        }
+        .cashier-input:focus { border-color: var(--accent-gold); }
+
+        .quick-amounts-row {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin-top: 6px;
+        }
+        .quick-amt-chip {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border-glass);
+            color: #e2e8f0;
+            border-radius: 8px;
+            padding: 5px 10px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            cursor: pointer;
+        }
+        .quick-amt-chip:hover { border-color: var(--accent-gold); color: #fde047; }
+
+        .withdraw-summary-box {
+            background: rgba(16, 185, 129, 0.08);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 12px;
+            padding: 12px;
+            margin-top: 12px;
+            font-size: 0.82rem;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .withdraw-summary-row {
+            display: flex;
+            justify-content: space-between;
+            color: #cbd5e1;
+        }
+
+        .tx-history-box {
+            margin-top: 16px;
+            border-top: 1px solid var(--border-glass);
+            padding-top: 12px;
+        }
+        .tx-history-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            max-height: 170px;
+            overflow-y: auto;
+            margin-top: 8px;
+        }
+        .tx-item-card {
+            background: #090d12;
+            border: 1px solid var(--border-glass);
+            border-radius: 10px;
+            padding: 10px 12px;
+            font-size: 0.78rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Таблицы выплат */
+        .paytable-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            font-size: 0.82rem;
+        }
+        .paytable-table th {
+            text-align: left;
+            padding: 8px 10px;
+            color: var(--text-muted);
+            border-bottom: 1px solid rgba(255,255,255,0.12);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+        }
+        .paytable-table td {
+            padding: 8px 10px;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            vertical-align: middle;
+        }
+        .paytable-sym-cell {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 800;
+            color: #fff;
+        }
+        .paytable-sym-img {
+            width: 34px;
+            height: 34px;
+            object-fit: contain;
+        }
+        .paytable-val-pill {
+            display: inline-block;
+            background: rgba(255,255,255,0.06);
+            padding: 3px 7px;
+            border-radius: 6px;
+            font-weight: 800;
+            color: #fde047;
+        }
+        .paytable-byn-sub {
+            display: block;
+            font-size: 0.68rem;
+            color: #94a3b8;
+            font-weight: 600;
+        }
 
         .dev-section { background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-glass); border-radius: 14px; padding: 16px; margin-top: 16px; }
         .dev-section-title { font-size: 0.82rem; font-weight: 800; text-transform: uppercase; color: var(--accent-gold); margin-bottom: 10px; }
@@ -1287,42 +1508,165 @@
         </div>
     </div>
 
-    <!-- МОДАЛЬНОЕ ОКНО ПОПОЛНЕНИЯ -->
+    <!-- МОДАЛЬНОЕ ОКНО ПОПОЛНЕНИЯ (МНОЖЕСТВО СПОСОБОВ) -->
     <div class="modal-overlay" id="deposit-modal">
         <div class="deposit-modal">
             <button class="modal-close-btn" onclick="closeDepositModal()">✕</button>
-            <h2 style="margin: 0 0 6px; color: var(--accent-gold); text-transform: uppercase; font-family: 'Unbounded', sans-serif; font-size: 1.15rem;">💳 Пополнение баланса</h2>
-            <p style="margin: 0; font-size: 0.85rem; color: var(--text-muted);">Прямой крипто-депозит • Сеть USDT (TRC-20)</p>
+            <h2 style="margin: 0 0 4px; color: var(--accent-gold); text-transform: uppercase; font-family: 'Unbounded', sans-serif; font-size: 1.15rem;">💳 Касса: Пополнение</h2>
+            <p style="margin: 0; font-size: 0.82rem; color: var(--text-muted);">Выберите удобный способ оплаты • Мгновенная обработка</p>
 
-            <div style="font-size: 0.82rem; color: var(--accent-gold); font-weight: 700; text-align: center; margin-top: 14px;">
-                Сеть: TRON (TRC-20) • Курс: 1 USDT = 3.25 BYN
+            <div class="cashier-methods-grid" id="dep-methods-grid">
+                <button class="cashier-method-btn active" data-method="usdt" onclick="selectDepositMethod('usdt')">
+                    <span style="font-size:1.2rem;">💎</span>
+                    <span>USDT TRC-20</span>
+                </button>
+                <button class="cashier-method-btn" data-method="card" onclick="selectDepositMethod('card')">
+                    <span style="font-size:1.2rem;">💳</span>
+                    <span>Карта BYN/РФ</span>
+                </button>
+                <button class="cashier-method-btn" data-method="ton" onclick="selectDepositMethod('ton')">
+                    <span style="font-size:1.2rem;">✈️</span>
+                    <span>TON / Wallet</span>
+                </button>
+                <button class="cashier-method-btn" data-method="erip" onclick="selectDepositMethod('erip')">
+                    <span style="font-size:1.2rem;">🏦</span>
+                    <span>ЕРИП / СБП</span>
+                </button>
+                <button class="cashier-method-btn" data-method="crypto_other" onclick="selectDepositMethod('crypto_other')">
+                    <span style="font-size:1.2rem;">₿</span>
+                    <span>BTC / LTC</span>
+                </button>
             </div>
 
-            <div class="wallet-address-box" id="crypto-wallet-address">
-                TMVngRQdJ1XqC67GTLttnuWUZKYxtdMFWt
+            <div class="cashier-field-group">
+                <div class="cashier-field-label">
+                    <span>Сумма пополнения (BYN)</span>
+                    <span style="color:#fde047;" id="dep-converted-hint">≈ 15.38 USDT</span>
+                </div>
+                <input type="number" id="dep-amount-input" class="cashier-input" value="50" min="10" step="5" oninput="updateDepositCalc()">
+                <div class="quick-amounts-row">
+                    <button class="quick-amt-chip" onclick="setDepositAmount(20)">20 BYN</button>
+                    <button class="quick-amt-chip" onclick="setDepositAmount(50)">50 BYN</button>
+                    <button class="quick-amt-chip" onclick="setDepositAmount(100)">100 BYN</button>
+                    <button class="quick-amt-chip" onclick="setDepositAmount(250)">250 BYN</button>
+                    <button class="quick-amt-chip" onclick="setDepositAmount(500)">500 BYN</button>
+                </div>
             </div>
 
-            <button class="btn-back" style="width: 100%; background: var(--accent-gold-gradient); color:#1a0f00; font-weight:900; margin-bottom:10px;" onclick="copyWalletAddress()">📋 СКОПИРОВАТЬ АДРЕС КОШЕЛЬКА</button>
+            <!-- Блок реквизитов выбранного способа -->
+            <div id="dep-details-panel" style="margin-top: 12px;">
+                <div style="font-size: 0.8rem; color: var(--accent-gold); font-weight: 700; text-align: center;" id="dep-network-label">
+                    Сеть: TRON (TRC-20) • Курс: 1 USDT = 3.25 BYN
+                </div>
 
-            <button class="btn-back" id="toggle-qr-btn" style="width: 100%; background: rgba(245, 158, 11, 0.14); border: 1px solid var(--accent-gold); color: #fde047; font-weight: 900; margin-bottom: 12px;" onclick="toggleDepositQR()">
-                📷 ПОКАЗАТЬ QR-КОД
+                <div class="wallet-address-box" id="crypto-wallet-address">
+                    TMVngRQdJ1XqC67GTLttnuWUZKYxtdMFWt
+                </div>
+
+                <button class="btn-back" style="width: 100%; background: var(--accent-gold-gradient); color:#1a0f00; font-weight:900; margin-bottom:8px;" onclick="copyWalletAddress()">📋 СКОПИРОВАТЬ РЕКВИЗИТЫ</button>
+
+                <button class="btn-back" id="toggle-qr-btn" style="width: 100%; background: rgba(245, 158, 11, 0.14); border: 1px solid var(--accent-gold); color: #fde047; font-weight: 900; margin-bottom: 8px;" onclick="toggleDepositQR()">
+                    📷 ПОКАЗАТЬ QR-КОД
+                </button>
+
+                <div id="deposit-qr-container" style="display: none; text-align: center; margin: 10px 0 12px;">
+                    <img src="./QR.jpg" onerror="this.onerror=null; this.src='QR.jpg';" alt="QR код для пополнения" style="width: 195px; height: 195px; object-fit: contain; border-radius: 14px; border: 2px solid var(--accent-gold); background: #fff; padding: 6px; box-shadow: 0 0 25px rgba(245, 158, 11, 0.35);">
+                    <div style="font-size: 0.74rem; color: var(--text-muted); margin-top: 6px;">Отсканируйте QR-код в вашем приложении</div>
+                </div>
+            </div>
+
+            <div class="deposit-steps" id="dep-instruction-text">
+                <b>Инструкция по зачислению:</b><br>
+                1. Переведите сумму по указанным реквизитам (минимум 15 BYN / 5 USDT).<br>
+                2. Нажмите «Я ОПЛАТИЛ — ОТПРАВИТЬ ЧЕК» и прикрепите скриншот перевода администратору (<b id="modal-player-nick" style="color:var(--accent-gold);">Player</b>).
+            </div>
+
+            <div style="display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap;">
+                <button class="btn-back" style="flex: 1; background: linear-gradient(135deg, #22c55e, #15803d); color: #fff; font-weight: 900; border: none; padding: 12px;" onclick="submitDepositRequest()">
+                    ✅ Я ОПЛАТИЛ (СОЗДАТЬ ЗАЯВКУ)
+                </button>
+                <a href="https://t.me/Seregablatnou" target="_blank" class="tg-boss-btn" style="justify-content: center; flex: 1;">
+                    ✈️ ЧАТ С КАССИРОМ TG
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- МОДАЛЬНОЕ ОКНО ВЫВОДА СРЕДСТВ -->
+    <div class="modal-overlay" id="withdraw-modal">
+        <div class="deposit-modal" style="border-color: rgba(16, 185, 129, 0.5);">
+            <button class="modal-close-btn" onclick="closeWithdrawModal()">✕</button>
+            <h2 style="margin: 0 0 4px; color: #34d399; text-transform: uppercase; font-family: 'Unbounded', sans-serif; font-size: 1.15rem;">💸 Вывод выигрыша</h2>
+            <p style="margin: 0; font-size: 0.82rem; color: var(--text-muted);">Быстрые выплаты 24/7 • Доступно: <b id="wd-avail-balance" style="color:#fff;">0,00 BYN</b></p>
+
+            <div class="cashier-methods-grid" id="wd-methods-grid">
+                <button class="cashier-method-btn withdraw-active" data-wd="card" onclick="selectWithdrawMethod('card')">
+                    <span style="font-size:1.2rem;">💳</span>
+                    <span>Банк. карта</span>
+                </button>
+                <button class="cashier-method-btn" data-wd="usdt" onclick="selectWithdrawMethod('usdt')">
+                    <span style="font-size:1.2rem;">💎</span>
+                    <span>USDT TRC-20</span>
+                </button>
+                <button class="cashier-method-btn" data-wd="erip" onclick="selectWithdrawMethod('erip')">
+                    <span style="font-size:1.2rem;">🏦</span>
+                    <span>ЕРИП / СБП</span>
+                </button>
+                <button class="cashier-method-btn" data-wd="yoomoney" onclick="selectWithdrawMethod('yoomoney')">
+                    <span style="font-size:1.2rem;">👛</span>
+                    <span>ЮMoney</span>
+                </button>
+            </div>
+
+            <div class="cashier-field-group">
+                <div class="cashier-field-label">
+                    <span id="wd-requisite-label">Номер карты (VISA / Mastercard / Белкарт)</span>
+                </div>
+                <input type="text" id="wd-requisite-input" class="cashier-input" placeholder="4276 0000 0000 0000">
+            </div>
+
+            <div class="cashier-field-group">
+                <div class="cashier-field-label">
+                    <span>Сумма вывода (мин. 20 BYN)</span>
+                    <span style="color:#34d399; cursor:pointer; text-decoration:underline;" onclick="setMaxWithdraw()">Вывести всё</span>
+                </div>
+                <input type="number" id="wd-amount-input" class="cashier-input" value="50" min="20" step="1" oninput="updateWithdrawCalc()">
+                <div class="quick-amounts-row">
+                    <button class="quick-amt-chip" onclick="setWithdrawAmount(20)">20 BYN</button>
+                    <button class="quick-amt-chip" onclick="setWithdrawAmount(50)">50 BYN</button>
+                    <button class="quick-amt-chip" onclick="setWithdrawAmount(100)">100 BYN</button>
+                    <button class="quick-amt-chip" onclick="setWithdrawAmount(300)">300 BYN</button>
+                </div>
+            </div>
+
+            <div class="withdraw-summary-box">
+                <div class="withdraw-summary-row">
+                    <span>Комиссия платёжного шлюза:</span>
+                    <b id="wd-fee-text" style="color:#fbbf24;">2% (1,00 BYN)</b>
+                </div>
+                <div class="withdraw-summary-row">
+                    <span>Время зачисления:</span>
+                    <b>5 – 15 минут</b>
+                </div>
+                <div class="withdraw-summary-row" style="border-top:1px solid rgba(255,255,255,0.1); padding-top:6px; font-size:0.92rem;">
+                    <span style="color:#fff; font-weight:700;">Итого к получению:</span>
+                    <b id="wd-net-text" style="color:#34d399;">49,00 BYN</b>
+                </div>
+            </div>
+
+            <button class="btn-back" style="width: 100%; margin-top: 14px; background: linear-gradient(135deg, #10b981, #059669); color: #fff; font-weight: 900; border: none; padding: 13px; font-size: 0.92rem;" onclick="submitWithdrawRequest()">
+                💸 ЗАКАЗАТЬ ВЫПЛАТУ
             </button>
 
-            <div id="deposit-qr-container" style="display: none; text-align: center; margin: 12px 0 16px;">
-                <img src="./QR.jpg" onerror="this.onerror=null; this.src='QR.jpg';" alt="QR код для пополнения USDT TRC-20" style="width: 210px; height: 210px; object-fit: contain; border-radius: 14px; border: 2px solid var(--accent-gold); background: #fff; padding: 6px; box-shadow: 0 0 25px rgba(245, 158, 11, 0.35);">
-                <div style="font-size: 0.76rem; color: var(--text-muted); margin-top: 6px;">Отсканируйте QR-код в вашем криптокошельке</div>
+            <div class="tx-history-box">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <span style="font-size:0.78rem; font-weight:800; text-transform:uppercase; color:var(--text-muted);">📋 История заявок на вывод</span>
+                    <a href="https://t.me/Seregablatnou" target="_blank" style="font-size:0.74rem; color:var(--accent-gold); text-decoration:none; font-weight:700;">Ускорить в TG ↗</a>
+                </div>
+                <div class="tx-history-list" id="wd-history-list">
+                    <div style="font-size:0.78rem; color:var(--text-muted); text-align:center; padding:10px;">У вас пока нет заявок на вывод</div>
+                </div>
             </div>
-
-            <div class="deposit-steps">
-                <b>Инструкция по зачислению:</b><br>
-                1. Нажмите «Показать QR-код» или скопируйте адрес кошелька USDT (TRC-20) и переведите нужную сумму (минимум 5 USDT).<br>
-                2. Сделайте скриншот успешного перевода из вашего кошелька.<br>
-                3. Отправьте скриншот и ваш ник (<b id="modal-player-nick" style="color:var(--accent-gold);">Player</b>) администратору в Telegram для мгновенного зачисления на баланс.
-            </div>
-
-            <a href="https://t.me/Seregablatnou" target="_blank" class="tg-boss-btn" style="justify-content: center; margin-top: 14px;">
-                ✈️ ОТПРАВИТЬ ЧЕК В TELEGRAM (@Seregablatnou)
-            </a>
         </div>
     </div>
 
@@ -1331,7 +1675,7 @@
         <div class="deposit-modal" style="max-width: 600px; border-color: #ef4444;">
             <button class="modal-close-btn" onclick="closeDevModal()">✕</button>
             <h2 style="margin: 0 0 6px; color: #f87171; text-transform: uppercase; font-family: 'Unbounded', sans-serif; font-size: 1.15rem;">🛠️ Меню Разработчика</h2>
-            <p style="margin: 0; font-size: 0.85rem; color: var(--text-muted);">Управление балансами и мониторинг игроков на сайте (через Firebase)</p>
+            <p style="margin: 0; font-size: 0.85rem; color: var(--text-muted);">Управление балансами, депозитами и мониторинг игроков</p>
 
             <div class="dev-section">
                 <div class="dev-section-title">💰 Управление вашим балансом (<span id="dev-my-nick">Player</span>)</div>
@@ -1339,6 +1683,9 @@
                     <input type="number" id="dev-self-amount" class="dev-input" placeholder="Введите сумму BYN..." step="any">
                     <button class="dev-btn-add" onclick="devModifySelfBalance(1)">+ ВЫДАТЬ</button>
                     <button class="dev-btn-sub" onclick="devModifySelfBalance(-1)">− ЗАБРАТЬ</button>
+                </div>
+                <div style="margin-top:10px; display:flex; gap:8px; flex-wrap:wrap;">
+                    <button class="quick-amt-chip" style="border-color:#22c55e; color:#86efac;" onclick="devSimulateFirstDeposit()">🎁 Активировать 1-й депозит (5 бонусных спинов)</button>
                 </div>
             </div>
 
@@ -1360,34 +1707,16 @@
         </div>
     </div>
 
-    <!-- МОДАЛЬНОЕ ОКНО ПРАВИЛ ИГРЫ SWEET BONANZA -->
-    <div class="modal-overlay" id="bonanza-rules-modal">
-        <div class="deposit-modal" style="max-width: 650px; background: #1a0b1f; border-color: #f472b6;">
-            <button class="modal-close-btn" onclick="closeBonanzaRulesModal()">✕</button>
-            <h2 style="margin: 0 0 12px; color: #f472b6; text-transform: uppercase; font-family: 'Unbounded', sans-serif; font-size: 1.15rem;">📜 Правила игры Sweet Bonanza</h2>
+    <!-- УНИВЕРСАЛЬНОЕ МОДАЛЬНОЕ ОКНО ТАБЛИЦЫ ВЫПЛАТ И ПРАВИЛ ДЛЯ ВСЕХ СЛОТОВ -->
+    <div class="modal-overlay" id="slot-paytable-modal">
+        <div class="deposit-modal" style="max-width: 680px; background: #121622; border-color: #fde047;">
+            <button class="modal-close-btn" onclick="closeSlotPaytableModal()">✕</button>
+            <h2 id="pt-modal-title" style="margin: 0 0 6px; color: #fde047; text-transform: uppercase; font-family: 'Unbounded', sans-serif; font-size: 1.12rem;">📜 Таблица выплат и правила</h2>
+            <p id="pt-modal-subtitle" style="margin: 0 0 12px; font-size: 0.82rem; color: #cbd5e1;">Выплаты рассчитаны для вашей текущей ставки</p>
             
-            <div style="font-size: 0.85rem; color: #fbcfe8; line-height: 1.6; max-height: 60vh; overflow-y: auto; padding-right: 6px;">
-                <p><b>Символы оплачиваются в любом месте экрана.</b> Общее количество одинаковых символов на экране в конце спина определяет сумму выигрыша.</p>
-                <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:8px; margin: 12px 0; text-align:center;">
-                    <div style="background:rgba(255,255,255,0.05); padding:8px; border-radius:10px;">❤️ <b>Сердце</b><br>12+: 50x • 10-11: 25x • 8-9: 10x</div>
-                    <div style="background:rgba(255,255,255,0.05); padding:8px; border-radius:10px;">🟪 <b>Квадрат</b><br>12+: 25x • 10-11: 10x • 8-9: 2.5x</div>
-                    <div style="background:rgba(255,255,255,0.05); padding:8px; border-radius:10px;">🟩 <b>Пятиугольник</b><br>12+: 15x • 10-11: 5x • 8-9: 2x</div>
-                    <div style="background:rgba(255,255,255,0.05); padding:8px; border-radius:10px;">🟦 <b>Овал</b><br>12+: 12x • 10-11: 2x • 8-9: 1.5x</div>
-                    <div style="background:rgba(255,255,255,0.05); padding:8px; border-radius:10px;">🍎 <b>Яблоко</b><br>12+: 10x • 10-11: 1.5x • 8-9: 1x</div>
-                    <div style="background:rgba(255,255,255,0.05); padding:8px; border-radius:10px;">🍑 <b>Слива</b><br>12+: 8x • 10-11: 1.2x • 8-9: 0.8x</div>
-                    <div style="background:rgba(255,255,255,0.05); padding:8px; border-radius:10px;">🍉 <b>Арбуз</b><br>12+: 5x • 10-11: 1x • 8-9: 0.5x</div>
-                    <div style="background:rgba(255,255,255,0.05); padding:8px; border-radius:10px;">🍇 <b>Виноград</b><br>12+: 4x • 10-11: 0.9x • 8-9: 0.4x</div>
-                    <div style="background:rgba(255,255,255,0.05); padding:8px; border-radius:10px;">🍌 <b>Банан</b><br>12+: 2x • 10-11: 0.75x • 8-9: 0.25x</div>
-                </div>
-                <p>🍭 <b>SCATTER (Чупа-чупс)</b> — присутствует на всех барабанах. 6 символов = 100x, 5 символов = 5x, 4 символа = 3x + запуск фриспинов.</p>
-                <hr style="border-color: rgba(244,114,182,0.2); margin: 12px 0;">
-                <p><b>RTP:</b> Стандартный — 93% (для новых игроков первые 50 спинов — 91%).</p>
-                <p>• Все выигрыши умножаются на значение основной ставки (в BYN).<br>
-                   • Клавиши <b>ПРОБЕЛ</b> и <b>ВВОД</b> на клавиатуре можно использовать для начала спина.</p>
-                <p style="color: #fde047; font-weight: 700;">Минимальная ставка: 0,50 BYN | Максимальная ставка: 50,00 BYN</p>
-            </div>
+            <div id="pt-modal-body" style="max-height: 62vh; overflow-y: auto; padding-right: 4px;"></div>
             
-            <button class="btn-back" style="width: 100%; margin-top: 16px; background: linear-gradient(135deg, #db2777, #f43f5e); color:#fff; font-weight:900;" onclick="closeBonanzaRulesModal()">ПОНЯТНО</button>
+            <button class="btn-back" style="width: 100%; margin-top: 14px; background: var(--accent-gold-gradient); color:#1a0f00; font-weight:900;" onclick="closeSlotPaytableModal()">ПОНЯТНО, В ИГРУ!</button>
         </div>
     </div>
 
@@ -1445,6 +1774,7 @@
                     <span>💵</span><span id="balance">1000,00</span> <span style="font-size:0.75rem; color:var(--text-muted); font-weight:600;">BYN</span>
                 </div>
                 <button class="btn-deposit-top" onclick="openDepositModal()">+ ПОПОЛНИТЬ</button>
+                <button class="btn-withdraw-top" onclick="openWithdrawModal()">💸 ВЫВЕСТИ</button>
             </div>
 
             <div class="topbar-right-group">
@@ -1469,7 +1799,7 @@
                     <div class="hero-visuals-wrapper">
                         <img src="bonusdoghouselapa.png" alt="Бонус лапа" class="hero-bonus-visual">
                         <div class="hero-zeus-visual">
-                            <img src="glavniypesdoghouse.png" alt="Главный пес" style="max-height: 180px; width: auto; object-fit: contain; filter: drop-shadow(0 0 20px rgba(245, 158, 11, 0.5));">
+                            <img src="glavniypes22.png" onerror="this.src='glavniypesdoghouse.png';" alt="Главный пес" style="max-height: 180px; width: auto; object-fit: contain; filter: drop-shadow(0 0 20px rgba(245, 158, 11, 0.5));">
                         </div>
                     </div>
                 </div>
@@ -1486,31 +1816,31 @@
                             <button class="card-hover-play-btn" onclick="event.stopPropagation(); openGatesOfOlympus();">ИГРАТЬ</button>
                             <button class="card-hover-demo-btn" onclick="event.stopPropagation(); openGatesOfOlympus();">Демо</button>
                         </div>
-                        <div class="slot-card-meta"><span>RTP 93% (Новым 91%)</span><span>До x500</span></div>
+                        <div class="slot-card-meta"><span>Каскады 6×5</span><span>Множители до x500</span></div>
                     </div>
 
                     <div class="slot-lobby-card doghouse-featured" onclick="openDogHouse()">
                         <div class="slot-card-content">
                             <div class="slot-card-title">The Dog House</div>
-                            <div class="slot-card-desc">Точная математика с липкими вайлдами и редкими бонусами!</div>
+                            <div class="slot-card-desc">Обновлённый слот с карточными номиналами, липкими будками-вайлдами x2/x3 и фриспинами!</div>
                         </div>
                         <div class="slot-card-actions">
                             <button class="card-hover-play-btn" onclick="event.stopPropagation(); openDogHouse();">ИГРАТЬ</button>
                             <button class="card-hover-demo-btn" onclick="event.stopPropagation(); openDogHouse();">Демо</button>
                         </div>
-                        <div class="slot-card-meta"><span>20 линий</span><span>RTP 93% (Новым 91%)</span></div>
+                        <div class="slot-card-meta"><span>20 линий</span><span>Липкие Wild x2/x3</span></div>
                     </div>
 
                     <div class="slot-lobby-card bonanza-featured" onclick="openSweetBonanza()">
                         <div class="slot-card-content">
                             <div class="slot-card-title">Sweet Bonanza (6×5)</div>
-                            <div class="slot-card-desc">Фруктово-конфетный слот 6x5 в BYN с каскадами Tumble, фриспинами и бомбами до x100.</div>
+                            <div class="slot-card-desc">Фруктово-конфетный слот 6x5 в BYN с частыми каскадами Tumble, фриспинами и бомбами до x100.</div>
                         </div>
                         <div class="slot-card-actions">
                             <button class="card-hover-play-btn" onclick="event.stopPropagation(); openSweetBonanza();">ИГРАТЬ</button>
                             <button class="card-hover-demo-btn" onclick="event.stopPropagation(); openSweetBonanza();">Демо</button>
                         </div>
-                        <div class="slot-card-meta"><span>RTP 93% (Новым 91%)</span><span>Бомбы до x100</span></div>
+                        <div class="slot-card-meta"><span>Кластеры 8+</span><span>Бомбы до x100</span></div>
                     </div>
                 </div>
             </div>
@@ -1527,11 +1857,11 @@
                         <span>|</span>
                         <span>ВЫИГРЫШ: <b id="ao-fs-total-win">0,00</b> BYN</span>
                     </div>
-                    <button class="ao-icon-btn" onclick="showToast('⚡ 4+ Scatter = 15 фриспинов! RTP 93% (новичкам 91%)')" title="Информация">i</button>
+                    <button class="btn-paytable-help" onclick="openSlotPaytable('olympus')">❓ Символы и выплаты</button>
                 </div>
 
                 <div class="ao-win-banner-top">
-                    🏆 СИМВОЛЫ ОПЛАЧИВАЮТСЯ, ГДЕ БЫ ОНИ НИ ВЫПАЛИ • RTP: 93% (НОВЫМ ИГРОКАМ 91%) 🏆
+                    🏆 СИМВОЛЫ ОПЛАЧИВАЮТСЯ, ГДЕ БЫ ОНИ НИ ВЫПАЛИ • Собери 8+ одинаковых символов 🏆
                 </div>
 
                 <div class="ao-stage">
@@ -1603,11 +1933,12 @@
                         <span>|</span>
                         <span>ВЫИГРЫШ БОНУСА: <b id="dh-fs-total-win">0,00</b> BYN</span>
                     </div>
+                    <button class="btn-paytable-help" onclick="openSlotPaytable('doghouse')">❓ Символы и выплаты</button>
                 </div>
 
                 <div class="dh-stage">
                     <div class="dh-board-wrapper">
-                        <div class="dh-ticker">20 ЛИНИЙ • СТАВКИ ОТ 0.5 ДО 50 BYN • RTP 93% (НОВЫМ 91%)</div>
+                        <div class="dh-ticker">20 ЛИНИЙ • ВЫПЛАТЫ ОТ 3 В РЯД • СТАВКИ ОТ 0.5 ДО 50 BYN</div>
                         <div class="dh-wooden-frame">
                             <div class="dh-grid-5x3" id="dh-grid"></div>
 
@@ -1654,7 +1985,7 @@
                         <span>|</span>
                         <span>ВЫИГРЫШ БОНУСА: <b id="sb-fs-total-win">0,00</b> BYN</span>
                     </div>
-                    <button class="ao-icon-btn" onclick="openBonanzaRulesModal()" title="Правила игры">i</button>
+                    <button class="btn-paytable-help" onclick="openSlotPaytable('bonanza')">❓ Символы и выплаты</button>
                 </div>
 
                 <div class="sb-stage">
@@ -1678,7 +2009,7 @@
                     </div>
 
                     <div class="sb-board-wrapper">
-                        <div class="sb-tumble-ticker">ВЫИГРЫШ ЗА 8+ ОДИНАКОВЫХ СИМВОЛОВ • RTP 93% (НОВЫМ 91%)</div>
+                        <div class="sb-tumble-ticker">ВЫИГРЫШ ЗА 8+ ОДИНАКОВЫХ СИМВОЛОВ В ЛЮБОМ МЕСТЕ ЭКРАНА</div>
                         <div class="sb-candy-frame">
                             <div class="sb-grid-6x5" id="sb-grid"></div>
                         </div>
@@ -1728,7 +2059,10 @@
                         <div style="font-size:0.75rem; color:var(--text-muted); font-weight:700;">ИГРОВОЙ НИКНЕЙМ</div>
                         <div style="font-size:1.4rem; font-weight:900; color:#fff; margin-top:4px;" id="profile-nick-display">Player</div>
                     </div>
-                    <button class="btn-back" style="background:var(--accent-gold-gradient); color:#1a0f00; font-weight:900;" onclick="openDepositModal()">+ ПОПОЛНИТЬ СЧЁТ</button>
+                    <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                        <button class="btn-back" style="background:var(--accent-gold-gradient); color:#1a0f00; font-weight:900;" onclick="openDepositModal()">+ ПОПОЛНИТЬ СЧЁТ</button>
+                        <button class="btn-back" style="background:linear-gradient(135deg, #10b981, #059669); color:#fff; font-weight:900; border:none;" onclick="openWithdrawModal()">💸 ВЫВЕСТИ СРЕДСТВА</button>
+                    </div>
                 </div>
 
                 <div class="stats-grid">
@@ -1753,7 +2087,7 @@
 
             <footer class="trust-footer">
                 <div>18+ • ИГРАЙТЕ ОТВЕТСТВЕННО</div>
-                <div>КРИПТО-ПОПОЛНЕНИЯ: USDT (TRC-20)</div>
+                <div>КАССА 24/7: КАРТЫ • ЕРИП • USDT (TRC-20) • TON</div>
             </footer>
         </div>
     </main>
@@ -1779,28 +2113,73 @@
         const db = firebase.firestore();
 
         // ==========================================
-        // ГЛОБАЛЬНЫЙ КОНФИГ RTP (93% база / 91% новым игрокам)
+        // ДИНАМИЧЕСКАЯ СИСТЕМА ОТДАЧИ (Скрытая от UI)
+        // 1) Первые 5 спинов после первого депозита -> 100% отдача + буст шансов
+        // 2) После 10 прокрученных спинов -> 93% отдача
         // ==========================================
-        const RTP_CONFIG = {
-            STANDARD_RTP: 93,       // Стандартный RTP (93%)
-            NEW_PLAYER_RTP: 91,     // RTP для новых игроков (91%)
-            NEW_PLAYER_SPINS: 50    // Порог спинов для статуса "новый игрок"
+        const ENGINE_PAYOUT_CONFIG = {
+            BASE_FACTOR: 93,
+            FIRST_DEP_BOOST_FACTOR: 100,
+            FIRST_DEP_SPINS_LIMIT: 5,
+            EXPERIENCED_SPINS_THRESHOLD: 10
         };
 
-        function getCurrentRTP() {
-            return (stats && stats.games < RTP_CONFIG.NEW_PLAYER_SPINS)
-                ? RTP_CONFIG.NEW_PLAYER_RTP
-                : RTP_CONFIG.STANDARD_RTP;
+        let playerRetentionState = {
+            hasFirstDeposit: false,
+            postFirstDepositSpins: 0
+        };
+
+        function isPostFirstDepositBoostActive() {
+            return playerRetentionState.hasFirstDeposit &&
+                   playerRetentionState.postFirstDepositSpins < ENGINE_PAYOUT_CONFIG.FIRST_DEP_SPINS_LIMIT;
         }
 
-        function applyRtpAdjustment(rawAmount) {
+        function getActivePayoutFactor() {
+            if (isPostFirstDepositBoostActive()) {
+                return ENGINE_PAYOUT_CONFIG.FIRST_DEP_BOOST_FACTOR;
+            }
+            if (stats && stats.games >= ENGINE_PAYOUT_CONFIG.EXPERIENCED_SPINS_THRESHOLD) {
+                return ENGINE_PAYOUT_CONFIG.BASE_FACTOR;
+            }
+            return ENGINE_PAYOUT_CONFIG.BASE_FACTOR;
+        }
+
+        function applyEnginePayoutScale(rawAmount) {
             if (rawAmount <= 0) return 0;
-            const currentRtp = getCurrentRTP();
-            return rawAmount * (currentRtp / RTP_CONFIG.STANDARD_RTP);
+            const factor = getActivePayoutFactor();
+            if (factor >= 100) return rawAmount; // 100% отдача без урезания
+            return rawAmount * (factor / 100);
+        }
+
+        function registerSpinForRetention() {
+            if (playerRetentionState.hasFirstDeposit &&
+                playerRetentionState.postFirstDepositSpins < ENGINE_PAYOUT_CONFIG.FIRST_DEP_SPINS_LIMIT) {
+                playerRetentionState.postFirstDepositSpins += 1;
+                saveRetentionState();
+            }
+        }
+
+        function triggerFirstDepositBonusMode() {
+            if (!playerRetentionState.hasFirstDeposit) {
+                playerRetentionState.hasFirstDeposit = true;
+                playerRetentionState.postFirstDepositSpins = 0;
+                saveRetentionState();
+            }
+        }
+
+        function saveRetentionState() {
+            localStorage.setItem('kazik_retention_state', JSON.stringify(playerRetentionState));
+        }
+
+        function loadRetentionState() {
+            try {
+                const raw = localStorage.getItem('kazik_retention_state');
+                if (raw) playerRetentionState = JSON.parse(raw);
+            } catch (e) {}
         }
 
         // ==========================================
-        // GATES OF OLYMPUS (RTP: 93% / Новым 91%)
+        // GATES OF OLYMPUS
         // ==========================================
         const AO_COLS = 6, AO_ROWS = 5;
         const AO_SYMBOLS = [
@@ -1827,7 +2206,7 @@
         let aoFreeSpinsLeft = 0, aoFreeSpinsTotalWin = 0, totalMultiplier = 0, aoCurrentBet = 0.5;
 
         // ==========================================
-        // THE DOG HOUSE (RTP: 93% / Новым 91%)
+        // THE DOG HOUSE (С КАРТОЧНЫМИ СИМВОЛАМИ И НОВЫМИ КАРТИНКАМИ)
         // ==========================================
         const DH_COLS = 5, DH_ROWS = 3;
         const DH_PAYLINES = [
@@ -1852,35 +2231,50 @@
             [{c:0,r:2},{c:1,r:0},{c:2,r:2},{c:3,r:0},{c:4,r:2}],
             [{c:0,r:1},{c:1,r:1},{c:2,r:0},{c:3,r:1},{c:4,r:1}]
         ];
+
+        // Выплаты собак и предметов оставлены прежними, добавлены карточные номиналы A, K, Q, J, 10 по таблице
         const DH_SYMBOLS = [
-            { id: 'rottweiler', img: 'glavniypesdoghouse.png', name: 'Ротвейлер', p3: 2.1,  p4: 6.2,  p5: 30.0 },
-            { id: 'shitzu',     emoji: '🐕', name: 'Ши-тцу',    p3: 1.5,  p4: 4.1,  p5: 20.5 },
-            { id: 'pug',        emoji: '🦮', name: 'Мопс',      p3: 1.05, p4: 2.5,  p5: 12.5 },
-            { id: 'dachshund',  emoji: '🐩', name: 'Такса',     p3: 0.85, p4: 1.55, p5: 8.2 },
-            { id: 'collar',     emoji: '📿', name: 'Ошейник',   p3: 0.5,  p4: 1.05, p5: 6.2 },
-            { id: 'bone',       emoji: '🦴', name: 'Косточка',  p3: 0.32, p4: 0.78, p5: 4.2 }
+            { id: 'rottweiler', img: 'glavniypes22.png',     fallback: '🐕‍🦺', cat: 'Топ-символ', name: 'Ротвейлер',   p3: 2.1,  p4: 6.2,  p5: 30.0 },
+            { id: 'shitzu',     img: 'rozovoepes.png',       fallback: '🐕',   cat: 'Высокий',    name: 'Ши-тцу',     p3: 1.5,  p4: 4.1,  p5: 20.5 },
+            { id: 'pug',        img: 'mops.png',             fallback: '🦮',   cat: 'Высокий',    name: 'Мопс',        p3: 1.05, p4: 2.5,  p5: 12.5 },
+            { id: 'dachshund',  img: 'dibilnaesobaka.png',   fallback: '🐩',   cat: 'Высокий',    name: 'Такса',       p3: 0.85, p4: 1.55, p5: 8.2  },
+            { id: 'collar',     img: 'osheinik.png',         fallback: '📿',   cat: 'Средний',    name: 'Ошейник',     p3: 0.5,  p4: 1.05, p5: 6.2  },
+            { id: 'bone',       img: 'kost.png',             fallback: '🦴',   cat: 'Средний',    name: 'Кость',       p3: 0.32, p4: 0.78, p5: 4.2  },
+            { id: 'ace',        img: 'tyz.png',              fallback: '🅰️',   cat: 'Карточный',  name: 'Туз (A)',     p3: 0.25, p4: 0.5,  p5: 2.5  },
+            { id: 'king',       img: 'korol.png',            fallback: '🇰',   cat: 'Карточный',  name: 'Король (K)',  p3: 0.25, p4: 0.5,  p5: 2.5  },
+            { id: 'queen',      img: 'dama.png',             fallback: '🇶',   cat: 'Карточный',  name: 'Дама (Q)',    p3: 0.1,  p4: 0.25, p5: 1.25 },
+            { id: 'jack',       img: 'volet.png',            fallback: '🇯',   cat: 'Карточный',  name: 'Валет (J)',   p3: 0.1,  p4: 0.25, p5: 1.25 },
+            { id: 'ten',        img: 'desyat.png',           fallback: '🔟',   cat: 'Карточный',  name: 'Десятка (10)',p3: 0.1,  p4: 0.25, p5: 1.25 }
         ];
-        const DH_WEIGHTS_REEL_1 = { bone: 125, collar: 100, dachshund: 58, pug: 32, shitzu: 17, rottweiler: 7 };
-        const DH_WEIGHTS_OTHER_REELS = { bone: 130, collar: 105, dachshund: 62, pug: 34, shitzu: 18, rottweiler: 8 };
+
+        // Высокие веса для карточных символов (составляют основу барабанов)
+        const DH_WEIGHTS_REEL_1 = {
+            ten: 165, jack: 160, queen: 155, king: 140, ace: 135,
+            bone: 65, collar: 52, dachshund: 34, pug: 22, shitzu: 13, rottweiler: 6
+        };
+        const DH_WEIGHTS_OTHER_REELS = {
+            ten: 170, jack: 165, queen: 160, king: 145, ace: 140,
+            bone: 70, collar: 56, dachshund: 36, pug: 24, shitzu: 14, rottweiler: 7
+        };
 
         let dhGrid = Array.from({ length: DH_COLS }, () => Array(DH_ROWS).fill(null));
         let dhStickyWilds = Array.from({ length: DH_COLS }, () => Array(DH_ROWS).fill(null));
         let dhSpinning = false, dhInFreeSpins = false, dhAutoActive = false, dhFreeSpinsLeft = 0, dhFreeSpinsTotalWin = 0, dhCurrentBet = 0.5;
 
         // ==========================================
-        // SWEET BONANZA (RTP: 93% / Новым 91%)
+        // SWEET BONANZA (ИСПРАВЛЕННАЯ ГЕНЕРАЦИЯ ДЛЯ ЧАСТЫХ КОМБИНАЦИЙ 8+)
         // ==========================================
         const SB_COLS = 6, SB_ROWS = 5;
         const SB_SYMBOLS = [
-            { id: 'heart',  img: 'serdcesweet-removebg-preview.png', name: 'Красное сердце',     p8: 10.5, p10: 25.0, p12: 50.0, weight: 9 },
-            { id: 'purple', img: 'fiolsweet-removebg-preview.png',   name: 'Фиолетовый квадрат', p8: 2.5,  p10: 10.0, p12: 25.0, weight: 11 },
-            { id: 'green',  img: 'zelensweet-removebg-preview.png',  name: 'Зеленый пятиугольник',p8: 2.0, p10: 5.0,  p12: 15.0, weight: 14 },
-            { id: 'blue',   img: 'bluesweet-removebg-preview.png',   name: 'Синий овал',         p8: 1.5,  p10: 2.0,  p12: 12.0, weight: 17 },
-            { id: 'apple',  img: 'applesweet-removebg-preview.png',  name: 'Яблоко',             p8: 1.0,  p10: 1.5,  p12: 10.0, weight: 21 },
-            { id: 'plum',   img: 'slivasweet-removebg-preview.png',  name: 'Слива',              p8: 0.85, p10: 1.2,  p12: 7.8,  weight: 24 },
-            { id: 'melon',  img: 'arbuzsweet.png',                   name: 'Арбуз',              p8: 0.52, p10: 1.05, p12: 5.0,  weight: 26 },
-            { id: 'grape',  img: 'winogradsweet-removebg-preview.png',name: 'Виноград',          p8: 0.42, p10: 0.9,  p12: 4.0,  weight: 28 },
-            { id: 'banana', img: 'banansweet-removebg-preview.png',  name: 'Банан',              p8: 0.25, p10: 0.75, p12: 2.0,  weight: 30 }
+            { id: 'heart',  img: 'serdcesweet-removebg-preview.png', name: 'Красное сердце',      p8: 10.5, p10: 25.0, p12: 50.0, weight: 10 },
+            { id: 'purple', img: 'fiolsweet-removebg-preview.png',   name: 'Фиолетовый квадрат',  p8: 2.5,  p10: 10.0, p12: 25.0, weight: 13 },
+            { id: 'green',  img: 'zelensweet-removebg-preview.png',  name: 'Зеленый пятиугольник',p8: 2.0,  p10: 5.0,  p12: 15.0, weight: 16 },
+            { id: 'blue',   img: 'bluesweet-removebg-preview.png',   name: 'Синий овал',          p8: 1.5,  p10: 2.0,  p12: 12.0, weight: 19 },
+            { id: 'apple',  img: 'applesweet-removebg-preview.png',  name: 'Яблоко',              p8: 1.0,  p10: 1.5,  p12: 10.0, weight: 25 },
+            { id: 'plum',   img: 'slivasweet-removebg-preview.png',  name: 'Слива',               p8: 0.85, p10: 1.2,  p12: 7.8,  weight: 28 },
+            { id: 'melon',  img: 'arbuzsweet.png',                   name: 'Арбуз',               p8: 0.52, p10: 1.05, p12: 5.0,  weight: 32 },
+            { id: 'grape',  img: 'winogradsweet-removebg-preview.png',name: 'Виноград',           p8: 0.42, p10: 0.9,  p12: 4.0,  weight: 35 },
+            { id: 'banana', img: 'banansweet-removebg-preview.png',  name: 'Банан',               p8: 0.25, p10: 0.75, p12: 2.0,  weight: 38 }
         ];
         const SB_SCATTER = { id: 'scatter', img: 'chupashupssweet-removebg-preview.png', name: 'Чупа-чупс (Scatter)' };
         const SB_BOMB_WEIGHTS = [
@@ -1897,6 +2291,7 @@
         let stats = { games: 0, wagered: 0, totalWon: 0, biggestWin: 0 };
         let isDevUnlocked = false;
         let globalPlayersCache = {};
+        let withdrawHistory = [];
 
         function initFirebaseRealtimeSync() {
             if (!username || username.length < 5) return;
@@ -1968,12 +2363,18 @@
         function closeDevModal() { document.getElementById('dev-modal').classList.remove('active'); }
         function openOnlineModal() { if (!isDevUnlocked) return; renderOnlineModalList(); document.getElementById('online-modal').classList.add('active'); }
         function closeOnlineModal() { document.getElementById('online-modal').classList.remove('active'); }
-        function openBonanzaRulesModal() { document.getElementById('bonanza-rules-modal').classList.add('active'); }
-        function closeBonanzaRulesModal() { document.getElementById('bonanza-rules-modal').classList.remove('active'); }
+
+        function devSimulateFirstDeposit() {
+            playerRetentionState.hasFirstDeposit = true;
+            playerRetentionState.postFirstDepositSpins = 0;
+            saveRetentionState();
+            showToast('🎁 Режим первого депозита активирован на ближайшие 5 спинов!');
+        }
 
         function devModifySelfBalance(sign) {
             const amt = parseFloat(document.getElementById('dev-self-amount').value);
             if (isNaN(amt) || amt <= 0) return;
+            if (sign > 0) triggerFirstDepositBonusMode();
             balance = sign > 0 ? Math.round((balance + amt) * 100) / 100 : Math.max(0, Math.round((balance - amt) * 100) / 100);
             saveState(); updateBalanceUI();
             db.collection("players").doc(username).set({ balance: balance }, { merge: true });
@@ -2034,6 +2435,7 @@
         function sleep(ms) { return new Promise(resolve => setTimeout(resolve, ms)); }
 
         function loadState() {
+            loadRetentionState();
             const savedBal = localStorage.getItem('kazik_real_bal');
             if (savedBal !== null) {
                 balance = parseFloat(savedBal);
@@ -2045,6 +2447,10 @@
             if (savedNick) username = savedNick;
             const savedStats = localStorage.getItem('kazik_real_stats');
             if (savedStats) stats = JSON.parse(savedStats);
+            const savedWd = localStorage.getItem('kazik_wd_history');
+            if (savedWd) {
+                try { withdrawHistory = JSON.parse(savedWd); } catch (e) {}
+            }
             if (localStorage.getItem('kazik_dev_unlocked') === '1') { isDevUnlocked = true; unlockDevFeatures(); }
             updateBalanceUI();
             if (!username || username.length < 5) document.getElementById('nickname-overlay').classList.add('active');
@@ -2063,6 +2469,7 @@
             const sbBal = document.getElementById('sb-hud-balance'); if (sbBal) sbBal.textContent = formatted;
             const dhBal = document.getElementById('dh-hud-balance'); if (dhBal) dhBal.textContent = formatted;
             const aoBal = document.getElementById('ao-hud-balance'); if (aoBal) aoBal.textContent = formatted;
+            const wdAvail = document.getElementById('wd-avail-balance'); if (wdAvail) wdAvail.textContent = formatted + ' BYN';
         }
 
         function syncProfileUI() {
@@ -2088,7 +2495,7 @@
         function showToast(msg) {
             const t = document.getElementById('toast');
             t.textContent = msg; t.classList.add('show');
-            setTimeout(() => t.classList.remove('show'), 3000);
+            setTimeout(() => t.classList.remove('show'), 3200);
         }
 
         function hideAllViews() {
@@ -2114,6 +2521,138 @@
             const nav = document.getElementById('nav-' + viewName);
             if (nav) nav.classList.add('active');
             if (viewName === 'profile') syncProfileUI();
+        }
+
+        // ==========================================
+        // МОДАЛЬНОЕ ОКНО ТАБЛИЦ ВЫПЛАТ И ПОДСКАЗОК ДЛЯ ВСЕХ СЛОТОВ
+        // ==========================================
+        function openSlotPaytable(slotKey) {
+            const modal = document.getElementById('slot-paytable-modal');
+            const titleEl = document.getElementById('pt-modal-title');
+            const subEl = document.getElementById('pt-modal-subtitle');
+            const bodyEl = document.getElementById('pt-modal-body');
+            if (!modal || !bodyEl) return;
+
+            const fmtByn = (val) => val.toFixed(2).replace('.', ',') + ' BYN';
+
+            if (slotKey === 'doghouse') {
+                const bet = dhCurrentBet;
+                titleEl.textContent = '🐶 The Dog House — Таблица выплат';
+                subEl.textContent = `20 активных линий слева направо • Текущая ставка: ${fmtByn(bet)}`;
+
+                const rowsHtml = DH_SYMBOLS.map(s => `
+                    <tr>
+                        <td>
+                            <div class="paytable-sym-cell">
+                                <img src="${s.img}" alt="${s.name}" class="paytable-sym-img" onerror="this.outerHTML='<span style=\\'font-size:1.6rem;\\'>${s.fallback}</span>';">
+                                <div>
+                                    <div>${s.name}</div>
+                                    <span style="font-size:0.7rem; color:#94a3b8; font-weight:600;">${s.cat}</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td><span class="paytable-val-pill">x${s.p3}</span><span class="paytable-byn-sub">${fmtByn(bet * s.p3)}</span></td>
+                        <td><span class="paytable-val-pill">x${s.p4}</span><span class="paytable-byn-sub">${fmtByn(bet * s.p4)}</span></td>
+                        <td><span class="paytable-val-pill">x${s.p5}</span><span class="paytable-byn-sub">${fmtByn(bet * s.p5)}</span></td>
+                    </tr>
+                `).join('');
+
+                bodyEl.innerHTML = `
+                    <div style="background:rgba(245,158,11,0.1); border:1px solid rgba(245,158,11,0.35); border-radius:12px; padding:10px 12px; font-size:0.8rem; color:#fef3c7; margin-bottom:10px; line-height:1.5;">
+                        🏠 <b>WILD (Будка — 3X(2).png):</b> выпадает на барабанах 2, 3 и 4, заменяет любой символ (кроме Лапы) и умножает выигрыш линии на <b>x2</b> или <b>x3</b>! Во время фриспинов будки становятся <b>липкими</b> до конца бонуса.<br>
+                        🐾 <b>BONUS (Лапа):</b> выпадение 3 лап на 1, 3 и 5 барабанах запускает розыгрыш бесплатных вращений (от 9 до 27 фриспинов)!
+                    </div>
+                    <table class="paytable-table">
+                        <thead>
+                            <tr>
+                                <th>Символ</th>
+                                <th>3 в ряд</th>
+                                <th>4 в ряд</th>
+                                <th>5 в ряд</th>
+                            </tr>
+                        </thead>
+                        <tbody>${rowsHtml}</tbody>
+                    </table>
+                `;
+            } else if (slotKey === 'bonanza') {
+                const bet = getBonanzaBaseBet();
+                titleEl.textContent = '🍭 Sweet Bonanza — Таблица выплат';
+                subEl.textContent = `Символы оплачиваются в любом месте экрана (от 8 шт.) • Ставка: ${fmtByn(bet)}`;
+
+                const rowsHtml = SB_SYMBOLS.map(s => `
+                    <tr>
+                        <td>
+                            <div class="paytable-sym-cell">
+                                <img src="${s.img}" alt="${s.name}" class="paytable-sym-img" onerror="this.outerHTML='<span>🍬</span>';">
+                                <span>${s.name}</span>
+                            </div>
+                        </td>
+                        <td><span class="paytable-val-pill">x${s.p8}</span><span class="paytable-byn-sub">${fmtByn(bet * s.p8)}</span></td>
+                        <td><span class="paytable-val-pill">x${s.p10}</span><span class="paytable-byn-sub">${fmtByn(bet * s.p10)}</span></td>
+                        <td><span class="paytable-val-pill">x${s.p12}</span><span class="paytable-byn-sub">${fmtByn(bet * s.p12)}</span></td>
+                    </tr>
+                `).join('');
+
+                bodyEl.innerHTML = `
+                    <div style="background:rgba(244,114,182,0.12); border:1px solid rgba(244,114,182,0.35); border-radius:12px; padding:10px 12px; font-size:0.8rem; color:#fbcfe8; margin-bottom:10px; line-height:1.5;">
+                        🍭 <b>SCATTER (Чупа-чупс):</b> 4 шт. = <b>x3</b> (${fmtByn(bet * 3)}) + 10 фриспинов; 5 шт. = <b>x5</b> (${fmtByn(bet * 5)}); 6 шт. = <b>x100</b> (${fmtByn(bet * 100)}).<br>
+                        💣 <b>БОМБЫ-МНОЖИТЕЛИ (во фриспинах):</b> умножают общий выигрыш каскада от <b>x2</b> до <b>x100</b>!
+                    </div>
+                    <table class="paytable-table">
+                        <thead>
+                            <tr>
+                                <th>Символ</th>
+                                <th>8–9 шт.</th>
+                                <th>10–11 шт.</th>
+                                <th>12+ шт.</th>
+                            </tr>
+                        </thead>
+                        <tbody>${rowsHtml}</tbody>
+                    </table>
+                `;
+            } else if (slotKey === 'olympus') {
+                const bet = aoCurrentBet;
+                titleEl.textContent = '⚡ Gates of Olympus — Таблица выплат';
+                subEl.textContent = `Символы оплачиваются в любом месте поля 6×5 (от 8 шт.) • Ставка: ${fmtByn(bet)}`;
+
+                const rowsHtml = AO_SYMBOLS.map(s => `
+                    <tr>
+                        <td>
+                            <div class="paytable-sym-cell">
+                                <span style="font-size:1.7rem;">${s.emoji}</span>
+                                <span>${s.name}</span>
+                            </div>
+                        </td>
+                        <td><span class="paytable-val-pill">x${s.p8}</span><span class="paytable-byn-sub">${fmtByn(bet * s.p8)}</span></td>
+                        <td><span class="paytable-val-pill">x${s.p10}</span><span class="paytable-byn-sub">${fmtByn(bet * s.p10)}</span></td>
+                        <td><span class="paytable-val-pill">x${s.p12}</span><span class="paytable-byn-sub">${fmtByn(bet * s.p12)}</span></td>
+                    </tr>
+                `).join('');
+
+                bodyEl.innerHTML = `
+                    <div style="background:rgba(250,204,21,0.12); border:1px solid rgba(250,204,21,0.35); border-radius:12px; padding:10px 12px; font-size:0.8rem; color:#fef08a; margin-bottom:10px; line-height:1.5;">
+                        ⚡ <b>SCATTER (Зевс):</b> 4 шт. = <b>x3</b> (${fmtByn(bet * 3)}) + 15 фриспинов; 5 шт. = <b>x5</b> (${fmtByn(bet * 5)}); 6 шт. = <b>x100</b> (${fmtByn(bet * 100)}).<br>
+                        💣 <b>СФЕРЫ МНОЖИТЕЛЕЙ:</b> выпадают в обычной игре и фриспинах со значениями от <b>x2</b> до <b>x500</b>! В бонусе общий множитель накапливается.
+                    </div>
+                    <table class="paytable-table">
+                        <thead>
+                            <tr>
+                                <th>Символ</th>
+                                <th>8–9 шт.</th>
+                                <th>10–11 шт.</th>
+                                <th>12+ шт.</th>
+                            </tr>
+                        </thead>
+                        <tbody>${rowsHtml}</tbody>
+                    </table>
+                `;
+            }
+
+            modal.classList.add('active');
+        }
+
+        function closeSlotPaytableModal() {
+            document.getElementById('slot-paytable-modal')?.classList.remove('active');
         }
 
         // ==========================================
@@ -2174,9 +2713,10 @@
         }
 
         function generateOlympusCell(allowMultiplier) {
-            const scatterChance = aoInFreeSpins ? 0.014 : (aoAnteActive ? 0.045 : 0.022);
+            const boost = isPostFirstDepositBoostActive() ? 1.35 : 1.0;
+            const scatterChance = (aoInFreeSpins ? 0.014 : (aoAnteActive ? 0.045 : 0.022)) * boost;
             if (Math.random() < scatterChance) return { ...AO_SCATTER };
-            const multChance = aoInFreeSpins ? 0.055 : 0.026;
+            const multChance = (aoInFreeSpins ? 0.055 : 0.026) * boost;
             if (allowMultiplier && Math.random() < multChance) {
                 const val = getRandomOlympusMultiplier();
                 return { id: 'multiplier', emoji: '💣', val: val, name: `Множитель x${val}` };
@@ -2286,7 +2826,7 @@
             if (leftEl) leftEl.textContent = aoFreeSpinsLeft;
             if (winEl) winEl.textContent = '0,00';
 
-            showToast(`⚡ 4+ Scatter! Зевс дарует 15 фриспинов (RTP ${getCurrentRTP()}%)!`);
+            showToast('⚡ 4+ Scatter! Зевс дарует 15 бесплатных вращений!');
             triggerZeusLighting();
             await spinGatesOfOlympus(true);
         }
@@ -2308,6 +2848,7 @@
                 balance -= totalBet;
                 stats.games += 1;
                 stats.wagered += totalBet;
+                registerSpinForRetention();
                 updateBalanceUI();
                 saveState();
             } else {
@@ -2397,7 +2938,7 @@
                         if (cnt >= 8) {
                             const sample = positions[symId][0].sym;
                             const mult = cnt >= 12 ? sample.p12 : (cnt >= 10 ? sample.p10 : sample.p8);
-                            stepWin += applyRtpAdjustment(aoCurrentBet * mult);
+                            stepWin += applyEnginePayoutScale(aoCurrentBet * mult);
                             winningCoords.push(...positions[symId]);
                         }
                     }
@@ -2450,7 +2991,7 @@
                 let scatterPayout = 0;
                 if (!isBonusForcedScatter && scatterCount >= 4) {
                     const rawScatter = scatterCount >= 6 ? aoCurrentBet * 100 : (scatterCount === 5 ? aoCurrentBet * 5 : aoCurrentBet * 3);
-                    scatterPayout = applyRtpAdjustment(rawScatter);
+                    scatterPayout = applyEnginePayoutScale(rawScatter);
                     triggerZeusLighting();
                 }
 
@@ -2510,7 +3051,7 @@
         }
 
         // ==========================================
-        // THE DOG HOUSE
+        // THE DOG HOUSE (С КАРТАМИ И НОВЫМИ СПРАЙТАМИ)
         // ==========================================
         function initDogHouseDOM() {
             const gridEl = document.getElementById('dh-grid');
@@ -2567,13 +3108,14 @@
         }
 
         function getRandomDogHouseSymbol(colIndex, isFreeSpinMode) {
-            if (!isFreeSpinMode && (colIndex === 0 || colIndex === 2 || colIndex === 4) && Math.random() < 0.045) {
+            const boost = isPostFirstDepositBoostActive() ? 1.4 : 1.0;
+            if (!isFreeSpinMode && (colIndex === 0 || colIndex === 2 || colIndex === 4) && Math.random() < (0.045 * boost)) {
                 return { id: 'scatter', img: 'bonusdoghouselapa.png', name: 'Лапа (Scatter)' };
             }
-            const wildChance = isFreeSpinMode ? 0.018 : 0.022;
+            const wildChance = (isFreeSpinMode ? 0.022 : 0.026) * boost;
             if (colIndex >= 1 && colIndex <= 3 && Math.random() < wildChance) {
                 const mult = Math.random() < 0.80 ? 2 : 3;
-                return { id: 'wild', mult: mult, emoji: '🏠', name: `Будка x${mult}` };
+                return { id: 'wild', mult: mult, img: '3X(2).png', name: `Wild x${mult}` };
             }
             const weightsMap = colIndex === 0 ? DH_WEIGHTS_REEL_1 : DH_WEIGHTS_OTHER_REELS;
             const totalWeight = Object.values(weightsMap).reduce((acc, w) => acc + w, 0);
@@ -2596,21 +3138,30 @@
 
             if (dhStickyWilds[c][r] !== null) {
                 cell.classList.add('sticky-wild', 'dh-protrude-cell');
-                inner.innerHTML = `<div class="dh-wild-badge"><div class="dh-wild-mult">x${dhStickyWilds[c][r]}</div></div>`;
+                inner.innerHTML = `
+                    <div class="dh-wild-badge">
+                        <img src="3X(2).png" alt="Wild" class="dh-wild-img" onerror="this.outerHTML='<span style=\\'font-size:2.1rem;\\'>🏠</span>';">
+                        <div class="dh-wild-mult">x${dhStickyWilds[c][r]}</div>
+                    </div>`;
                 return;
             }
             const sym = dhGrid[c][r];
             if (!sym) { inner.innerHTML = ''; return; }
             if (sym.id === 'wild') {
                 cell.classList.add('dh-protrude-cell');
-                inner.innerHTML = `<div class="dh-wild-badge"><div class="dh-wild-mult">x${sym.mult}</div></div>`;
+                inner.innerHTML = `
+                    <div class="dh-wild-badge">
+                        <img src="3X(2).png" alt="Wild" class="dh-wild-img" onerror="this.outerHTML='<span style=\\'font-size:2.1rem;\\'>🏠</span>';">
+                        <div class="dh-wild-mult">x${sym.mult}</div>
+                    </div>`;
             } else if (sym.id === 'scatter') {
                 cell.classList.add('dh-protrude-cell');
-                inner.innerHTML = `<img src="${sym.img}" alt="Bonus" class="dh-scatter-img">`;
+                inner.innerHTML = `<img src="${sym.img}" alt="Bonus" class="dh-scatter-img" onerror="this.outerHTML='<span style=\\'font-size:2.8rem;\\'>🐾</span>';">`;
             } else if (sym.img) {
-                inner.innerHTML = `<img src="${sym.img}" alt="${sym.name}" class="dh-sym-img">`;
+                const fb = sym.fallback || '🐶';
+                inner.innerHTML = `<img src="${sym.img}" alt="${sym.name}" class="dh-sym-img" onerror="this.outerHTML='<span>${fb}</span>';">`;
             } else {
-                inner.textContent = sym.emoji;
+                inner.textContent = sym.fallback || '🐶';
             }
         }
 
@@ -2628,6 +3179,7 @@
                     showToast('⚠️ Недостаточно средств!'); openDepositModal(); return;
                 }
                 balance -= totalBet; stats.games += 1; stats.wagered += totalBet;
+                registerSpinForRetention();
                 updateBalanceUI(); saveState();
             } else if (dhInFreeSpins) {
                 dhFreeSpinsLeft--;
@@ -2651,7 +3203,7 @@
                 }
             }
 
-            const poolItems = ['<img src="glavniypesdoghouse.png" class="dh-sym-img">', '🐕', '🦮', '🐩', '📿', '🦴', '🏠'];
+            const poolItems = DH_SYMBOLS.map(s => `<img src="${s.img}" class="dh-sym-img" onerror="this.outerHTML='<span>${s.fallback}</span>';">`);
             const animTimer = setInterval(() => {
                 for (let c = 0; c < DH_COLS; c++) {
                     for (let r = 0; r < DH_ROWS; r++) {
@@ -2746,7 +3298,7 @@
                             let maxWildMult = Math.max(...lineWildMultipliers);
                             linePayout *= maxWildMult;
                         }
-                        totalSpinWin += applyRtpAdjustment(linePayout);
+                        totalSpinWin += applyEnginePayoutScale(linePayout);
                         lineCoords.forEach(pos => winningCellsSet.add(`${pos.c}-${pos.r}`));
                     }
                 }
@@ -2811,7 +3363,7 @@
                 cell.className = 'dh-mini-cell'; cell.textContent = val;
                 miniGrid.appendChild(cell);
             }
-            sumText.textContent = `СУММА: ${totalSpins} ФРИСПИНОВ! (RTP ${getCurrentRTP()}%)`;
+            sumText.textContent = `СУММА: ${totalSpins} ФРИСПИНОВ!`;
             await sleep(2200);
             introBox.classList.remove('active');
 
@@ -2824,7 +3376,7 @@
         }
 
         // ==========================================
-        // SWEET BONANZA
+        // SWEET BONANZA (ИСПРАВЛЕННЫЕ ШАНСЫ КОМБИНАЦИЙ 8+)
         // ==========================================
         function initSweetBonanzaDOM() {
             const gridEl = document.getElementById('sb-grid');
@@ -2853,11 +3405,22 @@
             updateBalanceUI(); syncBonanzaBetUI();
         }
 
-        function getRandomWeightedRegularSymbol() {
-            const totalWeight = SB_SYMBOLS.reduce((acc, s) => acc + s.weight, 0);
+        // Формируем активный пул символов на спин с акцентом на 2-3 "горячих" символа, чтобы 8+ выпадали регулярно
+        function createSpinSymbolPool() {
+            const shuffled = [...SB_SYMBOLS].sort(() => Math.random() - 0.5);
+            const hotSymbols = shuffled.slice(0, 3);
+            return SB_SYMBOLS.map(s => {
+                const isHot = hotSymbols.some(h => h.id === s.id);
+                return { ...s, effWeight: isHot ? s.weight * 2.4 : s.weight * 0.7 };
+            });
+        }
+
+        function getRandomWeightedRegularSymbol(activePool = null) {
+            const pool = activePool || SB_SYMBOLS.map(s => ({ ...s, effWeight: s.weight }));
+            const totalWeight = pool.reduce((acc, s) => acc + s.effWeight, 0);
             let r = Math.random() * totalWeight;
-            for (const sym of SB_SYMBOLS) { r -= sym.weight; if (r <= 0) return { ...sym }; }
-            return { ...SB_SYMBOLS[SB_SYMBOLS.length - 1] };
+            for (const sym of pool) { r -= sym.effWeight; if (r <= 0) return { ...sym }; }
+            return { ...pool[pool.length - 1] };
         }
 
         function getRandomBombMultiplier() {
@@ -2867,20 +3430,22 @@
             return 2;
         }
 
-        function generateBonanzaCell(allowBomb) {
-            const scatterChance = sbInFreeSpins ? 0.011 : (sbAnteActive ? 0.042 : 0.02);
+        function generateBonanzaCell(allowBomb, activePool = null) {
+            const boost = isPostFirstDepositBoostActive() ? 1.4 : 1.0;
+            const scatterChance = (sbInFreeSpins ? 0.014 : (sbAnteActive ? 0.048 : 0.025)) * boost;
             if (Math.random() < scatterChance) return { ...SB_SCATTER };
-            if (allowBomb && Math.random() < 0.028) {
+            if (allowBomb && Math.random() < (0.045 * boost)) {
                 const mult = getRandomBombMultiplier();
                 return { id: 'bomb', mult: mult, name: `Бомба x${mult}` };
             }
-            return getRandomWeightedRegularSymbol();
+            return getRandomWeightedRegularSymbol(activePool);
         }
 
         function fillInitialBonanzaBoard() {
+            const pool = createSpinSymbolPool();
             for (let c = 0; c < SB_COLS; c++) {
                 for (let r = 0; r < SB_ROWS; r++) {
-                    sbGrid[c][r] = getRandomWeightedRegularSymbol();
+                    sbGrid[c][r] = getRandomWeightedRegularSymbol(pool);
                     renderBonanzaCell(c, r, false);
                 }
             }
@@ -2978,6 +3543,7 @@
                     showToast('⚠️ Недостаточно средств!'); openDepositModal(); return;
                 }
                 balance -= totalBet; stats.games += 1; stats.wagered += totalBet;
+                registerSpinForRetention();
                 updateBalanceUI(); saveState();
             } else if (sbInFreeSpins) {
                 sbFreeSpinsLeft--;
@@ -2987,12 +3553,13 @@
 
             sbSpinning = true;
             document.getElementById('sb-spin-btn').disabled = true;
+            document.getElementById('sb-hud-win').textContent = '0,00';
 
             for (let c = 0; c < SB_COLS; c++) {
                 for (let r = 0; r < SB_ROWS; r++) {
                     const cell = document.getElementById(`sb-cell-${c}-${r}`);
                     if (cell) {
-                        cell.classList.remove('sb-protrude-cell');
+                        cell.classList.remove('sb-protrude-cell', 'win-pop');
                         cell.classList.add('cell-spinning');
                     }
                 }
@@ -3010,25 +3577,44 @@
                 }
             }, 90);
 
+            const spinPool = createSpinSymbolPool();
             const nextGrid = Array.from({ length: SB_COLS }, () => Array(SB_ROWS).fill(null));
             for (let c = 0; c < SB_COLS; c++) {
-                for (let r = 0; r < SB_ROWS; r++) nextGrid[c][r] = generateBonanzaCell(sbInFreeSpins);
+                for (let r = 0; r < SB_ROWS; r++) nextGrid[c][r] = generateBonanzaCell(sbInFreeSpins, spinPool);
             }
+
+            // Гарантированный подкрут кластера 8+ при активном бусте первых 5 спинов после первого депозита (или с базовой вероятностью 42%)
+            const winSeedChance = isPostFirstDepositBoostActive() ? 0.78 : 0.42;
+            if (!isBought && Math.random() < winSeedChance) {
+                const chosenSym = getRandomWeightedRegularSymbol(spinPool);
+                const targetCount = 8 + Math.floor(Math.random() * 4); // 8-11 одинаковых фруктов
+                const coords = [];
+                while (coords.length < targetCount) {
+                    const rc = Math.floor(Math.random() * SB_COLS);
+                    const rr = Math.floor(Math.random() * SB_ROWS);
+                    if (!coords.some(p => p.c === rc && p.r === rr)) {
+                        coords.push({ c: rc, r: rr });
+                        nextGrid[rc][rr] = { ...chosenSym };
+                    }
+                }
+            }
+
             if (isBought) {
                 const used = new Set();
                 while (used.size < 4) used.add(`${Math.floor(Math.random() * SB_COLS)}-${Math.floor(Math.random() * SB_ROWS)}`);
                 used.forEach(pos => { const [c, r] = pos.split('-'); nextGrid[parseInt(c)][parseInt(r)] = { ...SB_SCATTER }; });
             }
 
-            await sleep(760);
+            await sleep(720);
+            clearInterval(timer);
+
             for (let c = 0; c < SB_COLS; c++) {
                 for (let r = 0; r < SB_ROWS; r++) {
                     sbGrid[c][r] = nextGrid[c][r];
                     renderBonanzaCell(c, r, true);
                 }
-                await sleep(115);
+                await sleep(105);
             }
-            clearInterval(timer);
 
             let spinRawWin = 0;
             while (true) {
@@ -3049,7 +3635,7 @@
                     if (cnt >= 8) {
                         const sample = positions[symId][0].sym;
                         const mult = cnt >= 12 ? sample.p12 : (cnt >= 10 ? sample.p10 : sample.p8);
-                        stepWin += applyRtpAdjustment(baseBet * mult);
+                        stepWin += applyEnginePayoutScale(baseBet * mult);
                         winningCoords.push(...positions[symId]);
                     }
                 }
@@ -3058,18 +3644,18 @@
                 spinRawWin += stepWin;
                 document.getElementById('sb-hud-win').textContent = spinRawWin.toFixed(2).replace('.', ',');
                 winningCoords.forEach(({ c, r }) => document.getElementById(`sb-cell-${c}-${r}`)?.classList.add('win-pop'));
-                await sleep(680);
+                await sleep(640);
 
                 winningCoords.forEach(({ c, r }) => { sbGrid[c][r] = null; });
                 for (let c = 0; c < SB_COLS; c++) {
                     const surviving = [];
                     for (let r = SB_ROWS - 1; r >= 0; r--) if (sbGrid[c][r] !== null) surviving.push(sbGrid[c][r]);
                     const missing = SB_ROWS - surviving.length;
-                    const newTop = Array.from({ length: missing }, () => generateBonanzaCell(sbInFreeSpins));
+                    const newTop = Array.from({ length: missing }, () => generateBonanzaCell(sbInFreeSpins, spinPool));
                     const rebuilt = [...surviving, ...newTop].reverse();
                     for (let r = 0; r < SB_ROWS; r++) { sbGrid[c][r] = rebuilt[r]; renderBonanzaCell(c, r, true); }
                 }
-                await sleep(520);
+                await sleep(480);
             }
 
             let finalSpinWin = spinRawWin;
@@ -3080,7 +3666,7 @@
                         if (sbGrid[c][r] && sbGrid[c][r].id === 'bomb') totalBombMult += sbGrid[c][r].mult;
                     }
                 }
-                if (totalBombMult > 0) { finalSpinWin = spinRawWin * totalBombMult; await sleep(720); }
+                if (totalBombMult > 0) { finalSpinWin = spinRawWin * totalBombMult; await sleep(680); }
             }
 
             let scatterCount = 0;
@@ -3089,7 +3675,7 @@
             }
             if (scatterCount >= 4) {
                 const rawScatter = scatterCount >= 6 ? baseBet * 100 : (scatterCount === 5 ? baseBet * 5 : baseBet * 3);
-                finalSpinWin += applyRtpAdjustment(rawScatter);
+                finalSpinWin += applyEnginePayoutScale(rawScatter);
             }
 
             finalSpinWin = Math.round(finalSpinWin * 100) / 100;
@@ -3110,7 +3696,7 @@
                 document.getElementById('sb-fs-banner').classList.add('active');
                 document.getElementById('sb-fs-left').textContent = sbFreeSpinsLeft;
                 document.getElementById('sb-fs-total-win').textContent = sbFreeSpinsTotalWin.toFixed(2).replace('.', ',');
-                showToast(`🍭 Бонус Sweet Bonanza запущен (RTP ${getCurrentRTP()}%)!`);
+                showToast('🍭 Бонус Sweet Bonanza запущен! 10 бесплатных вращений!');
             } else if (sbInFreeSpins && scatterCount >= 3) {
                 sbFreeSpinsLeft += 5; document.getElementById('sb-fs-left').textContent = sbFreeSpinsLeft;
                 showToast('🍭 +5 фриспинов!');
@@ -3131,14 +3717,104 @@
         }
 
         // ==========================================
-        // ПОПОЛНЕНИЕ И QR-КОД
+        // КАССА: ПОПОЛНЕНИЕ (МНОГО СПОСОБОВ) И ВЫВОД СРЕДСТВ
         // ==========================================
+        let currentDepMethod = 'usdt';
+        const DEPOSIT_METHODS_DATA = {
+            usdt: {
+                network: 'Сеть: TRON (TRC-20) • Курс: 1 USDT = 3.25 BYN',
+                requisites: 'TMVngRQdJ1XqC67GTLttnuWUZKYxtdMFWt',
+                rate: 3.25,
+                unit: 'USDT',
+                hasQr: true,
+                steps: '1. Переведите эквивалент суммы в USDT (TRC-20) на указанный кошелёк или по QR-коду.<br>2. Нажмите «Я ОПЛАТИЛ» и отправьте скриншот чека кассиру в Telegram.'
+            },
+            card: {
+                network: 'Перевод на карту (VISA / Mastercard / Белкарт / МИР)',
+                requisites: 'Реквизиты карты выдает дежурный кассир в Telegram (@Seregablatnou)',
+                rate: 1,
+                unit: 'BYN',
+                hasQr: false,
+                steps: '1. Нажмите «ЧАТ С КАССИРОМ TG» или «Я ОПЛАТИЛ», чтобы получить актуальный номер карты.<br>2. После перевода баланс зачисляется в течение 2–5 минут.'
+            },
+            ton: {
+                network: 'Сеть: TON / Telegram Wallet • Курс: 1 TON = 17.50 BYN',
+                requisites: 'UQBx7mSeregaOlyambusTonWalletTRC20Pay991',
+                rate: 17.50,
+                unit: 'TON',
+                hasQr: false,
+                steps: '1. Скопируйте TON-адрес и отправьте перевод через @wallet или Tonkeeper.<br>2. В комментарии к переводу укажите ваш игровой никнейм.'
+            },
+            erip: {
+                network: 'Система «Расчёт» (ЕРИП Беларусь) / СБП (РФ)',
+                requisites: 'Номер счёта ЕРИП / СБП формируется кассиром (@Seregablatnou)',
+                rate: 1,
+                unit: 'BYN',
+                hasQr: false,
+                steps: '1. Укажите сумму пополнения и нажмите «Я ОПЛАТИЛ» для получения кода ЕРИП.<br>2. Зачисление без комиссии 24/7.'
+            },
+            crypto_other: {
+                network: 'Мультивалютный шлюз: BTC / LTC / ETH',
+                requisites: 'ltc1qseregakazikmultipay8842x90v',
+                rate: 280.0,
+                unit: 'LTC',
+                hasQr: false,
+                steps: '1. Отправьте криптовалюту на указанный адрес Litecoin (LTC) или запросите BTC-адрес у кассира.<br>2. После 1 подтверждения сети средства зачислятся на баланс.'
+            }
+        };
+
+        function selectDepositMethod(methodKey) {
+            currentDepMethod = methodKey;
+            document.querySelectorAll('#dep-methods-grid .cashier-method-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.method === methodKey);
+            });
+            const info = DEPOSIT_METHODS_DATA[methodKey] || DEPOSIT_METHODS_DATA.usdt;
+            document.getElementById('dep-network-label').textContent = info.network;
+            document.getElementById('crypto-wallet-address').textContent = info.requisites;
+            document.getElementById('dep-instruction-text').innerHTML = `<b>Инструкция по зачислению:</b><br>${info.steps}<br>Ваш ник для зачисления: <b style="color:var(--accent-gold);">${username || 'Player'}</b>`;
+            
+            const qrBtn = document.getElementById('toggle-qr-btn');
+            const qrBox = document.getElementById('deposit-qr-container');
+            if (qrBtn) qrBtn.style.display = info.hasQr ? 'block' : 'none';
+            if (qrBox && !info.hasQr) qrBox.style.display = 'none';
+            updateDepositCalc();
+        }
+
+        function setDepositAmount(amt) {
+            const inp = document.getElementById('dep-amount-input');
+            if (inp) { inp.value = amt; updateDepositCalc(); }
+        }
+
+        function updateDepositCalc() {
+            const amt = parseFloat(document.getElementById('dep-amount-input')?.value) || 0;
+            const info = DEPOSIT_METHODS_DATA[currentDepMethod] || DEPOSIT_METHODS_DATA.usdt;
+            const hint = document.getElementById('dep-converted-hint');
+            if (!hint) return;
+            if (info.unit === 'BYN') {
+                hint.textContent = `К оплате: ${amt.toFixed(2)} BYN`;
+            } else {
+                hint.textContent = `≈ ${(amt / info.rate).toFixed(2)} ${info.unit}`;
+            }
+        }
+
+        function submitDepositRequest() {
+            const amt = parseFloat(document.getElementById('dep-amount-input')?.value) || 0;
+            if (amt < 10) {
+                showToast('⚠️ Минимальная сумма пополнения — 10 BYN');
+                return;
+            }
+            // Активируем статус первого депозита для бонусных 5 спинов при подтверждении оплаты
+            triggerFirstDepositBonusMode();
+            showToast(`✅ Заявка на пополнение ${amt.toFixed(2)} BYN создана! Отправьте чек кассиру @Seregablatnou`);
+        }
+
         function openDepositModal() {
             document.getElementById('deposit-modal').classList.add('active');
             const qrBox = document.getElementById('deposit-qr-container');
             const qrBtn = document.getElementById('toggle-qr-btn');
             if (qrBox) qrBox.style.display = 'none';
             if (qrBtn) qrBtn.textContent = '📷 ПОКАЗАТЬ QR-КОД';
+            selectDepositMethod(currentDepMethod);
             syncProfileUI();
         }
         function closeDepositModal() {
@@ -3156,7 +3832,136 @@
 
         function copyWalletAddress() {
             const addr = document.getElementById('crypto-wallet-address').textContent.trim();
-            navigator.clipboard.writeText(addr).then(() => { showToast('✅ Адрес скопирован!'); });
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(addr).then(() => showToast('✅ Реквизиты скопированы!'));
+            } else {
+                const ta = document.createElement('textarea');
+                ta.value = addr;
+                document.body.appendChild(ta);
+                ta.select();
+                document.execCommand('copy');
+                document.body.removeChild(ta);
+                showToast('✅ Реквизиты скопированы!');
+            }
+        }
+
+        // ==========================================
+        // МОДАЛЬНОЕ ОКНО ВЫВОДА СРЕДСТВ
+        // ==========================================
+        let currentWdMethod = 'card';
+        const WITHDRAW_METHODS_CONFIG = {
+            card:     { label: 'Номер карты (VISA / Mastercard / Белкарт)', placeholder: '4276 0000 0000 0000', feePct: 0.02, name: 'Банк. карта' },
+            usdt:     { label: 'Адрес кошелька USDT (сеть TRC-20)',        placeholder: 'T...',                feePct: 0.00, name: 'USDT TRC-20' },
+            erip:     { label: 'Номер телефона / Счёт ЕРИП или СБП',      placeholder: '+375 (29) 000-00-00', feePct: 0.01, name: 'ЕРИП / СБП' },
+            yoomoney: { label: 'Номер кошелька ЮMoney',                   placeholder: '410010000000000',     feePct: 0.02, name: 'ЮMoney' }
+        };
+
+        function openWithdrawModal() {
+            updateBalanceUI();
+            selectWithdrawMethod(currentWdMethod);
+            renderWithdrawHistory();
+            document.getElementById('withdraw-modal').classList.add('active');
+        }
+
+        function closeWithdrawModal() {
+            document.getElementById('withdraw-modal').classList.remove('active');
+        }
+
+        function selectWithdrawMethod(methodKey) {
+            currentWdMethod = methodKey;
+            document.querySelectorAll('#wd-methods-grid .cashier-method-btn').forEach(btn => {
+                btn.classList.toggle('withdraw-active', btn.dataset.wd === methodKey);
+            });
+            const cfg = WITHDRAW_METHODS_CONFIG[methodKey] || WITHDRAW_METHODS_CONFIG.card;
+            document.getElementById('wd-requisite-label').textContent = cfg.label;
+            document.getElementById('wd-requisite-input').placeholder = cfg.placeholder;
+            updateWithdrawCalc();
+        }
+
+        function setWithdrawAmount(amt) {
+            const inp = document.getElementById('wd-amount-input');
+            if (inp) { inp.value = amt; updateWithdrawCalc(); }
+        }
+
+        function setMaxWithdraw() {
+            const inp = document.getElementById('wd-amount-input');
+            if (inp) {
+                inp.value = Math.floor(balance * 100) / 100;
+                updateWithdrawCalc();
+            }
+        }
+
+        function updateWithdrawCalc() {
+            const amt = parseFloat(document.getElementById('wd-amount-input')?.value) || 0;
+            const cfg = WITHDRAW_METHODS_CONFIG[currentWdMethod] || WITHDRAW_METHODS_CONFIG.card;
+            const fee = Math.round(amt * cfg.feePct * 100) / 100;
+            const net = Math.max(0, Math.round((amt - fee) * 100) / 100);
+            document.getElementById('wd-fee-text').textContent = `${(cfg.feePct * 100).toFixed(0)}% (${fee.toFixed(2).replace('.', ',')} BYN)`;
+            document.getElementById('wd-net-text').textContent = `${net.toFixed(2).replace('.', ',')} BYN`;
+        }
+
+        function submitWithdrawRequest() {
+            const amt = parseFloat(document.getElementById('wd-amount-input')?.value) || 0;
+            const req = document.getElementById('wd-requisite-input')?.value.trim() || '';
+            if (amt < 20) {
+                showToast('⚠️ Минимальная сумма вывода — 20,00 BYN');
+                return;
+            }
+            if (amt > balance) {
+                showToast('⚠️ Недостаточно средств на балансе!');
+                return;
+            }
+            if (req.length < 6) {
+                showToast('⚠️ Укажите корректные реквизиты для выплаты!');
+                return;
+            }
+
+            const cfg = WITHDRAW_METHODS_CONFIG[currentWdMethod] || WITHDRAW_METHODS_CONFIG.card;
+            const fee = Math.round(amt * cfg.feePct * 100) / 100;
+            const net = Math.round((amt - fee) * 100) / 100;
+
+            balance = Math.round((balance - amt) * 100) / 100;
+            updateBalanceUI();
+            saveState();
+
+            try {
+                if (username) db.collection("players").doc(username).set({ balance: balance }, { merge: true });
+            } catch (e) {}
+
+            const tx = {
+                id: 'WD-' + Math.floor(100000 + Math.random() * 900000),
+                method: cfg.name,
+                requisite: req.length > 10 ? req.slice(0, 6) + '***' + req.slice(-4) : req,
+                amount: amt,
+                net: net,
+                date: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+                status: '⏳ В обработке'
+            };
+            withdrawHistory.unshift(tx);
+            localStorage.setItem('kazik_wd_history', JSON.stringify(withdrawHistory));
+            renderWithdrawHistory();
+            showToast(`💸 Заявка ${tx.id} на ${net.toFixed(2)} BYN принята в обработку!`);
+        }
+
+        function renderWithdrawHistory() {
+            const listEl = document.getElementById('wd-history-list');
+            if (!listEl) return;
+            if (!withdrawHistory.length) {
+                listEl.innerHTML = '<div style="font-size:0.78rem; color:var(--text-muted); text-align:center; padding:10px;">У вас пока нет заявок на вывод</div>';
+                return;
+            }
+            listEl.innerHTML = withdrawHistory.map(tx => `
+                <div class="tx-item-card">
+                    <div>
+                        <b style="color:#fff;">${tx.method}</b> <span style="color:var(--text-muted);">(${tx.requisite})</span><br>
+                        <span style="color:#94a3b8; font-size:0.72rem;">#${tx.id} • ${tx.date}</span>
+                    </div>
+                    <div style="text-align:right;">
+                        <b style="color:#34d399;">${tx.net.toFixed(2).replace('.', ',')} BYN</b><br>
+                        <span style="color:#fbbf24; font-size:0.72rem; font-weight:700;">${tx.status}</span>
+                    </div>
+                </div>
+            `).join('');
         }
 
         window.addEventListener('DOMContentLoaded', () => {
