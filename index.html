@@ -139,11 +139,13 @@
 
         .slot-nav-img {
             width: 100%;
-            height: 85px;
+            height: 80px;
             object-fit: cover;
+            object-position: center;
             border-radius: 8px;
             border: 1px solid var(--border-glass);
             display: block;
+            background: #0f141d;
             transition: transform 0.25s ease, filter 0.25s ease;
         }
 
@@ -561,282 +563,36 @@
         }
         .btn-back:hover { background: rgba(255, 255, 255, 0.08); }
 
-        .auto-active-btn {
-            background: #22c55e !important;
-            color: #000 !important;
-            border-color: #86efac !important;
-            box-shadow: 0 0 15px rgba(34, 197, 94, 0.7);
-        }
-
         /* GATES OF OLYMPUS */
         #view-olympus {
-            padding: 0;
-            overflow: hidden;
-            border: 2px solid #f59e0b;
-            background: radial-gradient(circle at 82% 55%, rgba(250, 204, 21, 0.22) 0%, transparent 45%),
-                        linear-gradient(180deg, #1c103b 0%, #2e1045 45%, #150824 100%);
-            box-shadow: 0 15px 45px rgba(245, 158, 11, 0.25);
+            padding: 0; overflow: hidden; border: 2px solid #f59e0b;
+            background: radial-gradient(circle at 82% 55%, rgba(250, 204, 21, 0.22) 0%, transparent 45%), linear-gradient(180deg, #1c103b 0%, #2e1045 45%, #150824 100%);
         }
-        #view-olympus.freespins-mode {
-            background: radial-gradient(circle at 82% 55%, rgba(250, 204, 21, 0.35) 0%, transparent 48%),
-                        linear-gradient(180deg, #3b0764 0%, #581c87 45%, #701a75 85%, #831843 100%);
-            border-color: #facc15;
-            box-shadow: 0 0 50px rgba(250, 204, 21, 0.45);
-        }
-
         .ao-top-bar {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 10px 18px;
-            background: rgba(15, 8, 30, 0.78);
-            backdrop-filter: blur(6px);
-            border-bottom: 1px solid rgba(245, 158, 11, 0.3);
-            position: relative;
-            z-index: 15;
+            display: flex; align-items: center; justify-content: space-between; padding: 10px 18px;
+            background: rgba(15, 8, 30, 0.78); border-bottom: 1px solid rgba(245, 158, 11, 0.3);
         }
-
-        .ao-fs-banner {
-            display: none;
-            background: linear-gradient(90deg, #b45309, #d97706, #ca8a04);
-            color: #fff;
-            padding: 6px 18px;
-            border-radius: 999px;
-            font-weight: 900;
-            font-size: 0.9rem;
-            border: 2px solid #fef08a;
-            box-shadow: 0 0 20px rgba(250, 204, 21, 0.7);
-            animation: aoPulseBanner 1.2s infinite alternate;
-        }
-        .ao-fs-banner.active { display: inline-flex; align-items: center; gap: 10px; }
-        @keyframes aoPulseBanner { 0% { transform: scale(1); } 100% { transform: scale(1.04); } }
-
-        .ao-win-banner-top {
-            background: linear-gradient(90deg, #78350f, #d97706, #b45309);
-            border-bottom: 2px solid #fde047;
-            text-align: center;
-            padding: 6px;
-            font-family: 'Unbounded', sans-serif;
-            font-size: 0.82rem;
-            font-weight: 900;
-            color: #fffbeb;
-            letter-spacing: 0.5px;
-            text-shadow: 0 1px 3px rgba(0,0,0,0.6);
-            position: relative;
-            z-index: 15;
-        }
-
-        .ao-stage {
-            display: grid;
-            grid-template-columns: 185px minmax(0, 1fr) 290px;
-            gap: 10px;
-            padding: 14px 16px;
-            align-items: center;
-            position: relative;
-            min-height: 510px;
-        }
-        @media (max-width: 1050px) {
-            .ao-stage { grid-template-columns: 1fr; }
-            .ao-right-zeus-zone { display: none; }
-        }
-
-        .ao-left-controls-zone {
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-            z-index: 10;
-        }
-        .ao-feature-card {
-            border-radius: 14px;
-            padding: 12px 10px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            border: 2px solid #fde047;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45);
-            user-select: none;
-        }
-        .ao-feature-card:hover { transform: translateY(-2px) scale(1.02); filter: brightness(1.08); }
-        .ao-buy-feature { background: linear-gradient(180deg, #b45309 0%, #78350f 100%); }
-        .ao-ante-card { background: linear-gradient(180deg, #6b21a8 0%, #4c1d95 100%); }
-        .ao-ante-card.active {
-            background: linear-gradient(180deg, #15803d 0%, #166534 100%);
-            border-color: #86efac;
-            box-shadow: 0 0 25px rgba(34, 197, 94, 0.65);
-        }
-
-        .ao-right-zeus-zone {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            justify-content: flex-end;
-            height: 100%;
-            min-height: 490px;
-            position: relative;
-            z-index: 8;
-            pointer-events: none;
-            padding-left: 15px;
-        }
-        .ao-official-logo {
-            position: absolute;
-            top: 6px;
-            right: 15px;
-            width: 130px;
-            height: auto;
-            object-fit: contain;
-            z-index: 12;
-            filter: drop-shadow(0 4px 12px rgba(245, 158, 11, 0.7));
-        }
-        .ao-zeus-hero-wrap {
-            position: relative;
-            width: 100%;
-            height: 420px;
-            display: flex;
-            align-items: flex-end;
-            justify-content: flex-start;
-        }
-        .ao-zeus-hero-img {
-            height: 480px;
-            width: auto;
-            max-width: none;
-            object-fit: contain;
-            transform: translateX(0px);
-            filter: drop-shadow(0 12px 35px rgba(245, 158, 11, 0.65));
-            animation: zeusFloat 3.8s ease-in-out infinite alternate;
-            transform-origin: bottom center;
-        }
-
-        .ao-yellow-mult-badge {
-            position: absolute;
-            top: 8px;
-            right: 20px;
-            z-index: 25;
-            background: linear-gradient(135deg, rgba(70, 20, 110, 0.92), rgba(35, 10, 60, 0.96));
-            border: 2px solid #fde047;
-            border-radius: 14px;
-            padding: 8px 18px;
-            text-align: center;
-            box-shadow: 0 0 25px rgba(250, 204, 21, 0.45);
-            backdrop-filter: blur(8px);
-        }
-        .ao-yellow-mult-label {
-            font-size: 0.65rem;
-            font-weight: 800;
-            color: #fef08a;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        .ao-yellow-mult-value {
-            font-size: 1.45rem;
-            font-weight: 900;
-            color: #fde047;
-            text-shadow: 0 0 12px rgba(253, 224, 71, 0.7);
-        }
-
-        .ao-board-wrapper { display: flex; flex-direction: column; align-items: center; position: relative; z-index: 10; }
+        .ao-stage { display: flex; justify-content: center; padding: 20px; align-items: center; }
         .ao-gold-frame {
-            width: 100%;
-            max-width: 660px;
-            padding: 12px;
-            border-radius: 20px;
+            width: 100%; max-width: 660px; padding: 12px; border-radius: 20px;
             background: linear-gradient(180deg, #ca8a04 0%, #a16207 50%, #713f12 100%);
-            border: 3px solid #fde047;
-            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.75);
-            overflow: visible;
+            border: 3px solid #fde047; box-shadow: 0 16px 40px rgba(0, 0, 0, 0.75);
         }
         .ao-grid-6x5 {
-            display: grid;
-            grid-template-columns: repeat(6, 1fr);
-            grid-template-rows: repeat(5, 1fr);
-            gap: 6px;
-            background: radial-gradient(circle at 50% 45%, rgba(60, 20, 95, 0.94) 0%, rgba(20, 8, 40, 0.98) 100%);
-            border-radius: 14px;
-            padding: 10px;
-            overflow: visible;
+            display: grid; grid-template-columns: repeat(6, 1fr); grid-template-rows: repeat(5, 1fr);
+            gap: 6px; background: radial-gradient(circle at 50% 45%, rgba(60, 20, 95, 0.94) 0%, rgba(20, 8, 40, 0.98) 100%);
+            border-radius: 14px; padding: 10px;
         }
         .ao-cell {
-            aspect-ratio: 1.05 / 1;
-            min-height: 60px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 10px;
-            border: 1px solid rgba(254, 240, 138, 0.14);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: visible;
+            aspect-ratio: 1.05 / 1; min-height: 60px; background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px; border: 1px solid rgba(254, 240, 138, 0.14);
+            display: flex; align-items: center; justify-content: center; position: relative;
         }
-        .ao-symbol-inner {
-            width: 100%;
-            height: 100%;
-            font-size: 2.3rem;
-            line-height: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            will-change: transform, opacity;
-            overflow: visible;
-        }
-
-        .ao-cell.cell-spinning .ao-symbol-inner { animation: aoCellScroll 0.15s infinite alternate ease-in-out; }
-        @keyframes aoCellScroll {
-            0% { transform: translateY(-7px) scale(0.92); opacity: 0.45; }
-            100% { transform: translateY(7px) scale(1.05); opacity: 1; }
-        }
-        .ao-symbol-inner.drop-in { animation: aoDropBounce 0.4s cubic-bezier(0.22, 1.25, 0.36, 1) forwards; }
-        @keyframes aoDropBounce {
-            0% { transform: translateY(-60px) scale(0.8); opacity: 0.2; }
-            75% { transform: translateY(4px) scale(1.05); opacity: 1; }
-            100% { transform: translateY(0) scale(1); opacity: 1; }
-        }
-        .ao-cell.win-pop {
-            background: radial-gradient(circle, rgba(253, 224, 71, 0.65) 0%, rgba(202, 138, 4, 0.4) 100%);
-            border-color: #fde047;
-            box-shadow: 0 0 20px rgba(253, 224, 71, 0.85);
-            z-index: 6;
-        }
-
+        .ao-symbol-inner { font-size: 2.2rem; }
         .ao-pragmatic-hud {
-            background: rgba(12, 6, 25, 0.96);
-            border-top: 2px solid #581c87;
-            padding: 10px 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 15px;
-            position: relative;
-            z-index: 15;
+            background: rgba(12, 6, 25, 0.96); border-top: 2px solid #581c87; padding: 10px 20px;
+            display: flex; align-items: center; justify-content: space-between; gap: 15px;
         }
-        .ao-hud-left-group { display: flex; align-items: center; gap: 12px; }
-        .ao-icon-btn {
-            width: 38px; height: 38px; border-radius: 50%;
-            background: linear-gradient(135deg, #3b0764, #1e1b4b); border: 2px solid #eab308;
-            color: #fff; display: grid; place-items: center; cursor: pointer;
-            transition: 0.2s;
-        }
-        .ao-icon-btn:hover { transform: scale(1.08); }
-        .ao-credits-box {
-            display: flex; flex-direction: column; background: rgba(0,0,0,0.4);
-            border: 1px solid #581c87; padding: 4px 12px; border-radius: 8px; font-size: 0.8rem; font-weight: 700;
-        }
-        .ao-credits-box span:first-child { color: var(--text-muted); font-size: 0.62rem; text-transform: uppercase; }
-        .ao-credits-box span:last-child { color: #fde047; font-size: 0.92rem; }
-        .ao-hud-center-group { text-align: center; }
-        .ao-win-label { font-size: 0.68rem; color: #fef08a; text-transform: uppercase; font-weight: 700; }
-        .ao-win-amount { font-size: 1.35rem; font-weight: 900; color: #fde047; }
-        .ao-hud-right-group { display: flex; align-items: center; gap: 16px; }
-        .ao-bet-adjust-btn {
-            width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, #ca8a04, #854d0e);
-            border: 2px solid #fde047; color: #fff; font-size: 1.3rem; font-weight: 900; display: grid; place-items: center; cursor: pointer;
-        }
-        .ao-spin-circle-btn {
-            width: 76px; height: 76px; border-radius: 50%;
-            background: radial-gradient(circle at 35% 30%, #fde047, #ca8a04 65%, #713f12 100%);
-            border: 4px solid #fff; color: #fff; display: grid; place-items: center; cursor: pointer;
-            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.7); transition: 0.15s;
-        }
-        .ao-spin-circle-btn svg { width: 38px; height: 38px; fill: #fff; }
-        .ao-spin-circle-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
         /* THE DOG HOUSE */
         #view-doghouse {
@@ -852,13 +608,7 @@
             background: linear-gradient(180deg, #fffbeb 0%, #fde047 55%, #f59e0b 100%);
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
-        .dh-fs-banner {
-            display: none; background: linear-gradient(90deg, #b45309, #d97706, #ca8a04);
-            color: #fff; padding: 6px 18px; border-radius: 999px; font-weight: 900; font-size: 0.9rem; border: 2px solid #fef08a;
-        }
-        .dh-fs-banner.active { display: inline-flex; align-items: center; gap: 10px; }
         .dh-stage { display: flex; justify-content: center; padding: 16px 20px; align-items: center; }
-        @media (max-width: 850px) { .dh-stage { padding: 10px; } }
         .dh-board-wrapper { display: flex; flex-direction: column; align-items: center; position: relative; width: 100%; }
         .dh-ticker {
             background: linear-gradient(90deg, rgba(61, 34, 15, 0.9), rgba(120, 53, 15, 0.95), rgba(61, 34, 15, 0.9));
@@ -873,21 +623,22 @@
         .dh-grid-5x3 {
             display: grid; grid-template-columns: repeat(5, 1fr); grid-template-rows: repeat(3, 1fr);
             gap: 8px; background: radial-gradient(circle at 50% 45%, rgba(69, 30, 10, 0.92) 0%, rgba(20, 8, 2, 0.96) 100%);
-            border-radius: 14px; padding: 12px; overflow: visible;
+            border-radius: 14px; padding: 12px;
         }
         .dh-cell {
             aspect-ratio: 1.1 / 1; min-height: 82px; background: rgba(255, 255, 255, 0.05);
             border-radius: 12px; border: 1px solid rgba(254, 240, 138, 0.15);
-            display: flex; align-items: center; justify-content: center; position: relative; padding: 4px;
-            overflow: visible;
+            display: flex; align-items: center; justify-content: center; position: relative; padding: 0;
+            overflow: hidden;
         }
-        .dh-symbol-inner { width: 100%; height: 100%; font-size: 2.8rem; display: flex; align-items: center; justify-content: center; overflow: visible; }
-        .dh-symbol-inner.drop-in { animation: aoDropBounce 0.32s cubic-bezier(0.22, 1.25, 0.36, 1) forwards; }
-        .dh-sym-img { width: 92%; height: 92%; max-width: 96px; max-height: 96px; object-fit: contain; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.65)); }
-        
-        .dh-cell.spinning .dh-symbol-inner { animation: aoCellScroll 0.12s infinite alternate ease-in-out; }
-        .dh-cell.win-pop { background: radial-gradient(circle, rgba(253, 224, 71, 0.6) 0%, rgba(202, 138, 4, 0.35) 100%); border-color: #fde047; box-shadow: 0 0 18px rgba(253, 224, 71, 0.8); z-index: 3; }
-        .dh-cell.sticky-wild { background: radial-gradient(circle, rgba(239, 68, 68, 0.6) 0%, rgba(185, 28, 28, 0.4) 100%); border-color: #fca5a5; z-index: 15; overflow: visible; }
+        .dh-symbol-inner { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+        .dh-sym-img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+            border-radius: 10px;
+            display: block;
+        }
 
         .dh-pragmatic-hud {
             background: rgba(20, 10, 5, 0.96); border-top: 2px solid #78350f; padding: 10px 20px;
@@ -915,40 +666,19 @@
             box-shadow: 0 6px 20px rgba(245, 158, 11, 0.7);
         }
         .dh-spin-circle-btn svg { width: 38px; height: 38px; fill: #fff; }
-        .dh-spin-circle-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
         /* SWEET BONANZA */
         #view-bonanza {
             padding: 0; overflow: hidden; border: 2px solid #f43f5e;
             background: linear-gradient(180deg, #4a044e 0%, #701a75 40%, #3b0764 100%);
-            box-shadow: 0 15px 45px rgba(244, 63, 94, 0.2);
         }
         .sb-top-bar {
             display: flex; align-items: center; justify-content: space-between; padding: 10px 18px;
             background: rgba(40, 10, 30, 0.75); border-bottom: 1px solid rgba(244, 63, 94, 0.3);
         }
         .sb-logo-title { display: inline-flex; align-items: center; height: 40px; }
-        .sb-logo-img { max-height: 38px; width: auto; object-fit: contain; filter: drop-shadow(0 2px 8px rgba(244, 63, 94, 0.6)); }
-        .sb-stage { display: grid; grid-template-columns: 205px 1fr; gap: 14px; padding: 16px 20px; align-items: center; }
-        @media (max-width: 850px) { .sb-stage { grid-template-columns: 1fr; } }
-        .sb-left-features { display: flex; flex-direction: column; gap: 14px; z-index: 5; }
-        .sb-bonanza-mascot {
-            width: 100%; height: 120px; object-fit: contain; border-radius: 14px;
-            filter: drop-shadow(0 6px 18px rgba(244, 63, 94, 0.55));
-            animation: zeusFloat 3.5s ease-in-out infinite alternate;
-        }
-        .sb-feature-card {
-            border-radius: 16px; padding: 14px 12px; text-align: center; cursor: pointer;
-            border: 2px solid #f472b6; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45);
-        }
-        .sb-buy-feature { background: linear-gradient(180deg, #be185d 0%, #831843 100%); }
-        .sb-ante-card { background: linear-gradient(180deg, #6b21a8 0%, #4c1d95 100%); border-color: #c084fc; }
-        .sb-board-wrapper { display: flex; flex-direction: column; align-items: center; position: relative; }
-        .sb-tumble-ticker {
-            background: linear-gradient(90deg, rgba(88, 28, 135, 0.9), rgba(157, 23, 77, 0.95), rgba(88, 28, 135, 0.9));
-            border: 2px solid #f43f5e; border-bottom: none; border-radius: 14px 14px 0 0;
-            padding: 6px 22px; min-width: 310px; text-align: center; font-weight: 900; color: #fbcfe8;
-        }
+        .sb-logo-img { max-height: 38px; width: auto; object-fit: contain; }
+        .sb-stage { display: flex; justify-content: center; padding: 20px; align-items: center; }
         .sb-candy-frame {
             width: 100%; max-width: 720px; padding: 12px; border-radius: 20px;
             background: linear-gradient(180deg, #db2777 0%, #9d174d 50%, #701a75 100%);
@@ -957,42 +687,17 @@
         .sb-grid-6x5 {
             display: grid; grid-template-columns: repeat(6, 1fr); grid-template-rows: repeat(5, 1fr);
             gap: 6px; background: radial-gradient(circle at 50% 45%, rgba(90, 20, 80, 0.92) 0%, rgba(30, 8, 40, 0.96) 100%);
-            border-radius: 14px; padding: 10px; overflow: visible;
+            border-radius: 14px; padding: 10px;
         }
         .sb-cell {
             aspect-ratio: 1.05 / 1; min-height: 62px; background: rgba(255, 255, 255, 0.05);
             border-radius: 10px; border: 1px solid rgba(254, 205, 211, 0.12);
             display: flex; align-items: center; justify-content: center; position: relative;
-            overflow: visible;
         }
-        .sb-symbol-inner { font-size: 2.6rem; line-height: 1; display: flex; align-items: center; justify-content: center; overflow: visible; width: 100%; height: 100%; }
-        .sb-cell.cell-spinning .sb-symbol-inner { animation: aoCellScroll 0.16s infinite alternate ease-in-out; }
-        .sb-sym-img { width: 104%; height: 104%; max-width: 72px; max-height: 72px; object-fit: contain; filter: drop-shadow(0 4px 10px rgba(0,0,0,0.65)); }
-        
         .sb-bottom-hud {
             background: rgba(30, 8, 25, 0.96); border-top: 2px solid #831843; padding: 10px 20px;
             display: flex; align-items: center; justify-content: space-between; gap: 15px;
         }
-        .sb-hud-left { display: flex; align-items: center; gap: 12px; }
-        .sb-stat-pill { background: rgba(0,0,0,0.4); border: 1px solid #831843; padding: 4px 12px; border-radius: 8px; font-size: 0.8rem; font-weight: 700; }
-        .sb-stat-pill-lbl { color: var(--text-muted); font-size: 0.62rem; text-transform: uppercase; }
-        .sb-stat-pill-val { color: #fff; font-size: 0.92rem; }
-        .sb-hud-center { text-align: center; }
-        .sb-win-display-lbl { font-size: 0.68rem; color: #fbcfe8; text-transform: uppercase; font-weight: 700; }
-        .sb-win-display-val { font-size: 1.35rem; font-weight: 900; color: #fde047; }
-        .sb-hud-right { display: flex; align-items: center; gap: 12px; }
-        .sb-bet-control { display: flex; align-items: center; gap: 4px; background: rgba(0,0,0,0.4); border: 1px solid #831843; border-radius: 10px; padding: 4px; }
-        .sb-bet-step-btn { width: 34px; height: 34px; border-radius: 8px; background: #be185d; border: none; color: #fff; font-weight: 900; cursor: pointer; }
-        .sb-bet-input-wrap { display: flex; flex-direction: column; align-items: center; padding: 0 6px; }
-        .sb-bet-input-wrap span { font-size: 0.58rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700; }
-        .sb-bet-input-wrap input { background: transparent; border: none; color: #fde047; font-weight: 900; font-size: 0.92rem; width: 65px; text-align: center; outline: none; }
-        .sb-spin-btn {
-            width: 72px; height: 72px; border-radius: 50%;
-            background: radial-gradient(circle at 35% 30%, #f472b6, #db2777 65%, #701a75 100%);
-            border: 4px solid #fff; color: #fff; font-size: 1.8rem; font-weight: 900; display: grid; place-items: center; cursor: pointer;
-            box-shadow: 0 6px 20px rgba(244, 63, 94, 0.7);
-        }
-        .sb-spin-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
         .modal-overlay {
             display: none; position: fixed; inset: 0; background: rgba(4, 7, 11, 0.88);
@@ -1154,7 +859,7 @@
             </button>
 
             <button class="nav-item slot-nav-card" id="nav-slot-doghouse" onclick="openDogHouse()">
-                <img src="glavniypes22.png" alt="The Dog House" class="slot-nav-img">
+                <img src="emblemadoghouse-removebg-preview.png" alt="The Dog House" class="slot-nav-img">
                 <span class="slot-nav-label">The Dog House</span>
             </button>
 
@@ -1242,7 +947,7 @@
                             <button class="card-hover-play-btn" onclick="event.stopPropagation(); openDogHouse();">ИГРАТЬ</button>
                             <button class="card-hover-demo-btn" onclick="event.stopPropagation(); openDogHouse();">Демо</button>
                         </div>
-                        <div class="slot-card-meta"><span>20 линий</span><span>Новые иконки</span></div>
+                        <div class="slot-card-meta"><span>20 линий</span><span>Полные иконки</span></div>
                     </div>
 
                     <div class="slot-lobby-card bonanza-featured" onclick="openSweetBonanza()">
@@ -1264,30 +969,24 @@
                 <div class="ao-top-bar">
                     <button class="btn-back" onclick="showLobby()">← В зал</button>
                     <div style="font-size: 0.88rem; font-weight: 800; color: #fde047;">GATES OF OLYMPUS SLOT</div>
-                    <button class="ao-icon-btn" onclick="showToast('⚡ Стандартный слот')" title="Информация">i</button>
                 </div>
-                <div class="ao-win-banner-top">🏆 ОЛИМП — СТАНДАРТНЫЙ РЕЖИМ 🏆</div>
-                <div class="ao-stage" style="justify-content:center;">
-                    <div class="ao-board-wrapper">
-                        <div class="ao-gold-frame">
-                            <div class="ao-grid-6x5" id="ao-grid"></div>
-                        </div>
+                <div class="ao-stage">
+                    <div class="ao-gold-frame">
+                        <div class="ao-grid-6x5" id="ao-grid"></div>
                     </div>
                 </div>
                 <div class="ao-pragmatic-hud">
-                    <div class="ao-hud-left-group">
-                        <div class="ao-credits-box"><span>КРЕДИТ</span><span><span id="ao-hud-balance">1 000,00</span> BYN</span></div>
-                        <div class="ao-credits-box"><span>СТАВКА</span><span><span id="ao-hud-total-bet">0,50</span> BYN</span></div>
+                    <div style="display:flex; gap:12px; align-items:center;">
+                        <div class="dh-credits-box"><span>КРЕДИТ</span><span><span id="ao-hud-balance">1 000,00</span> BYN</span></div>
+                        <div class="dh-credits-box"><span>СТАВКА</span><span>0,50 BYN</span></div>
                     </div>
-                    <div class="ao-hud-center-group">
-                        <div class="ao-win-label">ПОСЛЕДНИЙ ВЫИГРЫШ</div>
-                        <div class="ao-win-amount"><span id="ao-hud-win">0,00</span> BYN</div>
+                    <div style="text-align:center;">
+                        <div style="font-size:0.68rem; color:#fef08a; text-transform:uppercase; font-weight:700;">ВЫИГРЫШ</div>
+                        <div style="font-size:1.35rem; font-weight:900; color:#fde047;"><span id="ao-hud-win">0,00</span> BYN</div>
                     </div>
-                    <div class="ao-hud-right-group">
-                        <button class="ao-spin-circle-btn" id="ao-spin-btn" onclick="spinGatesOfOlympus()">
-                            <svg viewBox="0 0 24 24"><path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"/></svg>
-                        </button>
-                    </div>
+                    <button class="dh-spin-circle-btn" onclick="spinGatesOfOlympus()">
+                        <svg viewBox="0 0 24 24"><path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"/></svg>
+                    </button>
                 </div>
             </div>
 
@@ -1325,7 +1024,7 @@
                             <svg viewBox="0 0 24 24"><path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"/></svg>
                         </button>
                         <button class="dh-bet-adjust-btn" onclick="changeDogHouseBet(0.5)">+</button>
-                        <button class="ao-icon-btn" id="dh-auto-btn" onclick="toggleDogHouseAuto()" title="Автоспины" style="font-size:0.72rem; font-weight:900; width:44px; height:44px;">AUTO</button>
+                        <button class="ao-icon-btn" id="dh-auto-btn" onclick="toggleDogHouseAuto()" title="Автоспины" style="font-size:0.72rem; font-weight:900; width:44px; height:44px; background:rgba(0,0,0,0.4); border:1px solid #78350f; color:#fff; border-radius:50%; cursor:pointer;">AUTO</button>
                     </div>
                 </div>
             </div>
@@ -1337,29 +1036,22 @@
                     <div class="sb-logo-title">
                         <img src="sweetbananzaemblema.png" alt="Sweet Bonanza" class="sb-logo-img">
                     </div>
-                    <button class="ao-icon-btn" onclick="showToast('🍭 Стандартный режим')" title="Правила игры">i</button>
                 </div>
-                <div class="sb-stage" style="justify-content:center;">
-                    <div class="sb-board-wrapper">
-                        <div class="sb-candy-frame">
-                            <div class="sb-grid-6x5" id="sb-grid"></div>
-                        </div>
+                <div class="sb-stage">
+                    <div class="sb-candy-frame">
+                        <div class="sb-grid-6x5" id="sb-grid"></div>
                     </div>
                 </div>
                 <div class="sb-bottom-hud">
-                    <div class="sb-hud-left">
-                        <div class="sb-stat-pill">
-                            <div class="sb-stat-pill-lbl">Баланс</div>
-                            <div class="sb-stat-pill-val"><span id="sb-hud-balance">1 000,00</span> BYN</div>
-                        </div>
+                    <div class="sb-stat-pill" style="background:rgba(0,0,0,0.4); padding:4px 12px; border-radius:8px;">
+                        <div style="font-size:0.62rem; color:var(--text-muted); text-transform:uppercase;">Баланс</div>
+                        <div style="color:#fff;"><span id="sb-hud-balance">1 000,00</span> BYN</div>
                     </div>
-                    <div class="sb-hud-center">
-                        <div class="sb-win-display-lbl">ПОСЛЕДНИЙ ВЫИГРЫШ</div>
-                        <div class="sb-win-display-val"><span id="sb-hud-win">0,00</span> BYN</div>
+                    <div style="text-align:center;">
+                        <div style="font-size:0.68rem; color:#fbcfe8; text-transform:uppercase; font-weight:700;">ВЫИГРЫШ</div>
+                        <div style="font-size:1.35rem; font-weight:900; color:#fde047;"><span id="sb-hud-win">0,00</span> BYN</div>
                     </div>
-                    <div class="sb-hud-right">
-                        <button class="sb-spin-btn" id="sb-spin-btn" onclick="spinSweetBonanza()">↻</button>
-                    </div>
+                    <button class="dh-spin-circle-btn" onclick="spinSweetBonanza()" style="width:65px; height:65px; font-size:1.5rem;">↻</button>
                 </div>
             </div>
 
@@ -1424,23 +1116,18 @@
         } catch (e) {}
         const db = firebase.firestore();
 
-        // КОНФИГУРАЦИЯ МАТЕМАТИКИ И RTP ДЛЯ DOG HOUSE
         const DOG_HOUSE_CONFIG = {
-            rtpNewSession: 0.88,         // 85%–90% для новых сессий / небольших ставок
-            rtpLoyalPlayer: 0.95,        // 94%–96% для постоянных игроков (3+ депозита или 500+ спинов)
-            baitSpinsCount: 12,          // Первые 5-15 спинов (фаза приманки)
+            rtpNewSession: 0.88,
+            rtpLoyalPlayer: 0.95,
+            baitSpinsCount: 12,
             baitMinMult: 1.5,
             baitMaxMult: 4.0,
-            emptySeriesMin: 4,
-            emptySeriesMax: 8,
             smallWinMinMult: 0.3,
             smallWinMaxMult: 1.2,
-            bigWinChance: 0.015,         // 1.5% шанс крупного заноса (1%-2%)
+            bigWinChance: 0.015,
             bigWinMinMult: 25,
             bigWinMaxMult: 100,
-            lastStandChance: 0.50,       // 50% шанс камбэка при балансе <= ставке
-            lastStandSpinsMin: 1,
-            lastStandSpinsMax: 3,
+            lastStandChance: 0.50,
             lastStandMinMult: 2,
             lastStandMaxMult: 3
         };
@@ -1456,7 +1143,6 @@
             sessionState.spinCount++;
             let win = 0;
 
-            // Проверка триггера «Последнего шанса»
             const todayStr = new Date().toDateString();
             if (sessionState.lastLastStandDate !== todayStr) {
                 sessionState.lastLastStandDate = todayStr;
@@ -1473,7 +1159,6 @@
                 }
             }
 
-            // Фаза приманки (первые спины новой сессии)
             if (sessionState.spinCount <= DOG_HOUSE_CONFIG.baitSpinsCount) {
                 if (Math.random() < 0.75) {
                     const mult = Math.random() * (DOG_HOUSE_CONFIG.baitMaxMult - DOG_HOUSE_CONFIG.baitMinMult) + DOG_HOUSE_CONFIG.baitMinMult;
@@ -1482,7 +1167,6 @@
                 }
             }
 
-            // Проверка на крупный занос для игроков в глубоком историческом минусе
             const totalHistoryNet = stats.totalWon - stats.wagered;
             if (totalHistoryNet < 0 && Math.random() < DOG_HOUSE_CONFIG.bigWinChance) {
                 const bigMult = Math.floor(Math.random() * (DOG_HOUSE_CONFIG.bigWinMaxMult - DOG_HOUSE_CONFIG.bigWinMinMult + 1)) + DOG_HOUSE_CONFIG.bigWinMinMult;
@@ -1491,12 +1175,11 @@
                 return win;
             }
 
-            // Обычная фаза качелей и долгосрока
             const isLoyal = (sessionState.depositsCount >= 3 || stats.games >= 500);
             const currentRtp = isLoyal ? DOG_HOUSE_CONFIG.rtpLoyalPlayer : DOG_HOUSE_CONFIG.rtpNewSession;
 
             if (Math.random() > currentRtp) {
-                return 0; // пустой спин
+                return 0;
             } else {
                 const smallMult = Math.random() * (DOG_HOUSE_CONFIG.smallWinMaxMult - DOG_HOUSE_CONFIG.smallWinMinMult) + DOG_HOUSE_CONFIG.smallWinMinMult;
                 win = baseBet * smallMult;
@@ -1743,31 +1426,67 @@
             if (viewName === 'profile') syncProfileUI();
         }
 
-        // ==========================================
-        // STUBS ДЛЯ ДРУГИХ СЛОТОВ
-        // ==========================================
+        // Вспомогательные сетки для Олимпа и Бонцы
+        function initGatesOfOlympusDOM() {
+            const gridEl = document.getElementById('ao-grid');
+            if (!gridEl || gridEl.children.length > 0) return;
+            for (let r = 0; r < 5; r++) {
+                for (let c = 0; c < 6; c++) {
+                    const cell = document.createElement('div');
+                    cell.className = 'ao-cell';
+                    cell.innerHTML = '<div class="ao-symbol-inner">💎</div>';
+                    gridEl.appendChild(cell);
+                }
+            }
+        }
+
+        function initSweetBonanzaDOM() {
+            const gridEl = document.getElementById('sb-grid');
+            if (!gridEl || gridEl.children.length > 0) return;
+            for (let r = 0; r < 5; r++) {
+                for (let c = 0; c < 6; c++) {
+                    const cell = document.createElement('div');
+                    cell.className = 'sb-cell';
+                    cell.innerHTML = '<div class="ao-symbol-inner">🍬</div>';
+                    gridEl.appendChild(cell);
+                }
+            }
+        }
+
         function openGatesOfOlympus() {
             hideAllViews();
+            initGatesOfOlympusDOM();
             document.getElementById('view-olympus').classList.add('active');
             document.getElementById('nav-slot-olympus').classList.add('active');
             updateBalanceUI();
         }
         function spinGatesOfOlympus() {
-            showToast('⚡ Олимп в стандартном режиме');
+            if (balance < 0.5) { showToast('⚠️ Недостаточно средств!'); openDepositModal(); return; }
+            balance -= 0.5; stats.games++; stats.wagered += 0.5;
+            let win = Math.random() < 0.3 ? 1.5 : 0;
+            if (win > 0) { balance += win; stats.totalWon += win; if (win > stats.biggestWin) stats.biggestWin = win; }
+            document.getElementById('ao-hud-win').textContent = win.toFixed(2).replace('.', ',');
+            updateBalanceUI(); saveState();
         }
 
         function openSweetBonanza() {
             hideAllViews();
+            initSweetBonanzaDOM();
             document.getElementById('view-bonanza').classList.add('active');
             document.getElementById('nav-slot-bonanza').classList.add('active');
             updateBalanceUI();
         }
         function spinSweetBonanza() {
-            showToast('🍭 Бонза в стандартном режиме');
+            if (balance < 0.5) { showToast('⚠️ Недостаточно средств!'); openDepositModal(); return; }
+            balance -= 0.5; stats.games++; stats.wagered += 0.5;
+            let win = Math.random() < 0.3 ? 2.0 : 0;
+            if (win > 0) { balance += win; stats.totalWon += win; if (win > stats.biggestWin) stats.biggestWin = win; }
+            document.getElementById('sb-hud-win').textContent = win.toFixed(2).replace('.', ',');
+            updateBalanceUI(); saveState();
         }
 
         // ==========================================
-        // THE DOG HOUSE (ГЛАВНЫЙ СЛОТ ПО ТРЕБОВАНИЮ)
+        // THE DOG HOUSE
         // ==========================================
         function initDogHouseDOM() {
             const gridEl = document.getElementById('dh-grid');
