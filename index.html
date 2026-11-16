@@ -1381,7 +1381,7 @@
                 </div>
                 <p>🍭 <b>SCATTER (Чупа-чупс)</b> — присутствует на всех барабанах. 6 символов = 100x, 5 символов = 5x, 4 символа = 3x + запуск фриспинов.</p>
                 <hr style="border-color: rgba(244,114,182,0.2); margin: 12px 0;">
-                <p><b>RTP:</b> Обычные спины — 65%, Бонусный режим — 75%.</p>
+                <p><b>RTP:</b> Стандартный — 93% (для новых игроков первые 50 спинов — 91%).</p>
                 <p>• Все выигрыши умножаются на значение основной ставки (в BYN).<br>
                    • Клавиши <b>ПРОБЕЛ</b> и <b>ВВОД</b> на клавиатуре можно использовать для начала спина.</p>
                 <p style="color: #fde047; font-weight: 700;">Минимальная ставка: 0,50 BYN | Максимальная ставка: 50,00 BYN</p>
@@ -1486,7 +1486,7 @@
                             <button class="card-hover-play-btn" onclick="event.stopPropagation(); openGatesOfOlympus();">ИГРАТЬ</button>
                             <button class="card-hover-demo-btn" onclick="event.stopPropagation(); openGatesOfOlympus();">Демо</button>
                         </div>
-                        <div class="slot-card-meta"><span>RTP 65% / 75%</span><span>До x500</span></div>
+                        <div class="slot-card-meta"><span>RTP 93% (Новым 91%)</span><span>До x500</span></div>
                     </div>
 
                     <div class="slot-lobby-card doghouse-featured" onclick="openDogHouse()">
@@ -1498,7 +1498,7 @@
                             <button class="card-hover-play-btn" onclick="event.stopPropagation(); openDogHouse();">ИГРАТЬ</button>
                             <button class="card-hover-demo-btn" onclick="event.stopPropagation(); openDogHouse();">Демо</button>
                         </div>
-                        <div class="slot-card-meta"><span>20 линий</span><span>RTP 65% / 75%</span></div>
+                        <div class="slot-card-meta"><span>20 линий</span><span>RTP 93% (Новым 91%)</span></div>
                     </div>
 
                     <div class="slot-lobby-card bonanza-featured" onclick="openSweetBonanza()">
@@ -1510,7 +1510,7 @@
                             <button class="card-hover-play-btn" onclick="event.stopPropagation(); openSweetBonanza();">ИГРАТЬ</button>
                             <button class="card-hover-demo-btn" onclick="event.stopPropagation(); openSweetBonanza();">Демо</button>
                         </div>
-                        <div class="slot-card-meta"><span>BYN</span><span>Бомбы до x100</span></div>
+                        <div class="slot-card-meta"><span>RTP 93% (Новым 91%)</span><span>Бомбы до x100</span></div>
                     </div>
                 </div>
             </div>
@@ -1527,11 +1527,11 @@
                         <span>|</span>
                         <span>ВЫИГРЫШ: <b id="ao-fs-total-win">0,00</b> BYN</span>
                     </div>
-                    <button class="ao-icon-btn" onclick="showToast('⚡ 4+ Scatter = 15 фриспинов!')" title="Информация">i</button>
+                    <button class="ao-icon-btn" onclick="showToast('⚡ 4+ Scatter = 15 фриспинов! RTP 93% (новичкам 91%)')" title="Информация">i</button>
                 </div>
 
                 <div class="ao-win-banner-top">
-                    🏆 СИМВОЛЫ ОПЛАЧИВАЮТСЯ, ГДЕ БЫ ОНИ НИ ВЫПАЛИ • RTP: Спины 65% / Бонусы 75% 🏆
+                    🏆 СИМВОЛЫ ОПЛАЧИВАЮТСЯ, ГДЕ БЫ ОНИ НИ ВЫПАЛИ • RTP: 93% (НОВЫМ ИГРОКАМ 91%) 🏆
                 </div>
 
                 <div class="ao-stage">
@@ -1607,7 +1607,7 @@
 
                 <div class="dh-stage">
                     <div class="dh-board-wrapper">
-                        <div class="dh-ticker">20 ЛИНИЙ • СТАВКИ ОТ 0.5 ДО 50 BYN • RTP 65%/75%</div>
+                        <div class="dh-ticker">20 ЛИНИЙ • СТАВКИ ОТ 0.5 ДО 50 BYN • RTP 93% (НОВЫМ 91%)</div>
                         <div class="dh-wooden-frame">
                             <div class="dh-grid-5x3" id="dh-grid"></div>
 
@@ -1678,7 +1678,7 @@
                     </div>
 
                     <div class="sb-board-wrapper">
-                        <div class="sb-tumble-ticker">ВЫИГРЫШ ЗА 8+ ОДИНАКОВЫХ СИМВОЛОВ • RTP 65% / 75%</div>
+                        <div class="sb-tumble-ticker">ВЫИГРЫШ ЗА 8+ ОДИНАКОВЫХ СИМВОЛОВ • RTP 93% (НОВЫМ 91%)</div>
                         <div class="sb-candy-frame">
                             <div class="sb-grid-6x5" id="sb-grid"></div>
                         </div>
@@ -1779,26 +1779,47 @@
         const db = firebase.firestore();
 
         // ==========================================
-        // GATES OF OLYMPUS (RTP: Спины 65%, Бонусы 75%)
+        // ГЛОБАЛЬНЫЙ КОНФИГ RTP (93% база / 91% новым игрокам)
+        // ==========================================
+        const RTP_CONFIG = {
+            STANDARD_RTP: 93,       // Стандартный RTP (93%)
+            NEW_PLAYER_RTP: 91,     // RTP для новых игроков (91%)
+            NEW_PLAYER_SPINS: 50    // Порог спинов для статуса "новый игрок"
+        };
+
+        function getCurrentRTP() {
+            return (stats && stats.games < RTP_CONFIG.NEW_PLAYER_SPINS)
+                ? RTP_CONFIG.NEW_PLAYER_RTP
+                : RTP_CONFIG.STANDARD_RTP;
+        }
+
+        function applyRtpAdjustment(rawAmount) {
+            if (rawAmount <= 0) return 0;
+            const currentRtp = getCurrentRTP();
+            return rawAmount * (currentRtp / RTP_CONFIG.STANDARD_RTP);
+        }
+
+        // ==========================================
+        // GATES OF OLYMPUS (RTP: 93% / Новым 91%)
         // ==========================================
         const AO_COLS = 6, AO_ROWS = 5;
         const AO_SYMBOLS = [
-            { id: 'crown',    emoji: '👑', name: 'Золотая корона',    p8: 6.8,  p10: 16,   p12: 32,  weight: 8 },
-            { id: 'hourglass',emoji: '⏳', name: 'Песочные часы',     p8: 1.6,  p10: 6.4,  p12: 16,  weight: 10 },
-            { id: 'ring',     emoji: '💍', name: 'Кольцо',            p8: 1.2,  p10: 3.2,  p12: 9.5, weight: 12 },
-            { id: 'cup',      emoji: '🏆', name: 'Кубок',             p8: 0.95, p10: 1.4,  p12: 8,   weight: 14 },
-            { id: 'red_gem',  emoji: '♦️', name: 'Красный камень',    p8: 0.6,  p10: 0.95, p12: 6.2, weight: 19 },
-            { id: 'purple',   emoji: '🔮', name: 'Фиолетовый камень', p8: 0.45, p10: 0.8,  p12: 4.6, weight: 23 },
-            { id: 'yellow',   emoji: '🔸', name: 'Желтый камень',     p8: 0.3,  p10: 0.6,  p12: 3,   weight: 26 },
-            { id: 'green',    emoji: '❇️', name: 'Зеленый камень',    p8: 0.22, p10: 0.5,  p12: 2.2, weight: 29 },
-            { id: 'blue',     emoji: '💎', name: 'Синий камень',      p8: 0.15, p10: 0.38, p12: 1.1, weight: 33 }
+            { id: 'crown',    emoji: '👑', name: 'Золотая корона',    p8: 9.5,  p10: 22.0, p12: 45.0, weight: 9 },
+            { id: 'hourglass',emoji: '⏳', name: 'Песочные часы',     p8: 2.3,  p10: 9.0,  p12: 22.5, weight: 11 },
+            { id: 'ring',     emoji: '💍', name: 'Кольцо',            p8: 1.7,  p10: 4.5,  p12: 13.5, weight: 13 },
+            { id: 'cup',      emoji: '🏆', name: 'Кубок',             p8: 1.35, p10: 2.0,  p12: 11.2, weight: 15 },
+            { id: 'red_gem',  emoji: '♦️', name: 'Красный камень',    p8: 0.85, p10: 1.35, p12: 8.8,  weight: 20 },
+            { id: 'purple',   emoji: '🔮', name: 'Фиолетовый камень', p8: 0.65, p10: 1.15, p12: 6.5,  weight: 24 },
+            { id: 'yellow',   emoji: '🔸', name: 'Желтый камень',     p8: 0.42, p10: 0.85, p12: 4.2,  weight: 26 },
+            { id: 'green',    emoji: '❇️', name: 'Зеленый камень',    p8: 0.32, p10: 0.72, p12: 3.1,  weight: 28 },
+            { id: 'blue',     emoji: '💎', name: 'Синий камень',      p8: 0.22, p10: 0.55, p12: 1.6,  weight: 30 }
         ];
         const AO_SCATTER = { id: 'scatter', img: 'scatterolymp.png', emoji: '⚡', name: 'Зевс (Scatter)' };
         const AO_MULTIPLIER_WEIGHTS = [
-            { val: 2, weight: 58 }, { val: 3, weight: 31 }, { val: 4, weight: 14 },
-            { val: 5, weight: 8 },  { val: 6, weight: 4 },  { val: 8, weight: 2 },
-            { val: 10, weight: 1 }, { val: 15, weight: 0.3 }, { val: 25, weight: 0.1 },
-            { val: 50, weight: 0.03 }, { val: 100, weight: 0.008 }, { val: 500, weight: 0.0004 }
+            { val: 2, weight: 55 }, { val: 3, weight: 32 }, { val: 4, weight: 16 },
+            { val: 5, weight: 9 },  { val: 6, weight: 5 },  { val: 8, weight: 2.5 },
+            { val: 10, weight: 1.4 }, { val: 15, weight: 0.45 }, { val: 25, weight: 0.15 },
+            { val: 50, weight: 0.04 }, { val: 100, weight: 0.012 }, { val: 500, weight: 0.0008 }
         ];
 
         let aoGrid = Array.from({ length: AO_COLS }, () => Array(AO_ROWS).fill(null));
@@ -1806,7 +1827,7 @@
         let aoFreeSpinsLeft = 0, aoFreeSpinsTotalWin = 0, totalMultiplier = 0, aoCurrentBet = 0.5;
 
         // ==========================================
-        // THE DOG HOUSE (RTP: Спины 65%, Бонусы 75%)
+        // THE DOG HOUSE (RTP: 93% / Новым 91%)
         // ==========================================
         const DH_COLS = 5, DH_ROWS = 3;
         const DH_PAYLINES = [
@@ -1832,40 +1853,40 @@
             [{c:0,r:1},{c:1,r:1},{c:2,r:0},{c:3,r:1},{c:4,r:1}]
         ];
         const DH_SYMBOLS = [
-            { id: 'rottweiler', img: 'glavniypesdoghouse.png', name: 'Ротвейлер', p3: 1.5,  p4: 4.5,  p5: 22.0 },
-            { id: 'shitzu',     emoji: '🐕', name: 'Ши-тцу',    p3: 1.1,  p4: 3.0,  p5: 15.0 },
-            { id: 'pug',        emoji: '🦮', name: 'Мопс',      p3: 0.75, p4: 1.8,  p5: 9.0 },
-            { id: 'dachshund',  emoji: '🐩', name: 'Такса',     p3: 0.6,  p4: 1.1,  p5: 6.0 },
-            { id: 'collar',     emoji: '📿', name: 'Ошейник',   p3: 0.35, p4: 0.75, p5: 4.5 },
-            { id: 'bone',       emoji: '🦴', name: 'Косточка',  p3: 0.22, p4: 0.55, p5: 3.0 }
+            { id: 'rottweiler', img: 'glavniypesdoghouse.png', name: 'Ротвейлер', p3: 2.1,  p4: 6.2,  p5: 30.0 },
+            { id: 'shitzu',     emoji: '🐕', name: 'Ши-тцу',    p3: 1.5,  p4: 4.1,  p5: 20.5 },
+            { id: 'pug',        emoji: '🦮', name: 'Мопс',      p3: 1.05, p4: 2.5,  p5: 12.5 },
+            { id: 'dachshund',  emoji: '🐩', name: 'Такса',     p3: 0.85, p4: 1.55, p5: 8.2 },
+            { id: 'collar',     emoji: '📿', name: 'Ошейник',   p3: 0.5,  p4: 1.05, p5: 6.2 },
+            { id: 'bone',       emoji: '🦴', name: 'Косточка',  p3: 0.32, p4: 0.78, p5: 4.2 }
         ];
-        const DH_WEIGHTS_REEL_1 = { bone: 135, collar: 105, dachshund: 56, pug: 28, shitzu: 14, rottweiler: 5 };
-        const DH_WEIGHTS_OTHER_REELS = { bone: 140, collar: 110, dachshund: 60, pug: 30, shitzu: 15, rottweiler: 6 };
+        const DH_WEIGHTS_REEL_1 = { bone: 125, collar: 100, dachshund: 58, pug: 32, shitzu: 17, rottweiler: 7 };
+        const DH_WEIGHTS_OTHER_REELS = { bone: 130, collar: 105, dachshund: 62, pug: 34, shitzu: 18, rottweiler: 8 };
 
         let dhGrid = Array.from({ length: DH_COLS }, () => Array(DH_ROWS).fill(null));
         let dhStickyWilds = Array.from({ length: DH_COLS }, () => Array(DH_ROWS).fill(null));
         let dhSpinning = false, dhInFreeSpins = false, dhAutoActive = false, dhFreeSpinsLeft = 0, dhFreeSpinsTotalWin = 0, dhCurrentBet = 0.5;
 
         // ==========================================
-        // SWEET BONANZA (RTP: Спины 65%, Бонусы 75%)
+        // SWEET BONANZA (RTP: 93% / Новым 91%)
         // ==========================================
         const SB_COLS = 6, SB_ROWS = 5;
         const SB_SYMBOLS = [
-            { id: 'heart',  img: 'serdcesweet-removebg-preview.png', name: 'Красное сердце',     p8: 7.5,  p10: 18,   p12: 36,  weight: 8 },
-            { id: 'purple', img: 'fiolsweet-removebg-preview.png',   name: 'Фиолетовый квадрат', p8: 1.8,  p10: 7.2,  p12: 18,  weight: 10 },
-            { id: 'green',  img: 'zelensweet-removebg-preview.png',  name: 'Зеленый пятиугольник',p8: 1.4,  p10: 3.6,  p12: 11,  weight: 13 },
-            { id: 'blue',   img: 'bluesweet-removebg-preview.png',   name: 'Синий овал',         p8: 1.1,  p10: 1.45, p12: 8.5, weight: 16 },
-            { id: 'apple',  img: 'applesweet-removebg-preview.png',  name: 'Яблоко',             p8: 0.75, p10: 1.1,  p12: 7,   weight: 20 },
-            { id: 'plum',   img: 'slivasweet-removebg-preview.png',  name: 'Слива',              p8: 0.6,  p10: 0.85, p12: 5.5, weight: 23 },
-            { id: 'melon',  img: 'arbuzsweet.png',                   name: 'Арбуз',              p8: 0.38, p10: 0.75, p12: 3.5, weight: 26 },
-            { id: 'grape',  img: 'winogradsweet-removebg-preview.png',name: 'Виноград',          p8: 0.3,  p10: 0.65, p12: 2.8, weight: 29 },
-            { id: 'banana', img: 'banansweet-removebg-preview.png',  name: 'Банан',              p8: 0.18, p10: 0.55, p12: 1.4, weight: 32 }
+            { id: 'heart',  img: 'serdcesweet-removebg-preview.png', name: 'Красное сердце',     p8: 10.5, p10: 25.0, p12: 50.0, weight: 9 },
+            { id: 'purple', img: 'fiolsweet-removebg-preview.png',   name: 'Фиолетовый квадрат', p8: 2.5,  p10: 10.0, p12: 25.0, weight: 11 },
+            { id: 'green',  img: 'zelensweet-removebg-preview.png',  name: 'Зеленый пятиугольник',p8: 2.0, p10: 5.0,  p12: 15.0, weight: 14 },
+            { id: 'blue',   img: 'bluesweet-removebg-preview.png',   name: 'Синий овал',         p8: 1.5,  p10: 2.0,  p12: 12.0, weight: 17 },
+            { id: 'apple',  img: 'applesweet-removebg-preview.png',  name: 'Яблоко',             p8: 1.0,  p10: 1.5,  p12: 10.0, weight: 21 },
+            { id: 'plum',   img: 'slivasweet-removebg-preview.png',  name: 'Слива',              p8: 0.85, p10: 1.2,  p12: 7.8,  weight: 24 },
+            { id: 'melon',  img: 'arbuzsweet.png',                   name: 'Арбуз',              p8: 0.52, p10: 1.05, p12: 5.0,  weight: 26 },
+            { id: 'grape',  img: 'winogradsweet-removebg-preview.png',name: 'Виноград',          p8: 0.42, p10: 0.9,  p12: 4.0,  weight: 28 },
+            { id: 'banana', img: 'banansweet-removebg-preview.png',  name: 'Банан',              p8: 0.25, p10: 0.75, p12: 2.0,  weight: 30 }
         ];
         const SB_SCATTER = { id: 'scatter', img: 'chupashupssweet-removebg-preview.png', name: 'Чупа-чупс (Scatter)' };
         const SB_BOMB_WEIGHTS = [
-            { mult: 2, weight: 52 }, { mult: 3, weight: 29 }, { mult: 4, weight: 16 },
-            { mult: 5, weight: 9 },  { mult: 8, weight: 4.5 },  { mult: 10, weight: 2.8 },
-            { mult: 20, weight: 0.5 }, { mult: 50, weight: 0.09 }, { mult: 100, weight: 0.024 }
+            { mult: 2, weight: 50 }, { mult: 3, weight: 30 }, { mult: 4, weight: 17 },
+            { mult: 5, weight: 10 }, { mult: 8, weight: 5 },  { mult: 10, weight: 3.2 },
+            { mult: 20, weight: 0.6 }, { mult: 50, weight: 0.12 }, { mult: 100, weight: 0.03 }
         ];
 
         let sbGrid = Array.from({ length: SB_COLS }, () => Array(SB_ROWS).fill(null));
@@ -2153,9 +2174,9 @@
         }
 
         function generateOlympusCell(allowMultiplier) {
-            const scatterChance = aoInFreeSpins ? 0.012 : (aoAnteActive ? 0.04 : 0.018);
+            const scatterChance = aoInFreeSpins ? 0.014 : (aoAnteActive ? 0.045 : 0.022);
             if (Math.random() < scatterChance) return { ...AO_SCATTER };
-            const multChance = aoInFreeSpins ? 0.045 : 0.02;
+            const multChance = aoInFreeSpins ? 0.055 : 0.026;
             if (allowMultiplier && Math.random() < multChance) {
                 const val = getRandomOlympusMultiplier();
                 return { id: 'multiplier', emoji: '💣', val: val, name: `Множитель x${val}` };
@@ -2265,7 +2286,7 @@
             if (leftEl) leftEl.textContent = aoFreeSpinsLeft;
             if (winEl) winEl.textContent = '0,00';
 
-            showToast('⚡ 4+ Scatter! Зевс дарует 15 фриспинов (RTP 75%)!');
+            showToast(`⚡ 4+ Scatter! Зевс дарует 15 фриспинов (RTP ${getCurrentRTP()}%)!`);
             triggerZeusLighting();
             await spinGatesOfOlympus(true);
         }
@@ -2376,7 +2397,7 @@
                         if (cnt >= 8) {
                             const sample = positions[symId][0].sym;
                             const mult = cnt >= 12 ? sample.p12 : (cnt >= 10 ? sample.p10 : sample.p8);
-                            stepWin += aoCurrentBet * mult;
+                            stepWin += applyRtpAdjustment(aoCurrentBet * mult);
                             winningCoords.push(...positions[symId]);
                         }
                     }
@@ -2428,7 +2449,8 @@
 
                 let scatterPayout = 0;
                 if (!isBonusForcedScatter && scatterCount >= 4) {
-                    scatterPayout = scatterCount >= 6 ? aoCurrentBet * 100 : (scatterCount === 5 ? aoCurrentBet * 5 : aoCurrentBet * 3);
+                    const rawScatter = scatterCount >= 6 ? aoCurrentBet * 100 : (scatterCount === 5 ? aoCurrentBet * 5 : aoCurrentBet * 3);
+                    scatterPayout = applyRtpAdjustment(rawScatter);
                     triggerZeusLighting();
                 }
 
@@ -2545,12 +2567,12 @@
         }
 
         function getRandomDogHouseSymbol(colIndex, isFreeSpinMode) {
-            if (!isFreeSpinMode && (colIndex === 0 || colIndex === 2 || colIndex === 4) && Math.random() < 0.035) {
+            if (!isFreeSpinMode && (colIndex === 0 || colIndex === 2 || colIndex === 4) && Math.random() < 0.045) {
                 return { id: 'scatter', img: 'bonusdoghouselapa.png', name: 'Лапа (Scatter)' };
             }
-            const wildChance = isFreeSpinMode ? 0.012 : 0.014;
+            const wildChance = isFreeSpinMode ? 0.018 : 0.022;
             if (colIndex >= 1 && colIndex <= 3 && Math.random() < wildChance) {
-                const mult = Math.random() < 0.85 ? 2 : 3;
+                const mult = Math.random() < 0.80 ? 2 : 3;
                 return { id: 'wild', mult: mult, emoji: '🏠', name: `Будка x${mult}` };
             }
             const weightsMap = colIndex === 0 ? DH_WEIGHTS_REEL_1 : DH_WEIGHTS_OTHER_REELS;
@@ -2724,7 +2746,7 @@
                             let maxWildMult = Math.max(...lineWildMultipliers);
                             linePayout *= maxWildMult;
                         }
-                        totalSpinWin += linePayout;
+                        totalSpinWin += applyRtpAdjustment(linePayout);
                         lineCoords.forEach(pos => winningCellsSet.add(`${pos.c}-${pos.r}`));
                     }
                 }
@@ -2783,13 +2805,13 @@
 
             let totalSpins = 0; miniGrid.innerHTML = '';
             for (let i = 0; i < 9; i++) {
-                const val = Math.random() < 0.55 ? 1 : (Math.random() < 0.88 ? 2 : 3);
+                const val = Math.random() < 0.50 ? 1 : (Math.random() < 0.85 ? 2 : 3);
                 totalSpins += val;
                 const cell = document.createElement('div');
                 cell.className = 'dh-mini-cell'; cell.textContent = val;
                 miniGrid.appendChild(cell);
             }
-            sumText.textContent = `СУММА: ${totalSpins} ФРИСПИНОВ! (RTP 75%)`;
+            sumText.textContent = `СУММА: ${totalSpins} ФРИСПИНОВ! (RTP ${getCurrentRTP()}%)`;
             await sleep(2200);
             introBox.classList.remove('active');
 
@@ -2846,9 +2868,9 @@
         }
 
         function generateBonanzaCell(allowBomb) {
-            const scatterChance = sbInFreeSpins ? 0.008 : (sbAnteActive ? 0.035 : 0.016);
+            const scatterChance = sbInFreeSpins ? 0.011 : (sbAnteActive ? 0.042 : 0.02);
             if (Math.random() < scatterChance) return { ...SB_SCATTER };
-            if (allowBomb && Math.random() < 0.02) {
+            if (allowBomb && Math.random() < 0.028) {
                 const mult = getRandomBombMultiplier();
                 return { id: 'bomb', mult: mult, name: `Бомба x${mult}` };
             }
@@ -3027,7 +3049,7 @@
                     if (cnt >= 8) {
                         const sample = positions[symId][0].sym;
                         const mult = cnt >= 12 ? sample.p12 : (cnt >= 10 ? sample.p10 : sample.p8);
-                        stepWin += baseBet * mult;
+                        stepWin += applyRtpAdjustment(baseBet * mult);
                         winningCoords.push(...positions[symId]);
                     }
                 }
@@ -3066,7 +3088,8 @@
                 for (let r = 0; r < SB_ROWS; r++) if (sbGrid[c][r] && sbGrid[c][r].id === 'scatter') scatterCount++;
             }
             if (scatterCount >= 4) {
-                finalSpinWin += scatterCount >= 6 ? baseBet * 100 : (scatterCount === 5 ? baseBet * 5 : baseBet * 3);
+                const rawScatter = scatterCount >= 6 ? baseBet * 100 : (scatterCount === 5 ? baseBet * 5 : baseBet * 3);
+                finalSpinWin += applyRtpAdjustment(rawScatter);
             }
 
             finalSpinWin = Math.round(finalSpinWin * 100) / 100;
@@ -3087,7 +3110,7 @@
                 document.getElementById('sb-fs-banner').classList.add('active');
                 document.getElementById('sb-fs-left').textContent = sbFreeSpinsLeft;
                 document.getElementById('sb-fs-total-win').textContent = sbFreeSpinsTotalWin.toFixed(2).replace('.', ',');
-                showToast('🍭 Бонус Sweet Bonanza запущен (RTP 75%)!');
+                showToast(`🍭 Бонус Sweet Bonanza запущен (RTP ${getCurrentRTP()}%)!`);
             } else if (sbInFreeSpins && scatterCount >= 3) {
                 sbFreeSpinsLeft += 5; document.getElementById('sb-fs-left').textContent = sbFreeSpinsLeft;
                 showToast('🍭 +5 фриспинов!');
