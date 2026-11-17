@@ -2161,9 +2161,126 @@
             .trust-footer { flex-direction: column; gap: 6px; }
             .deposit-modal { padding: 20px; border-radius: 12px; }
         }
+    /* ==========================================================
+           МОБИЛЬНАЯ АДАПТАЦИЯ СЛОТОВ (до 768px)
+           ========================================================== */
+        @media (max-width: 768px) {
+            .content-area { padding: 10px 8px 24px !important; }
+            .topbar { padding: 8px 10px !important; gap: 6px !important; }
+            .balance-center-box { font-size: 0.92rem !important; padding: 6px 10px !important; }
+            .btn-deposit-top, .btn-withdraw-top { padding: 8px 10px !important; font-size: 0.74rem !important; }
+
+            /* Общие шапки слотов */
+            .ao-top-bar, .dh-top-bar, .sb-top-bar {
+                padding: 8px 10px !important;
+                gap: 6px !important;
+                justify-content: space-between !important;
+            }
+            .dh-logo-title { font-size: 1.05rem !important; }
+            .btn-back, .btn-paytable-help { padding: 6px 10px !important; font-size: 0.72rem !important; }
+
+            /* Тикеры — убираем min-width: 310px, чтобы не рвали экран */
+            .dh-ticker, .sb-tumble-ticker {
+                min-width: 0 !important;
+                width: 100% !important;
+                font-size: 0.65rem !important;
+                padding: 5px 8px !important;
+                border-radius: 10px 10px 0 0 !important;
+            }
+
+            /* Сцены и рамки слотов */
+            .ao-stage, .dh-stage, .sb-stage {
+                padding: 8px 6px !important;
+                min-height: auto !important;
+                gap: 8px !important;
+            }
+            .ao-gold-frame, .dh-wooden-frame, .sb-candy-frame {
+                padding: 5px !important;
+                border-radius: 12px !important;
+                border-width: 2px !important;
+                width: 100% !important;
+            }
+            .ao-grid-6x5, .dh-grid-5x3, .sb-grid-6x5 {
+                gap: 3px !important;
+                padding: 4px !important;
+                border-radius: 10px !important;
+            }
+
+            /* Ячейки и символы под узкий экран */
+            .ao-cell, .sb-cell { min-height: 44px !important; border-radius: 6px !important; }
+            .dh-cell { min-height: 58px !important; border-radius: 8px !important; }
+            .ao-symbol-inner { font-size: 1.45rem !important; }
+            .sb-symbol-inner { font-size: 1.5rem !important; }
+            .dh-symbol-inner { font-size: 1.7rem !important; }
+
+            /* Бейдж множителя в Olympus */
+            .ao-yellow-mult-badge {
+                position: static !important;
+                margin: 0 auto 6px !important;
+                padding: 4px 12px !important;
+                display: inline-block !important;
+            }
+            .ao-yellow-mult-value { font-size: 1.1rem !important; }
+
+            /* Кнопки покупки бонуса и Анте в ряд на телефоне */
+            .ao-left-controls-zone, .sb-left-features {
+                flex-direction: row !important;
+                flex-wrap: wrap !important;
+                gap: 8px !important;
+            }
+            .ao-feature-card, .sb-feature-card {
+                flex: 1 1 46% !important;
+                padding: 8px 6px !important;
+            }
+            .sb-bonanza-mascot { display: none !important; }
+
+            /* Нижние панели управления (HUD) */
+            .ao-pragmatic-hud, .dh-pragmatic-hud, .sb-bottom-hud {
+                padding: 8px 10px !important;
+                gap: 8px !important;
+                justify-content: center !important;
+            }
+            .ao-hud-left-group, .dh-hud-left-group, .sb-hud-left,
+            .ao-hud-right-group, .dh-hud-right-group, .sb-hud-right {
+                gap: 8px !important;
+                justify-content: center !important;
+                flex-wrap: wrap !important;
+            }
+            .ao-spin-circle-btn, .dh-spin-circle-btn, .sb-spin-btn {
+                width: 58px !important;
+                height: 58px !important;
+            }
+            .ao-spin-circle-btn svg, .dh-spin-circle-btn svg {
+                width: 28px !important;
+                height: 28px !important;
+            }
+            .ao-bet-adjust-btn, .dh-bet-adjust-btn {
+                width: 36px !important;
+                height: 36px !important;
+                font-size: 1.1rem !important;
+            }
+        }
     </style>
 </head>
 <body>
+    <div id="nickname-overlay">
+    <div class="nickname-box">
+        <div style="font-size: 3.2rem; margin-bottom: 10px;">🎰👑</div>
+        <h2 style="margin: 0 0 8px; text-transform: uppercase; font-family: 'Unbounded', sans-serif; font-size: 1.2rem;">Вход в Слот-Клуб</h2>
+        <p style="color: var(--text-muted); font-size: 0.88rem; margin: 0;">Введите игровой никнейм: 5–20 символов, латиница, цифры и «_»</p>
+        <input type="text" id="first-nickname-input" maxlength="20" placeholder="Например: SeregaWin" onkeydown="if(event.key==='Enter') submitFirstNickname()">
+        <button class="btn-back" style="width: 100%; margin-top: 16px; background: var(--accent-gold-gradient); color:#04150a; font-weight:900;" onclick="submitFirstNickname()">ВОЙТИ В КАЗИНО →</button>
+    </div>
+</div>
+
+<!-- МОДАЛЬНОЕ ОКНО ПОПОЛНЕНИЯ -->
+<div class="modal-overlay" id="deposit-modal">
+    <div class="deposit-modal">
+        <button class="modal-close-btn" onclick="closeDepositModal()">✕</button>
+        <h2 style="margin: 0 0 4px; color: var(--accent-gold); text-transform: uppercase; font-family: 'Unbounded', sans-serif; font-size: 1.15rem;">💳 Касса: Пополнение</h2>
+        <p style="margin: 0; font-size: 0.82rem; color: var(--text-muted);">Выберите удобный способ оплаты • Мгновенная обработка</p>
+
+        <div class="cashier-methods-grid" id="dep
 
     <div id="nickname-overlay">
         <div class="nickname-box">
