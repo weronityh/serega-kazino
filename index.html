@@ -4400,6 +4400,7 @@
         }
 
         async function spinDogHouse() {
+            if (isBanned) { showToast('🚫 Ваш аккаунт заблокирован!'); return; }
             if (dhSpinning || bonusPurchasePending) return;
             if (isOtherSlotBusy('dh')) { showToast('⚠️ Дождитесь окончания игры в другом слоте!'); return; }
 
@@ -4761,6 +4762,7 @@
         }
 
         async function spinSweetBonanza(isBonusForcedScatter = false) {
+            if (isBanned) { showToast('🚫 Ваш аккаунт заблокирован!'); return; }
             if (sbSpinning || bonusPurchasePending) return;
             if (isOtherSlotBusy('sb')) { showToast('⚠️ Дождитесь окончания игры в другом слоте!'); return; }
             const baseBet = getBonanzaBaseBet();
@@ -5002,6 +5004,7 @@
         function playSfx(type) {
             if (!soundEnabled || !audioCtx) return;
             if (audioCtx.state === 'suspended') audioCtx.resume();
+            const osc = audioCtx.createOscillator();
             const gain = audioCtx.createGain();
             osc.connect(gain);
             gain.connect(audioCtx.destination);
