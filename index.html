@@ -2259,6 +2259,20 @@
                 font-size: 1.1rem !important;
             }
         }
+        .bigwin-overlay {
+            display: none; position: fixed; inset: 0; z-index: 99999;
+            background: rgba(5, 7, 10, 0.85); backdrop-filter: blur(6px);
+            align-items: center; justify-content: center; flex-direction: column; text-align: center;
+        }
+        .bigwin-overlay.active { display: flex; animation: bigWinPop 0.35s ease; }
+        .bigwin-title {
+            font-family: 'Unbounded', sans-serif; font-size: 2.4rem; font-weight: 900;
+            color: #fde047; text-shadow: 0 0 30px rgba(250, 204, 21, 0.8); margin-bottom: 10px;
+        }
+        .bigwin-amount {
+            font-family: 'Unbounded', sans-serif; font-size: 2rem; font-weight: 900; color: #00e701;
+        }
+        @keyframes bigWinPop { 0% { transform: scale(0.6); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
     </style>
 </head>
 <body>
@@ -2565,6 +2579,8 @@
                     </div>
                 </div>
 
+                <div id="recent-wins-bar" style="display:flex; gap:10px; overflow-x:auto; margin-bottom:20px; padding-bottom:6px;"></div>
+                <div id="recent-wins-bar" style="display:flex; gap:10px; overflow-x:auto; margin-bottom:20px; padding-bottom:6px;"></div>
                 <h3 style="color: #fff; text-transform: uppercase; margin: 0 0 16px 0; font-size: 1.05rem; font-family: 'Unbounded', sans-serif;">🎰 Популярные игровые автоматы</h3>
                 
                 <div class="slots-catalog-grid">
@@ -4116,6 +4132,7 @@
                     }
                     updateBalanceUI();
                     saveState();
+                    recordRecentWin('Gates of Olympus', finalSpinWin);
                 }
 
                 if (!isBonusForcedScatter && scatterCount >= 4) {
@@ -4494,6 +4511,7 @@
                     }
                     updateBalanceUI();
                     saveState();
+                    recordRecentWin('The Dog House', spinTotal);
                 }
 
                 if (!dhInFreeSpins && scatterCount >= 3) {
@@ -4883,6 +4901,7 @@
                     }
                     updateBalanceUI();
                     saveState();
+                    recordRecentWin('Sweet Bonanza', finalSpinWin);
                 }
 
                 if (!isBonusForcedScatter && scatterCount >= 4) {
@@ -4918,12 +4937,114 @@
             }
         }
 
+        function checkAndShowBigWin(winAmount, betAmount) {
+            if (!betAmount || winAmount < betAmount * 15) return;
+            const mult = winAmount / betAmount;
+            const title = mult >= 50 ? '👑 MEGA WIN!' : (mult >= 25 ? '🔥 SUPER WIN!' : '💰 BIG WIN!');
+            document.getElementById('bigwin-title').textContent = title;
+            document.getElementById('bigwin-amount').textContent = winAmount.toFixed(2).replace('.', ',') + ' BYN';
+            const ov = document.getElementById('bigwin-overlay');
+            ov.classList.add('active');
+            playSfx('win');
+            setTimeout(() => ov.classList.remove('active'), 3200);
+        }
+        let soundEnabled = true;
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+        function playSfx(type) {
+            if (!soundEnabled) return;
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            const now = audioCtx.currentTime;
+            if (type === 'spin') {
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(220, now);
+                osc.frequency.exponentialRampToValueAtTime(440, now + 0.12);
+                gain.gain.setValueAtTime(0.08, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.14);
+                osc.start(now); osc.stop(now + 0.14);
+            } else if (type === 'stop') {
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(180, now);
+                gain.gain.setValueAtTime(0.07, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
+                osc.start(now); osc.stop(now + 0.08);
+            } else if (type === 'win') {
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(523, now);
+                osc.frequency.setValueAtTime(659, now + 0.1);
+                osc.frequency.setValueAtTime(784, now + 0.2);
+                gain.gain.setValueAtTime(0.12, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.45);
+                osc.start(now); osc.stop(now + 0.45);
+            }
+        }
+        async function recordRecentWin(slotName, amount) {
+            if (!username || amount < 5) return; // Записываем заносы от 5 BYN и выше
+            try {
+                await db.collection('recent_wins').add({
+                    nick: username,
+                    slot: slotName,
+                    amount: normalizeMoney(amount),
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+            } catch (e) {}
+        }
+
+        function listenRecentWins() {
+            const bar = document.getElementById('recent-wins-bar');
+            if (!bar) return;
+            db.collection('recent_wins').orderBy('createdAt', 'desc').limit(6).onSnapshot(snap => {
+                bar.innerHTML = '';
+                snap.forEach(doc => {
+                    const d = doc.data();
+                    bar.innerHTML += `<div style="background:#15181d; border:1px solid #23272f; border-radius:10px; padding:8px 12px; font-size:0.78rem; white-space:nowrap;">
+                        🏆 <b style="color:#fff;">${escapeHtml(d.nick)}</b> • <span style="color:#8a919e;">${escapeHtml(d.slot)}</span> • <b style="color:#00e701;">+${Number(d.amount).toFixed(2)} BYN</b>
+                    </div>`;
+                });
+            });
+        }
+        async function recordRecentWin(slotName, amount) {
+            if (!username || amount < 5) return; // Записываем заносы от 5 BYN и выше
+            try {
+                await db.collection('recent_wins').add({
+                    nick: username,
+                    slot: slotName,
+                    amount: normalizeMoney(amount),
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+            } catch (e) {}
+        }
+
+        function listenRecentWins() {
+            const bar = document.getElementById('recent-wins-bar');
+            if (!bar) return;
+            db.collection('recent_wins').orderBy('createdAt', 'desc').limit(6).onSnapshot(snap => {
+                bar.innerHTML = '';
+                snap.forEach(doc => {
+                    const d = doc.data();
+                    bar.innerHTML += `<div style="background:#15181d; border:1px solid #23272f; border-radius:10px; padding:8px 12px; font-size:0.78rem; white-space:nowrap;">
+                        🏆 <b style="color:#fff;">${escapeHtml(d.nick)}</b> • <span style="color:#8a919e;">${escapeHtml(d.slot)}</span> • <b style="color:#00e701;">+${Number(d.amount).toFixed(2)} BYN</b>
+                    </div>`;
+                });
+            });
+        }
         window.addEventListener('DOMContentLoaded', () => {
             loadState();
             initOlympusDOM();
             initDogHouseDOM();
             initBonanzaDOM();
+            listenRecentWins();
         });
     </script>
+    <div class="bigwin-overlay" id="bigwin-overlay" onclick="this.classList.remove('active')">
+        <div class="bigwin-title" id="bigwin-title">BIG WIN!</div>
+        <div class="bigwin-amount" id="bigwin-amount">0,00 BYN</div>
+        <div style="margin-top:14px; font-size:0.8rem; color:#94a3b8;">Нажмите на экран, чтобы продолжить</div>
+    </div>
 </body>
 </html>
