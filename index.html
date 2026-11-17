@@ -3897,7 +3897,8 @@
         function changeOlympusBet(delta) {
             if (aoSpinning || aoInFreeSpins) return;
             aoCurrentBet = Math.max(0.5, Math.min(50, Math.round((aoCurrentBet + delta) * 100) / 100));
-            syncOlympusBetUI();
+            syncOlympusBetUI(); 
+            playSfx('click');
         }
 
         function toggleOlympusAnte() {
@@ -3964,6 +3965,7 @@
             if (winEl) winEl.textContent = '0,00';
 
             showToast('⚡ 4+ Scatter! Зевс дарует 15 бесплатных вращений!');
+            playSfx('bonus');
             triggerZeusLighting();
             await spinGatesOfOlympus(true);
         }
@@ -3998,6 +4000,7 @@
             }
 
             aoSpinning = true;
+            playSfx('spin');
             const spinBtn = document.getElementById('ao-spin-btn');
             if (spinBtn) spinBtn.disabled = true;
 
@@ -4049,12 +4052,13 @@
                 clearInterval(timer);
 
                 for (let c = 0; c < AO_COLS; c++) {
-                    for (let r = 0; r < AO_ROWS; r++) {
-                        aoGrid[c][r] = nextGrid[c][r];
-                        renderOlympusCell(c, r, true);
-                    }
-                    await sleep(95);
-                }
+                 for (let r = 0; r < AO_ROWS; r++) {
+                     aoGrid[c][r] = nextGrid[c][r];
+                     renderOlympusCell(c, r, true);
+                 }
+                 playSfx('stop');
+                 await sleep(95);
+             }
 
                 if (hasDroppedBomb) triggerZeusLighting();
 
@@ -4306,6 +4310,7 @@
             if (dhSpinning || dhInFreeSpins) return;
             dhCurrentBet = Math.max(0.5, Math.min(50, Math.round((dhCurrentBet + delta) * 100) / 100));
             syncDogHouseBetUI();
+            playSfx('click');
         }
 
         function toggleDogHouseAuto() {
@@ -4353,6 +4358,7 @@
             document.getElementById('dh-fs-left').textContent = dhFreeSpinsLeft;
             document.getElementById('dh-fs-total-win').textContent = '0,00';
             showToast(`🐶 Выиграно ${totalSpins} фриспинов с липкими будками!`);
+            playSfx('bonus');
         }
 
         function evaluateDogHousePaylines() {
@@ -4425,6 +4431,7 @@
             }
 
             dhSpinning = true;
+            playSfx('spin');
             const spinBtn = document.getElementById('dh-spin-btn');
             if (spinBtn) spinBtn.disabled = true;
 
@@ -4509,6 +4516,7 @@
                         }
                         renderDogHouseCell(c, r, !(dhInFreeSpins && dhStickyWilds[c][r]));
                     }
+                    playSfx('stop');
                 }
                 clearInterval(timer);
 
@@ -4758,6 +4766,8 @@
             document.getElementById('sb-fs-left').textContent = sbFreeSpinsLeft;
             document.getElementById('sb-fs-total-win').textContent = '0,00';
             showToast('🍭 4+ Чупа-чупса! Запущено 10 фриспинов с бомбами до x100!');
+            playSfx('bonus');
+            playSfx('spin');
             await spinSweetBonanza(true);
         }
 
@@ -4845,6 +4855,7 @@
                         sbGrid[c][r] = nextGrid[c][r];
                         renderBonanzaCell(c, r, true);
                     }
+                    playSfx('stop')
                     await sleep(90);
                 }
 
@@ -4876,6 +4887,7 @@
                     spinRawWin += stepWin;
                     if (hudWinEl) hudWinEl.textContent = spinRawWin.toFixed(2).replace('.', ',');
                     winningCoords.forEach(({ c, r }) => document.getElementById(`sb-cell-${c}-${r}`)?.classList.add('win-pop'));
+                    playSfx('pop');
                     await sleep(600);
 
                     winningCoords.forEach(({ c, r }) => { sbGrid[c][r] = null; });
@@ -5001,36 +5013,44 @@
             showToast(soundEnabled ? '🔊 Звук включён' : '🔇 Звук выключен');
         }
 
+        function playTone(freq, startTime, duration, wave = 'triangle', vol = 0.08, endFreq = null) {
+            if (!soundEnabled || !audioCtx) return;
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = wave;
+            osc.frequency.setValueAtTime(freq, startTime);
+            if (endFreq) osc.frequency.exponentialRampToValueAtTime(endFreq, startTime + duration);
+            gain.gain.setValueAtTime(0.0001, startTime);
+            gain.gain.linearRampToValueAtTime(vol, startTime + 0.012);
+            gain.gain.exponentialRampToValueAtTime(0.0001, startTime + duration);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start(startTime);
+            osc.stop(startTime + duration + 0.02);
+        }
+
         function playSfx(type) {
             if (!soundEnabled || !audioCtx) return;
             if (audioCtx.state === 'suspended') audioCtx.resume();
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            osc.connect(gain);
-            gain.connect(audioCtx.destination);
-
             const now = audioCtx.currentTime;
-            if (type === 'spin') {
-                osc.type = 'sine';
-                osc.frequency.setValueAtTime(220, now);
-                osc.frequency.exponentialRampToValueAtTime(440, now + 0.12);
-                gain.gain.setValueAtTime(0.08, now);
-                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.14);
-                osc.start(now); osc.stop(now + 0.14);
+
+            if (type === 'click') {
+                playTone(620, now, 0.05, 'sine', 0.05, 420);
+            } else if (type === 'spin') {
+                playTone(240, now, 0.16, 'triangle', 0.08, 520);
+                playTone(360, now + 0.05, 0.14, 'sine', 0.05, 680);
             } else if (type === 'stop') {
-                osc.type = 'triangle';
-                osc.frequency.setValueAtTime(180, now);
-                gain.gain.setValueAtTime(0.07, now);
-                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
-                osc.start(now); osc.stop(now + 0.08);
+                playTone(155, now, 0.08, 'triangle', 0.09, 95);
+            } else if (type === 'pop') {
+                playTone(420, now, 0.09, 'sine', 0.07, 760);
             } else if (type === 'win') {
-                osc.type = 'sine';
-                osc.frequency.setValueAtTime(523, now);
-                osc.frequency.setValueAtTime(659, now + 0.1);
-                osc.frequency.setValueAtTime(784, now + 0.2);
-                gain.gain.setValueAtTime(0.12, now);
-                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.45);
-                osc.start(now); osc.stop(now + 0.45);
+                [523.25, 659.25, 783.99, 1046.5].forEach((f, idx) => {
+                    playTone(f, now + idx * 0.07, 0.28, 'triangle', 0.08);
+                });
+            } else if (type === 'bonus') {
+                [523.25, 659.25, 783.99, 1046.5, 1318.5].forEach((f, idx) => {
+                    playTone(f, now + idx * 0.09, 0.36, 'triangle', 0.1);
+                });
             }
         }
         async function recordRecentWin(slotName, amount) {
