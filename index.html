@@ -5,27 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>СЕРЁГА И ОЛЯМБУС КАЗИК — Официальный слот-портал</title>
     <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@700;900&family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-    <!-- Подключаем Firebase SDK (App, Auth, Firestore, Functions) -->
+    <!-- Подключаем Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-functions-compat.js"></script>
     <style>
         :root {
-            --bg-main: #070a0e;
-            --bg-sidebar: rgba(11, 16, 23, 0.75);
-            --bg-topbar: rgba(11, 16, 23, 0.85);
-            --bg-card: rgba(18, 25, 34, 0.65);
-            --border-glass: rgba(255, 255, 255, 0.08);
-            --border-color: #1c2633;
-            
-            --accent-gold: #f59e0b;
-            --accent-gold-gradient: linear-gradient(135deg, #fbbf24 0%, #d97706 100%);
-            --accent-gold-glow: rgba(245, 158, 11, 0.4);
+            --bg-main: #0b0d10;
+            --bg-sidebar: #0f1115;
+            --bg-topbar: rgba(11, 13, 16, 0.92);
+            --bg-card: #15181d;
+            --border-glass: #23272f;
+            --border-color: #23272f;
 
-            --text-main: #ffffff;
-            --text-muted: #8a99ad;
-            --danger: #ef4444;
+            /* Зелёный акцент в стиле Stake (старые имена переменных сохранены) */
+            --accent-gold: #00e701;
+            --accent-gold-gradient: linear-gradient(180deg, #00e701 0%, #00cf01 100%);
+            --accent-gold-glow: rgba(0, 231, 1, 0.18);
+
+            --text-main: #f4f5f7;
+            --text-muted: #8a919e;
+            --danger: #d66060;
         }
 
         * { box-sizing: border-box; }
@@ -1530,43 +1529,9 @@
             background: #090d12; border: 1px solid var(--border-glass); border-radius: 12px; padding: 10px 14px;
             display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap;
         }
-        .player-status-dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 6px; flex-shrink: 0; }
+        .player-status-dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 6px; }
         .player-status-dot.online { background: #22c55e; box-shadow: 0 0 8px #22c55e; }
         .player-status-dot.offline { background: #64748b; }
-
-        .dev-hint { margin-top: 10px; font-size: 0.75rem; line-height: 1.45; color: var(--text-muted); }
-        .dev-hint b { color: #e2e8f0; }
-        .dev-toolbar { display: flex; gap: 8px; align-items: center; margin-bottom: 10px; flex-wrap: wrap; }
-        .dev-btn-refresh {
-            background: rgba(255, 255, 255, 0.06);
-            border: 1px solid var(--border-glass);
-            color: #e2e8f0;
-            border-radius: 10px;
-            padding: 10px 14px;
-            font-weight: 700;
-            font-size: 0.8rem;
-            cursor: pointer;
-        }
-        .dev-btn-refresh:hover { background: rgba(255, 255, 255, 0.12); }
-        .player-row-info { display: flex; align-items: center; gap: 8px; min-width: 0; }
-        .player-meta { font-size: 0.72rem; color: var(--text-muted); margin-top: 3px; }
-        .player-meta b { color: #f1f5f9; }
-        .player-row-actions { display: flex; gap: 6px; }
-        .dev-mini-btn {
-            border: 1px solid transparent;
-            border-radius: 8px;
-            padding: 8px 12px;
-            font-size: 0.75rem;
-            font-weight: 800;
-            cursor: pointer;
-            color: #fff;
-            white-space: nowrap;
-        }
-        .dev-mini-btn.add { background: rgba(22, 163, 74, 0.18); border-color: rgba(34, 197, 94, 0.45); color: #86efac; }
-        .dev-mini-btn.add:hover { background: rgba(22, 163, 74, 0.32); }
-        .dev-mini-btn.sub { background: rgba(220, 38, 38, 0.16); border-color: rgba(248, 113, 113, 0.4); color: #fca5a5; }
-        .dev-mini-btn.sub:hover { background: rgba(220, 38, 38, 0.3); }
-        .dev-empty { font-size: 0.8rem; color: var(--text-muted); text-align: center; padding: 14px 8px; }
 
         .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; margin-top: 16px; }
         .stat-card { background: var(--bg-card); backdrop-filter: blur(12px); border: 1px solid var(--border-glass); border-radius: 16px; padding: 18px; text-align: center; }
@@ -1591,172 +1556,600 @@
         .toast.show { transform: translateY(0); opacity: 1; }
         .trust-footer { margin-top: auto; padding-top: 18px; border-top: 1px solid var(--border-glass); display: flex; justify-content: space-between; font-size: 0.78rem; color: var(--text-muted); }
 
-        /* ========================================== */
-        /* ACCESSIBILITY & MOBILE RESPONSIVE FIXES    */
-        /* ========================================== */
-        @media (prefers-reduced-motion: reduce) {
-            *,
-            *::before,
-            *::after {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
-                scroll-behavior: auto !important;
-            }
+        /* ==========================================================
+           STAKE-STYLE THEME (оболочка сайта; слоты не затронуты)
+           ========================================================== */
+        ::-webkit-scrollbar { width: 10px; height: 10px; }
+        ::-webkit-scrollbar-track { background: #0b0d10; }
+        ::-webkit-scrollbar-thumb { background: #262b33; border-radius: 8px; border: 2px solid #0b0d10; }
+        ::-webkit-scrollbar-thumb:hover { background: #353b45; }
+        ::selection { background: rgba(0, 231, 1, 0.25); color: #fff; }
 
-            .hero-bonus-visual,
-            .hero-zeus-visual,
-            .ao-zeus-hero-img,
-            .sb-bonanza-mascot,
-            #view-olympus .ao-multiplier-sphere,
-            #view-olympus .ao-scatter-img,
-            #view-doghouse .dh-scatter-img,
-            #view-doghouse .dh-wild-badge,
-            #view-bonanza .sb-bomb-wrap,
-            #view-bonanza .sb-scatter-img {
-                animation: none !important;
-            }
+        body {
+            background-color: var(--bg-main);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
-        @media (max-width: 768px) {
-            .content-area {
-                padding: 12px 10px 24px;
-            }
-
-            .ao-stage {
-                grid-template-columns: 1fr;
-                padding: 10px 8px;
-                gap: 10px;
-                min-height: auto;
-            }
-
-            .ao-yellow-mult-badge {
-                position: static;
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                padding: 6px 14px;
-                order: -2;
-            }
-
-            .ao-yellow-mult-value {
-                font-size: 1.15rem;
-            }
-
-            .ao-left-controls-zone {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                gap: 8px;
-                order: 2;
-            }
-
-            .ao-feature-card {
-                padding: 8px 6px;
-            }
-
-            .ao-board-wrapper {
-                order: 1;
-                width: 100%;
-            }
-
-            .ao-gold-frame {
-                padding: 6px;
-                border-radius: 14px;
-            }
-
-            .ao-grid-6x5 {
-                gap: 4px;
-                padding: 6px;
-            }
-
-            .ao-cell {
-                min-height: 44px;
-                border-radius: 7px;
-            }
-
-            .ao-symbol-inner {
-                font-size: 1.55rem;
-            }
-
-            #view-olympus .ao-multiplier-sphere,
-            #view-olympus .ao-scatter-img {
-                transform: scale(1.08);
-            }
-
-            .ao-pragmatic-hud {
-                padding: 8px 10px;
-                justify-content: center;
-                gap: 10px;
-            }
-
-            .ao-spin-circle-btn {
-                width: 62px;
-                height: 62px;
-            }
+        /* ---------- Сайдбар ---------- */
+        .left-sidebar {
+            width: 248px;
+            background: #0f1115;
+            backdrop-filter: none;
+            -webkit-backdrop-filter: none;
+            border-right: 1px solid #1c2027;
+            padding: 18px 12px;
+        }
+        .brand-logo {
+            flex-direction: row;
+            align-items: center;
+            justify-content: flex-start;
+            text-align: left;
+            gap: 10px;
+            padding: 4px 6px 20px;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #1c2027;
+        }
+        .brand-crown {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            background: var(--accent-gold-gradient);
+            color: #04150a;
+            display: grid;
+            place-items: center;
+            font-family: 'Unbounded', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 900;
+            filter: none;
+            margin: 0;
+            flex-shrink: 0;
+            line-height: 1;
+        }
+        .brand-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+        .brand-title-top {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.58rem;
+            font-weight: 700;
+            letter-spacing: 1.6px;
+            color: var(--text-muted);
+        }
+        .brand-title-bottom {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 900;
+            letter-spacing: 0.3px;
+            color: #ffffff;
+            text-shadow: none;
+            margin: 0;
+            line-height: 1.1;
         }
 
-        @media (max-width: 400px) {
-            .topbar {
-                padding: 8px 10px;
-                gap: 8px;
-                display: grid;
-                grid-template-columns: 1fr auto;
-                grid-template-areas:
-                    "tg right"
-                    "balance balance";
-                align-items: center;
-            }
+        .nav-item {
+            border-radius: 9px;
+            padding: 10px 12px;
+            font-size: 0.855rem;
+            font-weight: 600;
+            color: #9aa1ad;
+        }
+        .nav-item:hover { background: #171a20; color: #ffffff; }
+        .nav-item.active {
+            background: #1a1e25;
+            border-color: #262b33;
+            color: #ffffff;
+            box-shadow: none;
+        }
+        .nav-item.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 3px;
+            height: 18px;
+            border-radius: 0 3px 3px 0;
+            background: var(--accent-gold);
+        }
 
-            .tg-boss-btn {
-                grid-area: tg;
-                padding: 7px 10px;
-                font-size: 0.72rem;
-                justify-self: start;
-                white-space: nowrap;
-            }
+        .slot-nav-card {
+            flex-direction: row;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 10px;
+            padding: 6px;
+            border-radius: 9px;
+        }
+        .slot-nav-img {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            object-fit: cover;
+            border: 1px solid #262b33;
+        }
+        .slot-nav-card:hover .slot-nav-img {
+            transform: none;
+            filter: brightness(1.12);
+            border-color: #353b45;
+        }
+        .slot-nav-card.active .slot-nav-img {
+            border-color: var(--accent-gold);
+            box-shadow: none;
+        }
+        .slot-nav-label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #c3c9d3;
+            text-align: left;
+            text-transform: none;
+            letter-spacing: 0;
+        }
+        .slot-nav-card:hover .slot-nav-label,
+        .slot-nav-card.active .slot-nav-label {
+            color: #ffffff;
+            text-shadow: none;
+        }
+        #nav-slot-doghouse .slot-nav-img,
+        #nav-slot-bonanza .slot-nav-img {
+            object-fit: contain;
+            padding: 3px;
+            background: #15181d;
+        }
 
-            .topbar-right-group {
-                grid-area: right;
-                gap: 6px;
-                justify-self: end;
-            }
+        .sidebar-promo-box {
+            background: #14171c;
+            border: 1px solid #23272f;
+            border-radius: 12px;
+            padding: 12px;
+            gap: 8px;
+        }
+        .sidebar-promo-label { font-size: 0.62rem; letter-spacing: 1px; color: #8a919e; }
+        .sidebar-promo-row input {
+            background: #0d1013;
+            border: 1px solid #262b33;
+            border-radius: 8px;
+            padding: 9px 10px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        .sidebar-promo-row input::placeholder { color: #5f6773; }
+        .sidebar-promo-row input:focus { border-color: rgba(0, 231, 1, 0.55); }
+        .sidebar-promo-btn {
+            background: var(--accent-gold-gradient);
+            color: #04150a;
+            border-radius: 8px;
+            font-weight: 800;
+            font-size: 0.78rem;
+        }
+        .dev-open-btn {
+            background: #1a1e25;
+            border: 1px solid #2c323c;
+            color: #c3c9d3;
+            box-shadow: none;
+        }
+        .dev-open-btn:hover { background: #20252d; color: #ffffff; transform: none; }
 
-            .topbar-profile-pill {
-                padding: 5px 10px 5px 7px;
-                max-width: 125px;
-            }
+        /* ---------- Верхняя панель ---------- */
+        .topbar {
+            min-height: 64px;
+            background: rgba(11, 13, 16, 0.92);
+            border-bottom: 1px solid #1c2027;
+            padding: 10px 24px;
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+        }
+        .tg-boss-btn {
+            background: #15181d;
+            border: 1px solid #23272f;
+            border-radius: 9px;
+            color: #9aa1ad;
+            font-size: 0.76rem;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+        }
+        .tg-boss-btn:hover { background: #1a1e25; border-color: #2f3540; color: #ffffff; }
+        .balance-center-box {
+            background: #15181d;
+            border: 1px solid #23272f;
+            border-radius: 10px;
+            padding: 8px 14px;
+            font-size: 1.05rem;
+            color: #ffffff;
+            backdrop-filter: none;
+        }
+        .btn-deposit-top {
+            background: var(--accent-gold-gradient);
+            color: #04150a;
+            border-radius: 9px;
+            box-shadow: none;
+            font-size: 0.8rem;
+            font-weight: 800;
+            letter-spacing: 0.2px;
+            padding: 10px 16px;
+        }
+        .btn-deposit-top:hover { filter: brightness(1.05); transform: none; }
+        .btn-withdraw-top {
+            background: #1b1f26;
+            color: #ffffff;
+            border: 1px solid #2c323c;
+            border-radius: 9px;
+            box-shadow: none;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+        .btn-withdraw-top:hover { background: #22272f; filter: none; transform: none; }
+        .topbar-online-pill {
+            background: #15181d;
+            border: 1px solid #23272f;
+            border-radius: 999px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: #c3c9d3;
+        }
+        .topbar-online-pill:hover { background: #1b1f26; border-color: #2f3540; transform: none; }
+        .topbar-profile-pill {
+            background: #15181d;
+            border: 1px solid #23272f;
+            border-radius: 999px;
+            font-weight: 600;
+        }
 
-            #topbar-username {
-                overflow: hidden;
-                text-overflow: ellipsis;
-                white-space: nowrap;
-                max-width: 78px;
-                font-size: 0.78rem !important;
-            }
+        /* ---------- Контент и герой ---------- */
+        .content-area { max-width: 1400px; padding: 24px 28px 40px; }
+        #view-lobby.game-view {
+            background: transparent;
+            border: none;
+            border-radius: 0;
+            padding: 0;
+            margin-bottom: 0;
+            backdrop-filter: none;
+            box-shadow: none;
+        }
+        .hero-banner {
+            border-radius: 16px;
+            border: 1px solid #23272f;
+            padding: 34px 38px;
+            margin-bottom: 26px;
+            background:
+                radial-gradient(800px 260px at 88% 30%, rgba(0, 231, 1, 0.09), transparent 65%),
+                linear-gradient(120deg, #14171c 0%, #101317 60%, #0d0f12 100%);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+            backdrop-filter: none;
+        }
+        .hero-content { max-width: 640px; }
+        .hero-content::before {
+            content: 'СЛОТ-ПОРТАЛ';
+            display: inline-block;
+            font-size: 0.64rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: var(--accent-gold);
+            background: rgba(0, 231, 1, 0.07);
+            border: 1px solid rgba(0, 231, 1, 0.22);
+            padding: 4px 10px;
+            border-radius: 999px;
+            margin-bottom: 16px;
+        }
+        .hero-title {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.7rem;
+            font-weight: 800;
+            line-height: 1.3;
+            letter-spacing: -0.3px;
+            margin-bottom: 22px;
+        }
+        .hero-cta-btn {
+            background: var(--accent-gold-gradient);
+            color: #04150a;
+            border-radius: 10px;
+            padding: 13px 22px;
+            font-size: 0.86rem;
+            font-weight: 800;
+            letter-spacing: 0.2px;
+            box-shadow: none;
+        }
+        .hero-cta-btn:hover { transform: none; filter: brightness(1.06); box-shadow: none; }
+        .hero-visuals-wrapper { gap: 8px; margin-right: 0; }
+        .hero-bonus-visual {
+            max-height: 104px;
+            filter: drop-shadow(0 12px 26px rgba(0, 0, 0, 0.6));
+        }
+        .hero-zeus-visual { filter: drop-shadow(0 12px 26px rgba(0, 0, 0, 0.6)); }
+        .content-area #view-lobby > h3 {
+            font-family: 'Inter', sans-serif !important;
+            font-size: 1rem !important;
+            font-weight: 700 !important;
+            letter-spacing: 0;
+            margin-bottom: 14px !important;
+        }
 
-            .balance-center-group {
-                grid-area: balance;
+        /* ---------- Карточки слотов в зале ---------- */
+        .slots-catalog-grid {
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        .slot-lobby-card {
+            padding: 0;
+            background: #15181d;
+            border: 1px solid #23272f;
+            border-radius: 12px;
+            min-height: 0;
+            box-shadow: none;
+        }
+        .slot-lobby-card:hover {
+            border-color: #353b45;
+            transform: translateY(-3px);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45);
+        }
+        .slot-card-thumb {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            overflow: hidden;
+            background: radial-gradient(circle at 50% 45%, #1a1e24 0%, #101317 100%);
+        }
+        .slot-card-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.45s ease;
+        }
+        .slot-lobby-card:hover .slot-card-thumb img { transform: scale(1.05); }
+        .doghouse-featured .slot-card-thumb img,
+        .bonanza-featured .slot-card-thumb img {
+            object-fit: contain;
+            padding: 24px 30px;
+        }
+        .slot-card-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 0.64rem;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            color: #dfe3e9;
+            background: rgba(10, 12, 15, 0.72);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            padding: 3px 7px;
+            border-radius: 6px;
+            backdrop-filter: blur(4px);
+        }
+        .slot-card-content { padding: 14px 16px 12px; }
+        .slot-card-title { font-size: 1rem; font-weight: 700; margin-bottom: 5px; }
+        .slot-card-desc {
+            font-size: 0.76rem;
+            color: #8a919e;
+            margin-bottom: 0;
+            line-height: 1.45;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .slot-card-meta {
+            margin: 0 16px 14px;
+            padding-top: 10px;
+            font-size: 0.72rem;
+            font-weight: 600;
+            color: #8a919e;
+            border-top: 1px solid #23272f;
+        }
+        .slot-card-meta span:first-child { color: #c3c9d3; }
+        .slot-lobby-card:hover .slot-card-content { opacity: 1; }
+        .slot-card-actions {
+            background: rgba(8, 10, 12, 0.55);
+            backdrop-filter: blur(2px);
+            gap: 8px;
+        }
+        .card-hover-play-btn {
+            background: var(--accent-gold-gradient);
+            color: #04150a;
+            border-radius: 8px;
+            padding: 11px 22px;
+            font-size: 0.82rem;
+            font-weight: 800;
+            box-shadow: none;
+            max-width: 170px;
+        }
+        .card-hover-play-btn:hover { transform: none; filter: brightness(1.06); }
+        .card-hover-demo-btn {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.78rem;
+            padding: 8px 18px;
+        }
+
+        /* ---------- Профиль и общие блоки ---------- */
+        #view-profile.game-view {
+            background: #12151a;
+            border: 1px solid #23272f;
+            border-radius: 14px;
+            box-shadow: none;
+        }
+        .game-header { border-bottom: 1px solid #23272f; }
+        .game-header h2 {
+            color: #ffffff;
+            font-family: 'Inter', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 800;
+            text-transform: none;
+            letter-spacing: 0;
+        }
+        .stat-card {
+            background: #0f1216;
+            border: 1px solid #23272f;
+            border-radius: 10px;
+        }
+        .stat-card-value { font-size: 1.3rem; }
+
+        /* ---------- Модальные окна / касса ---------- */
+        .modal-overlay { background: rgba(5, 6, 8, 0.82); }
+        .deposit-modal {
+            background: #14171c;
+            border: 1px solid #2a2f38;
+            border-radius: 14px;
+            box-shadow: 0 24px 80px rgba(0, 0, 0, 0.7);
+        }
+        .modal-close-btn { background: #1e232a; color: #c3c9d3; }
+        .modal-close-btn:hover { background: #272d36; color: #ffffff; }
+        .wallet-address-box {
+            background: #0d1013;
+            border: 1px dashed rgba(0, 231, 1, 0.45);
+            color: var(--accent-gold);
+        }
+        .deposit-steps { background: #101317; color: #b9c0ca; }
+        .cashier-method-btn {
+            background: #0f1216;
+            border: 1px solid #23272f;
+            border-radius: 9px;
+        }
+        .cashier-method-btn:hover { background: #1a1e25; color: #ffffff; }
+        .cashier-method-btn.active {
+            background: rgba(0, 231, 1, 0.1);
+            border-color: rgba(0, 231, 1, 0.55);
+            color: var(--accent-gold);
+            box-shadow: none;
+        }
+        .cashier-method-btn.withdraw-active {
+            background: rgba(0, 231, 1, 0.08);
+            border-color: rgba(0, 231, 1, 0.45);
+            color: #bff5c3;
+            box-shadow: none;
+        }
+        .cashier-input,
+        .dev-input {
+            background: #0d1013;
+            border: 1px solid #23272f;
+            border-radius: 9px;
+        }
+        .cashier-input:focus,
+        .dev-input:focus { border-color: rgba(0, 231, 1, 0.55); }
+        .quick-amt-chip {
+            background: #1a1e25;
+            border: 1px solid #2a2f38;
+            border-radius: 7px;
+            color: #c3c9d3;
+        }
+        .quick-amt-chip:hover { border-color: rgba(0, 231, 1, 0.55); color: #ffffff; }
+        .withdraw-summary-box {
+            background: rgba(0, 231, 1, 0.05);
+            border: 1px solid rgba(0, 231, 1, 0.22);
+            border-radius: 10px;
+        }
+        .tx-item-card,
+        .player-row-card {
+            background: #0f1216;
+            border: 1px solid #23272f;
+            border-radius: 9px;
+        }
+        .dev-section { background: #101317; border: 1px solid #23272f; }
+        .dev-section-title { color: #d7dbe2; }
+        .dev-btn-add {
+            background: rgba(0, 231, 1, 0.14);
+            color: #bff5c3;
+            border: 1px solid rgba(0, 231, 1, 0.35);
+            border-radius: 8px;
+        }
+        .dev-btn-sub {
+            background: #242a32;
+            color: #e3e6ea;
+            border: 1px solid #333a44;
+            border-radius: 8px;
+        }
+
+        /* ---------- Вход и уведомления ---------- */
+        #nickname-overlay {
+            background: radial-gradient(circle at 50% 35%, #13161b 0%, #08090b 70%);
+        }
+        .nickname-box {
+            background: #12151a;
+            border: 1px solid #262b33;
+            border-radius: 16px;
+            box-shadow: 0 30px 90px rgba(0, 0, 0, 0.65);
+        }
+        .nickname-box input {
+            background: #0d1013;
+            border: 1px solid #262b33;
+            border-radius: 9px;
+            font-weight: 600;
+        }
+        .nickname-box input:focus { border-color: rgba(0, 231, 1, 0.55); }
+        .toast {
+            background: #15181d;
+            border: 1px solid #2a2f38;
+            border-left: 3px solid var(--accent-gold);
+            border-radius: 9px;
+            font-weight: 600;
+        }
+        .trust-footer {
+            border-top: 1px solid #1c2027;
+            color: #6f7783;
+            font-size: 0.72rem;
+            letter-spacing: 0.2px;
+        }
+
+        /* ---------- Адаптивность ---------- */
+        @media (max-width: 1100px) {
+            .topbar { gap: 12px; }
+            .balance-center-group { order: 3; width: 100%; justify-content: center; }
+        }
+        @media (max-width: 980px) {
+            body { flex-direction: column; }
+            .left-sidebar {
+                position: sticky;
+                top: 0;
                 width: 100%;
-                display: grid;
-                grid-template-columns: 1fr auto auto;
-                gap: 6px;
+                height: auto;
+                flex-direction: row;
                 align-items: center;
+                gap: 10px;
+                padding: 10px 14px;
+                overflow-x: auto;
+                overflow-y: hidden;
+                border-right: none;
+                border-bottom: 1px solid #1c2027;
+                z-index: 50;
             }
-
-            .balance-center-box {
-                padding: 7px 10px;
-                font-size: 0.98rem;
-                justify-content: center;
-                min-width: 0;
+            .brand-logo {
+                border-bottom: none;
+                border-right: 1px solid #23272f;
+                padding: 0 12px 0 0;
+                margin: 0;
+                flex-shrink: 0;
             }
-
-            .btn-deposit-top,
-            .btn-withdraw-top {
-                padding: 9px 10px;
-                font-size: 0.72rem;
-                border-radius: 10px;
-                white-space: nowrap;
+            .brand-title-top { display: none; }
+            .brand-title-bottom { font-size: 0.9rem; white-space: nowrap; }
+            .brand-crown { width: 32px; height: 32px; font-size: 0.9rem; }
+            .sidebar-menu {
+                flex-direction: row;
+                align-items: center;
+                gap: 6px;
+                flex: 0 0 auto;
             }
+            .nav-item { padding: 8px 10px; white-space: nowrap; }
+            .nav-item.active::before { display: none; }
+            .slot-nav-img { width: 32px; height: 32px; }
+            .slot-nav-label { font-size: 0.74rem; }
+            .sidebar-promo-box { display: none; }
+            .main-wrapper { width: 100%; }
+            .topbar { position: static; }
+            .content-area { padding: 18px 16px 30px; }
+            .hero-banner { padding: 24px; flex-direction: column; align-items: flex-start; }
+            .hero-visuals-wrapper { align-self: flex-end; }
+            .hero-bonus-visual { max-height: 72px; }
+            .hero-title { font-size: 1.35rem; }
+        }
+        @media (max-width: 700px) {
+            .topbar { justify-content: center; }
+            .slots-catalog-grid { grid-template-columns: 1fr; }
+            .hero-visuals-wrapper { display: none; }
+            .hero-title { font-size: 1.18rem; }
+            .hero-cta-btn { width: 100%; }
+            .trust-footer { flex-direction: column; gap: 6px; }
+            .deposit-modal { padding: 20px; border-radius: 12px; }
         }
     </style>
 </head>
@@ -1766,37 +2159,37 @@
         <div class="nickname-box">
             <div style="font-size: 3.2rem; margin-bottom: 10px;">🎰👑</div>
             <h2 style="margin: 0 0 8px; text-transform: uppercase; font-family: 'Unbounded', sans-serif; font-size: 1.2rem;">Вход в Слот-Клуб</h2>
-            <p style="color: var(--text-muted); font-size: 0.88rem; margin: 0;">Введите ваш игровой никнейм (минимум 5 английских букв):</p>
+            <p style="color: var(--text-muted); font-size: 0.88rem; margin: 0;">Введите игровой никнейм: 5–20 символов, латиница, цифры и «_»</p>
             <input type="text" id="first-nickname-input" maxlength="20" placeholder="Например: SeregaWin" onkeydown="if(event.key==='Enter') submitFirstNickname()">
-            <button type="button" class="btn-back" style="width: 100%; margin-top: 16px; background: var(--accent-gold-gradient); color:#1a0f00; font-weight:900;" onclick="submitFirstNickname()">ВОЙТИ В КАЗИНО →</button>
+            <button class="btn-back" style="width: 100%; margin-top: 16px; background: var(--accent-gold-gradient); color:#04150a; font-weight:900;" onclick="submitFirstNickname()">ВОЙТИ В КАЗИНО →</button>
         </div>
     </div>
 
     <!-- МОДАЛЬНОЕ ОКНО ПОПОЛНЕНИЯ -->
     <div class="modal-overlay" id="deposit-modal">
         <div class="deposit-modal">
-            <button type="button" class="modal-close-btn" onclick="closeDepositModal()">✕</button>
+            <button class="modal-close-btn" onclick="closeDepositModal()">✕</button>
             <h2 style="margin: 0 0 4px; color: var(--accent-gold); text-transform: uppercase; font-family: 'Unbounded', sans-serif; font-size: 1.15rem;">💳 Касса: Пополнение</h2>
             <p style="margin: 0; font-size: 0.82rem; color: var(--text-muted);">Выберите удобный способ оплаты • Мгновенная обработка</p>
 
             <div class="cashier-methods-grid" id="dep-methods-grid">
-                <button type="button" class="cashier-method-btn active" data-method="usdt" onclick="selectDepositMethod('usdt')">
+                <button class="cashier-method-btn active" data-method="usdt" onclick="selectDepositMethod('usdt')">
                     <span style="font-size:1.2rem;">💎</span>
                     <span>USDT TRC-20</span>
                 </button>
-                <button type="button" class="cashier-method-btn" data-method="card" onclick="selectDepositMethod('card')">
+                <button class="cashier-method-btn" data-method="card" onclick="selectDepositMethod('card')">
                     <span style="font-size:1.2rem;">💳</span>
                     <span>Карта BYN/РФ</span>
                 </button>
-                <button type="button" class="cashier-method-btn" data-method="ton" onclick="selectDepositMethod('ton')">
+                <button class="cashier-method-btn" data-method="ton" onclick="selectDepositMethod('ton')">
                     <span style="font-size:1.2rem;">✈️</span>
                     <span>TON / Wallet</span>
                 </button>
-                <button type="button" class="cashier-method-btn" data-method="erip" onclick="selectDepositMethod('erip')">
+                <button class="cashier-method-btn" data-method="erip" onclick="selectDepositMethod('erip')">
                     <span style="font-size:1.2rem;">🏦</span>
                     <span>ЕРИП / СБП</span>
                 </button>
-                <button type="button" class="cashier-method-btn" data-method="crypto_other" onclick="selectDepositMethod('crypto_other')">
+                <button class="cashier-method-btn" data-method="crypto_other" onclick="selectDepositMethod('crypto_other')">
                     <span style="font-size:1.2rem;">₿</span>
                     <span>BTC / LTC</span>
                 </button>
@@ -1805,15 +2198,15 @@
             <div class="cashier-field-group">
                 <div class="cashier-field-label">
                     <span>Сумма пополнения (BYN)</span>
-                    <span style="color:#fde047;" id="dep-converted-hint">≈ 15.38 USDT</span>
+                    <span style="color:var(--accent-gold);" id="dep-converted-hint">≈ 15.38 USDT</span>
                 </div>
                 <input type="number" id="dep-amount-input" class="cashier-input" value="50" min="10" step="5" oninput="updateDepositCalc()">
                 <div class="quick-amounts-row">
-                    <button type="button" class="quick-amt-chip" onclick="setDepositAmount(20)">20 BYN</button>
-                    <button type="button" class="quick-amt-chip" onclick="setDepositAmount(50)">50 BYN</button>
-                    <button type="button" class="quick-amt-chip" onclick="setDepositAmount(100)">100 BYN</button>
-                    <button type="button" class="quick-amt-chip" onclick="setDepositAmount(250)">250 BYN</button>
-                    <button type="button" class="quick-amt-chip" onclick="setDepositAmount(500)">500 BYN</button>
+                    <button class="quick-amt-chip" onclick="setDepositAmount(20)">20 BYN</button>
+                    <button class="quick-amt-chip" onclick="setDepositAmount(50)">50 BYN</button>
+                    <button class="quick-amt-chip" onclick="setDepositAmount(100)">100 BYN</button>
+                    <button class="quick-amt-chip" onclick="setDepositAmount(250)">250 BYN</button>
+                    <button class="quick-amt-chip" onclick="setDepositAmount(500)">500 BYN</button>
                 </div>
             </div>
 
@@ -1826,14 +2219,14 @@
                     TMVngRQdJ1XqC67GTLttnuWUZKYxtdMFWt
                 </div>
 
-                <button type="button" class="btn-back" style="width: 100%; background: var(--accent-gold-gradient); color:#1a0f00; font-weight:900; margin-bottom:8px;" onclick="copyWalletAddress()">📋 СКОПИРОВАТЬ РЕКВИЗИТЫ</button>
+                <button class="btn-back" style="width: 100%; background: var(--accent-gold-gradient); color:#04150a; font-weight:900; margin-bottom:8px;" onclick="copyWalletAddress()">📋 СКОПИРОВАТЬ РЕКВИЗИТЫ</button>
 
-                <button type="button" class="btn-back" id="toggle-qr-btn" style="width: 100%; background: rgba(245, 158, 11, 0.14); border: 1px solid var(--accent-gold); color: #fde047; font-weight: 900; margin-bottom: 8px;" onclick="toggleDepositQR()">
+                <button class="btn-back" id="toggle-qr-btn" style="width: 100%; background: rgba(0, 231, 1, 0.08); border: 1px solid var(--accent-gold); color: var(--accent-gold); font-weight: 900; margin-bottom: 8px;" onclick="toggleDepositQR()">
                     📷 ПОКАЗАТЬ QR-КОД
                 </button>
 
                 <div id="deposit-qr-container" style="display: none; text-align: center; margin: 10px 0 12px;">
-                    <img src="./QR.jpg" onerror="this.onerror=null; this.style.display='none';" alt="QR код для пополнения" style="width: 195px; height: 195px; object-fit: contain; border-radius: 14px; border: 2px solid var(--accent-gold); background: #fff; padding: 6px; box-shadow: 0 0 25px rgba(245, 158, 11, 0.35);">
+                    <img src="./QR.jpg" onerror="this.onerror=null; this.src='QR.jpg';" alt="QR код для пополнения" style="width: 195px; height: 195px; object-fit: contain; border-radius: 14px; border: 2px solid var(--accent-gold); background: #fff; padding: 6px; box-shadow: 0 0 25px rgba(0, 231, 1, 0.18);">
                     <div style="font-size: 0.74rem; color: var(--text-muted); margin-top: 6px;">Отсканируйте QR-код в вашем приложении</div>
                 </div>
             </div>
@@ -1845,7 +2238,7 @@
             </div>
 
             <div style="display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap;">
-                <button type="button" class="btn-back" style="flex: 1; background: linear-gradient(135deg, #22c55e, #15803d); color: #fff; font-weight: 900; border: none; padding: 12px;" onclick="submitDepositRequest()">
+                <button class="btn-back" id="dep-submit-btn" style="flex: 1; background: var(--accent-gold-gradient); color: #04150a; font-weight: 900; border: none; padding: 12px;" onclick="submitDepositRequest()">
                     ✅ Я ОПЛАТИЛ (СОЗДАТЬ ЗАЯВКУ)
                 </button>
                 <a href="https://t.me/Seregablatnou" target="_blank" class="tg-boss-btn" style="justify-content: center; flex: 1;">
@@ -1858,24 +2251,24 @@
     <!-- МОДАЛЬНОЕ ОКНО ВЫВОДА СРЕДСТВ -->
     <div class="modal-overlay" id="withdraw-modal">
         <div class="deposit-modal" style="border-color: rgba(16, 185, 129, 0.5);">
-            <button type="button" class="modal-close-btn" onclick="closeWithdrawModal()">✕</button>
+            <button class="modal-close-btn" onclick="closeWithdrawModal()">✕</button>
             <h2 style="margin: 0 0 4px; color: #34d399; text-transform: uppercase; font-family: 'Unbounded', sans-serif; font-size: 1.15rem;">💸 Вывод выигрыша</h2>
             <p style="margin: 0; font-size: 0.82rem; color: var(--text-muted);">Быстрые выплаты 24/7 • Доступно: <b id="wd-avail-balance" style="color:#fff;">0,00 BYN</b></p>
 
             <div class="cashier-methods-grid" id="wd-methods-grid">
-                <button type="button" class="cashier-method-btn withdraw-active" data-wd="card" onclick="selectWithdrawMethod('card')">
+                <button class="cashier-method-btn withdraw-active" data-wd="card" onclick="selectWithdrawMethod('card')">
                     <span style="font-size:1.2rem;">💳</span>
                     <span>Банк. карта</span>
                 </button>
-                <button type="button" class="cashier-method-btn" data-wd="usdt" onclick="selectWithdrawMethod('usdt')">
+                <button class="cashier-method-btn" data-wd="usdt" onclick="selectWithdrawMethod('usdt')">
                     <span style="font-size:1.2rem;">💎</span>
                     <span>USDT TRC-20</span>
                 </button>
-                <button type="button" class="cashier-method-btn" data-wd="erip" onclick="selectWithdrawMethod('erip')">
+                <button class="cashier-method-btn" data-wd="erip" onclick="selectWithdrawMethod('erip')">
                     <span style="font-size:1.2rem;">🏦</span>
                     <span>ЕРИП / СБП</span>
                 </button>
-                <button type="button" class="cashier-method-btn" data-wd="yoomoney" onclick="selectWithdrawMethod('yoomoney')">
+                <button class="cashier-method-btn" data-wd="yoomoney" onclick="selectWithdrawMethod('yoomoney')">
                     <span style="font-size:1.2rem;">👛</span>
                     <span>ЮMoney</span>
                 </button>
@@ -1895,17 +2288,17 @@
                 </div>
                 <input type="number" id="wd-amount-input" class="cashier-input" value="50" min="20" step="1" oninput="updateWithdrawCalc()">
                 <div class="quick-amounts-row">
-                    <button type="button" class="quick-amt-chip" onclick="setWithdrawAmount(20)">20 BYN</button>
-                    <button type="button" class="quick-amt-chip" onclick="setWithdrawAmount(50)">50 BYN</button>
-                    <button type="button" class="quick-amt-chip" onclick="setWithdrawAmount(100)">100 BYN</button>
-                    <button type="button" class="quick-amt-chip" onclick="setWithdrawAmount(300)">300 BYN</button>
+                    <button class="quick-amt-chip" onclick="setWithdrawAmount(20)">20 BYN</button>
+                    <button class="quick-amt-chip" onclick="setWithdrawAmount(50)">50 BYN</button>
+                    <button class="quick-amt-chip" onclick="setWithdrawAmount(100)">100 BYN</button>
+                    <button class="quick-amt-chip" onclick="setWithdrawAmount(300)">300 BYN</button>
                 </div>
             </div>
 
             <div class="withdraw-summary-box">
                 <div class="withdraw-summary-row">
                     <span>Комиссия платёжного шлюза:</span>
-                    <b id="wd-fee-text" style="color:#fbbf24;">2% (1,00 BYN)</b>
+                    <b id="wd-fee-text" style="color:var(--text-muted);">2% (1,00 BYN)</b>
                 </div>
                 <div class="withdraw-summary-row">
                     <span>Время зачисления:</span>
@@ -1917,7 +2310,7 @@
                 </div>
             </div>
 
-            <button type="button" class="btn-back" style="width: 100%; margin-top: 14px; background: linear-gradient(135deg, #10b981, #059669); color: #fff; font-weight: 900; border: none; padding: 13px; font-size: 0.92rem;" onclick="submitWithdrawRequest()">
+            <button class="btn-back" id="wd-submit-btn" style="width: 100%; margin-top: 14px; background: var(--accent-gold-gradient); color: #04150a; font-weight: 900; border: none; padding: 13px; font-size: 0.92rem;" onclick="submitWithdrawRequest()">
                 💸 ЗАКАЗАТЬ ВЫПЛАТУ
             </button>
 
@@ -1933,87 +2326,49 @@
         </div>
     </div>
 
-    <!-- МОДАЛЬНОЕ ОКНО РАЗРАБОТЧИКА -->
-    <div class="modal-overlay" id="dev-modal">
-        <div class="deposit-modal" style="max-width: 600px; border-color: #ef4444;">
-            <button type="button" class="modal-close-btn" onclick="closeDevModal()">✕</button>
-            <h2 style="margin: 0 0 6px; color: #f87171; text-transform: uppercase; font-family: 'Unbounded', sans-serif; font-size: 1.15rem;">🛠️ Меню Разработчика</h2>
-            <p style="margin: 0; font-size: 0.85rem; color: var(--text-muted);">Управление балансами, депозитами и мониторинг игроков</p>
-
-            <div class="dev-section">
-                <div class="dev-section-title">Управление балансом — <span id="dev-my-nick">Player</span></div>
-                <div class="dev-input-row">
-                    <input type="number" id="dev-self-amount" class="dev-input" placeholder="Сумма, BYN" step="any" min="0">
-                    <button type="button" class="dev-btn-add" onclick="devModifySelfBalance(1)">+ НАЧИСЛИТЬ</button>
-                    <button type="button" class="dev-btn-sub" onclick="devModifySelfBalance(-1)">− СПИСАТЬ</button>
-                </div>
-                <div class="dev-hint" id="dev-mode-hint">Проверка прав администратора…</div>
-            </div>
-
-            <div class="dev-section">
-                <div class="dev-section-title">Игроки</div>
-                <div class="dev-toolbar">
-                    <input type="number" id="dev-player-amount" class="dev-input" style="min-width: 180px;" placeholder="Сумма для начисления / списания" value="100" step="any" min="0">
-                    <button type="button" class="dev-btn-refresh" onclick="loadAdminUsersList()">Обновить список</button>
-                </div>
-                <div class="players-list" id="dev-players-list">
-                    <div class="dev-empty">Загрузка игроков…</div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- МОДАЛЬНОЕ ОКНО ОНЛАЙНА -->
-    <div class="modal-overlay" id="online-modal">
-        <div class="deposit-modal" style="max-width: 540px;">
-            <button type="button" class="modal-close-btn" onclick="closeOnlineModal()">✕</button>
-            <h2 style="margin: 0 0 6px; color: var(--accent-gold); text-transform: uppercase; font-family: 'Unbounded', sans-serif; font-size: 1.15rem;">🟢 Мониторинг онлайна</h2>
-            <p style="margin: 0; font-size: 0.85rem; color: var(--text-muted);">Список игроков в реальном времени</p>
-            <div class="players-list" id="online-modal-list" style="margin-top: 16px;"></div>
-        </div>
-    </div>
-
     <!-- УНИВЕРСАЛЬНОЕ МОДАЛЬНОЕ ОКНО ТАБЛИЦЫ ВЫПЛАТ И ПРАВИЛ ДЛЯ ВСЕХ СЛОТОВ -->
     <div class="modal-overlay" id="slot-paytable-modal">
-        <div class="deposit-modal" style="max-width: 680px; background: #121622; border-color: #fde047;">
-            <button type="button" class="modal-close-btn" onclick="closeSlotPaytableModal()">✕</button>
-            <h2 id="pt-modal-title" style="margin: 0 0 6px; color: #fde047; text-transform: uppercase; font-family: 'Unbounded', sans-serif; font-size: 1.12rem;">📜 Таблица выплат и правила</h2>
+        <div class="deposit-modal" style="max-width: 680px; background: #12151a; border-color: #2a2f38;">
+            <button class="modal-close-btn" onclick="closeSlotPaytableModal()">✕</button>
+            <h2 id="pt-modal-title" style="margin: 0 0 6px; color: #ffffff; text-transform: uppercase; font-family: 'Unbounded', sans-serif; font-size: 1.12rem;">📜 Таблица выплат и правила</h2>
             <p id="pt-modal-subtitle" style="margin: 0 0 12px; font-size: 0.82rem; color: #cbd5e1;">Выплаты рассчитаны для вашей текущей ставки</p>
             
             <div id="pt-modal-body" style="max-height: 62vh; overflow-y: auto; padding-right: 4px;"></div>
             
-            <button type="button" class="btn-back" style="width: 100%; margin-top: 14px; background: var(--accent-gold-gradient); color:#1a0f00; font-weight:900;" onclick="closeSlotPaytableModal()">ПОНЯТНО, В ИГРУ!</button>
+            <button class="btn-back" style="width: 100%; margin-top: 14px; background: var(--accent-gold-gradient); color:#04150a; font-weight:900;" onclick="closeSlotPaytableModal()">ПОНЯТНО, В ИГРУ!</button>
         </div>
     </div>
 
     <!-- ЛЕВАЯ ПАНЕЛЬ -->
     <aside class="left-sidebar">
         <div class="brand-logo" onclick="showLobby()">
-            <div class="brand-crown">👑</div>
-            <div class="brand-title-top">СЕРЁГА И ОЛЯМБУС</div>
-            <div class="brand-title-bottom">КАЗИК</div>
+            <div class="brand-crown">К</div>
+            <div class="brand-text">
+                <div class="brand-title-top">СЕРЁГА И ОЛЯМБУС</div>
+                <div class="brand-title-bottom">КАЗИК</div>
+            </div>
         </div>
 
         <nav class="sidebar-menu">
-            <button type="button" class="nav-item active" id="nav-lobby" onclick="showLobby()">
+            <button class="nav-item active" id="nav-lobby" onclick="showLobby()">
                 <span class="nav-item-left"><span>🏠</span> Игровой зал</span>
             </button>
-            <button type="button" class="nav-item slot-nav-card" id="nav-slot-olympus" onclick="openGatesOfOlympus()">
+            <button class="nav-item slot-nav-card" id="nav-slot-olympus" onclick="openGatesOfOlympus()">
                 <img src="olympuspushka.jpg" alt="Gates of Olympus" class="slot-nav-img">
                 <span class="slot-nav-label">Gates of Olympus</span>
             </button>
 
-            <button type="button" class="nav-item slot-nav-card" id="nav-slot-doghouse" onclick="openDogHouse()">
+            <button class="nav-item slot-nav-card" id="nav-slot-doghouse" onclick="openDogHouse()">
                 <img src="emblemadoghouse-removebg-preview.png" alt="The Dog House" class="slot-nav-img">
                 <span class="slot-nav-label">The Dog House</span>
             </button>
 
-            <button type="button" class="nav-item slot-nav-card" id="nav-slot-bonanza" onclick="openSweetBonanza()">
+            <button class="nav-item slot-nav-card" id="nav-slot-bonanza" onclick="openSweetBonanza()">
                 <img src="sweetbananzaemblema.png" alt="Sweet Bonanza" class="slot-nav-img">
                 <span class="slot-nav-label">Sweet Bonanza</span>
             </button>
 
-            <button type="button" class="nav-item" id="nav-profile" onclick="switchView('profile')">
+            <button class="nav-item" id="nav-profile" onclick="switchView('profile')">
                 <span class="nav-item-left"><span>👤</span> Профиль и статистика</span>
             </button>
         </nav>
@@ -2022,9 +2377,8 @@
             <div class="sidebar-promo-label">🎟️ Промокод</div>
             <div class="sidebar-promo-row">
                 <input type="text" id="promo-code-input" placeholder="Введите код..." onkeydown="if(event.key==='Enter') applyPromoCode()">
-                <button type="button" class="sidebar-promo-btn" onclick="applyPromoCode()">ОК</button>
+                <button class="sidebar-promo-btn" onclick="applyPromoCode()">ОК</button>
             </div>
-            <button type="button" class="dev-open-btn" id="dev-menu-sidebar-btn" onclick="openDevModal()">🛠️ Меню разработчика</button>
         </div>
     </aside>
 
@@ -2039,15 +2393,11 @@
                 <div class="balance-center-box">
                     <span>💵</span><span id="balance">1000,00</span> <span style="font-size:0.75rem; color:var(--text-muted); font-weight:600;">BYN</span>
                 </div>
-                <button type="button" class="btn-deposit-top" onclick="openDepositModal()">+ ПОПОЛНИТЬ</button>
-                <button type="button" class="btn-withdraw-top" onclick="openWithdrawModal()">💸 ВЫВЕСТИ</button>
+                <button class="btn-deposit-top" onclick="openDepositModal()">+ ПОПОЛНИТЬ</button>
+                <button class="btn-withdraw-top" onclick="openWithdrawModal()">💸 ВЫВЕСТИ</button>
             </div>
 
             <div class="topbar-right-group">
-                <div class="topbar-online-pill" id="topbar-online-pill" onclick="openOnlineModal()" title="Нажмите, чтобы посмотреть список игроков">
-                    <span class="online-pulse-dot"></span>
-                    <span>Онлайн: <b id="topbar-real-online-count" style="color: var(--accent-gold);">1</b></span>
-                </div>
                 <div class="topbar-profile-pill" onclick="switchView('profile')">
                     <span>😎</span>
                     <span id="topbar-username" style="font-weight: 700; font-size: 0.85rem;">Player</span>
@@ -2060,12 +2410,12 @@
                 <div class="hero-banner">
                     <div class="hero-content">
                         <h1 class="hero-title">Серёга пушка - месси игрушка.<br>В собак залетай и баб забирай!</h1>
-                        <button type="button" class="hero-cta-btn" onclick="openDogHouse()">🐶 Залететь в The Dog House</button>
+                        <button class="hero-cta-btn" onclick="openDogHouse()">🐶 Залететь в The Dog House</button>
                     </div>
                     <div class="hero-visuals-wrapper">
                         <img src="bonusdoghouselapa.png" alt="Бонус лапа" class="hero-bonus-visual">
                         <div class="hero-zeus-visual">
-                            <img src="glavniypesdoghouse.png" alt="Главный пес" style="max-height: 180px; width: auto; object-fit: contain; filter: drop-shadow(0 0 20px rgba(245, 158, 11, 0.5));">
+                            <img src="glavniypesdoghouse.png" alt="Главный пес" style="max-height: 180px; width: auto; object-fit: contain; filter: drop-shadow(0 10px 24px rgba(0, 0, 0, 0.65));">
                         </div>
                     </div>
                 </div>
@@ -2074,37 +2424,49 @@
                 
                 <div class="slots-catalog-grid">
                     <div class="slot-lobby-card olympus-featured" onclick="openGatesOfOlympus()">
+                        <div class="slot-card-thumb">
+                            <img src="olympuspushka.jpg" alt="Gates of Olympus">
+                            <span class="slot-card-badge">6×5</span>
+                        </div>
                         <div class="slot-card-content">
                             <div class="slot-card-title">Gates of Olympus</div>
                             <div class="slot-card-desc">Легендарный слот Зевса 6x5 с каскадами, крылатыми шарами-множителями и покупкой бонуса.</div>
                         </div>
                         <div class="slot-card-actions">
-                            <button type="button" class="card-hover-play-btn" onclick="event.stopPropagation(); openGatesOfOlympus();">ИГРАТЬ</button>
-                            <button type="button" class="card-hover-demo-btn" onclick="event.stopPropagation(); openGatesOfOlympus();">Демо</button>
+                            <button class="card-hover-play-btn" onclick="event.stopPropagation(); openGatesOfOlympus();">ИГРАТЬ</button>
+                            <button class="card-hover-demo-btn" onclick="event.stopPropagation(); openGatesOfOlympus();">Демо</button>
                         </div>
                         <div class="slot-card-meta"><span>Каскады 6×5</span><span>Множители до x500</span></div>
                     </div>
 
                     <div class="slot-lobby-card doghouse-featured" onclick="openDogHouse()">
+                        <div class="slot-card-thumb">
+                            <img src="emblemadoghouse-removebg-preview.png" alt="The Dog House">
+                            <span class="slot-card-badge">5×3</span>
+                        </div>
                         <div class="slot-card-content">
                             <div class="slot-card-title">The Dog House</div>
                             <div class="slot-card-desc">Обновлённый слот с карточными номиналами, липкими будками-вайлдами x2/x3 и фриспинами!</div>
                         </div>
                         <div class="slot-card-actions">
-                            <button type="button" class="card-hover-play-btn" onclick="event.stopPropagation(); openDogHouse();">ИГРАТЬ</button>
-                            <button type="button" class="card-hover-demo-btn" onclick="event.stopPropagation(); openDogHouse();">Демо</button>
+                            <button class="card-hover-play-btn" onclick="event.stopPropagation(); openDogHouse();">ИГРАТЬ</button>
+                            <button class="card-hover-demo-btn" onclick="event.stopPropagation(); openDogHouse();">Демо</button>
                         </div>
                         <div class="slot-card-meta"><span>20 линий</span><span>Липкие Wild x2/x3</span></div>
                     </div>
 
                     <div class="slot-lobby-card bonanza-featured" onclick="openSweetBonanza()">
+                        <div class="slot-card-thumb">
+                            <img src="sweetbananzaemblema.png" alt="Sweet Bonanza">
+                            <span class="slot-card-badge">6×5</span>
+                        </div>
                         <div class="slot-card-content">
-                            <div class="slot-card-title">Sweet Bonanza (6×5)</div>
+                            <div class="slot-card-title">Sweet Bonanza</div>
                             <div class="slot-card-desc">Фруктово-конфетный слот 6x5 в BYN с каскадами Tumble, фриспинами и бомбами до x100.</div>
                         </div>
                         <div class="slot-card-actions">
-                            <button type="button" class="card-hover-play-btn" onclick="event.stopPropagation(); openSweetBonanza();">ИГРАТЬ</button>
-                            <button type="button" class="card-hover-demo-btn" onclick="event.stopPropagation(); openSweetBonanza();">Демо</button>
+                            <button class="card-hover-play-btn" onclick="event.stopPropagation(); openSweetBonanza();">ИГРАТЬ</button>
+                            <button class="card-hover-demo-btn" onclick="event.stopPropagation(); openSweetBonanza();">Демо</button>
                         </div>
                         <div class="slot-card-meta"><span>Кластеры 8+</span><span>Бомбы до x100</span></div>
                     </div>
@@ -2114,7 +2476,7 @@
             <!-- GATES OF OLYMPUS -->
             <div id="view-olympus" class="game-view">
                 <div class="ao-top-bar">
-                    <button type="button" class="btn-back" onclick="showLobby()">← В зал</button>
+                    <button class="btn-back" onclick="showLobby()">← В зал</button>
                     <div style="font-size: 0.88rem; font-weight: 800; color: #fde047;">GATES OF OLYMPUS SLOT</div>
                     <div class="ao-fs-banner" id="ao-fs-banner">
                         <span>⚡ ФРИСПИНЫ: <b id="ao-fs-left">15</b></span>
@@ -2123,7 +2485,7 @@
                         <span>|</span>
                         <span>ВЫИГРЫШ: <b id="ao-fs-total-win">0,00</b> BYN</span>
                     </div>
-                    <button type="button" class="btn-paytable-help" onclick="openSlotPaytable('olympus')">❓ Символы и выплаты</button>
+                    <button class="btn-paytable-help" onclick="openSlotPaytable('olympus')">❓ Символы и выплаты</button>
                 </div>
 
                 <div class="ao-win-banner-top">
@@ -2137,13 +2499,13 @@
                     </div>
 
                     <div class="ao-left-controls-zone">
-                        <div class="ao-feature-card ao-buy-feature" id="ao-buy-btn" role="button" tabindex="0" aria-label="Купить бесплатные спины за 100x ставки">
+                        <div class="ao-feature-card ao-buy-feature" onclick="buyOlympusBonus()">
                             <div style="font-size:0.75rem; font-weight:900; text-transform:uppercase; color:#fff;">КУПИТЬ БЕСПЛАТНЫЕ СПИНЫ</div>
                             <div style="margin-top:6px; background:rgba(0,0,0,0.35); border-radius:10px; padding:6px; font-size:1.15rem; font-weight:900; color:#fef08a;" id="ao-buy-price">50,00 BYN</div>
                             <div style="font-size:0.65rem; color:#fde68a; font-weight:700; margin-top:4px;">100x ОТ СТАВКИ</div>
                         </div>
 
-                        <div class="ao-feature-card ao-ante-card" id="ao-ante-btn" role="button" tabindex="0" aria-label="Переключить ставку Анте двойной шанс">
+                        <div class="ao-feature-card ao-ante-card" id="ao-ante-btn" onclick="toggleOlympusAnte()">
                             <div style="font-size: 0.72rem; font-weight: 900; color: #fff; text-transform: uppercase;">ОТ СУММЫ СТАВКИ</div>
                             <div style="font-size: 1.1rem; font-weight: 900; color: #fde047; margin: 4px 0;" id="ao-ante-val">0,62 BYN</div>
                             <div style="font-size: 0.7rem; font-weight: 800; color: #f3e8ff; line-height: 1.25; margin-bottom: 6px;">ДВОЙНОЙ ШАНС ВЫИГРЫША ФУНКЦИИ</div>
@@ -2161,16 +2523,15 @@
                     </div>
 
                     <div class="ao-right-zeus-zone">
-                        <img src="gatesofolympuslogo.png" onerror="this.style.display='none';" alt="Gates of Olympus Logo" class="ao-official-logo">
                         <div class="ao-zeus-hero-wrap" id="ao-zeus-avatar">
-                            <img src="zecssprava.png" onerror="this.onerror=null; this.style.display='none';" alt="Зевс справа" class="ao-zeus-hero-img">
+                            <img src="zecssprava.png" onerror="this.onerror=null; this.src='olympusnaprotiv.png';" alt="Зевс справа" class="ao-zeus-hero-img">
                         </div>
                     </div>
                 </div>
 
                 <div class="ao-pragmatic-hud">
                     <div class="ao-hud-left-group">
-                        <button type="button" class="ao-icon-btn" onclick="showToast('🔊 Звук включен')" title="Звук">🔊</button>
+                        <button class="ao-icon-btn" onclick="showToast('🔊 Звук включен')" title="Звук">🔊</button>
                         <div class="ao-credits-box"><span>КРЕДИТ</span><span><span id="ao-hud-balance">1 000,00</span> BYN</span></div>
                         <div class="ao-credits-box"><span>СТАВКА</span><span><span id="ao-hud-total-bet">0,50</span> BYN</span></div>
                     </div>
@@ -2179,12 +2540,12 @@
                         <div class="ao-win-amount"><span id="ao-hud-win">0,00</span> BYN</div>
                     </div>
                     <div class="ao-hud-right-group">
-                        <button type="button" class="ao-bet-adjust-btn" id="ao-bet-minus" aria-label="Уменьшить ставку">−</button>
-                        <button type="button" class="ao-spin-circle-btn" id="ao-spin-btn" aria-label="Запустить вращение">
-                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"/></svg>
+                        <button class="ao-bet-adjust-btn" onclick="changeOlympusBet(-0.5)">−</button>
+                        <button class="ao-spin-circle-btn" id="ao-spin-btn" onclick="spinGatesOfOlympus()">
+                            <svg viewBox="0 0 24 24"><path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"/></svg>
                         </button>
-                        <button type="button" class="ao-bet-adjust-btn" id="ao-bet-plus" aria-label="Увеличить ставку">+</button>
-                        <button type="button" class="ao-icon-btn" id="ao-auto-btn" aria-label="Автоспины" title="Автоспины" style="font-size:0.72rem; font-weight:900; width:44px; height:44px;">AUTO</button>
+                        <button class="ao-bet-adjust-btn" onclick="changeOlympusBet(0.5)">+</button>
+                        <button class="ao-icon-btn" id="ao-auto-btn" onclick="toggleOlympusAuto()" title="Автоспины" style="font-size:0.72rem; font-weight:900; width:44px; height:44px;">AUTO</button>
                     </div>
                 </div>
             </div>
@@ -2192,14 +2553,14 @@
             <!-- THE DOG HOUSE -->
             <div id="view-doghouse" class="game-view">
                 <div class="dh-top-bar">
-                    <button type="button" class="btn-back" onclick="showLobby()">← В зал</button>
+                    <button class="btn-back" onclick="showLobby()">← В зал</button>
                     <div class="dh-logo-title">THE DOG HOUSE</div>
                     <div class="dh-fs-banner" id="dh-fs-banner">
                         <span>🐶 ФРИСПИНЫ: <b id="dh-fs-left">10</b></span>
                         <span>|</span>
                         <span>ВЫИГРЫШ БОНУСА: <b id="dh-fs-total-win">0,00</b> BYN</span>
                     </div>
-                    <button type="button" class="btn-paytable-help" onclick="openSlotPaytable('doghouse')">❓ Символы и выплаты</button>
+                    <button class="btn-paytable-help" onclick="openSlotPaytable('doghouse')">❓ Символы и выплаты</button>
                 </div>
 
                 <div class="dh-stage">
@@ -2229,12 +2590,12 @@
                         <div class="dh-win-amount"><span id="dh-hud-win">0,00</span> BYN</div>
                     </div>
                     <div class="dh-hud-right-group">
-                        <button type="button" class="dh-bet-adjust-btn" onclick="changeDogHouseBet(-0.5)">−</button>
-                        <button type="button" class="dh-spin-circle-btn" id="dh-spin-btn" onclick="spinDogHouse()">
+                        <button class="dh-bet-adjust-btn" onclick="changeDogHouseBet(-0.5)">−</button>
+                        <button class="dh-spin-circle-btn" id="dh-spin-btn" onclick="spinDogHouse()">
                             <svg viewBox="0 0 24 24"><path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"/></svg>
                         </button>
-                        <button type="button" class="dh-bet-adjust-btn" onclick="changeDogHouseBet(0.5)">+</button>
-                        <button type="button" class="ao-icon-btn" id="dh-auto-btn" onclick="toggleDogHouseAuto()" title="Автоспины" style="font-size:0.72rem; font-weight:900; width:44px; height:44px;">AUTO</button>
+                        <button class="dh-bet-adjust-btn" onclick="changeDogHouseBet(0.5)">+</button>
+                        <button class="ao-icon-btn" id="dh-auto-btn" onclick="toggleDogHouseAuto()" title="Автоспины" style="font-size:0.72rem; font-weight:900; width:44px; height:44px;">AUTO</button>
                     </div>
                 </div>
             </div>
@@ -2242,16 +2603,16 @@
             <!-- SWEET BONANZA -->
             <div id="view-bonanza" class="game-view">
                 <div class="sb-top-bar">
-                    <button type="button" class="btn-back" onclick="showLobby()">← В зал</button>
+                    <button class="btn-back" onclick="showLobby()">← В зал</button>
                     <div class="sb-logo-title">
-                        <img src="sweetbananzaemblema.png" onerror="this.onerror=null; this.style.display='none';" alt="Sweet Bonanza" class="sb-logo-img">
+                        <img src="sweetbananzaemblema.png" onerror="this.src='sweetbananzanaprotiv.png';" alt="Sweet Bonanza" class="sb-logo-img">
                     </div>
                     <div class="sb-fs-banner" id="sb-fs-banner">
                         <span>🍭 ФРИСПИНЫ: <b id="sb-fs-left">10</b></span>
                         <span>|</span>
                         <span>ВЫИГРЫШ БОНУСА: <b id="sb-fs-total-win">0,00</b> BYN</span>
                     </div>
-                    <button type="button" class="btn-paytable-help" onclick="openSlotPaytable('bonanza')">❓ Символы и выплаты</button>
+                    <button class="btn-paytable-help" onclick="openSlotPaytable('bonanza')">❓ Символы и выплаты</button>
                 </div>
 
                 <div class="sb-stage">
@@ -2301,15 +2662,15 @@
 
                     <div class="sb-hud-right">
                         <div class="sb-bet-control">
-                            <button type="button" class="sb-bet-step-btn" onclick="changeBonanzaBet(-0.5)">−</button>
+                            <button class="sb-bet-step-btn" onclick="changeBonanzaBet(-0.5)">−</button>
                             <div class="sb-bet-input-wrap">
                                 <span>Ставка</span>
                                 <input type="number" id="sb-base-bet" value="0.5" min="0.5" max="50" step="0.5" onchange="syncBonanzaBetUI()">
                             </div>
-                            <button type="button" class="sb-bet-step-btn" onclick="changeBonanzaBet(0.5)">+</button>
+                            <button class="sb-bet-step-btn" onclick="changeBonanzaBet(0.5)">+</button>
                         </div>
-                        <button type="button" class="sb-spin-btn" id="sb-spin-btn" onclick="spinSweetBonanza()">↻</button>
-                        <button type="button" class="ao-icon-btn" id="sb-auto-btn" onclick="toggleBonanzaAuto()" title="Автоигра" style="font-size:0.72rem; font-weight:900; width:44px; height:44px;">AUTO</button>
+                        <button class="sb-spin-btn" id="sb-spin-btn" onclick="spinSweetBonanza()">↻</button>
+                        <button class="ao-icon-btn" id="sb-auto-btn" onclick="toggleBonanzaAuto()" title="Автоигра" style="font-size:0.72rem; font-weight:900; width:44px; height:44px;">AUTO</button>
                     </div>
                 </div>
             </div>
@@ -2318,7 +2679,7 @@
             <div id="view-profile" class="game-view">
                 <div class="game-header">
                     <h2>👤 Личный кабинет</h2>
-                    <button type="button" class="btn-back" onclick="showLobby()">← В зал</button>
+                    <button class="btn-back" onclick="showLobby()">← В зал</button>
                 </div>
                 <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:15px; background:var(--bg-card); padding:20px; border-radius:16px; border:1px solid var(--border-glass);">
                     <div>
@@ -2326,8 +2687,8 @@
                         <div style="font-size:1.4rem; font-weight:900; color:#fff; margin-top:4px;" id="profile-nick-display">Player</div>
                     </div>
                     <div style="display:flex; gap:10px; flex-wrap:wrap;">
-                        <button type="button" class="btn-back" style="background:var(--accent-gold-gradient); color:#1a0f00; font-weight:900;" onclick="openDepositModal()">+ ПОПОЛНИТЬ СЧЁТ</button>
-                        <button type="button" class="btn-back" style="background:linear-gradient(135deg, #10b981, #059669); color:#fff; font-weight:900; border:none;" onclick="openWithdrawModal()">💸 ВЫВЕСТИ СРЕДСТВА</button>
+                        <button class="btn-back" style="background:var(--accent-gold-gradient); color:#04150a; font-weight:900;" onclick="openDepositModal()">+ ПОПОЛНИТЬ СЧЁТ</button>
+                        <button class="btn-back" style="background:var(--accent-gold-gradient); color:#04150a; font-weight:900; border:none;" onclick="openWithdrawModal()">💸 ВЫВЕСТИ СРЕДСТВА</button>
                     </div>
                 </div>
 
@@ -2375,38 +2736,140 @@
             if (!firebase.apps.length) {
                 firebase.initializeApp(firebaseConfig);
             }
-        } catch (e) {
-            console.error("Firebase init error:", e);
-        }
-
-        const auth = firebase.auth();
+        } catch (e) {}
         const db = firebase.firestore();
-        const functions = firebase.app().functions("europe-west1");
-        const processSpinFn = functions.httpsCallable("processSpin");
-
-        // Уважение системной настройки prefers-reduced-motion
-        const REDUCED_MOTION = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-        const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-        const animDelay = (ms) => new Promise((resolve) => setTimeout(resolve, REDUCED_MOTION ? Math.min(ms, 80) : ms));
 
         // ==========================================
-        // СПРАВОЧНИКИ СИМВОЛОВ ДЛЯ ТАБЛИЦ ВЫПЛАТ И UI
+        // СИСТЕМА ОТДАЧИ (RTP 96%)
+        // ==========================================
+        const ENGINE_PAYOUT_CONFIG = {
+            BASE_FACTOR: 96,
+            FIRST_DEP_BOOST_FACTOR: 96,
+            FIRST_DEP_SPINS_LIMIT: 5,
+            EXPERIENCED_SPINS_THRESHOLD: 10,
+            MAX_WIN_MULTIPLIER: 5000,
+            MAX_BALANCE: 10000000
+        };
+
+        let playerRetentionState = {
+            hasFirstDeposit: false,
+            postFirstDepositSpins: 0
+        };
+
+        function isPostFirstDepositBoostActive() {
+            return playerRetentionState.hasFirstDeposit &&
+                   playerRetentionState.postFirstDepositSpins < ENGINE_PAYOUT_CONFIG.FIRST_DEP_SPINS_LIMIT;
+        }
+
+        function getActivePayoutFactor() {
+            if (isPostFirstDepositBoostActive()) {
+                return ENGINE_PAYOUT_CONFIG.FIRST_DEP_BOOST_FACTOR;
+            }
+            return ENGINE_PAYOUT_CONFIG.BASE_FACTOR;
+        }
+
+        function applyEnginePayoutScale(rawAmount) {
+            const amount = Number(rawAmount);
+            if (!Number.isFinite(amount) || amount <= 0) return 0;
+            return amount * (getActivePayoutFactor() / 100);
+        }
+
+        // Защита от «бесконечных» заносов и ошибок округления.
+        function normalizeMoney(value, fallback = 0) {
+            const n = Number(value);
+            if (!Number.isFinite(n) || n < 0) return fallback;
+            return Math.round(Math.min(n, ENGINE_PAYOUT_CONFIG.MAX_BALANCE) * 100) / 100;
+        }
+
+        // Ограничение максимального выигрыша за раунд/бонус (5000x ставки).
+        function capRoundWin(winAmount, betAmount, alreadyWon = 0) {
+            const win = Number(winAmount);
+            const bet = Number(betAmount);
+            const won = Number(alreadyWon) || 0;
+            if (!Number.isFinite(win) || win <= 0 || !Number.isFinite(bet) || bet <= 0) return 0;
+            const cap = Math.max(0, bet * ENGINE_PAYOUT_CONFIG.MAX_WIN_MULTIPLIER - Math.max(0, won));
+            return Math.round(Math.min(win, cap) * 100) / 100;
+        }
+
+        function escapeHtml(value) {
+            return String(value ?? '').replace(/[&<>"']/g, ch => ({
+                '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+            }[ch]));
+        }
+
+        function isValidNickname(nick) {
+            return /^[A-Za-z0-9_]{5,20}$/.test(String(nick || ''));
+        }
+
+        function isOtherSlotBusy(current) {
+            if (current !== 'ao' && (aoSpinning || aoInFreeSpins)) return true;
+            if (current !== 'dh' && (dhSpinning || dhInFreeSpins)) return true;
+            if (current !== 'sb' && (sbSpinning || sbInFreeSpins)) return true;
+            return false;
+        }
+
+        // Не даём запускать спины/покупки одновременно в разных слотах.
+        function isAnyGameBusy() {
+            return aoSpinning || dhSpinning || sbSpinning ||
+                   aoInFreeSpins || dhInFreeSpins || sbInFreeSpins;
+        }
+
+        function registerSpinForRetention() {
+            if (playerRetentionState.hasFirstDeposit &&
+                playerRetentionState.postFirstDepositSpins < ENGINE_PAYOUT_CONFIG.FIRST_DEP_SPINS_LIMIT) {
+                playerRetentionState.postFirstDepositSpins += 1;
+                saveRetentionState();
+            }
+        }
+
+        function triggerFirstDepositBonusMode() {
+            if (!playerRetentionState.hasFirstDeposit) {
+                playerRetentionState.hasFirstDeposit = true;
+                playerRetentionState.postFirstDepositSpins = 0;
+                saveRetentionState();
+            }
+        }
+
+        function saveRetentionState() {
+            localStorage.setItem('kazik_retention_state', JSON.stringify(playerRetentionState));
+        }
+
+        function loadRetentionState() {
+            try {
+                const raw = localStorage.getItem('kazik_retention_state');
+                if (raw) playerRetentionState = JSON.parse(raw);
+            } catch (e) {}
+        }
+
+        // ==========================================
+        // GATES OF OLYMPUS (ОТКАЛИБРОВАННЫЙ RTP 96%)
         // ==========================================
         const AO_COLS = 6, AO_ROWS = 5;
         const AO_SYMBOLS = [
-            { id: 'crown',    emoji: '👑', name: 'Золотая корона',    p8: 10.0, p10: 25.0, p12: 50.0 },
-            { id: 'hourglass',emoji: '⏳', name: 'Песочные часы',     p8: 2.5,  p10: 10.0, p12: 25.0 },
-            { id: 'ring',     emoji: '💍', name: 'Кольцо',            p8: 2.0,  p10: 5.0,  p12: 15.0 },
-            { id: 'cup',      emoji: '🏆', name: 'Кубок',             p8: 1.5,  p10: 2.0,  p12: 12.0 },
-            { id: 'red_gem',  emoji: '♦️', name: 'Красный камень',    p8: 1.0,  p10: 1.5,  p12: 10.0 },
-            { id: 'purple',   emoji: '🔮', name: 'Фиолетовый камень', p8: 0.8,  p10: 1.2,  p12: 8.0  },
-            { id: 'yellow',   emoji: '🔸', name: 'Желтый камень',     p8: 0.5,  p10: 1.0,  p12: 5.0  },
-            { id: 'green',    emoji: '❇️', name: 'Зеленый камень',    p8: 0.4,  p10: 0.9,  p12: 4.0  },
-            { id: 'blue',     emoji: '💎', name: 'Синий камень',      p8: 0.25, p10: 0.75, p12: 2.0  }
+            { id: 'crown',    emoji: '👑', name: 'Золотая корона',    p8: 6.5,  p10: 15.0, p12: 32.0, weight: 7 },
+            { id: 'hourglass',emoji: '⏳', name: 'Песочные часы',     p8: 1.8,  p10: 6.5,  p12: 16.0, weight: 10 },
+            { id: 'ring',     emoji: '💍', name: 'Кольцо',            p8: 1.2,  p10: 3.2,  p12: 10.0, weight: 14 },
+            { id: 'cup',      emoji: '🏆', name: 'Кубок',             p8: 0.95, p10: 1.5,  p12: 8.0,  weight: 18 },
+            { id: 'red_gem',  emoji: '♦️', name: 'Красный камень',    p8: 0.60, p10: 1.0,  p12: 6.0,  weight: 26 },
+            { id: 'purple',   emoji: '🔮', name: 'Фиолетовый камень', p8: 0.45, p10: 0.80, p12: 4.5,  weight: 32 },
+            { id: 'yellow',   emoji: '🔸', name: 'Желтый камень',     p8: 0.30, p10: 0.60, p12: 3.0,  weight: 38 },
+            { id: 'green',    emoji: '❇️', name: 'Зеленый камень',    p8: 0.22, p10: 0.45, p12: 2.0,  weight: 44 },
+            { id: 'blue',     emoji: '💎', name: 'Синий камень',      p8: 0.15, p10: 0.35, p12: 1.2,  weight: 50 }
+        ];
+        const AO_SCATTER = { id: 'scatter', img: 'scatterolymp.png', emoji: '⚡', name: 'Зевс (Scatter)' };
+        const AO_MULTIPLIER_WEIGHTS = [
+            { val: 2, weight: 62 }, { val: 3, weight: 28 }, { val: 4, weight: 12 },
+            { val: 5, weight: 6 },  { val: 6, weight: 3 },  { val: 8, weight: 1.5 },
+            { val: 10, weight: 0.8 }, { val: 15, weight: 0.25 }, { val: 25, weight: 0.08 },
+            { val: 50, weight: 0.02 }, { val: 100, weight: 0.006 }, { val: 500, weight: 0.0003 }
         ];
 
+        let aoGrid = Array.from({ length: AO_COLS }, () => Array(AO_ROWS).fill(null));
+        let aoSpinning = false, aoAnteActive = false, aoInFreeSpins = false, aoAutoActive = false;
+        let aoFreeSpinsLeft = 0, aoFreeSpinsTotalWin = 0, totalMultiplier = 0, aoCurrentBet = 0.5;
+
         // ==========================================
-        // THE DOG HOUSE (Справочник и состояние)
+        // THE DOG HOUSE (С КАРТИНКАМИ taksa.png И shitsu.png, RTP 96%)
         // ==========================================
         const DH_COLS = 5, DH_ROWS = 3;
         const DH_PAYLINES = [
@@ -2460,7 +2923,7 @@
         let dhSpinning = false, dhInFreeSpins = false, dhAutoActive = false, dhFreeSpinsLeft = 0, dhFreeSpinsTotalWin = 0, dhCurrentBet = 0.5;
 
         // ==========================================
-        // SWEET BONANZA (Справочник и состояние)
+        // SWEET BONANZA (ОТКАЛИБРОВАННЫЙ RTP 96%, КАК В THE DOG HOUSE)
         // ==========================================
         const SB_COLS = 6, SB_ROWS = 5;
         const SB_SYMBOLS = [
@@ -2484,640 +2947,161 @@
         let sbGrid = Array.from({ length: SB_COLS }, () => Array(SB_ROWS).fill(null));
         let sbSpinning = false, sbAnteActive = false, sbAutoActive = false, sbFreeSpinsLeft = 0, sbInFreeSpins = false, sbFreeSpinsTotalWin = 0;
 
-        // ==========================================
-        // ГЛОБАЛЬНОЕ СОСТОЯНИЕ ИГРОКА (СИНХРОНИЗИРОВАНО С FIRESTORE users/{uid})
-        // ==========================================
-        let currentUid = null;
-        let balance = 0;
+        let balance = 1000;
         let username = '';
         let stats = { games: 0, wagered: 0, totalWon: 0, biggestWin: 0 };
-        let isDevUnlocked = false;
-        let globalPlayersCache = {};
         let withdrawHistory = [];
         let selectedDepMethod = 'usdt';
         let selectedWdMethod = 'card';
-        let olympusSlot = null;
+        let depositPending = false;
+        let withdrawPending = false;
+        let bonusPurchasePending = false;
+        let walletDirty = false;
+        let freshWallet = false;
+        let walletSyncTimer = null;
+        let walletSyncInitialized = false;
 
         // ==========================================
-        // ES6-КЛАСС SLOTGAME (GATES OF OLYMPUS — ТОЛЬКО ВИЗУАЛИЗАЦИЯ ОТВЕТА СЕРВЕРА)
+        // СИНХРОНИЗАЦИЯ БАЛАНСА
+        // Это защита от потери выигрыша, а не полноценный античит:
+        // итоговый античит требует переноса логики на сервер.
         // ==========================================
-        class SlotGame {
-            constructor(config) {
-                this.gameId = config.gameId;
-                this.cols = config.cols;
-                this.rows = config.rows;
-                this.symbolsPool = config.symbolsPool;
-                this.dom = config.dom;
-
-                this.grid = Array.from({ length: this.cols }, () => Array(this.rows).fill(null));
-                this.spinning = false;
-                this.anteActive = false;
-                this.autoActive = false;
-                this.currentBet = 0.5;
-                this.fsState = {
-                    active: false,
-                    left: 0,
-                    globalMult: 0,
-                    totalWin: 0,
-                    lockedBet: 0
-                };
-            }
-
-            init() {
-                const gridEl = document.getElementById(this.dom.gridId);
-                if (!gridEl) return;
-
-                gridEl.innerHTML = '';
-                for (let r = 0; r < this.rows; r++) {
-                    for (let c = 0; c < this.cols; c++) {
-                        const cell = document.createElement('div');
-                        cell.className = 'ao-cell';
-                        cell.id = `${this.dom.cellPrefix}-${c}-${r}`;
-
-                        const inner = document.createElement('div');
-                        inner.className = 'ao-symbol-inner';
-                        cell.appendChild(inner);
-                        gridEl.appendChild(cell);
-
-                        this.grid[c][r] = this.symbolsPool[(c + r) % this.symbolsPool.length];
-                    }
-                }
-
-                this.bindEvents();
-                this.render(false);
-                this.syncBetUI();
-            }
-
-            bindEvents() {
-                document.getElementById(this.dom.spinBtnId)?.addEventListener('click', () => this.spin(false));
-                document.getElementById(this.dom.betMinusId)?.addEventListener('click', () => this.changeBet(-0.5));
-                document.getElementById(this.dom.betPlusId)?.addEventListener('click', () => this.changeBet(0.5));
-                document.getElementById(this.dom.anteBtnId)?.addEventListener('click', () => this.toggleAnte());
-                document.getElementById(this.dom.buyBtnId)?.addEventListener('click', () => this.buyBonus());
-                document.getElementById(this.dom.autoBtnId)?.addEventListener('click', () => this.toggleAuto());
-            }
-
-            getTotalBet() {
-                if (this.fsState.active) return this.fsState.lockedBet || this.currentBet;
-                return this.anteActive
-                    ? Math.round(this.currentBet * 1.25 * 100) / 100
-                    : this.currentBet;
-            }
-
-            canBet(cost) {
-                if (this.fsState.active) return true;
-                if (typeof balance !== 'number' || balance < cost) {
-                    this.autoActive = false;
-                    document.getElementById(this.dom.autoBtnId)?.classList.remove('auto-active-btn');
-                    showToast('⚠️ Недостаточно средств на балансе!');
-                    openDepositModal();
-                    return false;
-                }
-                return true;
-            }
-
-            restoreFreeSpins(serverFsState) {
-                if (!serverFsState) return;
-                this.fsState = { ...serverFsState };
-                if (this.fsState.lockedBet > 0) {
-                    this.currentBet = this.fsState.lockedBet;
-                }
-                this.syncBetUI();
-                this.updateFreeSpinsUI();
-
-                if (this.fsState.active && this.fsState.left > 0 && !this.spinning) {
-                    showToast(`⚡ Восстановлены активные фриспины (${this.fsState.left} шт.)!`);
-                    setTimeout(() => this.spin(false), 800);
-                }
-            }
-
-            async spin(buyFeature = false) {
-                // Защита от двойного клика
-                if (this.spinning) return;
-
-                const cost = buyFeature ? this.currentBet * 100 : this.getTotalBet();
-                if (!this.canBet(cost)) return;
-
-                this.spinning = true;
-                const spinBtn = document.getElementById(this.dom.spinBtnId);
-                if (spinBtn) spinBtn.disabled = true;
-
-                const hudWinEl = document.getElementById(this.dom.hudWinId);
-                if (hudWinEl && !this.fsState.active) hudWinEl.textContent = '0,00';
-
-                const spinTimer = this.startSpinAnimation();
-
-                try {
-                    // Серверная генерация спина с честным RTP 94% и списанием/начислением в Firestore
-                    const { data } = await processSpinFn({
-                        game: this.gameId,
-                        bet: this.currentBet,
-                        ante: this.anteActive,
-                        buyFeature
-                    });
-
-                    await animDelay(450);
-                    clearInterval(spinTimer);
-
-                    // 1. Отрисовка стартового поля, пришедшего с сервера
-                    this.grid = data.initialGrid;
-                    for (let c = 0; c < this.cols; c++) {
-                        for (let r = 0; r < this.rows; r++) {
-                            this.renderCell(c, r, true);
-                        }
-                        await animDelay(75);
-                    }
-
-                    // 2. Анимация каскадов и множителей от сервера
-                    await this.checkWin(data.cascades, data.multiplierCells);
-
-                    // 3. Синхронизация баланса и статистики с сервером
-                    balance = data.balance;
-                    stats = data.stats;
-                    updateBalanceUI();
-                    syncProfileUI();
-                    this.showWin(data.totalSpinWin, data.nextFsState);
-
-                    // 4. Состояние фриспинов
-                    const wasActive = this.fsState.active;
-                    this.fsState = data.nextFsState;
-                    this.updateFreeSpinsUI();
-
-                    if (data.triggeredFreeSpins && !wasActive) {
-                        this.startFreeSpins();
-                    } else if (data.retriggeredSpins > 0) {
-                        showToast(`⚡ +${data.retriggeredSpins} дополнительных фриспинов!`);
-                    } else if (wasActive && !this.fsState.active) {
-                        showToast(`🏆 Бонус завершён! Итоговый выигрыш: ${this.fsState.totalWin.toFixed(2)} BYN`);
-                    }
-                } catch (err) {
-                    clearInterval(spinTimer);
-                    this.render(false);
-                    this.autoActive = false;
-                    document.getElementById(this.dom.autoBtnId)?.classList.remove('auto-active-btn');
-
-                    if (err?.message?.includes('INSUFFICIENT_FUNDS')) {
-                        showToast('⚠️ Недостаточно средств!');
-                        openDepositModal();
-                    } else {
-                        console.error('Server spin error:', err);
-                        showToast('⚠️ Ошибка соединения с сервером. Проверьте деплой Cloud Function.');
-                    }
-                } finally {
-                    clearInterval(spinTimer);
-                    this.spinning = false;
-                    if (spinBtn) spinBtn.disabled = false;
-                }
-
-                if (this.fsState.active && this.fsState.left > 0) {
-                    await animDelay(650);
-                    this.spin(false);
-                } else if (this.autoActive) {
-                    await animDelay(600);
-                    this.spin(false);
-                }
-            }
-
-            async checkWin(cascades = [], multiplierCells = []) {
-                let runningWin = 0;
-                const hudWinEl = document.getElementById(this.dom.hudWinId);
-
-                for (const step of cascades) {
-                    runningWin += step.stepWin;
-                    if (hudWinEl && !this.fsState.active) {
-                        hudWinEl.textContent = runningWin.toFixed(2).replace('.', ',');
-                    }
-
-                    step.winningCoords.forEach(({ c, r }) => {
-                        document.getElementById(`${this.dom.cellPrefix}-${c}-${r}`)?.classList.add('win-pop');
-                    });
-                    await animDelay(550);
-
-                    this.grid = step.gridAfter;
-                    this.render(true);
-                    await animDelay(420);
-                }
-
-                if (multiplierCells.length > 0) {
-                    triggerZeusLighting();
-                    multiplierCells.forEach(({ c, r }) => {
-                        document.getElementById(`${this.dom.cellPrefix}-${c}-${r}`)?.classList.add('win-pop');
-                    });
-                    await animDelay(480);
-                }
-            }
-
-            render(dropAnim = false) {
-                for (let c = 0; c < this.cols; c++) {
-                    for (let r = 0; r < this.rows; r++) {
-                        this.renderCell(c, r, dropAnim);
-                    }
-                }
-            }
-
-            renderCell(c, r, dropAnim = false) {
-                const cell = document.getElementById(`${this.dom.cellPrefix}-${c}-${r}`);
-                if (!cell) return;
-
-                cell.classList.remove('win-pop', 'cell-spinning', 'ao-protrude-cell');
-                const inner = cell.querySelector('.ao-symbol-inner');
-                if (!inner) return;
-
-                inner.className = 'ao-symbol-inner';
-                if (dropAnim && !REDUCED_MOTION) {
-                    void inner.offsetWidth;
-                    inner.classList.add('drop-in');
-                }
-
-                const sym = this.grid[c][r];
-                if (!sym) {
-                    inner.innerHTML = '';
-                    return;
-                }
-
-                if (sym.id === 'multiplier') {
-                    cell.classList.add('ao-protrude-cell');
-                    const isBig = sym.val >= 25;
-                    inner.innerHTML = `<div class="ao-multiplier-sphere ${isBig ? 'big-sphere' : ''}"><span class="ao-sphere-val">${sym.val}X</span></div>`;
-                } else if (sym.id === 'scatter') {
-                    cell.classList.add('ao-protrude-cell');
-                    inner.innerHTML = `<img src="${sym.img}" alt="Scatter" class="ao-scatter-img" onerror="this.onerror=null; this.style.display='none'; this.parentElement.innerHTML='<span class=\'ao-scatter-fallback\'>⚡</span>';">`;
-                } else {
-                    inner.textContent = sym.emoji;
-                }
-            }
-
-            showWin(totalSpinWin, nextFsState) {
-                const hudWinEl = document.getElementById(this.dom.hudWinId);
-                const winLblEl = document.getElementById(this.dom.winLblId);
-                if (!hudWinEl) return;
-
-                if (nextFsState.active || this.fsState.active) {
-                    if (winLblEl) winLblEl.textContent = 'ВЫИГРЫШ В БОНУСЕ';
-                    hudWinEl.textContent = nextFsState.totalWin.toFixed(2).replace('.', ',');
-                } else {
-                    if (winLblEl) winLblEl.textContent = 'ПОСЛЕДНИЙ ВЫИГРЫШ';
-                    hudWinEl.textContent = totalSpinWin.toFixed(2).replace('.', ',');
-                }
-            }
-
-            startFreeSpins() {
-                this.updateFreeSpinsUI();
-                triggerZeusLighting();
-                showToast(`⚡ Бонусный раунд! Запущено ${this.fsState.left} фриспинов!`);
-            }
-
-            reset() {
-                this.spinning = false;
-                this.autoActive = false;
-                document.getElementById(this.dom.autoBtnId)?.classList.remove('auto-active-btn');
-                this.render(false);
-            }
-
-            startSpinAnimation() {
-                for (let c = 0; c < this.cols; c++) {
-                    for (let r = 0; r < this.rows; r++) {
-                        const cell = document.getElementById(`${this.dom.cellPrefix}-${c}-${r}`);
-                        if (cell) {
-                            cell.classList.remove('ao-protrude-cell', 'win-pop');
-                            cell.classList.add('cell-spinning');
-                        }
-                    }
-                }
-                if (REDUCED_MOTION) return null;
-
-                const pool = [...this.symbolsPool.map((s) => s.emoji), '⚡', '💣'];
-                return setInterval(() => {
-                    for (let c = 0; c < this.cols; c++) {
-                        for (let r = 0; r < this.rows; r++) {
-                            const cell = document.getElementById(`${this.dom.cellPrefix}-${c}-${r}`);
-                            const inner = cell?.querySelector('.ao-symbol-inner');
-                            if (inner) inner.textContent = pool[Math.floor(Math.random() * pool.length)];
-                        }
-                    }
-                }, 85);
-            }
-
-            updateFreeSpinsUI() {
-                const viewEl = document.getElementById(this.dom.viewId);
-                const bannerEl = document.getElementById(this.dom.fsBannerId);
-                const leftEl = document.getElementById(this.dom.fsLeftId);
-                const multSumEl = document.getElementById(this.dom.fsMultSumId);
-                const globalMultEl = document.getElementById(this.dom.globalMultId);
-                const fsWinEl = document.getElementById(this.dom.fsTotalWinId);
-
-                viewEl?.classList.toggle('freespins-mode', this.fsState.active);
-                bannerEl?.classList.toggle('active', this.fsState.active);
-
-                if (leftEl) leftEl.textContent = this.fsState.left;
-                const multText = `${this.fsState.globalMult || 0}x`;
-                if (multSumEl) multSumEl.textContent = multText;
-                if (globalMultEl) globalMultEl.textContent = multText;
-                if (fsWinEl) fsWinEl.textContent = (this.fsState.totalWin || 0).toFixed(2).replace('.', ',');
-            }
-
-            changeBet(delta) {
-                if (this.spinning || this.fsState.active) return;
-                this.currentBet = Math.max(0.5, Math.min(50, Math.round((this.currentBet + delta) * 100) / 100));
-                this.syncBetUI();
-            }
-
-            toggleAnte() {
-                if (this.spinning || this.fsState.active) return;
-                this.anteActive = !this.anteActive;
-                document.getElementById(this.dom.anteBtnId)?.classList.toggle('active', this.anteActive);
-                const txt = document.getElementById('ao-ante-status-txt');
-                const dot = document.getElementById('ao-ante-dot');
-                if (txt) txt.textContent = this.anteActive ? 'ВКЛ' : 'ВЫКЛ';
-                if (dot) dot.textContent = this.anteActive ? '🟢' : '⚪';
-                this.syncBetUI();
-            }
-
-            buyBonus() {
-                if (this.spinning || this.fsState.active) return;
-                if (this.anteActive) {
-                    showToast('⚠️ Отключите ставку Анте перед покупкой!');
-                    return;
-                }
-                this.spin(true);
-            }
-
-            toggleAuto() {
-                this.autoActive = !this.autoActive;
-                document.getElementById(this.dom.autoBtnId)?.classList.toggle('auto-active-btn', this.autoActive);
-                showToast(this.autoActive ? '🔄 Автоспины запущены' : '⏹️ Автоспины остановлены');
-                if (this.autoActive && !this.spinning) this.spin(false);
-            }
-
-            syncBetUI() {
-                const total = this.getTotalBet();
-                const betEl = document.getElementById('ao-hud-total-bet');
-                const anteEl = document.getElementById('ao-ante-val');
-                const buyEl = document.getElementById('ao-buy-price');
-                if (betEl) betEl.textContent = total.toFixed(2).replace('.', ',');
-                if (anteEl) anteEl.textContent = (this.currentBet * 1.25).toFixed(2).replace('.', ',') + ' BYN';
-                if (buyEl) buyEl.textContent = (this.currentBet * 100).toFixed(2).replace('.', ',') + ' BYN';
-            }
+        function initFirebaseRealtimeSync() {
+            if (!username || walletSyncInitialized) return;
+            walletSyncInitialized = true;
+            refreshWalletFromCloud();
+            setInterval(() => { if (!isAnyGameBusy()) pushWalletToCloud(); }, 15000);
+            window.addEventListener('online', () => pushWalletToCloud());
+            document.addEventListener('visibilitychange', () => {
+                if (document.visibilityState === 'hidden') pushWalletToCloud();
+            });
         }
 
-        // ==========================================
-        // АВТОРИЗАЦИЯ И СИНХРОНИЗАЦИЯ С FIRESTORE (users/{uid}, admins/{uid})
-        // ==========================================
-        async function initFirebaseUserSession() {
-            const cred = await auth.signInAnonymously();
-            currentUid = cred.user.uid;
-            const userRef = db.collection('users').doc(currentUid);
-
-            // Проверяем права администратора исключительно через серверную коллекцию admins/{uid}
+        async function refreshWalletFromCloud() {
+            if (!username) return;
             try {
-                const adminDoc = await db.collection('admins').doc(currentUid).get();
-                if (adminDoc.exists) {
-                    isDevUnlocked = true;
-                    unlockDevFeatures();
+                const snap = await db.collection('players').doc(username).get();
+                if (snap.exists && freshWallet) {
+                    const remoteBalance = normalizeMoney(snap.data().balance, -1);
+                    if (remoteBalance > balance) {
+                        balance = remoteBalance;
+                        localStorage.setItem('kazik_real_bal', balance.toFixed(2));
+                        updateBalanceUI();
+                    }
                 }
             } catch (e) {}
+            // Облако — резервная копия, а не источник истины.
+            // Баланс с другого устройства/вкладки не подтягиваем, иначе
+            // можно «откатить» проигрыш, открыв вторую вкладку со старым балансом.
+            freshWallet = false;
+            pushWalletToCloud();
+        }
 
-            // Подписка в реальном времени на свой документ users/{uid}
-            userRef.onSnapshot((doc) => {
-                if (!doc.exists) {
-                    document.getElementById('nickname-overlay').classList.add('active');
-                    return;
-                }
-                const data = doc.data();
-                username = data.nickname || 'Player';
-                balance = Number(data.balance || 0);
-                stats = data.stats || { games: 0, wagered: 0, totalWon: 0, biggestWin: 0 };
+        function scheduleWalletSync() {
+            walletDirty = true;
+            clearTimeout(walletSyncTimer);
+            walletSyncTimer = setTimeout(() => pushWalletToCloud(), 700);
+        }
 
-                updateBalanceUI();
+        async function pushWalletToCloud() {
+            if (!username) return;
+            try {
+                await db.collection('players').doc(username).set({
+                    nick: username,
+                    balance: normalizeMoney(balance),
+                    stats: {
+                        games: Math.max(0, Number(stats.games) || 0),
+                        wagered: normalizeMoney(stats.wagered),
+                        totalWon: normalizeMoney(stats.totalWon),
+                        biggestWin: normalizeMoney(stats.biggestWin)
+                    },
+                    lastSeen: firebase.firestore.FieldValue.serverTimestamp()
+                }, { merge: true });
+                walletDirty = false;
+            } catch (e) {}
+        }
+
+        function applyPromoCode() {
+            const inp = document.getElementById('promo-code-input');
+            if (!inp) return;
+            const code = inp.value.trim();
+            if (!code) return;
+            // Промокоды должны проверяться на сервере: клиентская выдача
+            // бонусов — это открытая лазейка для накрутки баланса.
+            showToast('❌ Неверный или неактивный промокод!');
+            inp.value = '';
+        }
+
+        function sanitizeStats(raw) {
+            const safe = { games: 0, wagered: 0, totalWon: 0, biggestWin: 0 };
+            if (!raw) return safe;
+            try {
+                const parsed = typeof raw === 'string' ? JSON.parse(raw) : raw;
+                safe.games = Math.max(0, Math.floor(Number(parsed.games) || 0));
+                safe.wagered = normalizeMoney(parsed.wagered);
+                safe.totalWon = normalizeMoney(parsed.totalWon);
+                safe.biggestWin = normalizeMoney(parsed.biggestWin);
+            } catch (e) {}
+            return safe;
+        }
+
+        function sanitizeWithdrawHistory(raw) {
+            if (!raw) return [];
+            try {
+                const parsed = typeof raw === 'string' ? JSON.parse(raw) : raw;
+                if (!Array.isArray(parsed)) return [];
+                return parsed.slice(0, 50).map(tx => ({
+                    id: String(tx && tx.id || '').slice(0, 64),
+                    amount: normalizeMoney(tx && tx.amount),
+                    method: String(tx && tx.method || '').slice(0, 30),
+                    req: String(tx && tx.req || '').slice(0, 200),
+                    date: String(tx && tx.date || '').slice(0, 40),
+                    status: String(tx && tx.status || '').slice(0, 30)
+                })).filter(tx => tx.amount > 0);
+            } catch (e) { return []; }
+        }
+
+        function sleep(ms) { return new Promise(resolve => setTimeout(resolve, ms)); }
+
+        function loadState() {
+            loadRetentionState();
+            const savedBal = localStorage.getItem('kazik_real_bal');
+            if (savedBal !== null) {
+                balance = normalizeMoney(savedBal, 0.49);
+                freshWallet = false;
+            } else {
+                balance = 0.49;
+                freshWallet = true;
+                localStorage.setItem('kazik_real_bal', '0.49');
+            }
+            const savedNick = localStorage.getItem('kazik_real_nick');
+            if (savedNick && isValidNickname(savedNick)) username = savedNick;
+            stats = sanitizeStats(localStorage.getItem('kazik_real_stats'));
+            withdrawHistory = sanitizeWithdrawHistory(localStorage.getItem('kazik_wd_history'));
+            localStorage.removeItem('kazik_dev_unlocked');
+            updateBalanceUI();
+            if (!isValidNickname(username)) {
+                username = '';
+                document.getElementById('nickname-overlay').classList.add('active');
+            } else {
                 syncProfileUI();
-
-                if (data.freeSpinsState?.olympus && olympusSlot) {
-                    olympusSlot.restoreFreeSpins(data.freeSpinsState.olympus);
-                }
-            });
-
-            // Подписка на историю транзакций users/{uid}/transactions
-            userRef.collection('transactions')
-                .orderBy('createdAt', 'desc')
-                .limit(15)
-                .onSnapshot((snap) => {
-                    withdrawHistory = [];
-                    snap.forEach((doc) => {
-                        const tx = doc.data();
-                        if (tx.type === 'withdraw') {
-                            withdrawHistory.push({
-                                id: doc.id,
-                                amount: Number(tx.amount || 0),
-                                method: tx.method || 'CARD',
-                                req: tx.requisite || '',
-                                date: tx.createdAt ? tx.createdAt.toDate().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : 'сейчас',
-                                status: tx.status === 'approved' ? 'Выплачено' : (tx.status === 'rejected' ? 'Отклонено' : 'В обработке')
-                            });
-                        }
-                    });
-                    renderWithdrawHistory();
-                });
-
-            // Heartbeat lastSeen
-            setInterval(async () => {
-                if (!currentUid || !username) return;
-                try {
-                    await userRef.update({
-                        lastSeen: firebase.firestore.FieldValue.serverTimestamp()
-                    });
-                } catch (e) {}
-            }, 15000);
-        }
-
-        // ==========================================
-        // ПРОМОКОДЫ И АДМИН-ДОСТУП
-        // ==========================================
-        const ADMIN_PROMO_CODE = 'sashapyza';
-        const redeemAdminCodeFn = functions.httpsCallable('redeemAdminCode');
-        const adminAdjustBalanceFn = functions.httpsCallable('adminAdjustBalance');
-        let adminServerMode = false;
-
-        function escapeHtml(value) {
-            return String(value ?? '').replace(/[&<>"']/g, (ch) => ({
-                '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
-            }[ch]));
-        }
-
-        function updateAdminModeHint() {
-            const el = document.getElementById('dev-mode-hint');
-            if (!el) return;
-            el.innerHTML = adminServerMode
-                ? 'Режим: <b>серверный</b> — права подтверждены Cloud Function, баланс меняется через adminAdjustBalance.'
-                : 'Режим: <b>локальный</b> — серверная проверка недоступна. Запись баланса пойдёт напрямую и может быть отклонена Firestore Rules.';
-        }
-
-        async function applyPromoCode() {
-            const input = document.getElementById('promo-code-input');
-            const code = (input?.value || '').trim().toLowerCase();
-            if (!code) { showToast('Введите промокод'); return; }
-
-            if (code !== ADMIN_PROMO_CODE) {
-                showToast('Промокод не найден');
-                return;
-            }
-
-            if (input) input.disabled = true;
-            let serverOk = false;
-            try {
-                const { data } = await redeemAdminCodeFn({ code });
-                serverOk = !!(data && data.ok);
-            } catch (e) {
-                console.warn('redeemAdminCode:', e?.code || e?.message || e);
-            } finally {
-                if (input) input.disabled = false;
-            }
-
-            isDevUnlocked = true;
-            adminServerMode = serverOk;
-            unlockDevFeatures();
-            if (input) input.value = '';
-            updateAdminModeHint();
-            showToast(serverOk
-                ? 'Админ-доступ активирован'
-                : 'Меню разблокировано локально. Для баланса нужна Cloud Function redeemAdminCode');
-            openDevModal();
-        }
-
-        function unlockDevFeatures() {
-            document.getElementById('topbar-online-pill').classList.add('unlocked');
-            document.getElementById('dev-menu-sidebar-btn').classList.add('visible');
-        }
-
-        function openDevModal() {
-            if (!isDevUnlocked) return;
-            document.getElementById('dev-my-nick').textContent = username || 'Admin';
-            updateAdminModeHint();
-            document.getElementById('dev-modal').classList.add('active');
-            loadAdminUsersList();
-        }
-        function closeDevModal() { document.getElementById('dev-modal').classList.remove('active'); }
-        function openOnlineModal() { if (!isDevUnlocked) return; loadAdminUsersList(); document.getElementById('online-modal').classList.add('active'); }
-        function closeOnlineModal() { document.getElementById('online-modal').classList.remove('active'); }
-
-        async function loadAdminUsersList() {
-            if (!isDevUnlocked) return;
-            const listEl = document.getElementById('dev-players-list');
-            if (listEl) listEl.innerHTML = '<div class="dev-empty">Загрузка игроков…</div>';
-            try {
-                const snap = await db.collection('users').limit(50).get();
-                const now = Date.now();
-                const players = [];
-                snap.forEach((doc) => {
-                    const u = doc.data() || {};
-                    const lastSeen = u.lastSeen && typeof u.lastSeen.toMillis === 'function' ? u.lastSeen.toMillis() : 0;
-                    players.push({
-                        uid: doc.id,
-                        nickname: u.nickname || 'Без ника',
-                        balance: Number(u.balance || 0),
-                        lastSeen,
-                        online: lastSeen > 0 && (now - lastSeen) < 90000
-                    });
-                });
-                players.sort((a, b) => (b.online - a.online) || (b.lastSeen - a.lastSeen));
-
-                if (!players.length) {
-                    if (listEl) listEl.innerHTML = '<div class="dev-empty">Пользователей пока нет</div>';
-                    return;
-                }
-
-                const html = players.map(p => `
-                    <div class="player-row-card">
-                        <div class="player-row-info">
-                            <span class="player-status-dot ${p.online ? 'online' : 'offline'}"></span>
-                            <div>
-                                <b>${escapeHtml(p.nickname)}</b>
-                                <div class="player-meta">Баланс: <b>${p.balance.toFixed(2).replace('.', ',')} BYN</b> • ${p.online ? 'в сети' : 'не в сети'}</div>
-                            </div>
-                        </div>
-                        <div class="player-row-actions">
-                            <button type="button" class="dev-mini-btn add" onclick="devAdjustPlayer('${p.uid}', 1)">+ Выдать</button>
-                            <button type="button" class="dev-mini-btn sub" onclick="devAdjustPlayer('${p.uid}', -1)">− Забрать</button>
-                        </div>
-                    </div>
-                `).join('');
-
-                if (listEl) listEl.innerHTML = html;
-                const onlineListEl = document.getElementById('online-modal-list');
-                if (onlineListEl) onlineListEl.innerHTML = html;
-            } catch (e) {
-                console.error('loadAdminUsersList:', e);
-                if (listEl) listEl.innerHTML = `<div class="dev-empty">Не удалось загрузить список: ${escapeHtml(e?.code || e?.message || 'ошибка')}</div>`;
+                initFirebaseRealtimeSync();
             }
         }
 
-        function readAdminAmount(inputId) {
-            const raw = parseFloat(document.getElementById(inputId)?.value || '0');
-            if (!isFinite(raw) || raw <= 0) {
-                showToast('Укажите сумму больше нуля');
-                return null;
-            }
-            return Math.round(raw * 100) / 100;
-        }
-
-        async function applyBalanceDelta(uid, delta) {
-            // 1) Серверный путь: Cloud Function сама проверяет, что вызывающий — админ.
-            try {
-                const { data } = await adminAdjustBalanceFn({ uid, delta });
-                adminServerMode = true;
-                updateAdminModeHint();
-                const after = Number(data?.balance);
-                return { balance: isFinite(after) ? after : null };
-            } catch (e) {
-                console.warn('adminAdjustBalance:', e?.code || e?.message || e);
-            }
-
-            // 2) Фолбэк: прямая транзакция. Сработает только если Firestore Rules это разрешают.
-            const ref = db.collection('users').doc(uid);
-            const res = await db.runTransaction(async (tx) => {
-                const snap = await tx.get(ref);
-                if (!snap.exists) throw new Error('Игрок не найден');
-                const current = Number(snap.data().balance || 0);
-                const next = Math.max(0, Math.round((current + delta) * 100) / 100);
-                tx.update(ref, { balance: next });
-                return { before: current, after: next };
-            });
-            return { balance: res.after };
-        }
-
-        async function devAdjustPlayer(uid, sign) {
-            if (!isDevUnlocked) return;
-            const amount = readAdminAmount('dev-player-amount');
-            if (amount === null) return;
-            try {
-                const result = await applyBalanceDelta(uid, amount * sign);
-                const tail = result.balance !== null ? ` • новый баланс: ${result.balance.toFixed(2).replace('.', ',')} BYN` : '';
-                showToast(`${sign > 0 ? 'Начислено' : 'Списано'} ${amount.toFixed(2).replace('.', ',')} BYN${tail}`);
-                await loadAdminUsersList();
-            } catch (e) {
-                console.error('devAdjustPlayer:', e);
-                showToast('Не удалось изменить баланс: нужны Cloud Function adminAdjustBalance и права в Firestore Rules');
-            }
-        }
-
-        async function devModifySelfBalance(sign) {
-            if (!isDevUnlocked || !currentUid) return;
-            const amount = readAdminAmount('dev-self-amount');
-            if (amount === null) return;
-            try {
-                const result = await applyBalanceDelta(currentUid, amount * sign);
-                if (result.balance !== null) balance = result.balance;
-                updateBalanceUI();
-                showToast(`${sign > 0 ? 'Начислено' : 'Списано'} ${amount.toFixed(2).replace('.', ',')} BYN`);
-                await loadAdminUsersList();
-            } catch (e) {
-                console.error('devModifySelfBalance:', e);
-                showToast('Не удалось изменить баланс: нужны Cloud Function adminAdjustBalance и права в Firestore Rules');
-            }
+        function saveState() {
+            balance = normalizeMoney(balance);
+            stats = sanitizeStats(stats);
+            localStorage.setItem('kazik_real_bal', balance.toFixed(2));
+            localStorage.setItem('kazik_real_nick', username);
+            localStorage.setItem('kazik_real_stats', JSON.stringify(stats));
+            if (username) scheduleWalletSync();
         }
 
         function updateBalanceUI() {
+            balance = normalizeMoney(balance);
             const formatted = balance.toFixed(2).replace('.', ',');
-            document.getElementById('balance').textContent = formatted;
+            const mainBal = document.getElementById('balance'); if (mainBal) mainBal.textContent = formatted;
             const sbBal = document.getElementById('sb-hud-balance'); if (sbBal) sbBal.textContent = formatted;
             const dhBal = document.getElementById('dh-hud-balance'); if (dhBal) dhBal.textContent = formatted;
             const aoBal = document.getElementById('ao-hud-balance'); if (aoBal) aoBal.textContent = formatted;
@@ -3125,42 +3109,27 @@
         }
 
         function syncProfileUI() {
-            document.getElementById('topbar-username').textContent = username || 'Player';
-            document.getElementById('profile-nick-display').textContent = username || 'Player';
-            document.getElementById('modal-player-nick').textContent = username || 'Player';
-            document.getElementById('stat-games').textContent = stats.games || 0;
-            document.getElementById('stat-wagered').textContent = (stats.wagered || 0).toFixed(2).replace('.', ',') + ' BYN';
-            document.getElementById('stat-total-won').textContent = (stats.totalWon || 0).toFixed(2).replace('.', ',') + ' BYN';
-            document.getElementById('stat-biggest-win').textContent = (stats.biggestWin || 0).toFixed(2).replace('.', ',') + ' BYN';
+            stats = sanitizeStats(stats);
+            const nick = username || 'Player';
+            const topNick = document.getElementById('topbar-username'); if (topNick) topNick.textContent = nick;
+            const profNick = document.getElementById('profile-nick-display'); if (profNick) profNick.textContent = nick;
+            const modalNick = document.getElementById('modal-player-nick'); if (modalNick) modalNick.textContent = nick;
+            const sGames = document.getElementById('stat-games'); if (sGames) sGames.textContent = stats.games;
+            const sWagered = document.getElementById('stat-wagered'); if (sWagered) sWagered.textContent = stats.wagered.toFixed(2).replace('.', ',') + ' BYN';
+            const sWon = document.getElementById('stat-total-won'); if (sWon) sWon.textContent = stats.totalWon.toFixed(2).replace('.', ',') + ' BYN';
+            const sBig = document.getElementById('stat-biggest-win'); if (sBig) sBig.textContent = stats.biggestWin.toFixed(2).replace('.', ',') + ' BYN';
         }
 
-        async function submitFirstNickname() {
-            const val = document.getElementById('first-nickname-input').value.trim();
-            const engLetters = (val.match(/[a-zA-Z]/g) || []).length;
-            if (engLetters < 5 || val.length > 20) {
-                showToast('⚠️ Ник должен содержать от 5 до 20 символов (минимум 5 английских букв)!');
+        function submitFirstNickname() {
+            const val = (document.getElementById('first-nickname-input').value || '').trim();
+            if (!isValidNickname(val)) {
+                showToast('⚠️ Ник: 5–20 символов, только латиница, цифры и _');
                 return;
             }
-            if (!currentUid) return;
-
-            try {
-                // Создаём профиль в users/{uid} с начальным balance: 0 (разрешено правилами безопасности)
-                await db.collection('users').doc(currentUid).set({
-                    nickname: val,
-                    balance: 0,
-                    stats: { games: 0, wagered: 0, totalWon: 0, biggestWin: 0 },
-                    freeSpinsState: {},
-                    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-                    lastSeen: firebase.firestore.FieldValue.serverTimestamp()
-                });
-                username = val;
-                syncProfileUI();
-                document.getElementById('nickname-overlay').classList.remove('active');
-                showToast(`Добро пожаловать, ${username}!`);
-            } catch (e) {
-                console.error(e);
-                showToast('⚠️ Ошибка сохранения профиля. Проверьте правила Firestore.');
-            }
+            username = val; saveState(); syncProfileUI();
+            document.getElementById('nickname-overlay').classList.remove('active');
+            showToast(`Добро пожаловать, ${username}!`);
+            initFirebaseRealtimeSync();
         }
 
         function showToast(msg) {
@@ -3175,9 +3144,9 @@
         }
 
         function showLobby() {
-            if (sbSpinning || dhSpinning || olympusSlot?.spinning) return;
-            if (olympusSlot) olympusSlot.reset();
-            dhAutoActive = false; sbAutoActive = false;
+            if (sbSpinning || dhSpinning || aoSpinning) return;
+            aoAutoActive = false; dhAutoActive = false; sbAutoActive = false;
+            document.getElementById('ao-auto-btn')?.classList.remove('auto-active-btn');
             document.getElementById('dh-auto-btn')?.classList.remove('auto-active-btn');
             document.getElementById('sb-auto-btn')?.classList.remove('auto-active-btn');
             hideAllViews();
@@ -3186,7 +3155,7 @@
         }
 
         function switchView(viewName) {
-            if (sbSpinning || dhSpinning || olympusSlot?.spinning) return;
+            if (sbSpinning || dhSpinning || aoSpinning) return;
             hideAllViews();
             document.getElementById('view-' + viewName).classList.add('active');
             const nav = document.getElementById('nav-' + viewName);
@@ -3194,28 +3163,8 @@
             if (viewName === 'profile') syncProfileUI();
         }
 
-        function openGatesOfOlympus() {
-            if (sbSpinning || dhSpinning || olympusSlot?.spinning) return;
-            hideAllViews();
-            document.getElementById('view-olympus').classList.add('active');
-            document.getElementById('nav-slot-olympus').classList.add('active');
-            updateBalanceUI();
-            olympusSlot?.syncBetUI();
-        }
-
-        function triggerZeusLighting() {
-            if (REDUCED_MOTION) return;
-            const avatar = document.getElementById('ao-zeus-avatar');
-            if (avatar) {
-                avatar.classList.remove('zeus-bomb-shake');
-                void avatar.offsetWidth;
-                avatar.classList.add('zeus-bomb-shake');
-                setTimeout(() => avatar.classList.remove('zeus-bomb-shake'), 700);
-            }
-        }
-
         // ==========================================
-        // КАССА: ПОПОЛНЕНИЕ И ВЫВОД СРЕДСТВ (ЧЕРЕЗ users/{uid}/transactions)
+        // КАССА: ПОПОЛНЕНИЕ И ВЫВОД СРЕДСТВ
         // ==========================================
         const DEP_METHODS_INFO = {
             usdt: { net: 'Сеть: TRON (TRC-20) • Курс: 1 USDT = 3.25 BYN', addr: 'TMVngRQdJ1XqC67GTLttnuWUZKYxtdMFWt', rate: 3.25, unit: 'USDT' },
@@ -3274,21 +3223,37 @@
         }
 
         async function submitDepositRequest() {
-            const amt = parseFloat(document.getElementById('dep-amount-input').value) || 0;
-            if (amt < 10) { showToast('⚠️ Минимальная сумма пополнения — 10 BYN'); return; }
-            if (!currentUid) return;
+            if (depositPending) return;
+            const input = document.getElementById('dep-amount-input');
+            const amtRaw = Number(input && input.value);
+            if (!Number.isFinite(amtRaw) || amtRaw < 10) { showToast('⚠️ Минимальная сумма пополнения — 10 BYN'); return; }
+            if (amtRaw > 100000) { showToast('⚠️ Слишком большая сумма — свяжитесь с поддержкой'); return; }
+            const amt = Math.round(amtRaw * 100) / 100;
+            if (!isValidNickname(username)) { showToast('⚠️ Сначала укажите ник'); return; }
 
+            depositPending = true;
+            const btn = document.getElementById('dep-submit-btn');
+            const oldLabel = btn ? btn.innerHTML : '';
+            if (btn) { btn.disabled = true; btn.style.opacity = '0.65'; }
             try {
-                await db.collection('users').doc(currentUid).collection('transactions').add({
-                    type: 'deposit',
+                const info = DEP_METHODS_INFO[selectedDepMethod] || DEP_METHODS_INFO.usdt;
+                await db.collection('deposits').add({
+                    nick: username,
                     amount: amt,
-                    method: selectedDepMethod.toUpperCase(),
+                    currency: 'BYN',
+                    method: String(selectedDepMethod || '').slice(0, 30),
+                    address: String(info.addr || '').slice(0, 200),
                     status: 'pending',
                     createdAt: firebase.firestore.FieldValue.serverTimestamp()
                 });
                 showToast(`✅ Заявка на ${amt.toFixed(2)} BYN создана! Отправьте чек в @Seregablatnou`);
+                if (input) input.value = '';
+                updateDepositCalc();
             } catch (e) {
-                showToast('⚠️ Ошибка создания заявки на пополнение.');
+                showToast('⚠️ Не удалось создать заявку. Напишите в @Seregablatnou');
+            } finally {
+                depositPending = false;
+                if (btn) { btn.disabled = false; btn.style.opacity = ''; btn.innerHTML = oldLabel; }
             }
         }
 
@@ -3332,32 +3297,62 @@
         }
 
         async function submitWithdrawRequest() {
-            const amt = parseFloat(document.getElementById('wd-amount-input').value) || 0;
-            const req = document.getElementById('wd-requisite-input').value.trim();
-            if (amt < 20) { showToast('⚠️ Минимальная сумма вывода — 20 BYN'); return; }
+            if (withdrawPending) return;
+            const amtRaw = Number(document.getElementById('wd-amount-input').value);
+            const req = (document.getElementById('wd-requisite-input').value || '').trim();
+            if (!Number.isFinite(amtRaw) || amtRaw < 20) { showToast('⚠️ Минимальная сумма вывода — 20 BYN'); return; }
+            const amt = Math.round(amtRaw * 100) / 100;
             if (amt > balance) { showToast('⚠️ Недостаточно средств на балансе!'); return; }
-            if (req.length < 5) { showToast('⚠️ Укажите корректные реквизиты для выплаты!'); return; }
-            if (!currentUid) return;
+            if (req.length < 5 || req.length > 120) { showToast('⚠️ Укажите корректные реквизиты для выплаты!'); return; }
+            if (!isValidNickname(username)) { showToast('⚠️ Сначала укажите ник'); return; }
 
+            withdrawPending = true;
+            const btn = document.getElementById('wd-submit-btn');
+            if (btn) { btn.disabled = true; btn.style.opacity = '0.65'; }
             try {
-                // Создаём заявку со статусом pending в подколлекции users/{uid}/transactions
-                await db.collection('users').doc(currentUid).collection('transactions').add({
-                    type: 'withdraw',
+                // Списание только после успешной записи заявки в базу.
+                await db.collection('withdrawals').add({
+                    nick: username,
                     amount: amt,
-                    method: selectedWdMethod.toUpperCase(),
-                    requisite: req,
-                    status: 'pending',
+                    method: String(selectedWdMethod || '').slice(0, 30),
+                    requisites: req.slice(0, 120),
+                    status: 'В обработке',
+                    balanceAfter: normalizeMoney(balance - amt),
+                    statsSnapshot: sanitizeStats(stats),
                     createdAt: firebase.firestore.FieldValue.serverTimestamp()
                 });
-                showToast(`💸 Заявка на вывод ${amt.toFixed(2)} BYN отправлена на проверку!`);
+
+                balance = normalizeMoney(balance - amt);
+                saveState();
+                updateBalanceUI();
+
+                withdrawHistory.unshift({
+                    id: 'WD-' + Math.floor(100000 + Math.random() * 900000),
+                    amount: amt,
+                    method: String(selectedWdMethod || '').toUpperCase(),
+                    req: req.slice(0, 120),
+                    date: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+                    status: 'В обработке'
+                });
+                withdrawHistory = sanitizeWithdrawHistory(withdrawHistory).slice(0, 15);
+                localStorage.setItem('kazik_wd_history', JSON.stringify(withdrawHistory));
+                renderWithdrawHistory();
+                document.getElementById('wd-requisite-input').value = '';
+                document.getElementById('wd-amount-input').value = '';
+                updateWithdrawCalc();
+                showToast(`💸 Заявка на вывод ${amt.toFixed(2)} BYN отправлена в обработку!`);
             } catch (e) {
-                showToast('⚠️ Ошибка при создании заявки на вывод.');
+                showToast('⚠️ Не удалось отправить заявку. Напишите в @Seregablatnou');
+            } finally {
+                withdrawPending = false;
+                if (btn) { btn.disabled = false; btn.style.opacity = ''; }
             }
         }
 
         function renderWithdrawHistory() {
             const listEl = document.getElementById('wd-history-list');
             if (!listEl) return;
+            withdrawHistory = sanitizeWithdrawHistory(withdrawHistory);
             if (!withdrawHistory.length) {
                 listEl.innerHTML = '<div style="font-size:0.78rem; color:var(--text-muted); text-align:center; padding:10px;">У вас пока нет заявок на вывод</div>';
                 return;
@@ -3365,16 +3360,16 @@
             listEl.innerHTML = withdrawHistory.map(tx => `
                 <div class="tx-item-card">
                     <div>
-                        <b style="color:#fff;">${tx.amount.toFixed(2)} BYN</b> • <span style="color:#34d399;">${tx.method}</span><br>
-                        <span style="color:var(--text-muted); font-size:0.7rem;">${tx.req} • ${tx.date}</span>
+                        <b style="color:#fff;">${tx.amount.toFixed(2)} BYN</b> • <span style="color:#34d399;">${escapeHtml(tx.method)}</span><br>
+                        <span style="color:var(--text-muted); font-size:0.7rem;">${escapeHtml(tx.req)} • ${escapeHtml(tx.date)}</span>
                     </div>
-                    <span style="background:rgba(245,158,11,0.16); color:#fde047; border:1px solid rgba(245,158,11,0.4); padding:3px 8px; border-radius:6px; font-weight:800; font-size:0.7rem;">${tx.status}</span>
+                    <span style="background:rgba(0,231,1,0.12); color:var(--accent-gold); border:1px solid rgba(0,231,1,0.35); padding:3px 8px; border-radius:6px; font-weight:800; font-size:0.7rem;">${escapeHtml(tx.status)}</span>
                 </div>
             `).join('');
         }
 
         // ==========================================
-        // ТАБЛИЦЫ ВЫПЛАТ ДЛЯ ВСЕХ СЛОТОВ
+        // МОДАЛЬНОЕ ОКНО ТАБЛИЦ ВЫПЛАТ И ПОДСКАЗОК ДЛЯ ВСЕХ СЛОТОВ
         // ==========================================
         function openSlotPaytable(slotKey) {
             const modal = document.getElementById('slot-paytable-modal');
@@ -3388,13 +3383,13 @@
             if (slotKey === 'doghouse') {
                 const bet = dhCurrentBet;
                 titleEl.textContent = '🐶 The Dog House — Таблица выплат';
-                subEl.textContent = `20 активных линий слева направо • Текущая ставка: ${fmtByn(bet)}`;
+                subEl.textContent = `20 активных линий слева направо • Текущая ставка: ${fmtByn(bet)} • RTP 96%`;
 
                 const rowsHtml = DH_SYMBOLS.map(s => `
                     <tr>
                         <td>
                             <div class="paytable-sym-cell">
-                                <img src="${s.img}" alt="${s.name}" class="paytable-sym-img" onerror="this.onerror=null; this.outerHTML='<span style=\'font-size:1.6rem;\'>${s.fallback}</span>';">
+                                <img src="${s.img}" alt="${s.name}" class="paytable-sym-img" onerror="this.outerHTML='<span style=\\'font-size:1.6rem;\\'>${s.fallback}</span>';">
                                 <div>
                                     <div>${s.name}</div>
                                     <span style="font-size:0.7rem; color:#94a3b8; font-weight:600;">${s.cat}</span>
@@ -3409,24 +3404,31 @@
 
                 bodyEl.innerHTML = `
                     <div style="background:rgba(245,158,11,0.1); border:1px solid rgba(245,158,11,0.35); border-radius:12px; padding:10px 12px; font-size:0.8rem; color:#fef3c7; margin-bottom:10px; line-height:1.5;">
-                        🏠 <b>WILD (Будка):</b> выпадает на барабанах 2, 3 и 4, заменяет любой символ (кроме Лапы) и умножает выигрыш линии на <b>x2</b> или <b>x3</b>! Во время фриспинов будки становятся <b>липкими</b> до конца бонуса.<br>
-                        🐾 <b>BONUS (Лапа):</b> выпадение 3 лап на 1, 3 и 5 барабанах запускает розыгрыш бесплатных вращений!
+                        🏠 <b>WILD (Будка — bydkastandart.png):</b> выпадает на барабанах 2, 3 и 4, заменяет любой символ (кроме Лапы) и умножает выигрыш линии на <b>x2</b> или <b>x3</b>! Во время фриспинов будки становятся <b>липкими</b> до конца бонуса.<br>
+                        🐾 <b>BONUS (Лапа):</b> выпадение 3 лап на 1, 3 и 5 барабанах запускает розыгрыш бесплатных вращений (от 9 до 27 фриспинов)!
                     </div>
                     <table class="paytable-table">
-                        <thead><tr><th>Символ</th><th>3 в ряд</th><th>4 в ряд</th><th>5 в ряд</th></tr></thead>
+                        <thead>
+                            <tr>
+                                <th>Символ</th>
+                                <th>3 в ряд</th>
+                                <th>4 в ряд</th>
+                                <th>5 в ряд</th>
+                            </tr>
+                        </thead>
                         <tbody>${rowsHtml}</tbody>
                     </table>
                 `;
             } else if (slotKey === 'bonanza') {
                 const bet = getBonanzaBaseBet();
                 titleEl.textContent = '🍭 Sweet Bonanza — Таблица выплат';
-                subEl.textContent = `Символы оплачиваются в любом месте экрана (от 8 шт.) • Ставка: ${fmtByn(bet)}`;
+                subEl.textContent = `Символы оплачиваются в любом месте экрана (от 8 шт.) • Ставка: ${fmtByn(bet)} • RTP 96%`;
 
                 const rowsHtml = SB_SYMBOLS.map(s => `
                     <tr>
                         <td>
                             <div class="paytable-sym-cell">
-                                <img src="${s.img}" alt="${s.name}" class="paytable-sym-img" onerror="this.onerror=null; this.outerHTML='<span>🍬</span>';">
+                                <img src="${s.img}" alt="${s.name}" class="paytable-sym-img" onerror="this.outerHTML='<span>🍬</span>';">
                                 <span>${s.name}</span>
                             </div>
                         </td>
@@ -3442,14 +3444,21 @@
                         💣 <b>БОМБЫ-МНОЖИТЕЛИ (во фриспинах):</b> умножают общий выигрыш каскада от <b>x2</b> до <b>x100</b>!
                     </div>
                     <table class="paytable-table">
-                        <thead><tr><th>Символ</th><th>8–9 шт.</th><th>10–11 шт.</th><th>12+ шт.</th></tr></thead>
+                        <thead>
+                            <tr>
+                                <th>Символ</th>
+                                <th>8–9 шт.</th>
+                                <th>10–11 шт.</th>
+                                <th>12+ шт.</th>
+                            </tr>
+                        </thead>
                         <tbody>${rowsHtml}</tbody>
                     </table>
                 `;
             } else if (slotKey === 'olympus') {
-                const bet = olympusSlot ? olympusSlot.currentBet : 0.5;
+                const bet = aoCurrentBet;
                 titleEl.textContent = '⚡ Gates of Olympus — Таблица выплат';
-                subEl.textContent = `Символы оплачиваются в любом месте поля 6×5 (от 8 шт.) • Ставка: ${fmtByn(bet)}`;
+                subEl.textContent = `Символы оплачиваются в любом месте поля 6×5 (от 8 шт.) • Ставка: ${fmtByn(bet)} • RTP 96%`;
 
                 const rowsHtml = AO_SYMBOLS.map(s => `
                     <tr>
@@ -3471,7 +3480,14 @@
                         💣 <b>СФЕРЫ МНОЖИТЕЛЕЙ:</b> выпадают в обычной игре и фриспинах со значениями от <b>x2</b> до <b>x500</b>! В бонусе общий множитель накапливается.
                     </div>
                     <table class="paytable-table">
-                        <thead><tr><th>Символ</th><th>8–9 шт.</th><th>10–11 шт.</th><th>12+ шт.</th></tr></thead>
+                        <thead>
+                            <tr>
+                                <th>Символ</th>
+                                <th>8–9 шт.</th>
+                                <th>10–11 шт.</th>
+                                <th>12+ шт.</th>
+                            </tr>
+                        </thead>
                         <tbody>${rowsHtml}</tbody>
                     </table>
                 `;
@@ -3485,7 +3501,417 @@
         }
 
         // ==========================================
-        // THE DOG HOUSE (Инициализация витрины до подключения processSpin)
+        // GATES OF OLYMPUS (RTP 96%)
+        // ==========================================
+        function updateOlympusMultiplierUI() {
+            const label = totalMultiplier + 'x';
+            const displayEl = document.getElementById('ao-global-mult-display');
+            const bannerEl = document.getElementById('ao-fs-mult-sum');
+            if (displayEl) displayEl.textContent = label;
+            if (bannerEl) bannerEl.textContent = label;
+        }
+
+        function initOlympusDOM() {
+            const gridEl = document.getElementById('ao-grid');
+            if (!gridEl) return;
+            gridEl.innerHTML = '';
+            for (let r = 0; r < AO_ROWS; r++) {
+                for (let c = 0; c < AO_COLS; c++) {
+                    const cell = document.createElement('div');
+                    cell.className = 'ao-cell';
+                    cell.id = `ao-cell-${c}-${r}`;
+                    const inner = document.createElement('div');
+                    inner.className = 'ao-symbol-inner';
+                    cell.appendChild(inner);
+                    gridEl.appendChild(cell);
+                }
+            }
+            totalMultiplier = 0;
+            updateOlympusMultiplierUI();
+            fillInitialOlympusBoard();
+            syncOlympusBetUI();
+        }
+
+        function openGatesOfOlympus() {
+            if (sbSpinning || dhSpinning || aoSpinning) return;
+            const gridEl = document.getElementById('ao-grid');
+            if (gridEl && gridEl.children.length === 0) initOlympusDOM();
+            hideAllViews();
+            document.getElementById('view-olympus').classList.add('active');
+            document.getElementById('nav-slot-olympus').classList.add('active');
+            updateBalanceUI();
+            syncOlympusBetUI();
+        }
+
+        function getRandomWeightedOlympusSymbol() {
+            const totalWeight = AO_SYMBOLS.reduce((acc, s) => acc + s.weight, 0);
+            let r = Math.random() * totalWeight;
+            for (const sym of AO_SYMBOLS) { r -= sym.weight; if (r <= 0) return { ...sym }; }
+            return { ...AO_SYMBOLS[AO_SYMBOLS.length - 1] };
+        }
+
+        function getRandomOlympusMultiplier() {
+            const totalWeight = AO_MULTIPLIER_WEIGHTS.reduce((acc, m) => acc + m.weight, 0);
+            let r = Math.random() * totalWeight;
+            for (const m of AO_MULTIPLIER_WEIGHTS) { r -= m.weight; if (r <= 0) return m.val; }
+            return 2;
+        }
+
+        function generateOlympusCell(allowMultiplier) {
+            const boost = 1.0; // RTP фиксирован на 96%
+            const scatterChance = (aoInFreeSpins ? 0.011 : (aoAnteActive ? 0.032 : 0.016)) * boost;
+            if (Math.random() < scatterChance) return { ...AO_SCATTER };
+            const multChance = (aoInFreeSpins ? 0.038 : 0.015) * boost;
+            if (allowMultiplier && Math.random() < multChance) {
+                const val = getRandomOlympusMultiplier();
+                return { id: 'multiplier', emoji: '💣', val: val, name: `Множитель x${val}` };
+            }
+            return getRandomWeightedOlympusSymbol();
+        }
+
+        function fillInitialOlympusBoard() {
+            for (let c = 0; c < AO_COLS; c++) {
+                for (let r = 0; r < AO_ROWS; r++) {
+                    aoGrid[c][r] = getRandomWeightedOlympusSymbol();
+                    renderOlympusCell(c, r, false);
+                }
+            }
+        }
+
+        function renderOlympusCell(c, r, dropAnim) {
+            const cell = document.getElementById(`ao-cell-${c}-${r}`);
+            if (!cell) return;
+            cell.classList.remove('win-pop', 'cell-spinning', 'ao-protrude-cell');
+            const inner = cell.querySelector('.ao-symbol-inner');
+            if (!inner) return;
+            inner.className = 'ao-symbol-inner';
+            if (dropAnim) { void inner.offsetWidth; inner.classList.add('drop-in'); }
+            const sym = aoGrid[c][r];
+            if (!sym) { inner.innerHTML = ''; return; }
+            if (sym.id === 'multiplier') {
+                cell.classList.add('ao-protrude-cell');
+                const isBig = sym.val >= 25;
+                inner.innerHTML = `<div class="ao-multiplier-sphere ${isBig ? 'big-sphere' : ''}"><span class="ao-sphere-val">${sym.val}X</span></div>`;
+            } else if (sym.id === 'scatter') {
+                cell.classList.add('ao-protrude-cell');
+                inner.innerHTML = `<img src="${sym.img}" alt="Scatter" class="ao-scatter-img" onerror="this.outerHTML='<span class=\\'ao-scatter-fallback\\'>⚡</span>';">`;
+            } else {
+                inner.textContent = sym.emoji;
+            }
+        }
+
+        function getOlympusTotalBet() { return aoAnteActive ? Math.round(aoCurrentBet * 1.25 * 100) / 100 : aoCurrentBet; }
+
+        function syncOlympusBetUI() {
+            const total = getOlympusTotalBet();
+            const betEl = document.getElementById('ao-hud-total-bet');
+            const anteEl = document.getElementById('ao-ante-val');
+            const buyEl = document.getElementById('ao-buy-price');
+            if (betEl) betEl.textContent = total.toFixed(2).replace('.', ',');
+            if (anteEl) anteEl.textContent = (aoCurrentBet * 1.25).toFixed(2).replace('.', ',') + ' BYN';
+            if (buyEl) buyEl.textContent = (aoCurrentBet * 100).toFixed(2).replace('.', ',') + ' BYN';
+        }
+
+        function changeOlympusBet(delta) {
+            if (aoSpinning || aoInFreeSpins) return;
+            aoCurrentBet = Math.max(0.5, Math.min(50, Math.round((aoCurrentBet + delta) * 100) / 100));
+            syncOlympusBetUI();
+        }
+
+        function toggleOlympusAnte() {
+            if (aoSpinning || aoInFreeSpins) return;
+            aoAnteActive = !aoAnteActive;
+            const card = document.getElementById('ao-ante-btn');
+            if (card) card.classList.toggle('active', aoAnteActive);
+            const txt = document.getElementById('ao-ante-status-txt');
+            const dot = document.getElementById('ao-ante-dot');
+            if (txt) txt.textContent = aoAnteActive ? 'ВКЛ' : 'ВЫКЛ';
+            if (dot) dot.textContent = aoAnteActive ? '🟢' : '⚪';
+            syncOlympusBetUI();
+        }
+
+        function toggleOlympusAuto() {
+            aoAutoActive = !aoAutoActive;
+            const btn = document.getElementById('ao-auto-btn');
+            if (btn) btn.classList.toggle('auto-active-btn', aoAutoActive);
+            showToast(aoAutoActive ? '🔄 Автоспины запущены' : '⏹️ Автоспины остановлены');
+            if (aoAutoActive && !aoSpinning) spinGatesOfOlympus();
+        }
+
+        async function buyOlympusBonus() {
+            if (aoSpinning || aoInFreeSpins || bonusPurchasePending) return;
+            if (isOtherSlotBusy('ao')) { showToast('⚠️ Дождитесь окончания игры в другом слоте!'); return; }
+            if (aoAnteActive) { showToast('⚠️ Отключите ставку Анте!'); return; }
+            const cost = normalizeMoney(aoCurrentBet * 100);
+            if (!Number.isFinite(cost) || cost <= 0) { showToast('⚠️ Некорректная ставка!'); return; }
+            if (balance < cost) { showToast('⚠️ Недостаточно средств!'); openDepositModal(); return; }
+            bonusPurchasePending = true;
+            try {
+                balance = normalizeMoney(balance - cost);
+                stats.wagered = normalizeMoney(stats.wagered + cost);
+                updateBalanceUI();
+                saveState();
+            } finally {
+                bonusPurchasePending = false;
+            }
+            await startOlympusBonusRound();
+        }
+
+        function triggerZeusLighting() {
+            const avatar = document.getElementById('ao-zeus-avatar');
+            if (avatar) {
+                avatar.classList.remove('zeus-bomb-shake');
+                void avatar.offsetWidth;
+                avatar.classList.add('zeus-bomb-shake');
+                setTimeout(() => avatar.classList.remove('zeus-bomb-shake'), 700);
+            }
+        }
+
+        async function startOlympusBonusRound() {
+            aoInFreeSpins = true;
+            aoFreeSpinsLeft = 15;
+            aoFreeSpinsTotalWin = 0;
+            totalMultiplier = 0;
+            updateOlympusMultiplierUI();
+
+            document.getElementById('view-olympus')?.classList.add('freespins-mode');
+            document.getElementById('ao-fs-banner')?.classList.add('active');
+            const leftEl = document.getElementById('ao-fs-left');
+            const winEl = document.getElementById('ao-fs-total-win');
+            if (leftEl) leftEl.textContent = aoFreeSpinsLeft;
+            if (winEl) winEl.textContent = '0,00';
+
+            showToast('⚡ 4+ Scatter! Зевс дарует 15 бесплатных вращений!');
+            triggerZeusLighting();
+            await spinGatesOfOlympus(true);
+        }
+
+        async function spinGatesOfOlympus(isBonusForcedScatter = false) {
+            if (aoSpinning || bonusPurchasePending) return;
+            if (isOtherSlotBusy('ao')) { showToast('⚠️ Дождитесь окончания игры в другом слоте!'); return; }
+            const totalBet = getOlympusTotalBet();
+
+            if (!aoInFreeSpins) {
+                totalMultiplier = 0;
+                updateOlympusMultiplierUI();
+                if (balance < totalBet) {
+                    aoAutoActive = false;
+                    document.getElementById('ao-auto-btn')?.classList.remove('auto-active-btn');
+                    showToast('⚠️ Недостаточно средств!');
+                    openDepositModal();
+                    return;
+                }
+                balance = normalizeMoney(balance - totalBet);
+                stats.games += 1;
+                stats.wagered = normalizeMoney(stats.wagered + totalBet);
+                registerSpinForRetention();
+                updateBalanceUI();
+                saveState();
+            } else {
+                aoFreeSpinsLeft--;
+                const leftEl = document.getElementById('ao-fs-left');
+                if (leftEl) leftEl.textContent = aoFreeSpinsLeft;
+                stats.games += 1;
+            }
+
+            aoSpinning = true;
+            const spinBtn = document.getElementById('ao-spin-btn');
+            if (spinBtn) spinBtn.disabled = true;
+
+            const winLblEl = document.getElementById('ao-win-lbl');
+            const hudWinEl = document.getElementById('ao-hud-win');
+            if (winLblEl) winLblEl.textContent = aoInFreeSpins ? 'ВЫИГРЫШ В БОНУСЕ' : 'ПОСЛЕДНИЙ ВЫИГРЫШ';
+            if (hudWinEl) hudWinEl.textContent = '0,00';
+
+            for (let c = 0; c < AO_COLS; c++) {
+                for (let r = 0; r < AO_ROWS; r++) {
+                    const cell = document.getElementById(`ao-cell-${c}-${r}`);
+                    if (cell) {
+                        cell.classList.remove('ao-protrude-cell', 'win-pop');
+                        cell.classList.add('cell-spinning');
+                    }
+                }
+            }
+
+            const emojiPool = [...AO_SYMBOLS.map(s => s.emoji), '⚡', '💣'];
+            const timer = setInterval(() => {
+                for (let c = 0; c < AO_COLS; c++) {
+                    for (let r = 0; r < AO_ROWS; r++) {
+                        const cell = document.getElementById(`ao-cell-${c}-${r}`);
+                        if (cell && cell.classList.contains('cell-spinning')) {
+                            const inner = cell.querySelector('.ao-symbol-inner');
+                            if (inner) inner.textContent = emojiPool[Math.floor(Math.random() * emojiPool.length)];
+                        }
+                    }
+                }
+            }, 85);
+
+            try {
+                const nextGrid = Array.from({ length: AO_COLS }, () => Array(AO_ROWS).fill(null));
+                let hasDroppedBomb = false;
+                for (let c = 0; c < AO_COLS; c++) {
+                    for (let r = 0; r < AO_ROWS; r++) {
+                        nextGrid[c][r] = generateOlympusCell(true);
+                        if (nextGrid[c][r].id === 'multiplier') hasDroppedBomb = true;
+                    }
+                }
+                if (isBonusForcedScatter) {
+                    nextGrid[0][1] = { ...AO_SCATTER };
+                    nextGrid[2][2] = { ...AO_SCATTER };
+                    nextGrid[3][1] = { ...AO_SCATTER };
+                    nextGrid[5][3] = { ...AO_SCATTER };
+                }
+
+                await sleep(620);
+                clearInterval(timer);
+
+                for (let c = 0; c < AO_COLS; c++) {
+                    for (let r = 0; r < AO_ROWS; r++) {
+                        aoGrid[c][r] = nextGrid[c][r];
+                        renderOlympusCell(c, r, true);
+                    }
+                    await sleep(95);
+                }
+
+                if (hasDroppedBomb) triggerZeusLighting();
+
+                let spinRawWin = 0, spinMultipliersSum = 0;
+                while (true) {
+                    const counts = {}, positions = {};
+                    for (let c = 0; c < AO_COLS; c++) {
+                        for (let r = 0; r < AO_ROWS; r++) {
+                            const sym = aoGrid[c][r];
+                            if (!sym || sym.id === 'scatter' || sym.id === 'multiplier') continue;
+                            counts[sym.id] = (counts[sym.id] || 0) + 1;
+                            if (!positions[sym.id]) positions[sym.id] = [];
+                            positions[sym.id].push({ c, r, sym });
+                        }
+                    }
+                    let stepWin = 0;
+                    const winningCoords = [];
+                    for (const symId of Object.keys(counts)) {
+                        const cnt = counts[symId];
+                        if (cnt >= 8) {
+                            const sample = positions[symId][0].sym;
+                            const mult = cnt >= 12 ? sample.p12 : (cnt >= 10 ? sample.p10 : sample.p8);
+                            stepWin += applyEnginePayoutScale(aoCurrentBet * mult);
+                            winningCoords.push(...positions[symId]);
+                        }
+                    }
+                    if (winningCoords.length === 0) break;
+
+                    spinRawWin += stepWin;
+                    if (hudWinEl) hudWinEl.textContent = spinRawWin.toFixed(2).replace('.', ',');
+                    winningCoords.forEach(({ c, r }) => document.getElementById(`ao-cell-${c}-${r}`)?.classList.add('win-pop'));
+                    await sleep(620);
+
+                    winningCoords.forEach(({ c, r }) => { aoGrid[c][r] = null; });
+                    let cascadeHasBomb = false;
+                    for (let c = 0; c < AO_COLS; c++) {
+                        const surviving = [];
+                        for (let r = AO_ROWS - 1; r >= 0; r--) if (aoGrid[c][r] !== null) surviving.push(aoGrid[c][r]);
+                        const missing = AO_ROWS - surviving.length;
+                        const newTop = Array.from({ length: missing }, () => {
+                            const item = generateOlympusCell(true);
+                            if (item.id === 'multiplier') cascadeHasBomb = true;
+                            return item;
+                        });
+                        const rebuilt = [...surviving, ...newTop].reverse();
+                        for (let r = 0; r < AO_ROWS; r++) { aoGrid[c][r] = rebuilt[r]; renderOlympusCell(c, r, true); }
+                    }
+                    if (cascadeHasBomb) triggerZeusLighting();
+                    await sleep(480);
+                }
+
+                if (spinRawWin > 0) {
+                    const multiplierCells = [];
+                    for (let c = 0; c < AO_COLS; c++) {
+                        for (let r = 0; r < AO_ROWS; r++) {
+                            const sym = aoGrid[c][r];
+                            if (sym && sym.id === 'multiplier') { spinMultipliersSum += sym.val; multiplierCells.push({ c, r }); }
+                        }
+                    }
+                    if (spinMultipliersSum > 0) {
+                        triggerZeusLighting();
+                        multiplierCells.forEach(({ c, r }) => document.getElementById(`ao-cell-${c}-${r}`)?.classList.add('win-pop'));
+                        await sleep(520);
+                        if (aoInFreeSpins) { totalMultiplier += spinMultipliersSum; updateOlympusMultiplierUI(); }
+                    }
+                }
+
+                let scatterCount = 0;
+                for (let c = 0; c < AO_COLS; c++) {
+                    for (let r = 0; r < AO_ROWS; r++) if (aoGrid[c][r] && aoGrid[c][r].id === 'scatter') scatterCount++;
+                }
+
+                let scatterPayout = 0;
+                if (!isBonusForcedScatter && scatterCount >= 4) {
+                    const scMult = scatterCount >= 6 ? 100 : (scatterCount === 5 ? 5 : 3);
+                    scatterPayout = applyEnginePayoutScale(aoCurrentBet * scMult);
+                }
+
+                let appliedMult = 1;
+                if (spinRawWin > 0) {
+                    if (aoInFreeSpins) appliedMult = Math.max(1, totalMultiplier);
+                    else if (spinMultipliersSum > 0) appliedMult = spinMultipliersSum;
+                }
+
+                let finalSpinWin = capRoundWin(
+                    (spinRawWin * appliedMult + scatterPayout),
+                    aoCurrentBet,
+                    aoInFreeSpins ? aoFreeSpinsTotalWin : 0
+                );
+                if (finalSpinWin > 0) {
+                    balance = normalizeMoney(balance + finalSpinWin);
+                    stats.totalWon += finalSpinWin;
+                    if (finalSpinWin > stats.biggestWin) stats.biggestWin = finalSpinWin;
+                    if (aoInFreeSpins) {
+                        aoFreeSpinsTotalWin = Math.round((aoFreeSpinsTotalWin + finalSpinWin) * 100) / 100;
+                        const fsWinEl = document.getElementById('ao-fs-total-win');
+                        if (fsWinEl) fsWinEl.textContent = aoFreeSpinsTotalWin.toFixed(2).replace('.', ',');
+                        if (hudWinEl) hudWinEl.textContent = aoFreeSpinsTotalWin.toFixed(2).replace('.', ',');
+                    } else {
+                        if (hudWinEl) hudWinEl.textContent = finalSpinWin.toFixed(2).replace('.', ',');
+                    }
+                    updateBalanceUI();
+                    saveState();
+                }
+
+                if (!isBonusForcedScatter && scatterCount >= 4) {
+                    if (!aoInFreeSpins) {
+                        aoSpinning = false;
+                        await startOlympusBonusRound();
+                        return;
+                    } else if (scatterCount >= 3) {
+                        aoFreeSpinsLeft += 5;
+                        showToast('⚡ +5 дополнительных фриспинов!');
+                    }
+                }
+            } finally {
+                clearInterval(timer);
+                aoSpinning = false;
+                if (spinBtn) spinBtn.disabled = false;
+            }
+
+            if (aoInFreeSpins) {
+                if (aoFreeSpinsLeft > 0) {
+                    await sleep(650);
+                    await spinGatesOfOlympus(false);
+                } else {
+                    aoInFreeSpins = false;
+                    document.getElementById('view-olympus')?.classList.remove('freespins-mode');
+                    document.getElementById('ao-fs-banner')?.classList.remove('active');
+                    showToast(`🏆 Бонус завершён! Итоговый выигрыш: ${aoFreeSpinsTotalWin.toFixed(2)} BYN`);
+                    if (aoAutoActive) { await sleep(700); spinGatesOfOlympus(); }
+                }
+            } else if (aoAutoActive) {
+                await sleep(600);
+                spinGatesOfOlympus();
+            }
+        }
+
+        // ==========================================
+        // THE DOG HOUSE (С КАРТИНКАМИ taksa.png И shitsu.png)
         // ==========================================
         function initDogHouseDOM() {
             const gridEl = document.getElementById('dh-grid');
@@ -3500,15 +3926,14 @@
                     inner.className = 'dh-symbol-inner';
                     cell.appendChild(inner);
                     gridEl.appendChild(cell);
-                    dhGrid[c][r] = DH_SYMBOLS[(c + r) % DH_SYMBOLS.length];
-                    renderDogHouseCell(c, r, false);
                 }
             }
+            fillInitialDogHouseBoard();
             syncDogHouseBetUI();
         }
 
         function openDogHouse() {
-            if (sbSpinning || dhSpinning || olympusSlot?.spinning) return;
+            if (sbSpinning || dhSpinning || aoSpinning) return;
             const gridEl = document.getElementById('dh-grid');
             if (gridEl && gridEl.children.length === 0) initDogHouseDOM();
             hideAllViews();
@@ -3518,6 +3943,40 @@
             syncDogHouseBetUI();
         }
 
+        function getRandomDogHouseSymbol(col) {
+            const weightsMap = col === 0 ? DH_WEIGHTS_REEL_1 : DH_WEIGHTS_OTHER_REELS;
+            const totalW = DH_SYMBOLS.reduce((sum, s) => sum + (weightsMap[s.id] || 10), 0);
+            let rnd = Math.random() * totalW;
+            for (const sym of DH_SYMBOLS) {
+                rnd -= (weightsMap[sym.id] || 10);
+                if (rnd <= 0) return { ...sym };
+            }
+            return { ...DH_SYMBOLS[DH_SYMBOLS.length - 1] };
+        }
+
+        function generateDogHouseCell(col) {
+            const boost = 1.0; // RTP фиксирован на 96%
+            // Wild (будка) только на 2, 3, 4 барабанах (col 1, 2, 3)
+            if (col >= 1 && col <= 3 && Math.random() < 0.055 * boost) {
+                const mult = Math.random() < 0.72 ? 2 : 3;
+                return { id: 'wild', img: 'bydkastandart.png', mult: mult, name: `Wild x${mult}` };
+            }
+            // Scatter (лапа) только на 1, 3, 5 барабанах (col 0, 2, 4) в обычной игре
+            if (!dhInFreeSpins && (col === 0 || col === 2 || col === 4) && Math.random() < 0.075 * boost) {
+                return { id: 'scatter', img: 'bonusdoghouselapa.png', name: 'Bonus Лапа' };
+            }
+            return getRandomDogHouseSymbol(col);
+        }
+
+        function fillInitialDogHouseBoard() {
+            for (let c = 0; c < DH_COLS; c++) {
+                for (let r = 0; r < DH_ROWS; r++) {
+                    dhGrid[c][r] = getRandomDogHouseSymbol(c);
+                    renderDogHouseCell(c, r, false);
+                }
+            }
+        }
+
         function renderDogHouseCell(c, r, dropAnim) {
             const cell = document.getElementById(`dh-cell-${c}-${r}`);
             if (!cell) return;
@@ -3525,10 +3984,27 @@
             const inner = cell.querySelector('.dh-symbol-inner');
             if (!inner) return;
             inner.className = 'dh-symbol-inner';
-            if (dropAnim && !REDUCED_MOTION) { void inner.offsetWidth; inner.classList.add('drop-in'); }
-            const sym = dhGrid[c][r];
+            if (dropAnim) { void inner.offsetWidth; inner.classList.add('drop-in'); }
+
+            const sticky = dhInFreeSpins ? dhStickyWilds[c][r] : null;
+            const sym = sticky || dhGrid[c][r];
             if (!sym) { inner.innerHTML = ''; return; }
-            inner.innerHTML = `<img src="${sym.img}" alt="${sym.name}" class="dh-sym-img" onerror="this.onerror=null; this.outerHTML='<span>${sym.fallback}</span>';">`;
+
+            if (sym.id === 'wild') {
+                if (sticky) cell.classList.add('sticky-wild');
+                else cell.classList.add('dh-protrude-cell');
+                inner.innerHTML = `
+                    <div class="dh-wild-badge">
+                        <img src="${sym.img}" alt="Wild" class="dh-wild-img" onerror="this.outerHTML='<span style=\\'font-size:2.6rem;\\'>🏠</span>';">
+                        <span class="dh-wild-mult">x${sym.mult}</span>
+                    </div>
+                `;
+            } else if (sym.id === 'scatter') {
+                cell.classList.add('dh-protrude-cell');
+                inner.innerHTML = `<img src="${sym.img}" alt="Scatter" class="dh-scatter-img" onerror="this.outerHTML='<span style=\\'font-size:2.8rem;\\'>🐾</span>';">`;
+            } else {
+                inner.innerHTML = `<img src="${sym.img}" alt="${sym.name}" class="dh-sym-img" onerror="this.outerHTML='<span>${sym.fallback}</span>';">`;
+            }
         }
 
         function syncDogHouseBetUI() {
@@ -3543,76 +4019,251 @@
         }
 
         function toggleDogHouseAuto() {
-            showToast('ℹ️ Подключите игру "doghouse" в Cloud Function processSpin.');
+            dhAutoActive = !dhAutoActive;
+            const btn = document.getElementById('dh-auto-btn');
+            if (btn) btn.classList.toggle('auto-active-btn', dhAutoActive);
+            showToast(dhAutoActive ? '🔄 Автоспины запущены' : '⏹️ Автоспины остановлены');
+            if (dhAutoActive && !dhSpinning) spinDogHouse();
         }
-// ==========================================
-        // THE DOG HOUSE (Локальный запуск спинов)
-        // ==========================================
+
+        async function triggerDogHouseFreeSpinsIntro() {
+            const introBox = document.getElementById('dh-fs-intro');
+            const miniGrid = document.getElementById('dh-mini-grid');
+            const sumText = document.getElementById('dh-intro-sum-text');
+            if (!introBox || !miniGrid) return;
+
+            miniGrid.innerHTML = '';
+            const cells = [];
+            for (let i = 0; i < 9; i++) {
+                const mc = document.createElement('div');
+                mc.className = 'dh-mini-cell';
+                mc.textContent = '?';
+                miniGrid.appendChild(mc);
+                cells.push(mc);
+            }
+            introBox.classList.add('active');
+
+            let totalSpins = 0;
+            for (let i = 0; i < 9; i++) {
+                await sleep(160);
+                const val = 1 + Math.floor(Math.random() * 3);
+                totalSpins += val;
+                cells[i].textContent = val;
+                if (sumText) sumText.textContent = `СУММА: ${totalSpins} ФРИСПИНОВ`;
+            }
+            await sleep(950);
+            introBox.classList.remove('active');
+
+            dhInFreeSpins = true;
+            dhFreeSpinsLeft = totalSpins;
+            dhFreeSpinsTotalWin = 0;
+            dhStickyWilds = Array.from({ length: DH_COLS }, () => Array(DH_ROWS).fill(null));
+
+            document.getElementById('dh-fs-banner')?.classList.add('active');
+            document.getElementById('dh-fs-left').textContent = dhFreeSpinsLeft;
+            document.getElementById('dh-fs-total-win').textContent = '0,00';
+            showToast(`🐶 Выиграно ${totalSpins} фриспинов с липкими будками!`);
+        }
+
+        function evaluateDogHousePaylines() {
+            let totalWin = 0;
+            const winCellsSet = new Set();
+
+            for (const line of DH_PAYLINES) {
+                const lineSyms = line.map(pt => (dhInFreeSpins && dhStickyWilds[pt.c][pt.r]) || dhGrid[pt.c][pt.r]);
+                if (lineSyms[0].id === 'scatter') continue;
+
+                let targetSym = null;
+                for (let i = 0; i < 5; i++) {
+                    if (lineSyms[i].id === 'scatter') break;
+                    if (lineSyms[i].id !== 'wild') {
+                        targetSym = lineSyms[i];
+                        break;
+                    }
+                }
+                if (!targetSym) targetSym = DH_SYMBOLS[0];
+
+                let matchCount = 0;
+                let lineMultSum = 0;
+                for (let i = 0; i < 5; i++) {
+                    const s = lineSyms[i];
+                    if (s.id === targetSym.id || s.id === 'wild') {
+                        matchCount++;
+                        if (s.id === 'wild') lineMultSum += s.mult;
+                    } else {
+                        break;
+                    }
+                }
+
+                if (matchCount >= 3) {
+                    const baseMult = matchCount === 5 ? targetSym.p5 : (matchCount === 4 ? targetSym.p4 : targetSym.p3);
+                    const wildMult = lineMultSum > 0 ? lineMultSum : 1;
+                    const linePay = applyEnginePayoutScale(dhCurrentBet * baseMult * wildMult);
+                    totalWin += linePay;
+                    for (let i = 0; i < matchCount; i++) {
+                        winCellsSet.add(`${line[i].c}-${line[i].r}`);
+                    }
+                }
+            }
+
+            return { totalWin: Math.round(totalWin * 100) / 100, winCells: Array.from(winCellsSet) };
+        }
+
         async function spinDogHouse() {
-            if (dhSpinning) return;
-            const cost = dhCurrentBet;
-            if (balance < cost) {
-                showToast('⚠️ Недостаточно средств на балансе!');
-                openDepositModal();
-                return;
+            if (dhSpinning || bonusPurchasePending) return;
+            if (isOtherSlotBusy('dh')) { showToast('⚠️ Дождитесь окончания игры в другом слоте!'); return; }
+
+            if (!dhInFreeSpins) {
+                if (balance < dhCurrentBet) {
+                    dhAutoActive = false;
+                    document.getElementById('dh-auto-btn')?.classList.remove('auto-active-btn');
+                    showToast('⚠️ Недостаточно средств!');
+                    openDepositModal();
+                    return;
+                }
+                balance = normalizeMoney(balance - dhCurrentBet);
+                stats.games += 1;
+                stats.wagered = normalizeMoney(stats.wagered + dhCurrentBet);
+                registerSpinForRetention();
+                updateBalanceUI();
+                saveState();
+            } else {
+                dhFreeSpinsLeft--;
+                document.getElementById('dh-fs-left').textContent = dhFreeSpinsLeft;
+                stats.games += 1;
             }
 
             dhSpinning = true;
-            balance = Math.round((balance - cost) * 100) / 100;
-            stats.games = (stats.games || 0) + 1;
-            stats.wagered = Math.round(((stats.wagered || 0) + cost) * 100) / 100;
-            updateBalanceUI();
-            syncProfileUI();
-
             const spinBtn = document.getElementById('dh-spin-btn');
             if (spinBtn) spinBtn.disabled = true;
 
-            // Анимация вращения барабанов
+            const winLblEl = document.getElementById('dh-win-lbl');
+            const hudWinEl = document.getElementById('dh-hud-win');
+            if (winLblEl) winLblEl.textContent = dhInFreeSpins ? 'ВЫИГРЫШ В БОНУСЕ' : 'ПОСЛЕДНИЙ ВЫИГРЫШ';
+            if (!dhInFreeSpins && hudWinEl) hudWinEl.textContent = '0,00';
+
             for (let c = 0; c < DH_COLS; c++) {
                 for (let r = 0; r < DH_ROWS; r++) {
+                    if (dhInFreeSpins && dhStickyWilds[c][r]) continue;
                     const cell = document.getElementById(`dh-cell-${c}-${r}`);
-                    cell?.classList.add('spinning');
+                    if (cell) {
+                        cell.classList.remove('win-pop', 'dh-protrude-cell');
+                        cell.classList.add('spinning');
+                    }
                 }
             }
 
-            await animDelay(600);
-
-            // Генерируем случайный результат для Dogs
-            let spinWin = 0;
-            for (let c = 0; c < DH_COLS; c++) {
-                for (let r = 0; r < DH_ROWS; r++) {
-                    dhGrid[c][r] = DH_SYMBOLS[Math.floor(Math.random() * DH_SYMBOLS.length)];
-                    renderDogHouseCell(c, r, true);
-                    const cell = document.getElementById(`dh-cell-${c}-${r}`);
-                    cell?.classList.remove('spinning');
+            const fallbackPool = DH_SYMBOLS.map(s => s.fallback);
+            const timer = setInterval(() => {
+                for (let c = 0; c < DH_COLS; c++) {
+                    for (let r = 0; r < DH_ROWS; r++) {
+                        if (dhInFreeSpins && dhStickyWilds[c][r]) continue;
+                        const cell = document.getElementById(`dh-cell-${c}-${r}`);
+                        if (cell && cell.classList.contains('spinning')) {
+                            const inner = cell.querySelector('.dh-symbol-inner');
+                            if (inner) inner.textContent = fallbackPool[Math.floor(Math.random() * fallbackPool.length)];
+                        }
+                    }
                 }
+            }, 80);
+
+            try {
+                const nextGrid = Array.from({ length: DH_COLS }, () => Array(DH_ROWS).fill(null));
+                for (let c = 0; c < DH_COLS; c++) {
+                    let hasScatterInCol = false;
+                    for (let r = 0; r < DH_ROWS; r++) {
+                        if (dhInFreeSpins && dhStickyWilds[c][r]) {
+                            nextGrid[c][r] = dhStickyWilds[c][r];
+                            continue;
+                        }
+                        let sym = generateDogHouseCell(c);
+                        if (sym.id === 'scatter') {
+                            if (hasScatterInCol) sym = getRandomDogHouseSymbol(c);
+                            else hasScatterInCol = true;
+                        }
+                        nextGrid[c][r] = sym;
+                    }
+                }
+
+                await sleep(520);
+                clearInterval(timer);
+
+                for (let c = 0; c < DH_COLS; c++) {
+                    for (let r = 0; r < DH_ROWS; r++) {
+                        dhGrid[c][r] = nextGrid[c][r];
+                        if (dhInFreeSpins && nextGrid[c][r].id === 'wild' && !dhStickyWilds[c][r]) {
+                            dhStickyWilds[c][r] = { ...nextGrid[c][r] };
+                        }
+                        renderDogHouseCell(c, r, !(dhInFreeSpins && dhStickyWilds[c][r]));
+                    }
+                    await sleep(90);
+                }
+
+                const { totalWin, winCells } = evaluateDogHousePaylines();
+                let scatterCount = 0;
+                for (let c = 0; c < DH_COLS; c++) {
+                    for (let r = 0; r < DH_ROWS; r++) {
+                        if (dhGrid[c][r] && dhGrid[c][r].id === 'scatter') scatterCount++;
+                    }
+                }
+
+                const scatterWin = (!dhInFreeSpins && scatterCount >= 3) ? applyEnginePayoutScale(dhCurrentBet * 5) : 0;
+                const spinTotal = capRoundWin(
+                    totalWin + scatterWin,
+                    dhCurrentBet,
+                    dhInFreeSpins ? dhFreeSpinsTotalWin : 0
+                );
+
+                if (winCells.length > 0) {
+                    winCells.forEach(key => document.getElementById(`dh-cell-${key}`)?.classList.add('win-pop'));
+                }
+
+                if (spinTotal > 0) {
+                    balance = normalizeMoney(balance + spinTotal);
+                    stats.totalWon += spinTotal;
+                    if (spinTotal > stats.biggestWin) stats.biggestWin = spinTotal;
+                    if (dhInFreeSpins) {
+                        dhFreeSpinsTotalWin = Math.round((dhFreeSpinsTotalWin + spinTotal) * 100) / 100;
+                        document.getElementById('dh-fs-total-win').textContent = dhFreeSpinsTotalWin.toFixed(2).replace('.', ',');
+                        if (hudWinEl) hudWinEl.textContent = dhFreeSpinsTotalWin.toFixed(2).replace('.', ',');
+                    } else {
+                        if (hudWinEl) hudWinEl.textContent = spinTotal.toFixed(2).replace('.', ',');
+                    }
+                    updateBalanceUI();
+                    saveState();
+                }
+
+                if (!dhInFreeSpins && scatterCount >= 3) {
+                    dhSpinning = false;
+                    await triggerDogHouseFreeSpinsIntro();
+                    await spinDogHouse();
+                    return;
+                }
+            } finally {
+                clearInterval(timer);
+                dhSpinning = false;
+                if (spinBtn) spinBtn.disabled = false;
             }
 
-            // Случайный выигрыш с вероятностью ~35%
-            if (Math.random() < 0.35) {
-                const mults = [1.2, 1.5, 2, 3, 5, 10];
-                const m = mults[Math.floor(Math.random() * mults.length)];
-                spinWin = Math.round(dhCurrentBet * m * 100) / 100;
-                balance = Math.round((balance + spinWin) * 100) / 100;
-                stats.totalWon = Math.round(((stats.totalWon || 0) + spinWin) * 100) / 100;
-                stats.biggestWin = Math.max(stats.biggestWin || 0, spinWin);
+            if (dhInFreeSpins) {
+                if (dhFreeSpinsLeft > 0) {
+                    await sleep(600);
+                    await spinDogHouse();
+                } else {
+                    dhInFreeSpins = false;
+                    dhStickyWilds = Array.from({ length: DH_COLS }, () => Array(DH_ROWS).fill(null));
+                    document.getElementById('dh-fs-banner')?.classList.remove('active');
+                    showToast(`🐶 Бонус завершён! Выигрыш: ${dhFreeSpinsTotalWin.toFixed(2)} BYN`);
+                    if (dhAutoActive) { await sleep(700); spinDogHouse(); }
+                }
+            } else if (dhAutoActive) {
+                await sleep(550);
+                spinDogHouse();
             }
-
-            updateBalanceUI();
-            syncProfileUI();
-
-            const hudWin = document.getElementById('dh-hud-win');
-            if (hudWin) hudWin.textContent = spinWin.toFixed(2).replace('.', ',');
-
-            if (spinWin > 0) {
-                showToast(`🏆 Выигрыш в The Dog House: ${spinWin.toFixed(2)} BYN!`);
-            }
-
-            dhSpinning = false;
-            if (spinBtn) spinBtn.disabled = false;
         }
+
         // ==========================================
-        // SWEET BONANZA (Инициализация витрины до подключения processSpin)
+        // SWEET BONANZA (ЧЕСТНЫЙ RTP 96%)
         // ==========================================
         function initBonanzaDOM() {
             const gridEl = document.getElementById('sb-grid');
@@ -3627,15 +4278,14 @@
                     inner.className = 'sb-symbol-inner';
                     cell.appendChild(inner);
                     gridEl.appendChild(cell);
-                    sbGrid[c][r] = SB_SYMBOLS[(c + r) % SB_SYMBOLS.length];
-                    renderBonanzaCell(c, r, false);
                 }
             }
+            fillInitialBonanzaBoard();
             syncBonanzaBetUI();
         }
 
         function openSweetBonanza() {
-            if (sbSpinning || dhSpinning || olympusSlot?.spinning) return;
+            if (sbSpinning || dhSpinning || aoSpinning) return;
             const gridEl = document.getElementById('sb-grid');
             if (gridEl && gridEl.children.length === 0) initBonanzaDOM();
             hideAllViews();
@@ -3645,6 +4295,47 @@
             syncBonanzaBetUI();
         }
 
+        function getRandomWeightedBonanzaSymbol() {
+            const totalW = SB_SYMBOLS.reduce((sum, s) => sum + s.weight, 0);
+            let r = Math.random() * totalW;
+            for (const sym of SB_SYMBOLS) {
+                r -= sym.weight;
+                if (r <= 0) return { ...sym };
+            }
+            return { ...SB_SYMBOLS[SB_SYMBOLS.length - 1] };
+        }
+
+        function getRandomBonanzaBomb() {
+            const totalW = SB_BOMB_WEIGHTS.reduce((sum, b) => sum + b.weight, 0);
+            let r = Math.random() * totalW;
+            for (const b of SB_BOMB_WEIGHTS) {
+                r -= b.weight;
+                if (r <= 0) return b.mult;
+            }
+            return 2;
+        }
+
+        function generateBonanzaCell(allowBomb) {
+            const boost = 1.0; // RTP фиксирован на 96%
+            const scatterChance = (sbInFreeSpins ? 0.011 : (sbAnteActive ? 0.032 : 0.016)) * boost;
+            if (Math.random() < scatterChance) return { ...SB_SCATTER };
+
+            if (allowBomb && sbInFreeSpins && Math.random() < 0.038 * boost) {
+                const mult = getRandomBonanzaBomb();
+                return { id: 'bomb', mult: mult, name: `Бомба x${mult}` };
+            }
+            return getRandomWeightedBonanzaSymbol();
+        }
+
+        function fillInitialBonanzaBoard() {
+            for (let c = 0; c < SB_COLS; c++) {
+                for (let r = 0; r < SB_ROWS; r++) {
+                    sbGrid[c][r] = getRandomWeightedBonanzaSymbol();
+                    renderBonanzaCell(c, r, false);
+                }
+            }
+        }
+
         function renderBonanzaCell(c, r, dropAnim) {
             const cell = document.getElementById(`sb-cell-${c}-${r}`);
             if (!cell) return;
@@ -3652,10 +4343,26 @@
             const inner = cell.querySelector('.sb-symbol-inner');
             if (!inner) return;
             inner.className = 'sb-symbol-inner';
-            if (dropAnim && !REDUCED_MOTION) { void inner.offsetWidth; inner.classList.add('drop-in'); }
+            if (dropAnim) { void inner.offsetWidth; inner.classList.add('drop-in'); }
+
             const sym = sbGrid[c][r];
             if (!sym) { inner.innerHTML = ''; return; }
-            inner.innerHTML = `<img src="${sym.img}" alt="${sym.name}" class="sb-sym-img" onerror="this.onerror=null; this.outerHTML='<span>🍬</span>';">`;
+
+            if (sym.id === 'bomb') {
+                cell.classList.add('sb-protrude-cell');
+                const isMega = sym.mult >= 20;
+                inner.innerHTML = `
+                    <div class="sb-bomb-wrap ${isMega ? 'mega-bomb' : ''}">
+                        <span class="sb-bomb-emoji">💣</span>
+                        <span class="sb-bomb-val">${sym.mult}x</span>
+                    </div>
+                `;
+            } else if (sym.id === 'scatter') {
+                cell.classList.add('sb-protrude-cell');
+                inner.innerHTML = `<img src="${sym.img}" alt="Scatter" class="sb-scatter-img" onerror="this.outerHTML='<span style=\\'font-size:3rem;\\'>🍭</span>';">`;
+            } else {
+                inner.innerHTML = `<img src="${sym.img}" alt="${sym.name}" class="sb-sym-img" onerror="this.outerHTML='<span>🍬</span>';">`;
+            }
         }
 
         function getBonanzaBaseBet() {
@@ -3699,124 +4406,257 @@
         }
 
         function toggleBonanzaAuto() {
-            showToast('ℹ️ Подключите игру "bonanza" в Cloud Function processSpin.');
+            sbAutoActive = !sbAutoActive;
+            document.getElementById('sb-auto-btn')?.classList.toggle('auto-active-btn', sbAutoActive);
+            showToast(sbAutoActive ? '🔄 Автоспины запущены' : '⏹️ Автоспины остановлены');
+            if (sbAutoActive && !sbSpinning) spinSweetBonanza();
         }
 
-        function buyBonanzaBonus() {
-            showToast('🔒 Покупка бонуса переведена на сервер (Cloud Function processSpin).');
+        async function buyBonanzaBonus() {
+            if (sbSpinning || sbInFreeSpins || bonusPurchasePending) return;
+            if (isOtherSlotBusy('sb')) { showToast('⚠️ Дождитесь окончания игры в другом слоте!'); return; }
+            if (sbAnteActive) { showToast('⚠️ Отключите удвоение шанса перед покупкой!'); return; }
+            const cost = normalizeMoney(getBonanzaBaseBet() * 100);
+            if (!Number.isFinite(cost) || cost <= 0) { showToast('⚠️ Некорректная ставка!'); return; }
+            if (balance < cost) { showToast('⚠️ Недостаточно средств!'); openDepositModal(); return; }
+            bonusPurchasePending = true;
+            try {
+                balance = normalizeMoney(balance - cost);
+                stats.wagered = normalizeMoney(stats.wagered + cost);
+                updateBalanceUI();
+                saveState();
+            } finally {
+                bonusPurchasePending = false;
+            }
+            await startBonanzaBonusRound();
         }
 
-        async function spinSweetBonanza() {
-            if (sbSpinning) return;
+        async function startBonanzaBonusRound() {
+            sbInFreeSpins = true;
+            sbFreeSpinsLeft = 10;
+            sbFreeSpinsTotalWin = 0;
+            document.getElementById('view-bonanza')?.classList.add('freespins-mode');
+            document.getElementById('sb-fs-banner')?.classList.add('active');
+            document.getElementById('sb-fs-left').textContent = sbFreeSpinsLeft;
+            document.getElementById('sb-fs-total-win').textContent = '0,00';
+            showToast('🍭 4+ Чупа-чупса! Запущено 10 фриспинов с бомбами до x100!');
+            await spinSweetBonanza(true);
+        }
+
+        async function spinSweetBonanza(isBonusForcedScatter = false) {
+            if (sbSpinning || bonusPurchasePending) return;
+            if (isOtherSlotBusy('sb')) { showToast('⚠️ Дождитесь окончания игры в другом слоте!'); return; }
+            const baseBet = getBonanzaBaseBet();
             const totalBet = getBonanzaTotalBet();
-            if (balance < totalBet) {
-                showToast('⚠️ Недостаточно средств на балансе!');
-                openDepositModal();
-                return;
+
+            if (!sbInFreeSpins) {
+                if (balance < totalBet) {
+                    sbAutoActive = false;
+                    document.getElementById('sb-auto-btn')?.classList.remove('auto-active-btn');
+                    showToast('⚠️ Недостаточно средств!');
+                    openDepositModal();
+                    return;
+                }
+                balance = normalizeMoney(balance - totalBet);
+                stats.games += 1;
+                stats.wagered = normalizeMoney(stats.wagered + totalBet);
+                registerSpinForRetention();
+                updateBalanceUI();
+                saveState();
+            } else {
+                sbFreeSpinsLeft--;
+                document.getElementById('sb-fs-left').textContent = sbFreeSpinsLeft;
+                stats.games += 1;
             }
 
             sbSpinning = true;
-            balance = Math.round((balance - totalBet) * 100) / 100;
-            stats.games = (stats.games || 0) + 1;
-            stats.wagered = Math.round(((stats.wagered || 0) + totalBet) * 100) / 100;
-            updateBalanceUI();
-            syncProfileUI();
-
             const spinBtn = document.getElementById('sb-spin-btn');
             if (spinBtn) spinBtn.disabled = true;
 
+            const winLblEl = document.getElementById('sb-win-lbl');
+            const hudWinEl = document.getElementById('sb-hud-win');
+            if (winLblEl) winLblEl.textContent = sbInFreeSpins ? 'ВЫИГРЫШ В БОНУСЕ' : 'ПОСЛЕДНИЙ ВЫИГРЫШ';
+            if (hudWinEl) hudWinEl.textContent = '0,00';
+
             for (let c = 0; c < SB_COLS; c++) {
                 for (let r = 0; r < SB_ROWS; r++) {
                     const cell = document.getElementById(`sb-cell-${c}-${r}`);
-                    cell?.classList.add('cell-spinning');
+                    if (cell) {
+                        cell.classList.remove('sb-protrude-cell', 'win-pop');
+                        cell.classList.add('cell-spinning');
+                    }
                 }
             }
 
-            await animDelay(600);
-
-            let spinWin = 0;
-            for (let c = 0; c < SB_COLS; c++) {
-                for (let r = 0; r < SB_ROWS; r++) {
-                    sbGrid[c][r] = SB_SYMBOLS[Math.floor(Math.random() * SB_SYMBOLS.length)];
-                    renderBonanzaCell(c, r, true);
-                    const cell = document.getElementById(`sb-cell-${c}-${r}`);
-                    cell?.classList.remove('cell-spinning');
+            const emojiPool = ['🍓', '🍇', '🍉', '🍏', '🍌', '🍭', '💣'];
+            const timer = setInterval(() => {
+                for (let c = 0; c < SB_COLS; c++) {
+                    for (let r = 0; r < SB_ROWS; r++) {
+                        const cell = document.getElementById(`sb-cell-${c}-${r}`);
+                        if (cell && cell.classList.contains('cell-spinning')) {
+                            const inner = cell.querySelector('.sb-symbol-inner');
+                            if (inner) inner.textContent = emojiPool[Math.floor(Math.random() * emojiPool.length)];
+                        }
+                    }
                 }
+            }, 85);
+
+            try {
+                const nextGrid = Array.from({ length: SB_COLS }, () => Array(SB_ROWS).fill(null));
+                for (let c = 0; c < SB_COLS; c++) {
+                    for (let r = 0; r < SB_ROWS; r++) {
+                        nextGrid[c][r] = generateBonanzaCell(true);
+                    }
+                }
+                if (isBonusForcedScatter) {
+                    nextGrid[0][1] = { ...SB_SCATTER };
+                    nextGrid[2][3] = { ...SB_SCATTER };
+                    nextGrid[3][1] = { ...SB_SCATTER };
+                    nextGrid[5][2] = { ...SB_SCATTER };
+                }
+
+                await sleep(580);
+                clearInterval(timer);
+
+                for (let c = 0; c < SB_COLS; c++) {
+                    for (let r = 0; r < SB_ROWS; r++) {
+                        sbGrid[c][r] = nextGrid[c][r];
+                        renderBonanzaCell(c, r, true);
+                    }
+                    await sleep(90);
+                }
+
+                let spinRawWin = 0;
+                while (true) {
+                    const counts = {}, positions = {};
+                    for (let c = 0; c < SB_COLS; c++) {
+                        for (let r = 0; r < SB_ROWS; r++) {
+                            const sym = sbGrid[c][r];
+                            if (!sym || sym.id === 'scatter' || sym.id === 'bomb') continue;
+                            counts[sym.id] = (counts[sym.id] || 0) + 1;
+                            if (!positions[sym.id]) positions[sym.id] = [];
+                            positions[sym.id].push({ c, r, sym });
+                        }
+                    }
+                    let stepWin = 0;
+                    const winningCoords = [];
+                    for (const symId of Object.keys(counts)) {
+                        const cnt = counts[symId];
+                        if (cnt >= 8) {
+                            const sample = positions[symId][0].sym;
+                            const mult = cnt >= 12 ? sample.p12 : (cnt >= 10 ? sample.p10 : sample.p8);
+                            stepWin += applyEnginePayoutScale(baseBet * mult);
+                            winningCoords.push(...positions[symId]);
+                        }
+                    }
+                    if (winningCoords.length === 0) break;
+
+                    spinRawWin += stepWin;
+                    if (hudWinEl) hudWinEl.textContent = spinRawWin.toFixed(2).replace('.', ',');
+                    winningCoords.forEach(({ c, r }) => document.getElementById(`sb-cell-${c}-${r}`)?.classList.add('win-pop'));
+                    await sleep(600);
+
+                    winningCoords.forEach(({ c, r }) => { sbGrid[c][r] = null; });
+                    for (let c = 0; c < SB_COLS; c++) {
+                        const surviving = [];
+                        for (let r = SB_ROWS - 1; r >= 0; r--) if (sbGrid[c][r] !== null) surviving.push(sbGrid[c][r]);
+                        const missing = SB_ROWS - surviving.length;
+                        const newTop = Array.from({ length: missing }, () => generateBonanzaCell(true));
+                        const rebuilt = [...surviving, ...newTop].reverse();
+                        for (let r = 0; r < SB_ROWS; r++) { sbGrid[c][r] = rebuilt[r]; renderBonanzaCell(c, r, true); }
+                    }
+                    await sleep(460);
+                }
+
+                let bombMultSum = 0;
+                if (spinRawWin > 0 && sbInFreeSpins) {
+                    const bombCells = [];
+                    for (let c = 0; c < SB_COLS; c++) {
+                        for (let r = 0; r < SB_ROWS; r++) {
+                            const sym = sbGrid[c][r];
+                            if (sym && sym.id === 'bomb') {
+                                bombMultSum += sym.mult;
+                                bombCells.push({ c, r });
+                            }
+                        }
+                    }
+                    if (bombMultSum > 0) {
+                        bombCells.forEach(({ c, r }) => document.getElementById(`sb-cell-${c}-${r}`)?.classList.add('win-pop'));
+                        await sleep(500);
+                    }
+                }
+
+                let scatterCount = 0;
+                for (let c = 0; c < SB_COLS; c++) {
+                    for (let r = 0; r < SB_ROWS; r++) if (sbGrid[c][r] && sbGrid[c][r].id === 'scatter') scatterCount++;
+                }
+
+                let scatterPayout = 0;
+                if (!isBonusForcedScatter && scatterCount >= 4) {
+                    const scMult = scatterCount >= 6 ? 100 : (scatterCount === 5 ? 5 : 3);
+                    scatterPayout = applyEnginePayoutScale(baseBet * scMult);
+                }
+
+                const appliedMult = (spinRawWin > 0 && bombMultSum > 0) ? bombMultSum : 1;
+                const finalSpinWin = capRoundWin(
+                    (spinRawWin * appliedMult + scatterPayout),
+                    baseBet,
+                    sbInFreeSpins ? sbFreeSpinsTotalWin : 0
+                );
+
+                if (finalSpinWin > 0) {
+                    balance = normalizeMoney(balance + finalSpinWin);
+                    stats.totalWon += finalSpinWin;
+                    if (finalSpinWin > stats.biggestWin) stats.biggestWin = finalSpinWin;
+                    if (sbInFreeSpins) {
+                        sbFreeSpinsTotalWin = Math.round((sbFreeSpinsTotalWin + finalSpinWin) * 100) / 100;
+                        document.getElementById('sb-fs-total-win').textContent = sbFreeSpinsTotalWin.toFixed(2).replace('.', ',');
+                        if (hudWinEl) hudWinEl.textContent = sbFreeSpinsTotalWin.toFixed(2).replace('.', ',');
+                    } else {
+                        if (hudWinEl) hudWinEl.textContent = finalSpinWin.toFixed(2).replace('.', ',');
+                    }
+                    updateBalanceUI();
+                    saveState();
+                }
+
+                if (!isBonusForcedScatter && scatterCount >= 4) {
+                    if (!sbInFreeSpins) {
+                        sbSpinning = false;
+                        await startBonanzaBonusRound();
+                        return;
+                    } else if (scatterCount >= 3) {
+                        sbFreeSpinsLeft += 5;
+                        showToast('🍭 +5 дополнительных фриспинов!');
+                    }
+                }
+            } finally {
+                clearInterval(timer);
+                sbSpinning = false;
+                if (spinBtn) spinBtn.disabled = false;
             }
 
-            if (Math.random() < 0.38) {
-                const mults = [1.5, 2, 4, 8, 15, 25];
-                const m = mults[Math.floor(Math.random() * mults.length)];
-                spinWin = Math.round(totalBet * m * 100) / 100;
-                balance = Math.round((balance + spinWin) * 100) / 100;
-                stats.totalWon = Math.round(((stats.totalWon || 0) + spinWin) * 100) / 100;
-                stats.biggestWin = Math.max(stats.biggestWin || 0, spinWin);
+            if (sbInFreeSpins) {
+                if (sbFreeSpinsLeft > 0) {
+                    await sleep(620);
+                    await spinSweetBonanza(false);
+                } else {
+                    sbInFreeSpins = false;
+                    document.getElementById('view-bonanza')?.classList.remove('freespins-mode');
+                    document.getElementById('sb-fs-banner')?.classList.remove('active');
+                    showToast(`🍭 Бонус завершён! Выигрыш: ${sbFreeSpinsTotalWin.toFixed(2)} BYN`);
+                    if (sbAutoActive) { await sleep(700); spinSweetBonanza(); }
+                }
+            } else if (sbAutoActive) {
+                await sleep(580);
+                spinSweetBonanza();
             }
-
-            updateBalanceUI();
-            syncProfileUI();
-
-            const hudWin = document.getElementById('sb-hud-win');
-            if (hudWin) hudWin.textContent = spinWin.toFixed(2).replace('.', ',');
-
-            if (spinWin > 0) {
-                showToast(`🍭 Выигрыш в Sweet Bonanza: ${spinWin.toFixed(2)} BYN!`);
-            }
-
-            sbSpinning = false;
-            if (spinBtn) spinBtn.disabled = false;
         }
 
-        // ==========================================
-        // ТОЧКА ВХОДА ПРИ ЗАГРУЗКЕ СТРАНИЦЫ
-        // ==========================================
-        window.addEventListener('DOMContentLoaded', async () => {
-            // 1. Всем кнопкам без type проставляем type="button"
-            document.querySelectorAll('button:not([type])').forEach((btn) => {
-                btn.setAttribute('type', 'button');
-            });
-
-            // 2. Глобальная защита от зацикливания onerror на всех <img>
-            document.querySelectorAll('img').forEach((img) => {
-                img.addEventListener('error', function handleImgError() {
-                    this.onerror = null;
-                    this.style.display = 'none';
-                }, { once: true });
-            });
-
-            // 3. Инициализация ES6-класса SlotGame для Gates of Olympus
-            olympusSlot = new SlotGame({
-                gameId: 'olympus',
-                cols: AO_COLS,
-                rows: AO_ROWS,
-                symbolsPool: AO_SYMBOLS,
-                dom: {
-                    viewId: 'view-olympus',
-                    gridId: 'ao-grid',
-                    cellPrefix: 'ao-cell',
-                    spinBtnId: 'ao-spin-btn',
-                    betMinusId: 'ao-bet-minus',
-                    betPlusId: 'ao-bet-plus',
-                    anteBtnId: 'ao-ante-btn',
-                    buyBtnId: 'ao-buy-btn',
-                    autoBtnId: 'ao-auto-btn',
-                    hudWinId: 'ao-hud-win',
-                    winLblId: 'ao-win-lbl',
-                    fsBannerId: 'ao-fs-banner',
-                    fsLeftId: 'ao-fs-left',
-                    fsMultSumId: 'ao-fs-mult-sum',
-                    globalMultId: 'ao-global-mult-display',
-                    fsTotalWinId: 'ao-fs-total-win'
-                }
-            });
-            olympusSlot.init();
-
-            // 4. Инициализация витрин остальных слотов
+        window.addEventListener('DOMContentLoaded', () => {
+            loadState();
+            initOlympusDOM();
             initDogHouseDOM();
             initBonanzaDOM();
-
-            // 5. Запуск анонимной сессии Firebase Auth + подписка на Firestore users/{uid}
-            await initFirebaseUserSession();
         });
     </script>
 </body>
