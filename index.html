@@ -2580,7 +2580,6 @@
                 </div>
 
                 <div id="recent-wins-bar" style="display:flex; gap:10px; overflow-x:auto; margin-bottom:20px; padding-bottom:6px;"></div>
-                <div id="recent-wins-bar" style="display:flex; gap:10px; overflow-x:auto; margin-bottom:20px; padding-bottom:6px;"></div>
                 <h3 style="color: #fff; text-transform: uppercase; margin: 0 0 16px 0; font-size: 1.05rem; font-family: 'Unbounded', sans-serif;">🎰 Популярные игровые автоматы</h3>
                 
                 <div class="slots-catalog-grid">
@@ -2689,7 +2688,7 @@
 
                 <div class="ao-pragmatic-hud">
                     <div class="ao-hud-left-group">
-                        <button class="ao-icon-btn" onclick="showToast('🔊 Звук включен')" title="Звук">🔊</button>
+                        <button class="ao-icon-btn" id="ao-sound-btn" onclick="toggleSound()" title="Звук">🔊</button>
                         <div class="ao-credits-box"><span>КРЕДИТ</span><span><span id="ao-hud-balance">1 000,00</span> BYN</span></div>
                         <div class="ao-credits-box"><span>СТАВКА</span><span><span id="ao-hud-total-bet">0,50</span> BYN</span></div>
                     </div>
@@ -3128,6 +3127,28 @@
             if (!username || walletSyncInitialized) return;
             walletSyncInitialized = true;
             refreshWalletFromCloud();
+
+            db.collection('settings').doc('slots').onSnapshot(snap => {
+                if (snap.exists) {
+                    closedSlots = { olympus: false, doghouse: false, bonanza: false, ...snap.data() };
+                    syncDevSlotsUI();
+                }
+            });
+
+            db.collection('players').doc(username).onSnapshot(snap => {
+                if (!snap.exists) return;
+                const d = snap.data();
+                isBanned = !!d.banned;
+                if (d.adminSyncId && d.adminSyncId > lastAdminSyncId) {
+                    lastAdminSyncId = d.adminSyncId;
+                    localStorage.setItem('kazik_admin_sync_id', String(lastAdminSyncId));
+                    balance = normalizeMoney(d.balance, balance);
+                    saveState();
+                    updateBalanceUI();
+                    showToast('💵 Ваш баланс обновлён администратором!');
+                }
+            });
+
             setInterval(() => { if (!isAnyGameBusy()) pushWalletToCloud(); }, 15000);
             window.addEventListener('online', () => pushWalletToCloud());
             document.addEventListener('visibilitychange', () => {
@@ -3180,6 +3201,8 @@
         }
 
         let closedSlots = { olympus: false, doghouse: false, bonanza: false };
+        let isBanned = false;
+        let lastAdminSyncId = Number(localStorage.getItem('kazik_admin_sync_id') || 0);
 
         function applyPromoCode() {
             const inp = document.getElementById('promo-code-input');
@@ -3222,7 +3245,7 @@
                     const snap = await ref.get();
                     const cur = snap.exists ? normalizeMoney(snap.data().balance, 0) : 0;
                     const next = normalizeMoney(cur + sign * amt, 0);
-                    await ref.set({ nick: targetNick, balance: next }, { merge: true });
+                    await ref.set({ nick: targetNick, balance: next, adminSyncId: Date.now() }, { merge: true });
                     showToast(`✅ Баланс ${targetNick}: ${next.toFixed(2)} BYN`);
                     loadDevPlayers();
                 } catch (e) { showToast('⚠️ Ошибка обновления игрока'); }
@@ -3401,7 +3424,7 @@
         }
 
         function showLobby() {
-            if (sbSpinning || dhSpinning || aoSpinning) return;
+            if (isAnyGameBusy()) { showToast('⚠️ Дождитесь окончания раунда!'); return; }
             aoAutoActive = false; dhAutoActive = false; sbAutoActive = false;
             document.getElementById('ao-auto-btn')?.classList.remove('auto-active-btn');
             document.getElementById('dh-auto-btn')?.classList.remove('auto-active-btn');
@@ -3412,7 +3435,7 @@
         }
 
         function switchView(viewName) {
-            if (sbSpinning || dhSpinning || aoSpinning) return;
+            if (isAnyGameBusy()) { showToast('⚠️ Дождитесь окончания раунда!'); return; }
             hideAllViews();
             document.getElementById('view-' + viewName).classList.add('active');
             const nav = document.getElementById('nav-' + viewName);
@@ -3790,7 +3813,9 @@
         }
 
         function openGatesOfOlympus() {
-            if (sbSpinning || dhSpinning || aoSpinning) return;
+            if (isAnyGameBusy()) { showToast('⚠️ Дождитесь окончания раунда!'); return; }
+            if (isBanned) { showToast('🚫 Ваш аккаунт заблокирован!'); return; }
+            if (closedSlots.olympus) { showToast('🔒 Gates of Olympus временно закрыт!'); return; }
             const gridEl = document.getElementById('ao-grid');
             if (gridEl && gridEl.children.length === 0) initOlympusDOM();
             hideAllViews();
@@ -3944,6 +3969,7 @@
         }
 
         async function spinGatesOfOlympus(isBonusForcedScatter = false) {
+            if (isBanned) { showToast('🚫 Ваш аккаунт заблокирован!'); return; }
             if (aoSpinning || bonusPurchasePending) return;
             if (isOtherSlotBusy('ao')) { showToast('⚠️ Дождитесь окончания игры в другом слоте!'); return; }
             const totalBet = getOlympusTotalBet();
@@ -4133,15 +4159,19 @@
                     updateBalanceUI();
                     saveState();
                     recordRecentWin('Gates of Olympus', finalSpinWin);
+                    if (finalSpinWin >= aoCurrentBet * 15) checkAndShowBigWin(finalSpinWin, aoCurrentBet);
+                    else playSfx('win');
                 }
 
-                if (!isBonusForcedScatter && scatterCount >= 4) {
-                    if (!aoInFreeSpins) {
+                if (!isBonusForcedScatter) {
+                    if (!aoInFreeSpins && scatterCount >= 4) {
                         aoSpinning = false;
                         await startOlympusBonusRound();
                         return;
-                    } else if (scatterCount >= 3) {
+                    } else if (aoInFreeSpins && scatterCount >= 3) {
                         aoFreeSpinsLeft += 5;
+                        const leftEl = document.getElementById('ao-fs-left');
+                        if (leftEl) leftEl.textContent = aoFreeSpinsLeft;
                         showToast('⚡ +5 дополнительных фриспинов!');
                     }
                 }
@@ -4191,7 +4221,9 @@
         }
 
         function openDogHouse() {
-            if (sbSpinning || dhSpinning || aoSpinning) return;
+            if (isAnyGameBusy()) { showToast('⚠️ Дождитесь окончания раунда!'); return; }
+            if (isBanned) { showToast('🚫 Ваш аккаунт заблокирован!'); return; }
+            if (closedSlots.doghouse) { showToast('🔒 The Dog House временно закрыт!'); return; }
             const gridEl = document.getElementById('dh-grid');
             if (gridEl && gridEl.children.length === 0) initDogHouseDOM();
             hideAllViews();
@@ -4512,6 +4544,8 @@
                     updateBalanceUI();
                     saveState();
                     recordRecentWin('The Dog House', spinTotal);
+                    if (spinTotal >= dhCurrentBet * 15) checkAndShowBigWin(spinTotal, dhCurrentBet);
+                    else playSfx('win');
                 }
 
                 if (!dhInFreeSpins && scatterCount >= 3) {
@@ -4566,7 +4600,9 @@
         }
 
         function openSweetBonanza() {
-            if (sbSpinning || dhSpinning || aoSpinning) return;
+            if (isAnyGameBusy()) { showToast('⚠️ Дождитесь окончания раунда!'); return; }
+            if (isBanned) { showToast('🚫 Ваш аккаунт заблокирован!'); return; }
+            if (closedSlots.bonanza) { showToast('🔒 Sweet Bonanza временно закрыт!'); return; }
             const gridEl = document.getElementById('sb-grid');
             if (gridEl && gridEl.children.length === 0) initBonanzaDOM();
             hideAllViews();
@@ -4902,15 +4938,19 @@
                     updateBalanceUI();
                     saveState();
                     recordRecentWin('Sweet Bonanza', finalSpinWin);
+                    if (finalSpinWin >= baseBet * 15) checkAndShowBigWin(finalSpinWin, baseBet);
+                    else playSfx('win');
                 }
 
-                if (!isBonusForcedScatter && scatterCount >= 4) {
-                    if (!sbInFreeSpins) {
+                if (!isBonusForcedScatter) {
+                    if (!sbInFreeSpins && scatterCount >= 4) {
                         sbSpinning = false;
                         await startBonanzaBonusRound();
                         return;
-                    } else if (scatterCount >= 3) {
+                    } else if (sbInFreeSpins && scatterCount >= 3) {
                         sbFreeSpinsLeft += 5;
+                        const leftEl = document.getElementById('sb-fs-left');
+                        if (leftEl) leftEl.textContent = sbFreeSpinsLeft;
                         showToast('🍭 +5 дополнительных фриспинов!');
                     }
                 }
@@ -4949,12 +4989,19 @@
             setTimeout(() => ov.classList.remove('active'), 3200);
         }
         let soundEnabled = true;
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const AudioCtxClass = window.AudioContext || window.webkitAudioContext;
+        const audioCtx = AudioCtxClass ? new AudioCtxClass() : null;
+
+        function toggleSound() {
+            soundEnabled = !soundEnabled;
+            const btn = document.getElementById('ao-sound-btn');
+            if (btn) btn.textContent = soundEnabled ? '🔊' : '🔇';
+            showToast(soundEnabled ? '🔊 Звук включён' : '🔇 Звук выключен');
+        }
 
         function playSfx(type) {
-            if (!soundEnabled) return;
+            if (!soundEnabled || !audioCtx) return;
             if (audioCtx.state === 'suspended') audioCtx.resume();
-            const osc = audioCtx.createOscillator();
             const gain = audioCtx.createGain();
             osc.connect(gain);
             gain.connect(audioCtx.destination);
@@ -4982,31 +5029,6 @@
                 gain.gain.exponentialRampToValueAtTime(0.001, now + 0.45);
                 osc.start(now); osc.stop(now + 0.45);
             }
-        }
-        async function recordRecentWin(slotName, amount) {
-            if (!username || amount < 5) return; // Записываем заносы от 5 BYN и выше
-            try {
-                await db.collection('recent_wins').add({
-                    nick: username,
-                    slot: slotName,
-                    amount: normalizeMoney(amount),
-                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
-                });
-            } catch (e) {}
-        }
-
-        function listenRecentWins() {
-            const bar = document.getElementById('recent-wins-bar');
-            if (!bar) return;
-            db.collection('recent_wins').orderBy('createdAt', 'desc').limit(6).onSnapshot(snap => {
-                bar.innerHTML = '';
-                snap.forEach(doc => {
-                    const d = doc.data();
-                    bar.innerHTML += `<div style="background:#15181d; border:1px solid #23272f; border-radius:10px; padding:8px 12px; font-size:0.78rem; white-space:nowrap;">
-                        🏆 <b style="color:#fff;">${escapeHtml(d.nick)}</b> • <span style="color:#8a919e;">${escapeHtml(d.slot)}</span> • <b style="color:#00e701;">+${Number(d.amount).toFixed(2)} BYN</b>
-                    </div>`;
-                });
-            });
         }
         async function recordRecentWin(slotName, amount) {
             if (!username || amount < 5) return; // Записываем заносы от 5 BYN и выше
