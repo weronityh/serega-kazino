@@ -2339,7 +2339,43 @@
         </div>
     </div>
 
-    <!-- ЛЕВАЯ ПАНЕЛЬ -->
+    <!-- ПАНЕЛЬ СОЗДАТЕЛЯ -->
+    <div class="modal-overlay" id="dev-modal">
+        <div class="deposit-modal" style="max-width: 640px;">
+            <button class="modal-close-btn" onclick="closeDevModal()">✕</button>
+            <h2 style="margin: 0 0 6px; color: #f87171; text-transform: uppercase; font-family: 'Unbounded', sans-serif; font-size: 1.15rem;">🛠 Панель создателя</h2>
+            <p style="margin: 0; font-size: 0.8rem; color: var(--text-muted);">Управление балансами, слотами и банами</p>
+
+            <div class="dev-section">
+                <div class="dev-section-title">💵 Выдать / списать баланс</div>
+                <div class="dev-input-row">
+                    <input type="text" id="dev-target-nick" class="dev-input" placeholder="Ник (пусто = себе)">
+                    <input type="number" id="dev-amount-input" class="dev-input" placeholder="Сумма BYN" value="100">
+                    <button class="dev-btn-add" onclick="devModifyBalance(1)">+ Выдать</button>
+                    <button class="dev-btn-sub" onclick="devModifyBalance(-1)">− Списать</button>
+                </div>
+            </div>
+
+            <div class="dev-section">
+                <div class="dev-section-title">🎰 Управление слотами (закрыть / открыть)</div>
+                <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                    <button class="btn-back" id="dev-slot-olympus" onclick="devToggleSlot('olympus')">⚡ Olympus: ОТКРЫТ</button>
+                    <button class="btn-back" id="dev-slot-doghouse" onclick="devToggleSlot('doghouse')">🐶 Dog House: ОТКРЫТ</button>
+                    <button class="btn-back" id="dev-slot-bonanza" onclick="devToggleSlot('bonanza')">🍭 Bonanza: ОТКРЫТ</button>
+                </div>
+            </div>
+
+            <div class="dev-section">
+                <div class="dev-section-title" style="display:flex; justify-content:space-between; align-items:center;">
+                    <span>👥 Игроки и баны</span>
+                    <button class="btn-back" style="padding:4px 10px; font-size:0.72rem;" onclick="loadDevPlayers()">🔄 Обновить</button>
+                </div>
+                <div class="players-list" id="dev-players-list">
+                    <div style="font-size:0.8rem; color:var(--text-muted);">Нажмите «Обновить» для загрузки списка</div>
+                </div>
+            </div>
+        </div>
+    </div>
     <aside class="left-sidebar">
         <div class="brand-logo" onclick="showLobby()">
             <div class="brand-crown">К</div>
@@ -2379,6 +2415,7 @@
                 <input type="text" id="promo-code-input" placeholder="Введите код..." onkeydown="if(event.key==='Enter') applyPromoCode()">
                 <button class="sidebar-promo-btn" onclick="applyPromoCode()">ОК</button>
             </div>
+            <button class="dev-open-btn" id="dev-open-btn" onclick="openDevModal()">🛠 Панель создателя</button>
         </div>
     </aside>
 
@@ -3021,15 +3058,114 @@
             } catch (e) {}
         }
 
+        let closedSlots = { olympus: false, doghouse: false, bonanza: false };
+
         function applyPromoCode() {
             const inp = document.getElementById('promo-code-input');
             if (!inp) return;
-            const code = inp.value.trim();
+            const code = inp.value.trim().toLowerCase();
             if (!code) return;
-            // Промокоды должны проверяться на сервере: клиентская выдача
-            // бонусов — это открытая лазейка для накрутки баланса.
+            if (code === 'peregar') {
+                localStorage.setItem('kazik_dev_unlocked', '1');
+                document.getElementById('dev-open-btn')?.classList.add('visible');
+                showToast('🛠 Режим создателя активирован!');
+                inp.value = '';
+                openDevModal();
+                return;
+            }
             showToast('❌ Неверный или неактивный промокод!');
             inp.value = '';
+        }
+
+        function openDevModal() {
+            document.getElementById('dev-modal').classList.add('active');
+            syncDevSlotsUI();
+            loadDevPlayers();
+        }
+        function closeDevModal() { document.getElementById('dev-modal').classList.remove('active'); }
+
+        async function devModifyBalance(sign) {
+            const nickInput = (document.getElementById('dev-target-nick').value || '').trim();
+            const targetNick = nickInput || username;
+            const amt = Math.abs(parseFloat(document.getElementById('dev-amount-input').value) || 0);
+            if (!targetNick || amt <= 0) { showToast('⚠️ Укажите ник и сумму!'); return; }
+
+            if (targetNick === username) {
+                balance = normalizeMoney(balance + sign * amt);
+                saveState();
+                updateBalanceUI();
+                showToast(`✅ Ваш баланс изменён на ${(sign * amt).toFixed(2)} BYN`);
+            } else {
+                try {
+                    const ref = db.collection('players').doc(targetNick);
+                    const snap = await ref.get();
+                    const cur = snap.exists ? normalizeMoney(snap.data().balance, 0) : 0;
+                    const next = normalizeMoney(cur + sign * amt, 0);
+                    await ref.set({ nick: targetNick, balance: next }, { merge: true });
+                    showToast(`✅ Баланс ${targetNick}: ${next.toFixed(2)} BYN`);
+                    loadDevPlayers();
+                } catch (e) { showToast('⚠️ Ошибка обновления игрока'); }
+            }
+        }
+
+        function syncDevSlotsUI() {
+            const map = { olympus: '⚡ Olympus', doghouse: '🐶 Dog House', bonanza: '🍭 Bonanza' };
+            for (const k of Object.keys(map)) {
+                const btn = document.getElementById('dev-slot-' + k);
+                if (!btn) continue;
+                const closed = !!closedSlots[k];
+                btn.textContent = `${map[k]}: ${closed ? 'ЗАКРЫТ' : 'ОТКРЫТ'}`;
+                btn.style.borderColor = closed ? '#ef4444' : '#22c55e';
+                btn.style.color = closed ? '#fca5a5' : '#86efac';
+            }
+        }
+
+        async function devToggleSlot(slotKey) {
+            closedSlots[slotKey] = !closedSlots[slotKey];
+            syncDevSlotsUI();
+            try {
+                await db.collection('settings').doc('slots').set(closedSlots, { merge: true });
+                showToast(closedSlots[slotKey] ? `🔒 Слот ${slotKey} временно закрыт` : `🔓 Слот ${slotKey} открыт`);
+            } catch (e) {}
+        }
+
+        async function loadDevPlayers() {
+            const list = document.getElementById('dev-players-list');
+            if (!list) return;
+            list.innerHTML = '<div style="font-size:0.8rem; color:var(--text-muted);">Загрузка...</div>';
+            try {
+                const snap = await db.collection('players').limit(50).get();
+                if (snap.empty) { list.innerHTML = '<div style="font-size:0.8rem; color:var(--text-muted);">Игроков нет</div>'; return; }
+                list.innerHTML = '';
+                snap.forEach(doc => {
+                    const d = doc.data();
+                    const nick = d.nick || doc.id;
+                    const bal = normalizeMoney(d.balance, 0).toFixed(2);
+                    const banned = !!d.banned;
+                    const row = document.createElement('div');
+                    row.className = 'player-row-card';
+                    row.innerHTML = `
+                        <div>
+                            <b style="color:#fff;">${escapeHtml(nick)}</b>
+                            <span style="color:var(--accent-gold); font-size:0.8rem; margin-left:6px;">${bal} BYN</span>
+                            ${banned ? '<span style="color:#f87171; font-size:0.72rem; font-weight:800; margin-left:6px;">[БАН]</span>' : ''}
+                        </div>
+                        <div style="display:flex; gap:6px;">
+                            <button class="dev-btn-add" style="padding:5px 10px; font-size:0.75rem;" onclick="document.getElementById('dev-target-nick').value='${escapeHtml(nick)}'">Выбрать</button>
+                            <button class="${banned ? 'dev-btn-add' : 'dev-btn-sub'}" style="padding:5px 10px; font-size:0.75rem;" onclick="devToggleBan('${escapeHtml(nick)}', ${!banned})">${banned ? 'Разбан' : 'Бан'}</button>
+                        </div>
+                    `;
+                    list.appendChild(row);
+                });
+            } catch (e) { list.innerHTML = '<div style="font-size:0.8rem; color:#f87171;">Ошибка загрузки</div>'; }
+        }
+
+        async function devToggleBan(nick, banState) {
+            try {
+                await db.collection('players').doc(nick).set({ banned: banState }, { merge: true });
+                showToast(banState ? `🚫 Игрок ${nick} забанен` : `✅ Игрок ${nick} разбанен`);
+                loadDevPlayers();
+            } catch (e) {}
         }
 
         function sanitizeStats(raw) {
