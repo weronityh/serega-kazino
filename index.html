@@ -3157,7 +3157,7 @@
                     `;
                     list.appendChild(row);
                 });
-            } catch (e) { list.innerHTML = '<div style="font-size:0.8rem; color:#f87171;">Ошибка загрузки</div>'; }
+            } catch (e) { list.innerHTML = `<div style="font-size:0.8rem; color:#f87171;">Ошибка: ${escapeHtml(e.message || e)}</div>`; }
         }
 
         async function devToggleBan(nick, banState) {
