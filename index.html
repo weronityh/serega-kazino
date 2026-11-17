@@ -4153,7 +4153,11 @@
                 }
             }
 
-            const fallbackPool = DH_SYMBOLS.map(s => s.fallback);
+            const dhSpinPool = [
+                ...DH_SYMBOLS.map(s => ({ img: s.img, fallback: s.fallback })),
+                { img: 'bydkastandart.png', fallback: '🏠' },
+                { img: 'bonusdoghouselapa.png', fallback: '🐾' }
+            ];
             const timer = setInterval(() => {
                 for (let c = 0; c < DH_COLS; c++) {
                     for (let r = 0; r < DH_ROWS; r++) {
@@ -4161,7 +4165,10 @@
                         const cell = document.getElementById(`dh-cell-${c}-${r}`);
                         if (cell && cell.classList.contains('spinning')) {
                             const inner = cell.querySelector('.dh-symbol-inner');
-                            if (inner) inner.textContent = fallbackPool[Math.floor(Math.random() * fallbackPool.length)];
+                            if (inner) {
+                                const pick = dhSpinPool[Math.floor(Math.random() * dhSpinPool.length)];
+                                inner.innerHTML = `<img src="${pick.img}" alt="" class="dh-sym-img" onerror="this.outerHTML='<span>${pick.fallback}</span>';">`;
+                            }
                         }
                     }
                 }
@@ -4488,14 +4495,17 @@
                 }
             }
 
-            const emojiPool = ['🍓', '🍇', '🍉', '🍏', '🍌', '🍭', '💣'];
+            const sbSpinPool = [...SB_SYMBOLS.map(s => s.img), SB_SCATTER.img];
             const timer = setInterval(() => {
                 for (let c = 0; c < SB_COLS; c++) {
                     for (let r = 0; r < SB_ROWS; r++) {
                         const cell = document.getElementById(`sb-cell-${c}-${r}`);
                         if (cell && cell.classList.contains('cell-spinning')) {
                             const inner = cell.querySelector('.sb-symbol-inner');
-                            if (inner) inner.textContent = emojiPool[Math.floor(Math.random() * emojiPool.length)];
+                            if (inner) {
+                                const img = sbSpinPool[Math.floor(Math.random() * sbSpinPool.length)];
+                                inner.innerHTML = `<img src="${img}" alt="" class="sb-sym-img" onerror="this.outerHTML='<span>🍬</span>';">`;
+                            }
                         }
                     }
                 }
