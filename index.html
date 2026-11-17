@@ -3373,11 +3373,72 @@
         function toggleDogHouseAuto() {
             showToast('ℹ️ Подключите игру "doghouse" в Cloud Function processSpin.');
         }
+// ==========================================
+        // THE DOG HOUSE (Локальный запуск спинов)
+        // ==========================================
+        async function spinDogHouse() {
+            if (dhSpinning) return;
+            const cost = dhCurrentBet;
+            if (balance < cost) {
+                showToast('⚠️ Недостаточно средств на балансе!');
+                openDepositModal();
+                return;
+            }
 
-        function spinDogHouse() {
-            showToast('🔒 Локальные спины отключены. Добавьте "doghouse" в Cloud Function processSpin.');
+            dhSpinning = true;
+            balance = Math.round((balance - cost) * 100) / 100;
+            stats.games = (stats.games || 0) + 1;
+            stats.wagered = Math.round(((stats.wagered || 0) + cost) * 100) / 100;
+            updateBalanceUI();
+            syncProfileUI();
+
+            const spinBtn = document.getElementById('dh-spin-btn');
+            if (spinBtn) spinBtn.disabled = true;
+
+            // Анимация вращения барабанов
+            for (let c = 0; c < DH_COLS; c++) {
+                for (let r = 0; r < DH_ROWS; r++) {
+                    const cell = document.getElementById(`dh-cell-${c}-${r}`);
+                    cell?.classList.add('spinning');
+                }
+            }
+
+            await animDelay(600);
+
+            // Генерируем случайный результат для Dogs
+            let spinWin = 0;
+            for (let c = 0; c < DH_COLS; c++) {
+                for (let r = 0; r < DH_ROWS; r++) {
+                    dhGrid[c][r] = DH_SYMBOLS[Math.floor(Math.random() * DH_SYMBOLS.length)];
+                    renderDogHouseCell(c, r, true);
+                    const cell = document.getElementById(`dh-cell-${c}-${r}`);
+                    cell?.classList.remove('spinning');
+                }
+            }
+
+            // Случайный выигрыш с вероятностью ~35%
+            if (Math.random() < 0.35) {
+                const mults = [1.2, 1.5, 2, 3, 5, 10];
+                const m = mults[Math.floor(Math.random() * mults.length)];
+                spinWin = Math.round(dhCurrentBet * m * 100) / 100;
+                balance = Math.round((balance + spinWin) * 100) / 100;
+                stats.totalWon = Math.round(((stats.totalWon || 0) + spinWin) * 100) / 100;
+                stats.biggestWin = Math.max(stats.biggestWin || 0, spinWin);
+            }
+
+            updateBalanceUI();
+            syncProfileUI();
+
+            const hudWin = document.getElementById('dh-hud-win');
+            if (hudWin) hudWin.textContent = spinWin.toFixed(2).replace('.', ',');
+
+            if (spinWin > 0) {
+                showToast(`🏆 Выигрыш в The Dog House: ${spinWin.toFixed(2)} BYN!`);
+            }
+
+            dhSpinning = false;
+            if (spinBtn) spinBtn.disabled = false;
         }
-
         // ==========================================
         // SWEET BONANZA (Инициализация витрины до подключения processSpin)
         // ==========================================
@@ -3473,8 +3534,65 @@
             showToast('🔒 Покупка бонуса переведена на сервер (Cloud Function processSpin).');
         }
 
-        function spinSweetBonanza() {
-            showToast('🔒 Локальные спины отключены. Добавьте "bonanza" в Cloud Function processSpin.');
+        async function spinSweetBonanza() {
+            if (sbSpinning) return;
+            const totalBet = getBonanzaTotalBet();
+            if (balance < totalBet) {
+                showToast('⚠️ Недостаточно средств на балансе!');
+                openDepositModal();
+                return;
+            }
+
+            sbSpinning = true;
+            balance = Math.round((balance - totalBet) * 100) / 100;
+            stats.games = (stats.games || 0) + 1;
+            stats.wagered = Math.round(((stats.wagered || 0) + totalBet) * 100) / 100;
+            updateBalanceUI();
+            syncProfileUI();
+
+            const spinBtn = document.getElementById('sb-spin-btn');
+            if (spinBtn) spinBtn.disabled = true;
+
+            for (let c = 0; c < SB_COLS; c++) {
+                for (let r = 0; r < SB_ROWS; r++) {
+                    const cell = document.getElementById(`sb-cell-${c}-${r}`);
+                    cell?.classList.add('cell-spinning');
+                }
+            }
+
+            await animDelay(600);
+
+            let spinWin = 0;
+            for (let c = 0; c < SB_COLS; c++) {
+                for (let r = 0; r < SB_ROWS; r++) {
+                    sbGrid[c][r] = SB_SYMBOLS[Math.floor(Math.random() * SB_SYMBOLS.length)];
+                    renderBonanzaCell(c, r, true);
+                    const cell = document.getElementById(`sb-cell-${c}-${r}`);
+                    cell?.classList.remove('cell-spinning');
+                }
+            }
+
+            if (Math.random() < 0.38) {
+                const mults = [1.5, 2, 4, 8, 15, 25];
+                const m = mults[Math.floor(Math.random() * mults.length)];
+                spinWin = Math.round(totalBet * m * 100) / 100;
+                balance = Math.round((balance + spinWin) * 100) / 100;
+                stats.totalWon = Math.round(((stats.totalWon || 0) + spinWin) * 100) / 100;
+                stats.biggestWin = Math.max(stats.biggestWin || 0, spinWin);
+            }
+
+            updateBalanceUI();
+            syncProfileUI();
+
+            const hudWin = document.getElementById('sb-hud-win');
+            if (hudWin) hudWin.textContent = spinWin.toFixed(2).replace('.', ',');
+
+            if (spinWin > 0) {
+                showToast(`🍭 Выигрыш в Sweet Bonanza: ${spinWin.toFixed(2)} BYN!`);
+            }
+
+            sbSpinning = false;
+            if (spinBtn) spinBtn.disabled = false;
         }
 
         // ==========================================
