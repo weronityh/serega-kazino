@@ -1052,6 +1052,16 @@
         }
 
         .dh-cell.spinning .dh-symbol-inner { animation: aoCellScroll 0.12s infinite alternate ease-in-out; }
+        .dh-cell.dh-tease-spin {
+            transform: scale(1.08);
+            border-color: #fde047 !important;
+            box-shadow: 0 0 24px rgba(250, 204, 21, 0.95), inset 0 0 14px rgba(250, 204, 21, 0.45);
+            z-index: 20;
+            transition: transform 0.25s ease;
+        }
+        .dh-cell.dh-tease-spin .dh-symbol-inner {
+            animation: aoCellScroll 0.055s infinite alternate ease-in-out !important;
+        }
         .dh-cell.win-pop {
             background: radial-gradient(circle, rgba(253, 224, 71, 0.6) 0%, rgba(202, 138, 4, 0.35) 100%);
             border-color: #fde047;
@@ -4328,10 +4338,25 @@
                     }
                 }
 
-                await sleep(520);
-                clearInterval(timer);
+                await sleep(450);
+
+                const hasScatterCol1 = !dhInFreeSpins && nextGrid[0].some(s => s && s.id === 'scatter');
+                const hasScatterCol3 = !dhInFreeSpins && nextGrid[2].some(s => s && s.id === 'scatter');
+                const teaseFifthReel = hasScatterCol1 && hasScatterCol3;
 
                 for (let c = 0; c < DH_COLS; c++) {
+                    if (c === 4 && teaseFifthReel) {
+                        for (let r = 0; r < DH_ROWS; r++) {
+                            document.getElementById(`dh-cell-4-${r}`)?.classList.add('dh-tease-spin');
+                        }
+                        await sleep(1450);
+                        for (let r = 0; r < DH_ROWS; r++) {
+                            document.getElementById(`dh-cell-4-${r}`)?.classList.remove('dh-tease-spin');
+                        }
+                    } else {
+                        await sleep(260);
+                    }
+
                     for (let r = 0; r < DH_ROWS; r++) {
                         dhGrid[c][r] = nextGrid[c][r];
                         if (dhInFreeSpins && nextGrid[c][r].id === 'wild' && !dhStickyWilds[c][r]) {
@@ -4339,8 +4364,8 @@
                         }
                         renderDogHouseCell(c, r, !(dhInFreeSpins && dhStickyWilds[c][r]));
                     }
-                    await sleep(90);
                 }
+                clearInterval(timer);
 
                 const { totalWin, winCells } = evaluateDogHousePaylines();
                 let scatterCount = 0;
