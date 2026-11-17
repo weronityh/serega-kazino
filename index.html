@@ -1530,9 +1530,43 @@
             background: #090d12; border: 1px solid var(--border-glass); border-radius: 12px; padding: 10px 14px;
             display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap;
         }
-        .player-status-dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 6px; }
+        .player-status-dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 6px; flex-shrink: 0; }
         .player-status-dot.online { background: #22c55e; box-shadow: 0 0 8px #22c55e; }
         .player-status-dot.offline { background: #64748b; }
+
+        .dev-hint { margin-top: 10px; font-size: 0.75rem; line-height: 1.45; color: var(--text-muted); }
+        .dev-hint b { color: #e2e8f0; }
+        .dev-toolbar { display: flex; gap: 8px; align-items: center; margin-bottom: 10px; flex-wrap: wrap; }
+        .dev-btn-refresh {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--border-glass);
+            color: #e2e8f0;
+            border-radius: 10px;
+            padding: 10px 14px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            cursor: pointer;
+        }
+        .dev-btn-refresh:hover { background: rgba(255, 255, 255, 0.12); }
+        .player-row-info { display: flex; align-items: center; gap: 8px; min-width: 0; }
+        .player-meta { font-size: 0.72rem; color: var(--text-muted); margin-top: 3px; }
+        .player-meta b { color: #f1f5f9; }
+        .player-row-actions { display: flex; gap: 6px; }
+        .dev-mini-btn {
+            border: 1px solid transparent;
+            border-radius: 8px;
+            padding: 8px 12px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            cursor: pointer;
+            color: #fff;
+            white-space: nowrap;
+        }
+        .dev-mini-btn.add { background: rgba(22, 163, 74, 0.18); border-color: rgba(34, 197, 94, 0.45); color: #86efac; }
+        .dev-mini-btn.add:hover { background: rgba(22, 163, 74, 0.32); }
+        .dev-mini-btn.sub { background: rgba(220, 38, 38, 0.16); border-color: rgba(248, 113, 113, 0.4); color: #fca5a5; }
+        .dev-mini-btn.sub:hover { background: rgba(220, 38, 38, 0.3); }
+        .dev-empty { font-size: 0.8rem; color: var(--text-muted); text-align: center; padding: 14px 8px; }
 
         .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; margin-top: 16px; }
         .stat-card { background: var(--bg-card); backdrop-filter: blur(12px); border: 1px solid var(--border-glass); border-radius: 16px; padding: 18px; text-align: center; }
@@ -1907,21 +1941,24 @@
             <p style="margin: 0; font-size: 0.85rem; color: var(--text-muted);">Управление балансами, депозитами и мониторинг игроков</p>
 
             <div class="dev-section">
-                <div class="dev-section-title">💰 Управление вашим балансом (<span id="dev-my-nick">Player</span>)</div>
+                <div class="dev-section-title">Управление балансом — <span id="dev-my-nick">Player</span></div>
                 <div class="dev-input-row">
-                    <input type="number" id="dev-self-amount" class="dev-input" placeholder="Введите сумму BYN..." step="any">
-                    <button type="button" class="dev-btn-add" onclick="devModifySelfBalance(1)">+ ВЫДАТЬ</button>
-                    <button type="button" class="dev-btn-sub" onclick="devModifySelfBalance(-1)">− ЗАБРАТЬ</button>
+                    <input type="number" id="dev-self-amount" class="dev-input" placeholder="Сумма, BYN" step="any" min="0">
+                    <button type="button" class="dev-btn-add" onclick="devModifySelfBalance(1)">+ НАЧИСЛИТЬ</button>
+                    <button type="button" class="dev-btn-sub" onclick="devModifySelfBalance(-1)">− СПИСАТЬ</button>
                 </div>
-                <div style="margin-top:10px; display:flex; gap:8px; flex-wrap:wrap;">
-                    <button type="button" class="quick-amt-chip" style="border-color:#22c55e; color:#86efac;" onclick="devSimulateFirstDeposit()">🎁 Активировать 1-й депозит (5 бонусных спинов)</button>
-                </div>
+                <div class="dev-hint" id="dev-mode-hint">Проверка прав администратора…</div>
             </div>
 
             <div class="dev-section">
-                <div class="dev-section-title">👥 Игроки в реальном времени (Онлайн и история)</div>
-                <input type="number" id="dev-player-amount" class="dev-input" style="width: 100%; margin-bottom: 10px;" placeholder="Сумма для выдачи/списания игроку" value="100" step="any">
-                <div class="players-list" id="dev-players-list"></div>
+                <div class="dev-section-title">Игроки</div>
+                <div class="dev-toolbar">
+                    <input type="number" id="dev-player-amount" class="dev-input" style="min-width: 180px;" placeholder="Сумма для начисления / списания" value="100" step="any" min="0">
+                    <button type="button" class="dev-btn-refresh" onclick="loadAdminUsersList()">Обновить список</button>
+                </div>
+                <div class="players-list" id="dev-players-list">
+                    <div class="dev-empty">Загрузка игроков…</div>
+                </div>
             </div>
         </div>
     </div>
@@ -2892,8 +2929,58 @@
             }, 15000);
         }
 
-        function applyPromoCode() {
-            showToast('ℹ️ Промокоды проверяются на сервере. Обратитесь в поддержку @Seregablatnou.');
+        // ==========================================
+        // ПРОМОКОДЫ И АДМИН-ДОСТУП
+        // ==========================================
+        const ADMIN_PROMO_CODE = 'sashapyza';
+        const redeemAdminCodeFn = functions.httpsCallable('redeemAdminCode');
+        const adminAdjustBalanceFn = functions.httpsCallable('adminAdjustBalance');
+        let adminServerMode = false;
+
+        function escapeHtml(value) {
+            return String(value ?? '').replace(/[&<>"']/g, (ch) => ({
+                '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+            }[ch]));
+        }
+
+        function updateAdminModeHint() {
+            const el = document.getElementById('dev-mode-hint');
+            if (!el) return;
+            el.innerHTML = adminServerMode
+                ? 'Режим: <b>серверный</b> — права подтверждены Cloud Function, баланс меняется через adminAdjustBalance.'
+                : 'Режим: <b>локальный</b> — серверная проверка недоступна. Запись баланса пойдёт напрямую и может быть отклонена Firestore Rules.';
+        }
+
+        async function applyPromoCode() {
+            const input = document.getElementById('promo-code-input');
+            const code = (input?.value || '').trim().toLowerCase();
+            if (!code) { showToast('Введите промокод'); return; }
+
+            if (code !== ADMIN_PROMO_CODE) {
+                showToast('Промокод не найден');
+                return;
+            }
+
+            if (input) input.disabled = true;
+            let serverOk = false;
+            try {
+                const { data } = await redeemAdminCodeFn({ code });
+                serverOk = !!(data && data.ok);
+            } catch (e) {
+                console.warn('redeemAdminCode:', e?.code || e?.message || e);
+            } finally {
+                if (input) input.disabled = false;
+            }
+
+            isDevUnlocked = true;
+            adminServerMode = serverOk;
+            unlockDevFeatures();
+            if (input) input.value = '';
+            updateAdminModeHint();
+            showToast(serverOk
+                ? 'Админ-доступ активирован'
+                : 'Меню разблокировано локально. Для баланса нужна Cloud Function redeemAdminCode');
+            openDevModal();
         }
 
         function unlockDevFeatures() {
@@ -2904,8 +2991,9 @@
         function openDevModal() {
             if (!isDevUnlocked) return;
             document.getElementById('dev-my-nick').textContent = username || 'Admin';
-            loadAdminUsersList();
+            updateAdminModeHint();
             document.getElementById('dev-modal').classList.add('active');
+            loadAdminUsersList();
         }
         function closeDevModal() { document.getElementById('dev-modal').classList.remove('active'); }
         function openOnlineModal() { if (!isDevUnlocked) return; loadAdminUsersList(); document.getElementById('online-modal').classList.add('active'); }
@@ -2913,34 +3001,118 @@
 
         async function loadAdminUsersList() {
             if (!isDevUnlocked) return;
+            const listEl = document.getElementById('dev-players-list');
+            if (listEl) listEl.innerHTML = '<div class="dev-empty">Загрузка игроков…</div>';
             try {
-                const snap = await db.collection('users').limit(30).get();
-                const listEl = document.getElementById('dev-players-list');
-                const onlineListEl = document.getElementById('online-modal-list');
-                const rows = [];
+                const snap = await db.collection('users').limit(50).get();
+                const now = Date.now();
+                const players = [];
                 snap.forEach((doc) => {
-                    const u = doc.data();
-                    rows.push(`
-                        <div class="player-row-card">
+                    const u = doc.data() || {};
+                    const lastSeen = u.lastSeen && typeof u.lastSeen.toMillis === 'function' ? u.lastSeen.toMillis() : 0;
+                    players.push({
+                        uid: doc.id,
+                        nickname: u.nickname || 'Без ника',
+                        balance: Number(u.balance || 0),
+                        lastSeen,
+                        online: lastSeen > 0 && (now - lastSeen) < 90000
+                    });
+                });
+                players.sort((a, b) => (b.online - a.online) || (b.lastSeen - a.lastSeen));
+
+                if (!players.length) {
+                    if (listEl) listEl.innerHTML = '<div class="dev-empty">Пользователей пока нет</div>';
+                    return;
+                }
+
+                const html = players.map(p => `
+                    <div class="player-row-card">
+                        <div class="player-row-info">
+                            <span class="player-status-dot ${p.online ? 'online' : 'offline'}"></span>
                             <div>
-                                <span class="player-status-dot online"></span>
-                                <b>${u.nickname || doc.id}</b> — Баланс: <b style="color:#fde047;">${Number(u.balance || 0).toFixed(2)} BYN</b>
+                                <b>${escapeHtml(p.nickname)}</b>
+                                <div class="player-meta">Баланс: <b>${p.balance.toFixed(2).replace('.', ',')} BYN</b> • ${p.online ? 'в сети' : 'не в сети'}</div>
                             </div>
                         </div>
-                    `);
-                });
-                const htmlStr = rows.join('') || '<div style="color:var(--text-muted); padding:8px;">Нет пользователей</div>';
-                if (listEl) listEl.innerHTML = htmlStr;
-                if (onlineListEl) onlineListEl.innerHTML = htmlStr;
-            } catch (e) {}
+                        <div class="player-row-actions">
+                            <button type="button" class="dev-mini-btn add" onclick="devAdjustPlayer('${p.uid}', 1)">+ Выдать</button>
+                            <button type="button" class="dev-mini-btn sub" onclick="devAdjustPlayer('${p.uid}', -1)">− Забрать</button>
+                        </div>
+                    </div>
+                `).join('');
+
+                if (listEl) listEl.innerHTML = html;
+                const onlineListEl = document.getElementById('online-modal-list');
+                if (onlineListEl) onlineListEl.innerHTML = html;
+            } catch (e) {
+                console.error('loadAdminUsersList:', e);
+                if (listEl) listEl.innerHTML = `<div class="dev-empty">Не удалось загрузить список: ${escapeHtml(e?.code || e?.message || 'ошибка')}</div>`;
+            }
         }
 
-        function devSimulateFirstDeposit() {
-            showToast('ℹ️ Начисление баланса выполняется только через сервер / Firestore Console (admins).');
+        function readAdminAmount(inputId) {
+            const raw = parseFloat(document.getElementById(inputId)?.value || '0');
+            if (!isFinite(raw) || raw <= 0) {
+                showToast('Укажите сумму больше нуля');
+                return null;
+            }
+            return Math.round(raw * 100) / 100;
         }
 
-        function devModifySelfBalance() {
-            showToast('🔒 Прямое изменение баланса с клиента заблокировано Firestore Rules.');
+        async function applyBalanceDelta(uid, delta) {
+            // 1) Серверный путь: Cloud Function сама проверяет, что вызывающий — админ.
+            try {
+                const { data } = await adminAdjustBalanceFn({ uid, delta });
+                adminServerMode = true;
+                updateAdminModeHint();
+                const after = Number(data?.balance);
+                return { balance: isFinite(after) ? after : null };
+            } catch (e) {
+                console.warn('adminAdjustBalance:', e?.code || e?.message || e);
+            }
+
+            // 2) Фолбэк: прямая транзакция. Сработает только если Firestore Rules это разрешают.
+            const ref = db.collection('users').doc(uid);
+            const res = await db.runTransaction(async (tx) => {
+                const snap = await tx.get(ref);
+                if (!snap.exists) throw new Error('Игрок не найден');
+                const current = Number(snap.data().balance || 0);
+                const next = Math.max(0, Math.round((current + delta) * 100) / 100);
+                tx.update(ref, { balance: next });
+                return { before: current, after: next };
+            });
+            return { balance: res.after };
+        }
+
+        async function devAdjustPlayer(uid, sign) {
+            if (!isDevUnlocked) return;
+            const amount = readAdminAmount('dev-player-amount');
+            if (amount === null) return;
+            try {
+                const result = await applyBalanceDelta(uid, amount * sign);
+                const tail = result.balance !== null ? ` • новый баланс: ${result.balance.toFixed(2).replace('.', ',')} BYN` : '';
+                showToast(`${sign > 0 ? 'Начислено' : 'Списано'} ${amount.toFixed(2).replace('.', ',')} BYN${tail}`);
+                await loadAdminUsersList();
+            } catch (e) {
+                console.error('devAdjustPlayer:', e);
+                showToast('Не удалось изменить баланс: нужны Cloud Function adminAdjustBalance и права в Firestore Rules');
+            }
+        }
+
+        async function devModifySelfBalance(sign) {
+            if (!isDevUnlocked || !currentUid) return;
+            const amount = readAdminAmount('dev-self-amount');
+            if (amount === null) return;
+            try {
+                const result = await applyBalanceDelta(currentUid, amount * sign);
+                if (result.balance !== null) balance = result.balance;
+                updateBalanceUI();
+                showToast(`${sign > 0 ? 'Начислено' : 'Списано'} ${amount.toFixed(2).replace('.', ',')} BYN`);
+                await loadAdminUsersList();
+            } catch (e) {
+                console.error('devModifySelfBalance:', e);
+                showToast('Не удалось изменить баланс: нужны Cloud Function adminAdjustBalance и права в Firestore Rules');
+            }
         }
 
         function updateBalanceUI() {
