@@ -6192,7 +6192,11 @@
                     showToast(`🍭 Бонус завершён! Выигрыш: ${sbFreeSpinsTotalWin.toFixed(2)} ⭐`);
                     if (sbAutoActive) { await sleep(700); spinSweetBonanza(); }
                 }
+            } else if (sbAutoActive) {
+                await sleep(580);
+                spinSweetBonanza();
             }
+        }
 
         function checkAndShowBigWin(winAmount, betAmount) {
             if (!betAmount || winAmount < betAmount * 15) return;
