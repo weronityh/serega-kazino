@@ -4571,6 +4571,15 @@ body.sidebar-collapsed .left-sidebar {
                         <div class="stat-card-value" id="stat-biggest-win" style="color: #3ddc84;">0,00 ⭐</div>
                     </div>
                 </div>
+
+                <!-- ПРОМОКОД ДЛЯ ТЕЛЕФОНА -->
+                <div style="margin-top:16px; background:var(--bg-card); padding:16px; border-radius:16px; border:1px solid var(--border-glass);">
+                    <div class="sidebar-promo-label" style="margin-bottom:8px;">🎟️ Промокод</div>
+                    <div class="sidebar-promo-row">
+                        <input type="text" id="profile-promo-input" placeholder="Введите код..." onkeydown="if(event.key==='Enter') applyProfilePromoCode()">
+                        <button class="sidebar-promo-btn" onclick="applyProfilePromoCode()">ОК</button>
+                    </div>
+                </div>
             </div>
 
             <footer class="trust-footer">
@@ -7525,6 +7534,14 @@ function toggleSidebar() {
 // Если пользователь ранее скрыл меню — оставляем его скрытым при загрузке
 if (localStorage.getItem('kazik_sidebar_collapsed') === '1') {
     document.body.classList.add('sidebar-collapsed');
+}
+function applyProfilePromoCode() {
+    const profInp = document.getElementById('profile-promo-input');
+    const sideInp = document.getElementById('promo-code-input');
+    if (!profInp || !sideInp) return;
+    sideInp.value = profInp.value;
+    profInp.value = '';
+    applyPromoCode();
 }
     </script>
 </body>
