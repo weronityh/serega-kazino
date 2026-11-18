@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>СЕРЁГА И ОЛЯМБУС КАЗИК — Официальный слот-портал</title>
-    <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@700;900&family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@700;900&family=Inter:wght@400;600;700;800;900&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
     <!-- Подключаем Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
@@ -1605,7 +1605,7 @@
             height: 38px;
             border-radius: 10px;
             background: var(--accent-gold-gradient);
-            color: #04150a;
+            color: #ffffff;
             display: grid;
             place-items: center;
             font-family: 'Unbounded', sans-serif;
@@ -1725,7 +1725,7 @@
         .sidebar-promo-row input:focus { border-color: rgba(0, 231, 1, 0.55); }
         .sidebar-promo-btn {
             background: var(--accent-gold-gradient);
-            color: #04150a;
+            color: #ffffff;
             border-radius: 8px;
             font-weight: 800;
             font-size: 0.78rem;
@@ -1768,7 +1768,7 @@
         }
         .btn-deposit-top {
             background: var(--accent-gold-gradient);
-            color: #04150a;
+            color: #ffffff;
             border-radius: 9px;
             box-shadow: none;
             font-size: 0.8rem;
@@ -1849,7 +1849,7 @@
         }
         .hero-cta-btn {
             background: var(--accent-gold-gradient);
-            color: #04150a;
+            color: #ffffff;
             border-radius: 10px;
             padding: 13px 22px;
             font-size: 0.86rem;
@@ -1954,7 +1954,7 @@
         }
         .card-hover-play-btn {
             background: var(--accent-gold-gradient);
-            color: #04150a;
+            color: #ffffff;
             border-radius: 8px;
             padding: 11px 22px;
             font-size: 0.82rem;
@@ -2273,6 +2273,677 @@
             font-family: 'Unbounded', sans-serif; font-size: 2rem; font-weight: 900; color: #00e701;
         }
         @keyframes bigWinPop { 0% { transform: scale(0.6); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+
+    /* ==========================================================
+       СКИН VODKA.BET — тёмно-синяя оболочка + электрик-синий акцент
+       Затрагивает только оболочку сайта: сайдбар, топбар, зал,
+       кассу, профиль, модалки и тосты.
+       Интерфейсы слотов (Olympus / Dog House / Bonanza) не изменяются.
+       ========================================================== */
+        :root {
+            --vb-bg: #060a13;
+            --vb-bg-2: #0a1120;
+            --vb-surface: #0d1626;
+            --vb-surface-2: #101c30;
+            --vb-line: rgba(255, 255, 255, 0.07);
+            --vb-line-strong: rgba(255, 255, 255, 0.13);
+            --vb-blue: #2f86ff;
+            --vb-blue-light: #4a9bff;
+            --vb-blue-deep: #1f63e8;
+            --vb-blue-soft: rgba(47, 134, 255, 0.12);
+            --vb-green: #3ddc84;
+
+            /* Старые имена переменных сохранены для совместимости */
+            --bg-main: var(--vb-bg);
+            --bg-sidebar: #070c17;
+            --bg-topbar: rgba(6, 10, 19, 0.84);
+            --bg-card: var(--vb-surface);
+            --border-glass: var(--vb-line);
+            --border-color: var(--vb-line);
+            --accent-gold: var(--vb-blue);
+            --accent-gold-gradient: linear-gradient(180deg, #4a9bff 0%, #1f63e8 100%);
+            --accent-gold-glow: rgba(47, 134, 255, 0.35);
+            --text-main: #eef3fc;
+            --text-muted: #8794ab;
+            --danger: #ff6b6b;
+        }
+
+        html { scrollbar-color: #17233a #060a13; }
+
+        body {
+            background-color: var(--vb-bg);
+            background-image:
+                radial-gradient(1100px 540px at 78% -14%, rgba(47, 134, 255, 0.18), transparent 62%),
+                radial-gradient(820px 500px at 4% 2%, rgba(31, 99, 232, 0.10), transparent 60%);
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+
+        ::-webkit-scrollbar { width: 10px; height: 10px; }
+        ::-webkit-scrollbar-track { background: var(--vb-bg); }
+        ::-webkit-scrollbar-thumb {
+            background: #17233a;
+            border: 2px solid var(--vb-bg);
+            border-radius: 8px;
+        }
+        ::-webkit-scrollbar-thumb:hover { background: #22314f; }
+        ::selection { background: rgba(47, 134, 255, 0.32); color: #fff; }
+
+        /* ---------- Сайдбар ---------- */
+        .left-sidebar {
+            background: linear-gradient(180deg, #080e1b 0%, #060a13 100%);
+            border-right: 1px solid var(--vb-line);
+            padding: 16px 12px;
+        }
+
+        .brand-logo {
+            border-bottom: 1px solid var(--vb-line);
+            padding: 6px 4px 18px;
+            margin-bottom: 12px;
+        }
+        .brand-crown {
+            width: 42px;
+            height: 42px;
+            display: grid;
+            place-items: center;
+            border-radius: 13px;
+            background: linear-gradient(180deg, #4a9bff 0%, #1f63e8 100%);
+            color: #fff;
+            font-size: 1.1rem;
+            font-weight: 900;
+            margin-bottom: 10px;
+            filter: none;
+            box-shadow: 0 10px 24px rgba(31, 99, 232, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.28);
+        }
+        .brand-title-top {
+            font-family: 'Manrope', 'Inter', sans-serif;
+            font-size: 0.6rem;
+            font-weight: 700;
+            letter-spacing: 2.2px;
+            color: #8b9bb5;
+        }
+        .brand-title-bottom {
+            font-family: 'Manrope', 'Inter', sans-serif;
+            font-size: 1.18rem;
+            font-weight: 800;
+            letter-spacing: 1.2px;
+            color: #ffffff;
+            text-shadow: none;
+        }
+
+        .nav-item {
+            border-radius: 12px;
+            padding: 11px 13px;
+            font-size: 0.86rem;
+            font-weight: 600;
+            color: #93a1b8;
+            border: 1px solid transparent;
+        }
+        .nav-item:hover {
+            background: rgba(255, 255, 255, 0.045);
+            color: #ffffff;
+        }
+        .nav-item.active {
+            background: linear-gradient(90deg, rgba(47, 134, 255, 0.20) 0%, rgba(47, 134, 255, 0.06) 65%, rgba(47, 134, 255, 0.02) 100%);
+            border-color: rgba(47, 134, 255, 0.38);
+            color: #ffffff;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+        }
+        .nav-item.active::before {
+            width: 3px;
+            height: 60%;
+            background: var(--vb-blue-light);
+            box-shadow: 0 0 12px rgba(74, 155, 255, 0.9);
+        }
+
+        .slot-nav-card { border-radius: 13px; padding: 7px; }
+        .slot-nav-img {
+            border-radius: 9px;
+            border: 1px solid var(--vb-line);
+            filter: none;
+        }
+        .slot-nav-card:hover .slot-nav-img {
+            border-color: rgba(74, 155, 255, 0.6);
+            box-shadow: 0 0 16px rgba(47, 134, 255, 0.3);
+            filter: none;
+        }
+        .slot-nav-card.active .slot-nav-img {
+            border-color: var(--vb-blue-light);
+            box-shadow: 0 0 16px rgba(47, 134, 255, 0.45);
+        }
+        .slot-nav-label {
+            color: #8fb6ea;
+            font-size: 0.67rem;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            text-transform: none;
+        }
+        .slot-nav-card:hover .slot-nav-label,
+        .slot-nav-card.active .slot-nav-label {
+            color: #ffffff;
+            text-shadow: none;
+        }
+
+        .sidebar-promo-box { border-top: 1px solid var(--vb-line); }
+        .sidebar-promo-label { color: #7d8ca4; font-weight: 700; letter-spacing: 0.6px; }
+        .sidebar-promo-row input {
+            background: #08101d;
+            border: 1px solid var(--vb-line);
+            border-radius: 10px;
+            color: #ffffff;
+        }
+        .sidebar-promo-row input::placeholder { color: #64748b; }
+        .sidebar-promo-row input:focus {
+            border-color: rgba(74, 155, 255, 0.6);
+            box-shadow: 0 0 0 3px rgba(47, 134, 255, 0.12);
+        }
+        .sidebar-promo-btn {
+            background: linear-gradient(180deg, #4a9bff 0%, #1f63e8 100%);
+            color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 6px 18px rgba(31, 99, 232, 0.35);
+        }
+        .sidebar-promo-btn:hover { filter: brightness(1.08); }
+
+        /* ---------- Топбар ---------- */
+        .topbar {
+            background: var(--bg-topbar);
+            border-bottom: 1px solid var(--vb-line);
+            min-height: 68px;
+            padding: 12px 26px;
+            gap: 12px;
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+        }
+
+        .tg-boss-btn {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--vb-line);
+            border-radius: 999px;
+            color: #b7c4d8;
+            font-size: 0.73rem;
+            font-weight: 700;
+            letter-spacing: 0.4px;
+            padding: 10px 17px;
+        }
+        .tg-boss-btn:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--vb-line-strong);
+            color: #ffffff;
+        }
+
+        .balance-center-box {
+            background: linear-gradient(180deg, #111c30 0%, #0b1424 100%);
+            border: 1px solid var(--vb-line);
+            border-radius: 999px;
+            padding: 9px 18px;
+            font-size: 1.02rem;
+            font-weight: 800;
+            color: #ffffff;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            backdrop-filter: none;
+        }
+
+        .btn-deposit-top {
+            background: linear-gradient(180deg, #4a9bff 0%, #2069f0 100%);
+            color: #ffffff;
+            border: none;
+            border-radius: 999px;
+            padding: 11px 21px;
+            font-size: 0.79rem;
+            font-weight: 800;
+            letter-spacing: 0.3px;
+            box-shadow: 0 10px 24px rgba(31, 107, 255, 0.38), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+        }
+        .btn-deposit-top:hover {
+            transform: none;
+            filter: brightness(1.07);
+            box-shadow: 0 12px 30px rgba(31, 107, 255, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-withdraw-top {
+            background: #121d31;
+            color: #eaf2ff;
+            border: 1px solid var(--vb-line-strong);
+            border-radius: 999px;
+            padding: 10px 19px;
+            font-size: 0.79rem;
+            font-weight: 700;
+            box-shadow: none;
+        }
+        .btn-withdraw-top:hover { background: #17243c; filter: none; transform: none; }
+
+        .topbar-online-pill {
+            background: #101c30;
+            border: 1px solid var(--vb-line);
+            border-radius: 999px;
+            color: #c6d3e8;
+        }
+        .topbar-online-pill:hover { background: #152441; border-color: var(--vb-line-strong); transform: none; }
+
+        .topbar-profile-pill {
+            background: linear-gradient(180deg, #111c30 0%, #0b1424 100%);
+            border: 1px solid var(--vb-line);
+            border-radius: 999px;
+            font-weight: 700;
+            padding: 6px 15px 6px 8px;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+        }
+        .topbar-profile-pill:hover { border-color: rgba(74, 155, 255, 0.45); }
+
+        /* ---------- Контент и герой ---------- */
+        .content-area { max-width: 1400px; padding: 26px 30px 44px; }
+
+        .hero-banner {
+            border-radius: 24px;
+            border: 1px solid var(--vb-line);
+            padding: 44px 46px;
+            margin-bottom: 26px;
+            background:
+                radial-gradient(640px 340px at 80% 42%, rgba(47, 134, 255, 0.30), transparent 68%),
+                radial-gradient(520px 280px at 99% 96%, rgba(61, 220, 132, 0.10), transparent 70%),
+                linear-gradient(115deg, #0f1c31 0%, #0b1526 55%, #0a1220 100%);
+            box-shadow: 0 26px 60px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            backdrop-filter: none;
+        }
+        .hero-content::before {
+            content: 'СЛОТ-ПОРТАЛ • BYN';
+            color: #9cc6ff;
+            background: rgba(47, 134, 255, 0.12);
+            border: 1px solid rgba(47, 134, 255, 0.35);
+            font-size: 0.6rem;
+            letter-spacing: 2px;
+            padding: 5px 12px;
+            border-radius: 999px;
+        }
+        .hero-title {
+            font-family: 'Manrope', 'Inter', sans-serif;
+            font-size: 2.15rem;
+            font-weight: 800;
+            line-height: 1.12;
+            letter-spacing: -0.8px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+            color: #ffffff;
+        }
+        .hero-title .hl {
+            color: var(--vb-green);
+            text-shadow: 0 0 32px rgba(61, 220, 132, 0.35);
+        }
+        .hero-sub {
+            font-size: 0.86rem;
+            font-weight: 600;
+            color: #93a2ba;
+            margin: 0 0 22px;
+            letter-spacing: 0.2px;
+        }
+        .hero-stats {
+            display: flex;
+            align-items: flex-end;
+            gap: 42px;
+            margin-top: 28px;
+            flex-wrap: wrap;
+        }
+        .hero-stat { display: flex; flex-direction: column; gap: 4px; }
+        .hero-stat-value {
+            font-family: 'Manrope', 'Inter', sans-serif;
+            font-size: 2.05rem;
+            font-weight: 800;
+            line-height: 1;
+            color: var(--vb-green);
+            letter-spacing: -0.5px;
+        }
+        .hero-stat-label {
+            font-size: 0.62rem;
+            font-weight: 800;
+            letter-spacing: 1.2px;
+            color: #93a2ba;
+            text-transform: uppercase;
+        }
+
+        .hero-cta-btn {
+            background: linear-gradient(180deg, #4a9bff 0%, #2069f0 100%);
+            color: #ffffff;
+            border-radius: 999px;
+            padding: 15px 30px;
+            font-size: 0.9rem;
+            font-weight: 800;
+            letter-spacing: 0.2px;
+            text-transform: none;
+            box-shadow: 0 12px 30px rgba(31, 107, 255, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+        }
+        .hero-cta-btn:hover {
+            transform: translateY(-1px);
+            filter: brightness(1.06);
+            box-shadow: 0 16px 38px rgba(31, 107, 255, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        }
+
+        .hero-bonus-visual { filter: drop-shadow(0 14px 32px rgba(0, 0, 0, 0.65)); }
+        .hero-zeus-visual { filter: drop-shadow(0 14px 32px rgba(0, 0, 0, 0.65)); }
+
+        .content-area #view-lobby > h3 {
+            font-family: 'Manrope', 'Inter', sans-serif !important;
+            font-size: 1rem !important;
+            font-weight: 800 !important;
+            letter-spacing: 0.6px;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 16px !important;
+        }
+        .content-area #view-lobby > h3::before {
+            content: '';
+            width: 4px;
+            height: 18px;
+            border-radius: 2px;
+            background: linear-gradient(180deg, #4a9bff 0%, #1f63e8 100%);
+            box-shadow: 0 0 12px rgba(47, 134, 255, 0.75);
+        }
+
+        /* ---------- Плашка последних выигрышей ---------- */
+        .recent-win-chip {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(180deg, #101c30 0%, #0b1424 100%);
+            border: 1px solid var(--vb-line);
+            border-radius: 999px;
+            padding: 9px 16px;
+            font-size: 0.76rem;
+            color: #c6d3e8;
+            white-space: nowrap;
+        }
+        .recent-win-chip .rw-nick { color: #ffffff; font-weight: 700; }
+        .recent-win-chip .rw-slot { color: #8794ab; }
+        .recent-win-chip .rw-amount { color: var(--vb-green); font-weight: 800; }
+
+        /* ---------- Карточки слотов ---------- */
+        .slots-catalog-grid { gap: 18px; }
+        .slot-lobby-card {
+            background: linear-gradient(180deg, #101b2e 0%, #0c1524 100%);
+            border: 1px solid var(--vb-line);
+            border-radius: 18px;
+            box-shadow: none;
+        }
+        .slot-lobby-card:hover {
+            border-color: rgba(47, 134, 255, 0.55);
+            transform: translateY(-4px);
+            box-shadow: 0 18px 42px rgba(0, 0, 0, 0.5), 0 0 26px rgba(47, 134, 255, 0.18);
+        }
+        .slot-card-thumb { background: radial-gradient(circle at 50% 45%, #16233a 0%, #0b1322 100%); }
+        .slot-card-thumb::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, transparent 55%, rgba(6, 10, 19, 0.55) 100%);
+            pointer-events: none;
+        }
+        .slot-card-badge {
+            background: rgba(6, 10, 19, 0.72);
+            border: 1px solid var(--vb-line-strong);
+            border-radius: 999px;
+            color: #cfe0f7;
+            padding: 4px 10px;
+            z-index: 2;
+        }
+        .slot-card-content { padding: 16px 18px 12px; }
+        .slot-card-title {
+            font-family: 'Manrope', 'Inter', sans-serif;
+            font-size: 1.02rem;
+            font-weight: 800;
+            color: #ffffff;
+        }
+        .slot-card-desc { font-size: 0.77rem; color: #8794ab; }
+        .slot-card-meta {
+            margin: 0 18px 16px;
+            padding-top: 11px;
+            border-top: 1px solid var(--vb-line);
+            font-size: 0.71rem;
+            color: #93a2ba;
+        }
+        .slot-card-meta span:first-child { color: #ffffff; }
+        .slot-card-actions {
+            background: linear-gradient(180deg, rgba(6, 10, 19, 0.6) 0%, rgba(6, 10, 19, 0.86) 100%);
+            backdrop-filter: blur(3px);
+        }
+        .card-hover-play-btn {
+            background: linear-gradient(180deg, #4a9bff 0%, #2069f0 100%);
+            color: #ffffff;
+            border-radius: 999px;
+            padding: 12px 26px;
+            font-size: 0.82rem;
+            font-weight: 800;
+            text-transform: none;
+            letter-spacing: 0.3px;
+            box-shadow: 0 10px 26px rgba(31, 107, 255, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+        }
+        .card-hover-play-btn:hover {
+            transform: none;
+            filter: brightness(1.07);
+            box-shadow: 0 14px 32px rgba(31, 107, 255, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        }
+
+        /* ---------- Профиль и общие блоки ---------- */
+        #view-profile.game-view {
+            background: linear-gradient(180deg, #0d1728 0%, #0a1220 100%);
+            border: 1px solid var(--vb-line);
+            border-radius: 20px;
+        }
+        .game-header { border-bottom: 1px solid var(--vb-line); }
+        .game-header h2 {
+            font-family: 'Manrope', 'Inter', sans-serif;
+            font-size: 1.06rem;
+            font-weight: 800;
+            color: #ffffff;
+        }
+        .stat-card {
+            background: #0c1626;
+            border: 1px solid var(--vb-line);
+            border-radius: 14px;
+        }
+        .stat-card-label { color: #8794ab; font-weight: 700; letter-spacing: 0.3px; }
+        .stat-card-value { color: #ffffff; font-weight: 800; }
+
+        .btn-back {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--vb-line);
+            border-radius: 12px;
+            color: #dbe6f7;
+            font-weight: 700;
+        }
+        .btn-back:hover { background: rgba(255, 255, 255, 0.09); }
+        #view-profile .btn-back[onclick*="openDepositModal"],
+        #view-profile .btn-back[onclick*="openWithdrawModal"] {
+            border: none;
+            box-shadow: 0 10px 24px rgba(31, 107, 255, 0.32), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+        }
+
+        /* ---------- Модальные окна / касса ---------- */
+        .modal-overlay {
+            background: rgba(4, 7, 13, 0.82);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+        }
+        .deposit-modal {
+            background: linear-gradient(180deg, #0d1728 0%, #0a1220 100%);
+            border: 1px solid var(--vb-line-strong);
+            border-radius: 20px;
+            box-shadow: 0 30px 90px rgba(0, 0, 0, 0.75);
+        }
+        .modal-close-btn {
+            background: #16213a;
+            color: #c9d6ea;
+            border-radius: 10px;
+        }
+        .modal-close-btn:hover { background: #1d2b47; color: #ffffff; }
+
+        .wallet-address-box {
+            background: #08101d;
+            border: 1px dashed rgba(47, 134, 255, 0.5);
+            border-radius: 12px;
+            color: #8fc0ff;
+        }
+        .deposit-steps {
+            background: #0a1322;
+            border-radius: 12px;
+            color: #b9c6da;
+        }
+        .cashier-method-btn {
+            background: #0b1424;
+            border: 1px solid var(--vb-line);
+            border-radius: 14px;
+            color: #c6d3e8;
+        }
+        .cashier-method-btn:hover {
+            background: #101c30;
+            border-color: var(--vb-line-strong);
+            color: #ffffff;
+        }
+        .cashier-method-btn.active {
+            background: linear-gradient(180deg, rgba(47, 134, 255, 0.22) 0%, rgba(47, 134, 255, 0.10) 100%);
+            border-color: rgba(74, 155, 255, 0.7);
+            color: #ffffff;
+            box-shadow: 0 0 0 1px rgba(47, 134, 255, 0.22), 0 10px 24px rgba(31, 99, 232, 0.20);
+        }
+        .cashier-method-btn.withdraw-active {
+            background: rgba(61, 220, 132, 0.10);
+            border-color: rgba(61, 220, 132, 0.45);
+            color: #c8ffe0;
+            box-shadow: none;
+        }
+        .cashier-methods-grid {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 10px;
+            margin: 16px 0;
+        }
+
+        .cashier-input,
+        .dev-input {
+            background: #08101d;
+            border: 1px solid var(--vb-line);
+            border-radius: 12px;
+            color: #ffffff;
+        }        .cashier-input::placeholder { color: #64748b; }
+        .cashier-input:focus,
+        .dev-input:focus {
+            border-color: rgba(74, 155, 255, 0.6);
+            box-shadow: 0 0 0 3px rgba(47, 134, 255, 0.14);
+        }
+
+        .quick-amt-chip {
+            background: #101c30;
+            border: 1px solid var(--vb-line);
+            border-radius: 999px;
+            color: #c6d3e8;
+        }
+        .quick-amt-chip:hover {
+            background: #152441;
+            border-color: rgba(74, 155, 255, 0.6);
+            color: #ffffff;
+        }
+        .withdraw-summary-box {
+            background: rgba(47, 134, 255, 0.07);
+            border: 1px solid rgba(47, 134, 255, 0.28);
+            border-radius: 14px;
+        }
+        .tx-item-card,
+        .player-row-card {
+            background: #0b1424;
+            border: 1px solid var(--vb-line);
+            border-radius: 12px;
+        }
+        .dev-section { background: #0b1424; border: 1px solid var(--vb-line); border-radius: 14px; }
+        .dev-section-title { color: #d7e2f3; }
+        .dev-btn-add {
+            background: rgba(61, 220, 132, 0.14);
+            color: #c8ffe0;
+            border: 1px solid rgba(61, 220, 132, 0.35);
+            border-radius: 10px;
+        }
+        .dev-btn-sub {
+            background: #16213a;
+            color: #e3eaf5;
+            border: 1px solid #23324e;
+            border-radius: 10px;
+        }
+
+        /* ---------- Вход, тосты, футер ---------- */
+        #nickname-overlay {
+            background:
+                radial-gradient(900px 520px at 50% 22%, #101c31 0%, #060a13 72%);
+        }
+        .nickname-box {
+            background: linear-gradient(180deg, #0d1728 0%, #0a1220 100%);
+            border: 1px solid var(--vb-line-strong);
+            border-radius: 22px;
+            box-shadow: 0 30px 90px rgba(0, 0, 0, 0.7);
+        }
+        .nickname-box input {
+            background: #08101d;
+            border: 1px solid var(--vb-line);
+            border-radius: 12px;
+            color: #ffffff;
+            font-weight: 600;
+        }
+        .nickname-box input::placeholder { color: #64748b; }
+        .nickname-box input:focus {
+            border-color: rgba(74, 155, 255, 0.6);
+            box-shadow: 0 0 0 3px rgba(47, 134, 255, 0.14);
+        }
+
+        .toast {
+            background: #0d1728;
+            border: 1px solid var(--vb-line-strong);
+            border-left: 3px solid var(--vb-blue-light);
+            border-radius: 12px;
+            color: #eaf2ff;
+            font-weight: 600;
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.55);
+        }
+        .trust-footer {
+            border-top: 1px solid var(--vb-line);
+            color: #6d7b92;
+            letter-spacing: 0.3px;
+        }
+
+        /* ---------- Адаптивность скина ---------- */
+        @media (max-width: 1100px) {
+            .hero-banner { padding: 34px 32px; }
+            .hero-title { font-size: 1.85rem; }
+        }
+        @media (max-width: 980px) {
+            .left-sidebar {
+                background: #070c17;
+                border-bottom: 1px solid var(--vb-line);
+            }
+            .brand-logo { border-right: 1px solid var(--vb-line); }
+            .brand-crown { width: 34px; height: 34px; border-radius: 11px; font-size: 0.92rem; margin-bottom: 0; }
+            .brand-title-bottom { font-size: 0.92rem; }
+            .nav-item { border-radius: 999px; padding: 8px 13px; }
+            .nav-item.active::before { display: none; }
+            .slot-nav-card { border-radius: 999px; }
+            .hero-banner { padding: 28px 24px; }
+        }
+        @media (max-width: 700px) {
+            .content-area { padding: 16px 14px 30px; }
+            .hero-title { font-size: 1.45rem; letter-spacing: -0.4px; }
+            .hero-stats { gap: 26px; margin-top: 22px; }
+            .hero-stat-value { font-size: 1.6rem; }
+            .hero-cta-btn { width: 100%; }
+            .balance-center-box { padding: 8px 14px; font-size: 0.92rem; }
+            .topbar { padding: 10px 14px; }
+            .cashier-methods-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+            #dep-submit-btn,
+            #dep-submit-btn ~ .tg-boss-btn {
+                flex: 1 1 100% !important;
+                justify-content: center;
+            }
+            #view-profile .btn-back[onclick*="openDepositModal"],
+            #view-profile .btn-back[onclick*="openWithdrawModal"] { flex: 1 1 100%; }
+            .deposit-modal { border-radius: 16px; }
+        }
     </style>
 </head>
 <body>
@@ -2283,7 +2954,7 @@
             <h2 style="margin: 0 0 8px; text-transform: uppercase; font-family: 'Unbounded', sans-serif; font-size: 1.2rem;">Вход в Слот-Клуб</h2>
             <p style="color: var(--text-muted); font-size: 0.88rem; margin: 0;">Введите игровой никнейм: 5–20 символов, латиница, цифры и «_»</p>
             <input type="text" id="first-nickname-input" maxlength="20" placeholder="Например: SeregaWin" onkeydown="if(event.key==='Enter') submitFirstNickname()">
-            <button class="btn-back" style="width: 100%; margin-top: 16px; background: var(--accent-gold-gradient); color:#04150a; font-weight:900;" onclick="submitFirstNickname()">ВОЙТИ В КАЗИНО →</button>
+            <button class="btn-back" style="width: 100%; margin-top: 16px; background: var(--accent-gold-gradient); color:#ffffff; font-weight:900;" onclick="submitFirstNickname()">ВОЙТИ В КАЗИНО →</button>
         </div>
     </div>
 
@@ -2341,14 +3012,14 @@
                     TMVngRQdJ1XqC67GTLttnuWUZKYxtdMFWt
                 </div>
 
-                <button class="btn-back" style="width: 100%; background: var(--accent-gold-gradient); color:#04150a; font-weight:900; margin-bottom:8px;" onclick="copyWalletAddress()">📋 СКОПИРОВАТЬ РЕКВИЗИТЫ</button>
+                <button class="btn-back" style="width: 100%; background: var(--accent-gold-gradient); color:#ffffff; font-weight:900; margin-bottom:8px;" onclick="copyWalletAddress()">📋 СКОПИРОВАТЬ РЕКВИЗИТЫ</button>
 
-                <button class="btn-back" id="toggle-qr-btn" style="width: 100%; background: rgba(0, 231, 1, 0.08); border: 1px solid var(--accent-gold); color: var(--accent-gold); font-weight: 900; margin-bottom: 8px;" onclick="toggleDepositQR()">
+                <button class="btn-back" id="toggle-qr-btn" style="width: 100%; background: rgba(47, 134, 255, 0.10); border: 1px solid var(--accent-gold); color: var(--accent-gold); font-weight: 900; margin-bottom: 8px;" onclick="toggleDepositQR()">
                     📷 ПОКАЗАТЬ QR-КОД
                 </button>
 
                 <div id="deposit-qr-container" style="display: none; text-align: center; margin: 10px 0 12px;">
-                    <img src="./QR.jpg" onerror="this.onerror=null; this.src='QR.jpg';" alt="QR код для пополнения" style="width: 195px; height: 195px; object-fit: contain; border-radius: 14px; border: 2px solid var(--accent-gold); background: #fff; padding: 6px; box-shadow: 0 0 25px rgba(0, 231, 1, 0.18);">
+                    <img src="./QR.jpg" onerror="this.onerror=null; this.src='QR.jpg';" alt="QR код для пополнения" style="width: 195px; height: 195px; object-fit: contain; border-radius: 14px; border: 2px solid var(--accent-gold); background: #fff; padding: 6px; box-shadow: 0 0 25px rgba(47, 134, 255, 0.22);">
                     <div style="font-size: 0.74rem; color: var(--text-muted); margin-top: 6px;">Отсканируйте QR-код в вашем приложении</div>
                 </div>
             </div>
@@ -2360,7 +3031,7 @@
             </div>
 
             <div style="display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap;">
-                <button class="btn-back" id="dep-submit-btn" style="flex: 1; background: var(--accent-gold-gradient); color: #04150a; font-weight: 900; border: none; padding: 12px;" onclick="submitDepositRequest()">
+                <button class="btn-back" id="dep-submit-btn" style="flex: 1; background: var(--accent-gold-gradient); color: #ffffff; font-weight: 900; border: none; padding: 12px;" onclick="submitDepositRequest()">
                     ✅ Я ОПЛАТИЛ (СОЗДАТЬ ЗАЯВКУ)
                 </button>
                 <a href="https://t.me/Seregablatnou" target="_blank" class="tg-boss-btn" style="justify-content: center; flex: 1;">
@@ -2372,9 +3043,9 @@
 
     <!-- МОДАЛЬНОЕ ОКНО ВЫВОДА СРЕДСТВ -->
     <div class="modal-overlay" id="withdraw-modal">
-        <div class="deposit-modal" style="border-color: rgba(16, 185, 129, 0.5);">
+        <div class="deposit-modal" style="border-color: rgba(47, 134, 255, 0.35);">
             <button class="modal-close-btn" onclick="closeWithdrawModal()">✕</button>
-            <h2 style="margin: 0 0 4px; color: #34d399; text-transform: uppercase; font-family: 'Unbounded', sans-serif; font-size: 1.15rem;">💸 Вывод выигрыша</h2>
+            <h2 style="margin: 0 0 4px; color: #ffffff; text-transform: uppercase; font-family: 'Unbounded', sans-serif; font-size: 1.15rem;">💸 Вывод выигрыша</h2>
             <p style="margin: 0; font-size: 0.82rem; color: var(--text-muted);">Быстрые выплаты 24/7 • Доступно: <b id="wd-avail-balance" style="color:#fff;">0,00 BYN</b></p>
 
             <div class="cashier-methods-grid" id="wd-methods-grid">
@@ -2406,7 +3077,7 @@
             <div class="cashier-field-group">
                 <div class="cashier-field-label">
                     <span>Сумма вывода (мин. 20 BYN)</span>
-                    <span style="color:#34d399; cursor:pointer; text-decoration:underline;" onclick="setMaxWithdraw()">Вывести всё</span>
+                    <span style="color:#8fc0ff; cursor:pointer; text-decoration:underline;" onclick="setMaxWithdraw()">Вывести всё</span>
                 </div>
                 <input type="number" id="wd-amount-input" class="cashier-input" value="50" min="20" step="1" oninput="updateWithdrawCalc()">
                 <div class="quick-amounts-row">
@@ -2428,11 +3099,11 @@
                 </div>
                 <div class="withdraw-summary-row" style="border-top:1px solid rgba(255,255,255,0.1); padding-top:6px; font-size:0.92rem;">
                     <span style="color:#fff; font-weight:700;">Итого к получению:</span>
-                    <b id="wd-net-text" style="color:#34d399;">49,00 BYN</b>
+                    <b id="wd-net-text" style="color:#3ddc84;">49,00 BYN</b>
                 </div>
             </div>
 
-            <button class="btn-back" id="wd-submit-btn" style="width: 100%; margin-top: 14px; background: var(--accent-gold-gradient); color: #04150a; font-weight: 900; border: none; padding: 13px; font-size: 0.92rem;" onclick="submitWithdrawRequest()">
+            <button class="btn-back" id="wd-submit-btn" style="width: 100%; margin-top: 14px; background: var(--accent-gold-gradient); color: #ffffff; font-weight: 900; border: none; padding: 13px; font-size: 0.92rem;" onclick="submitWithdrawRequest()">
                 💸 ЗАКАЗАТЬ ВЫПЛАТУ
             </button>
 
@@ -2457,7 +3128,7 @@
             
             <div id="pt-modal-body" style="max-height: 62vh; overflow-y: auto; padding-right: 4px;"></div>
             
-            <button class="btn-back" style="width: 100%; margin-top: 14px; background: var(--accent-gold-gradient); color:#04150a; font-weight:900;" onclick="closeSlotPaytableModal()">ПОНЯТНО, В ИГРУ!</button>
+            <button class="btn-back" style="width: 100%; margin-top: 14px; background: var(--accent-gold-gradient); color:#ffffff; font-weight:900;" onclick="closeSlotPaytableModal()">ПОНЯТНО, В ИГРУ!</button>
         </div>
     </div>
 
@@ -2568,8 +3239,19 @@
             <div id="view-lobby" class="game-view active">
                 <div class="hero-banner">
                     <div class="hero-content">
-                        <h1 class="hero-title">Серёга пушка - месси игрушка.<br>В собак залетай и баб забирай!</h1>
+                        <h1 class="hero-title">Серёга пушка — <span class="hl">месси игрушка.</span><br>В собак залетай и баб забирай!</h1>
+                        <p class="hero-sub">Оригинальные слоты • Мгновенные выплаты в BYN • Касса 24/7</p>
                         <button class="hero-cta-btn" onclick="openDogHouse()">🐶 Залететь в The Dog House</button>
+                        <div class="hero-stats">
+                            <div class="hero-stat">
+                                <span class="hero-stat-value">3</span>
+                                <span class="hero-stat-label">Оригинальных слота</span>
+                            </div>
+                            <div class="hero-stat">
+                                <span class="hero-stat-value">24/7</span>
+                                <span class="hero-stat-label">Выплаты в BYN</span>
+                            </div>
+                        </div>
                     </div>
                     <div class="hero-visuals-wrapper">
                         <img src="bonusdoghouselapa.png" alt="Бонус лапа" class="hero-bonus-visual">
@@ -2844,8 +3526,8 @@
                         <div style="font-size:1.4rem; font-weight:900; color:#fff; margin-top:4px;" id="profile-nick-display">Player</div>
                     </div>
                     <div style="display:flex; gap:10px; flex-wrap:wrap;">
-                        <button class="btn-back" style="background:var(--accent-gold-gradient); color:#04150a; font-weight:900;" onclick="openDepositModal()">+ ПОПОЛНИТЬ СЧЁТ</button>
-                        <button class="btn-back" style="background:var(--accent-gold-gradient); color:#04150a; font-weight:900; border:none;" onclick="openWithdrawModal()">💸 ВЫВЕСТИ СРЕДСТВА</button>
+                        <button class="btn-back" style="background:var(--accent-gold-gradient); color:#ffffff; font-weight:900;" onclick="openDepositModal()">+ ПОПОЛНИТЬ СЧЁТ</button>
+                        <button class="btn-back" style="background:var(--accent-gold-gradient); color:#ffffff; font-weight:900; border:none;" onclick="openWithdrawModal()">💸 ВЫВЕСТИ СРЕДСТВА</button>
                     </div>
                 </div>
 
@@ -2864,7 +3546,7 @@
                     </div>
                     <div class="stat-card">
                         <div class="stat-card-label">Крупнейший занос</div>
-                        <div class="stat-card-value" id="stat-biggest-win" style="color: #4ade80;">0,00 BYN</div>
+                        <div class="stat-card-value" id="stat-biggest-win" style="color: #3ddc84;">0,00 BYN</div>
                     </div>
                 </div>
             </div>
@@ -3650,10 +4332,10 @@
             listEl.innerHTML = withdrawHistory.map(tx => `
                 <div class="tx-item-card">
                     <div>
-                        <b style="color:#fff;">${tx.amount.toFixed(2)} BYN</b> • <span style="color:#34d399;">${escapeHtml(tx.method)}</span><br>
+                        <b style="color:#fff;">${tx.amount.toFixed(2)} BYN</b> • <span style="color:#3ddc84;">${escapeHtml(tx.method)}</span><br>
                         <span style="color:var(--text-muted); font-size:0.7rem;">${escapeHtml(tx.req)} • ${escapeHtml(tx.date)}</span>
                     </div>
-                    <span style="background:rgba(0,231,1,0.12); color:var(--accent-gold); border:1px solid rgba(0,231,1,0.35); padding:3px 8px; border-radius:6px; font-weight:800; font-size:0.7rem;">${escapeHtml(tx.status)}</span>
+                    <span style="background:rgba(47,134,255,0.14); color:#9cc6ff; border:1px solid rgba(47,134,255,0.4); padding:3px 8px; border-radius:6px; font-weight:800; font-size:0.7rem;">${escapeHtml(tx.status)}</span>
                 </div>
             `).join('');
         }
@@ -5082,8 +5764,10 @@
                 bar.innerHTML = '';
                 snap.forEach(doc => {
                     const d = doc.data();
-                    bar.innerHTML += `<div style="background:#15181d; border:1px solid #23272f; border-radius:10px; padding:8px 12px; font-size:0.78rem; white-space:nowrap;">
-                        🏆 <b style="color:#fff;">${escapeHtml(d.nick)}</b> • <span style="color:#8a919e;">${escapeHtml(d.slot)}</span> • <b style="color:#00e701;">+${Number(d.amount).toFixed(2)} BYN</b>
+                    bar.innerHTML += `<div class="recent-win-chip">
+                        🏆 <b class="rw-nick">${escapeHtml(d.nick)}</b>
+                        <span class="rw-slot">${escapeHtml(d.slot)}</span>
+                        <b class="rw-amount">+${Number(d.amount).toFixed(2)} BYN</b>
                     </div>`;
                 });
             });
