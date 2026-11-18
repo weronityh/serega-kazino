@@ -3737,6 +3737,160 @@
     /* Лёгкий подъём на 1 пиксель */
     transform: translateY(-1px);
 }
+/* === СТИЛЬ ЛЕВОГО МЕНЮ (КАРТОЧКИ + РАЗДЕЛИТЕЛИ + СЕТКА) === */
+.left-sidebar {
+    background: #080b10 !important;
+    border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
+    box-shadow: none !important;
+    padding: 16px 14px !important;
+    gap: 10px;
+}
+
+/* Верхние 2 большие карточки */
+.sb-top-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+.sb-big-card {
+    position: relative;
+    background: #10141c;
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    border-radius: 14px;
+    padding: 14px 8px 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.sb-big-card:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.22);
+    transform: translateY(-1px);
+}
+.sb-big-icon { font-size: 1.5rem; line-height: 1; }
+.sb-big-title { font-size: 0.78rem; font-weight: 700; color: #e2e8f0; }
+.sb-big-badge {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    font-size: 0.58rem;
+    font-weight: 800;
+    color: #4a9bff;
+}
+
+/* Разделитель с текстом по центру */
+.sb-divider {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 4px 0;
+    color: #94a3b8;
+    font-size: 0.72rem;
+    font-weight: 700;
+}
+.sb-divider::before,
+.sb-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+/* Сетка 2x2 */
+.sb-grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+.sb-pill-btn {
+    background: #10141c !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-radius: 12px !important;
+    padding: 9px 10px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 8px !important;
+    font-size: 0.78rem !important;
+    font-weight: 600 !important;
+    color: #cbd5e1 !important;
+    margin: 0 !important;
+}
+.sb-pill-btn:hover {
+    background: rgba(255, 255, 255, 0.06) !important;
+    border-color: rgba(255, 255, 255, 0.2) !important;
+    color: #fff !important;
+}
+.sb-pill-btn.active {
+    background: linear-gradient(135deg, rgba(47, 134, 255, 0.22), rgba(31, 99, 232, 0.12)) !important;
+    border-color: rgba(74, 155, 255, 0.5) !important;
+    color: #fff !important;
+    box-shadow: none !important;
+}
+.sb-icon-box {
+    width: 26px;
+    height: 26px;
+    border-radius: 7px;
+    background: rgba(255, 255, 255, 0.06);
+    display: grid;
+    place-items: center;
+    font-size: 0.85rem;
+    flex-shrink: 0;
+}
+
+/* На мобильных скрываем лишние сетки в верхнем баре */
+@media (max-width: 980px) {
+    .sb-top-cards, .sb-divider, .sb-grid-2 { display: none !important; }
+}
+/* === КНОПКА ТРИ ПОЛОСКИ И СВОРАЧИВАНИЕ БОКОВОГО МЕНЮ === */
+.sidebar-toggle-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: #101c30;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: #e2e8f0;
+    font-size: 1.2rem;
+    font-weight: 800;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: background 0.2s ease, border-color 0.2s ease;
+}
+.sidebar-toggle-btn:hover {
+    background: #172742;
+    border-color: rgba(74, 155, 255, 0.5);
+    color: #fff;
+}
+
+/* Плавная анимация ширины бокового меню */
+.left-sidebar {
+    transition: width 0.25s ease, padding 0.25s ease, opacity 0.2s ease;
+}
+
+/* Когда на <body> есть класс sidebar-collapsed — меню сжимается в 0 */
+body.sidebar-collapsed .left-sidebar {
+    width: 0 !important;
+    min-width: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    overflow: hidden !important;
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* На телефонах меню расположено сверху, поэтому там обнуляем высоту */
+@media (max-width: 980px) {
+    body.sidebar-collapsed .left-sidebar {
+        width: 100% !important;
+        height: 0 !important;
+    }
+}
     </style>
 </head>
 <body>
@@ -3915,58 +4069,89 @@
         </div>
     </div>
     <aside class="left-sidebar">
-        <div class="brand-logo" onclick="showLobby()">
-            <div class="brand-crown">К</div>
-            <div class="brand-text">
-                <div class="brand-title-top">СЕРЁГА И ОЛЯМБУС</div>
-                <div class="brand-title-bottom">КАЗИК</div>
-            </div>
+    <div class="brand-logo" onclick="showLobby()">
+        <div class="brand-crown">К</div>
+        <div class="brand-text">
+            <div class="brand-title-top">СЕРЁГА И ОЛЯМБУС</div>
+            <div class="brand-title-bottom">КАЗИК</div>
         </div>
+    </div>
 
-        <nav class="sidebar-menu">
-            <button class="nav-item active" id="nav-lobby" onclick="showLobby()">
-                <span class="nav-item-left"><span>🏠</span> Игровой зал</span>
-            </button>
-            <button class="nav-item slot-nav-card" id="nav-slot-olympus" onclick="openGatesOfOlympus()">
-                <img src="olympuspushka.jpg" alt="Gates of Olympus" class="slot-nav-img">
-                <span class="slot-nav-label">Gates of Olympus</span>
-            </button>
+    <!-- Верхние 2 большие карточки -->
+    <div class="sb-top-cards">
+        <button class="sb-big-card" onclick="showLobby()">
+            <span class="sb-big-icon">🏠</span>
+            <span class="sb-big-title">Зал</span>
+        </button>
+        <button class="sb-big-card" onclick="openDepositModal()">
+            <span class="sb-big-badge">⭐ 24/7</span>
+            <span class="sb-big-icon">💳</span>
+            <span class="sb-big-title">Касса</span>
+        </button>
+    </div>
 
-            <button class="nav-item slot-nav-card" id="nav-slot-doghouse" onclick="openDogHouse()">
-                <img src="emblemadoghouse-removebg-preview.png" alt="The Dog House" class="slot-nav-img">
-                <span class="slot-nav-label">The Dog House</span>
-            </button>
+    <!-- Разделитель -->
+    <div class="sb-divider"><span>Разделы</span></div>
 
-            <button class="nav-item slot-nav-card" id="nav-slot-bonanza" onclick="openSweetBonanza()">
-             <img src="sweetbananzaemblema.png" alt="Sweet Bonanza" class="slot-nav-img">
-             <span class="slot-nav-label">Sweet Bonanza</span>
-         </button>
+    <!-- Сетка 2x2 -->
+    <div class="sb-grid-2">
+        <button class="nav-item sb-pill-btn active" id="nav-lobby" onclick="showLobby()">
+            <span class="sb-icon-box">🎰</span>
+            <span>Все игры</span>
+        </button>
+        <button class="nav-item sb-pill-btn" id="nav-poker" onclick="openPoker()">
+            <span class="sb-icon-box">♠️</span>
+            <span>Покер</span>
+        </button>
+        <button class="nav-item sb-pill-btn" id="nav-profile" onclick="switchView('profile')">
+            <span class="sb-icon-box">👤</span>
+            <span>Профиль</span>
+        </button>
+        <button class="nav-item sb-pill-btn" onclick="openWithdrawModal()">
+            <span class="sb-icon-box">💸</span>
+            <span>Вывод</span>
+        </button>
+    </div>
 
-         <button class="nav-item" id="nav-poker" onclick="openPoker()">
-             <span class="nav-item-left"><span>♠️</span> Покер (Hold'em)</span>
-         </button>
+    <!-- Разделитель -->
+    <div class="sb-divider"><span>Слоты</span></div>
 
-         <button class="nav-item" id="nav-profile" onclick="switchView('profile')">
-                <span class="nav-item-left"><span>👤</span> Профиль и статистика</span>
-            </button>
-        </nav>
+    <!-- Список слотов -->
+    <nav class="sidebar-menu">
+        <button class="nav-item slot-nav-card" id="nav-slot-olympus" onclick="openGatesOfOlympus()">
+            <img src="olympuspushka.jpg" alt="Gates of Olympus" class="slot-nav-img">
+            <span class="slot-nav-label">Gates of Olympus</span>
+        </button>
 
-        <div class="sidebar-promo-box">
-            <div class="sidebar-promo-label">🎟️ Промокод</div>
-            <div class="sidebar-promo-row">
-                <input type="text" id="promo-code-input" placeholder="Введите код..." onkeydown="if(event.key==='Enter') applyPromoCode()">
-                <button class="sidebar-promo-btn" onclick="applyPromoCode()">ОК</button>
-            </div>
-            <button class="dev-open-btn" id="dev-open-btn" onclick="openDevModal()">🛠 Панель создателя</button>
+        <button class="nav-item slot-nav-card" id="nav-slot-doghouse" onclick="openDogHouse()">
+            <img src="emblemadoghouse-removebg-preview.png" alt="The Dog House" class="slot-nav-img">
+            <span class="slot-nav-label">The Dog House</span>
+        </button>
+
+        <button class="nav-item slot-nav-card" id="nav-slot-bonanza" onclick="openSweetBonanza()">
+            <img src="sweetbananzaemblema.png" alt="Sweet Bonanza" class="slot-nav-img">
+            <span class="slot-nav-label">Sweet Bonanza</span>
+        </button>
+    </nav>
+
+    <div class="sidebar-promo-box">
+        <div class="sidebar-promo-label">🎟️ Промокод</div>
+        <div class="sidebar-promo-row">
+            <input type="text" id="promo-code-input" placeholder="Введите код..." onkeydown="if(event.key==='Enter') applyPromoCode()">
+            <button class="sidebar-promo-btn" onclick="applyPromoCode()">ОК</button>
         </div>
-        <a href="https://t.me/Seregablatnou" target="_blank" rel="noopener" class="tg-boss-btn sidebar-support-btn">
-            <span>✈️</span> Поддержка / TG
-        </a>
-    </aside>
+        <button class="dev-open-btn" id="dev-open-btn" onclick="openDevModal()">🛠 Панель создателя</button>
+    </div>
+
+    <a href="https://t.me/Seregablatnou" target="_blank" rel="noopener" class="tg-boss-btn sidebar-support-btn">
+        <span>✈️</span> Поддержка / TG
+    </a>
+</aside>
 
     <!-- ОСНОВНАЯ ОБЛАСТЬ -->
     <main class="main-wrapper">
         <header class="topbar">
+            <button class="sidebar-toggle-btn" id="sidebar-toggle-btn" onclick="toggleSidebar()" title="Скрыть / показать меню">☰</button>
             <div class="balance-center-group">
                 <div class="wallet-capsule">
                     <div class="balance-center-box" role="button" tabindex="0" title="Открыть кассу"
@@ -7330,6 +7515,16 @@ async function sendGlobalChat() {
     } catch (e) {
         showToast('⚠️ Ошибка отправки сообщения');
     }
+}
+// === СВОРАЧИВАНИЕ БОКОВОГО МЕНЮ ===
+function toggleSidebar() {
+    const collapsed = document.body.classList.toggle('sidebar-collapsed');
+    localStorage.setItem('kazik_sidebar_collapsed', collapsed ? '1' : '0');
+}
+
+// Если пользователь ранее скрыл меню — оставляем его скрытым при загрузке
+if (localStorage.getItem('kazik_sidebar_collapsed') === '1') {
+    document.body.classList.add('sidebar-collapsed');
 }
     </script>
 </body>
