@@ -3394,6 +3394,174 @@
             justify-content: flex-start !important;
         }
         .left-sidebar .sidebar-support-btn:hover { color: #60a5fa !important; }
+/* ========================================== */
+        /* ПОКЕР (TEXAS HOLD'EM) — СТИЛИ              */
+        /* ========================================== */
+        .poker-tables-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 14px;
+            margin-top: 14px;
+        }
+        .poker-table-card {
+            background: var(--vb-surface);
+            border: 1px solid var(--vb-line);
+            border-radius: 16px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .poker-table-card h4 { margin: 0; font-size: 1rem; color: #fff; }
+        .poker-table-meta { display: flex; justify-content: space-between; font-size: 0.78rem; color: var(--text-muted); }
+
+        .poker-arena {
+            padding: 24px 10px;
+            display: flex;
+            justify-content: center;
+        }
+        .poker-felt {
+            position: relative;
+            width: 100%;
+            max-width: 820px;
+            min-height: 360px;
+            border-radius: 180px;
+            background: radial-gradient(ellipse at center, #0e4a2d 0%, #072918 75%, #04180e 100%);
+            border: 10px solid #162238;
+            box-shadow: inset 0 0 40px rgba(0,0,0,0.7), 0 18px 50px rgba(0,0,0,0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .poker-center-info {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            z-index: 2;
+        }
+        .poker-pot-pill {
+            background: rgba(6, 10, 19, 0.8);
+            border: 1px solid var(--vb-line-strong);
+            padding: 6px 16px;
+            border-radius: 999px;
+            font-size: 0.88rem;
+            color: #fff;
+        }
+        .poker-pot-pill b { color: var(--vb-green); }
+        .poker-board { display: flex; gap: 8px; min-height: 68px; align-items: center; }
+        .poker-stage-badge {
+            font-size: 0.72rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            color: #9cc6ff;
+            background: rgba(47, 134, 255, 0.15);
+            padding: 3px 10px;
+            border-radius: 999px;
+        }
+
+        .pk-card {
+            width: 46px;
+            height: 66px;
+            background: #fff;
+            color: #111;
+            border-radius: 7px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 1rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            user-select: none;
+        }
+        .pk-card.red { color: #dc2626; }
+        .pk-card.back {
+            background: repeating-linear-gradient(45deg, #1f63e8, #1f63e8 6px, #103a8f 6px, #103a8f 12px);
+            border: 2px solid #fff;
+        }
+
+        .poker-seats-layer { position: absolute; inset: 0; pointer-events: none; }
+        .pk-seat {
+            position: absolute;
+            width: 126px;
+            background: var(--vb-surface);
+            border: 1px solid var(--vb-line-strong);
+            border-radius: 12px;
+            padding: 8px;
+            text-align: center;
+            font-size: 0.75rem;
+            transform: translate(-50%, -50%);
+            pointer-events: auto;
+        }
+        .pk-seat.active-turn {
+            border-color: var(--vb-blue);
+            box-shadow: 0 0 18px rgba(47, 134, 255, 0.65);
+        }
+        .pk-seat.folded { opacity: 0.45; }
+        .pk-seat-pos-0 { top: 96%; left: 50%; }
+        .pk-seat-pos-1 { top: 75%; left: 8%; }
+        .pk-seat-pos-2 { top: 22%; left: 10%; }
+        .pk-seat-pos-3 { top: 2%;  left: 50%; }
+        .pk-seat-pos-4 { top: 22%; left: 90%; }
+        .pk-seat-pos-5 { top: 75%; left: 92%; }
+
+        .pk-dealer-chip {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: #fde047;
+            color: #000;
+            font-weight: 900;
+            font-size: 0.7rem;
+            display: grid;
+            place-items: center;
+        }
+
+        .poker-controls {
+            background: var(--vb-surface);
+            border: 1px solid var(--vb-line);
+            border-radius: 16px;
+            padding: 14px;
+            margin-top: 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .poker-my-hand-wrap { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+        .poker-my-cards { display: flex; gap: 6px; }
+        .poker-timer-bar { width: 100%; height: 4px; background: #1e293b; border-radius: 4px; overflow: hidden; }
+        #pk-timer-fill { width: 100%; height: 100%; background: var(--vb-blue); transition: width 1s linear; }
+
+        .poker-action-buttons { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+        .pk-btn {
+            padding: 10px 16px;
+            border-radius: 10px;
+            border: none;
+            font-weight: 800;
+            font-size: 0.84rem;
+            cursor: pointer;
+            color: #fff;
+        }
+        .pk-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+        .pk-fold { background: #dc2626; }
+        .pk-check { background: #334155; }
+        .pk-call { background: var(--vb-blue); }
+        .pk-raise { background: var(--vb-green); color: #04120a; }
+        .pk-allin { background: linear-gradient(135deg, #f59e0b, #dc2626); }
+        .pk-raise-wrap { display: flex; align-items: center; gap: 8px; background: #08101d; padding: 4px 8px; border-radius: 10px; }
+
+        @media (max-width: 768px) {
+            .poker-felt { min-height: 260px; border-radius: 100px; border-width: 6px; }
+            .pk-card { width: 34px; height: 50px; font-size: 0.78rem; }
+            .pk-seat { width: 88px; padding: 5px; font-size: 0.66rem; }
+            .poker-action-buttons { justify-content: space-between; }
+            .pk-btn { padding: 8px 10px; font-size: 0.74rem; flex: 1; }
+            .pk-raise-wrap { width: 100%; justify-content: space-between; }
+        }
     </style>
 </head>
 <body>
@@ -3595,11 +3763,15 @@
             </button>
 
             <button class="nav-item slot-nav-card" id="nav-slot-bonanza" onclick="openSweetBonanza()">
-                <img src="sweetbananzaemblema.png" alt="Sweet Bonanza" class="slot-nav-img">
-                <span class="slot-nav-label">Sweet Bonanza</span>
-            </button>
+             <img src="sweetbananzaemblema.png" alt="Sweet Bonanza" class="slot-nav-img">
+             <span class="slot-nav-label">Sweet Bonanza</span>
+         </button>
 
-            <button class="nav-item" id="nav-profile" onclick="switchView('profile')">
+         <button class="nav-item" id="nav-poker" onclick="openPoker()">
+             <span class="nav-item-left"><span>♠️</span> Покер (Hold'em)</span>
+         </button>
+
+         <button class="nav-item" id="nav-profile" onclick="switchView('profile')">
                 <span class="nav-item-left"><span>👤</span> Профиль и статистика</span>
             </button>
         </nav>
@@ -3918,8 +4090,94 @@
                 </div>
             </div>
 
-            <!-- ПРОФИЛЬ -->
-            <div id="view-profile" class="game-view">
+            <!-- ПОКЕР (TEXAS HOLD'EM) -->
+            <div id="view-poker" class="game-view">
+                <!-- Лобби покера -->
+                <div id="poker-lobby-screen">
+                    <div class="game-header">
+                        <h2>♠️ Техасский Холдем — Столы игроков</h2>
+                        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                            <button class="btn-back" style="background:var(--accent-gold-gradient); color:#fff; border:none;" onclick="openCreatePokerModal()">+ Создать стол</button>
+                            <button class="btn-back" onclick="showLobby()">← В зал</button>
+                        </div>
+                    </div>
+                    <div id="poker-tables-list" class="poker-tables-grid">
+                        <div style="color:var(--text-muted); padding:20px;">Загрузка столов...</div>
+                    </div>
+                </div>
+
+                <!-- Игровой стол -->
+                <div id="poker-table-screen" style="display:none;">
+                    <div class="game-header">
+                        <div>
+                            <h2 id="pk-table-title">Стол</h2>
+                            <div style="font-size:0.78rem; color:var(--text-muted);" id="pk-table-meta">Блайнды: 1/2 ⭐</div>
+                        </div>
+                        <div style="display:flex; gap:8px;">
+                            <button class="btn-back" id="pk-start-btn" style="display:none; background:var(--vb-green); color:#04120a; border:none;" onclick="startHand()">▶ Начать раздачу</button>
+                            <button class="btn-back" onclick="leaveTable()">🚪 Покинуть стол</button>
+                        </div>
+                    </div>
+
+                    <div class="poker-arena">
+                        <div class="poker-felt">
+                            <div class="poker-center-info">
+                                <div class="poker-pot-pill">БАНК: <b id="pk-pot">0,00</b> ⭐</div>
+                                <div class="poker-board" id="pk-board"></div>
+                                <div class="poker-stage-badge" id="pk-stage-badge">Ожидание игроков</div>
+                            </div>
+                            <div class="poker-seats-layer" id="pk-seats"></div>
+                        </div>
+                    </div>
+
+                    <div class="poker-controls" id="pk-controls">
+                        <div class="poker-my-hand-wrap">
+                            <span style="font-size:0.72rem; color:var(--text-muted); font-weight:700;">ВАШИ КАРТЫ:</span>
+                            <div id="pk-my-cards" class="poker-my-cards"></div>
+                            <span id="pk-my-combo" style="font-size:0.78rem; color:var(--vb-green); font-weight:800;"></span>
+                        </div>
+                        <div class="poker-timer-bar"><div id="pk-timer-fill"></div></div>
+                        <div class="poker-action-buttons" id="pk-action-btns">
+                            <button class="pk-btn pk-fold" onclick="playerAction('fold')">Fold</button>
+                            <button class="pk-btn pk-check" id="pk-btn-check" onclick="playerAction('check')">Check</button>
+                            <button class="pk-btn pk-call" id="pk-btn-call" onclick="playerAction('call')">Call <span id="pk-call-amt"></span></button>
+                            <div class="pk-raise-wrap">
+                                <input type="range" id="pk-raise-slider" min="2" max="100" step="1" oninput="syncRaiseInput()">
+                                <button class="pk-btn pk-raise" onclick="playerAction('raise')">Raise <span id="pk-raise-amt">2</span> ⭐</button>
+                            </div>
+                            <button class="pk-btn pk-allin" onclick="playerAction('allin')">All-in</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Модалка создания стола -->
+            <div class="modal-overlay" id="poker-create-modal">
+                <div class="deposit-modal" style="max-width:440px;">
+                    <button class="modal-close-btn" onclick="document.getElementById('poker-create-modal').classList.remove('active')">✕</button>
+                    <h2 style="margin:0 0 12px; font-size:1.1rem; color:#fff;">♠️ Создать покерный стол</h2>
+                    <div class="cashier-field-group">
+                        <label class="cashier-field-label">Название стола</label>
+                        <input type="text" id="pk-create-name" class="cashier-input" value="Стол для своих" maxlength="24">
+                    </div>
+                    <div class="cashier-field-group">
+                        <label class="cashier-field-label">Блайнды (SB / BB)</label>
+                        <select id="pk-create-blinds" class="cashier-input">
+                            <option value="1|2|50">1 / 2 ⭐ (Бай-ин: 50 ⭐)</option>
+                            <option value="5|10|250">5 / 10 ⭐ (Бай-ин: 250 ⭐)</option>
+                            <option value="25|50|1000">25 / 50 ⭐ (Бай-ин: 1000 ⭐)</option>
+                        </select>
+                    </div>
+                    <div class="cashier-field-group">
+                        <label class="cashier-field-label">Макс. игроков (2–6)</label>
+                        <input type="number" id="pk-create-max" class="cashier-input" value="6" min="2" max="6">
+                    </div>
+                    <button class="btn-back" style="width:100%; margin-top:16px; background:var(--accent-gold-gradient); color:#fff; border:none; padding:12px;" onclick="createTable()">Создать и сесть за стол</button>
+                </div>
+            </div>
+
+                     <!-- ПРОФИЛЬ -->
+         <div id="view-profile" class="game-view">
                 <div class="game-header">
                     <h2>👤 Личный кабинет</h2>
                     <button class="btn-back" onclick="showLobby()">← В зал</button>
@@ -6298,6 +6556,461 @@
             initBonanzaDOM();
             listenRecentWins();
         });
+
+        // ==========================================================
+        // ПОКЕР (TEXAS HOLD'EM NO-LIMIT) — КЛИЕНТСКИЙ MVP
+        // ==========================================================
+        let currentPokerTableId = null;
+        let currentPokerSeat = -1;
+        let unsubPokerLobby = null;
+        let unsubPokerTable = null;
+        let unsubPokerSeats = null;
+        let pkTableData = null;
+        let pkSeatsData = {};
+        let pkTurnTimer = null;
+
+        function openPoker() {
+            if (isAnyGameBusy()) { showToast('⚠️ Дождитесь окончания раунда в слоте!'); return; }
+            hideAllViews();
+            document.getElementById('view-poker').classList.add('active');
+            document.getElementById('nav-poker')?.classList.add('active');
+            initPoker();
+        }
+
+        function initPoker() {
+            document.getElementById('poker-lobby-screen').style.display = 'block';
+            document.getElementById('poker-table-screen').style.display = 'none';
+            if (unsubPokerLobby) unsubPokerLobby();
+            unsubPokerLobby = db.collection('poker_tables').orderBy('createdAt', 'desc').limit(20)
+                .onSnapshot(snap => {
+                    const list = document.getElementById('poker-tables-list');
+                    if (!list) return;
+                    if (snap.empty) {
+                        list.innerHTML = '<div style="color:var(--text-muted);">Нет открытых столов. Создайте первый!</div>';
+                        return;
+                    }
+                    list.innerHTML = '';
+                    snap.forEach(doc => {
+                        const t = doc.data();
+                        const count = (t.occupiedSeats || []).length;
+                        list.innerHTML += `
+                            <div class="poker-table-card">
+                                <h4>♠️ ${escapeHtml(t.name)}</h4>
+                                <div class="poker-table-meta">
+                                    <span>Блайнды: <b>${t.sb}/${t.bb} ⭐</b></span>
+                                    <span>Бай-ин: <b>${t.buyIn} ⭐</b></span>
+                                </div>
+                                <div class="poker-table-meta">
+                                    <span>Игроков: <b>${count}/${t.maxPlayers}</b></span>
+                                    <span style="color:var(--vb-green);">${t.status === 'playing' ? 'Идёт игра' : 'Ожидание'}</span>
+                                </div>
+                                <button class="btn-back" style="background:var(--accent-gold-gradient); color:#fff; border:none;" onclick="joinTable('${doc.id}')">Присоединиться (${t.buyIn} ⭐)</button>
+                            </div>`;
+                    });
+                });
+        }
+
+        function openCreatePokerModal() {
+            document.getElementById('poker-create-modal').classList.add('active');
+        }
+
+        async function createTable() {
+            const name = (document.getElementById('pk-create-name').value || 'Покерный стол').trim();
+            const [sb, bb, buyIn] = document.getElementById('pk-create-blinds').value.split('|').map(Number);
+            const maxPlayers = Math.max(2, Math.min(6, parseInt(document.getElementById('pk-create-max').value) || 6));
+
+            if (balance < buyIn) { showToast(`⚠️ Недостаточно средств! Нужен бай-ин ${buyIn} ⭐`); return; }
+
+            try {
+                const tableRef = db.collection('poker_tables').doc();
+                await db.runTransaction(async tx => {
+                    balance = normalizeMoney(balance - buyIn);
+                    tx.set(tableRef, {
+                        name, sb, bb, buyIn, maxPlayers,
+                        host: username,
+                        status: 'waiting',
+                        stage: 'waiting',
+                        pot: 0,
+                        currentBet: 0,
+                        dealerSeat: 0,
+                        currentTurn: -1,
+                        board: [],
+                        deck: [],
+                        occupiedSeats: [0],
+                        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+                    tx.set(tableRef.collection('seats').doc('0'), {
+                        seatIndex: 0, nick: username, stack: buyIn, bet: 0,
+                        status: 'waiting', cards: [], hasActed: false
+                    });
+                });
+                saveState();
+                updateBalanceUI();
+                document.getElementById('poker-create-modal').classList.remove('active');
+                enterPokerTable(tableRef.id, 0);
+            } catch (e) { showToast('⚠️ Ошибка создания стола'); }
+        }
+
+        async function joinTable(tableId) {
+            try {
+                let assignedSeat = -1;
+                await db.runTransaction(async tx => {
+                    const tableRef = db.collection('poker_tables').doc(tableId);
+                    const tSnap = await tx.get(tableRef);
+                    if (!tSnap.exists) throw new Error('Стол не найден');
+                    const t = tSnap.data();
+                    const occ = t.occupiedSeats || [];
+                    if (occ.length >= t.maxPlayers) throw new Error('Стол заполнен');
+                    if (balance < t.buyIn) throw new Error(`Нужен бай-ин ${t.buyIn} ⭐`);
+
+                    for (let i = 0; i < t.maxPlayers; i++) {
+                        if (!occ.includes(i)) { assignedSeat = i; break; }
+                    }
+                    if (assignedSeat === -1) throw new Error('Нет свободных мест');
+
+                    balance = normalizeMoney(balance - t.buyIn);
+                    occ.push(assignedSeat);
+                    tx.update(tableRef, { occupiedSeats: occ });
+                    tx.set(tableRef.collection('seats').doc(String(assignedSeat)), {
+                        seatIndex: assignedSeat, nick: username, stack: t.buyIn, bet: 0,
+                        status: 'waiting', cards: [], hasActed: false
+                    });
+                });
+                saveState();
+                updateBalanceUI();
+                enterPokerTable(tableId, assignedSeat);
+            } catch (e) { showToast('⚠️ ' + (e.message || 'Не удалось сесть за стол')); }
+        }
+
+        function enterPokerTable(tableId, seatIdx) {
+            currentPokerTableId = tableId;
+            currentPokerSeat = seatIdx;
+            if (unsubPokerLobby) unsubPokerLobby();
+            document.getElementById('poker-lobby-screen').style.display = 'none';
+            document.getElementById('poker-table-screen').style.display = 'block';
+
+            const tableRef = db.collection('poker_tables').doc(tableId);
+            unsubPokerTable = tableRef.onSnapshot(snap => {
+                if (!snap.exists) { showToast('Стол закрыт'); initPoker(); return; }
+                pkTableData = snap.data();
+                renderTable();
+            });
+            unsubPokerSeats = tableRef.collection('seats').onSnapshot(snap => {
+                pkSeatsData = {};
+                snap.forEach(d => { pkSeatsData[d.data().seatIndex] = d.data(); });
+                renderTable();
+            });
+        }
+
+        async function leaveTable() {
+            if (!currentPokerTableId) return;
+            clearInterval(pkTurnTimer);
+            const tId = currentPokerTableId;
+            const sIdx = currentPokerSeat;
+            try {
+                await db.runTransaction(async tx => {
+                    const tableRef = db.collection('poker_tables').doc(tId);
+                    const seatRef = tableRef.collection('seats').doc(String(sIdx));
+                    const [tSnap, sSnap] = await Promise.all([tx.get(tableRef), tx.get(seatRef)]);
+                    if (sSnap.exists) {
+                        const stack = sSnap.data().stack || 0;
+                        if (stack > 0) balance = normalizeMoney(balance + stack);
+                        tx.delete(seatRef);
+                    }
+                    if (tSnap.exists) {
+                        const occ = (tSnap.data().occupiedSeats || []).filter(i => i !== sIdx);
+                        if (occ.length === 0) tx.delete(tableRef);
+                        else tx.update(tableRef, { occupiedSeats: occ });
+                    }
+                });
+                saveState();
+                updateBalanceUI();
+            } catch (e) {}
+            if (unsubPokerTable) unsubPokerTable();
+            if (unsubPokerSeats) unsubPokerSeats();
+            currentPokerTableId = null;
+            currentPokerSeat = -1;
+            initPoker();
+        }
+
+        function dealCards() {
+            const suits = ['♠', '♥', '♦', '♣'];
+            const deck = [];
+            for (const s of suits) for (let r = 2; r <= 14; r++) deck.push({ r, s });
+            for (let i = deck.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [deck[i], deck[j]] = [deck[j], deck[i]];
+            }
+            return deck;
+        }
+
+        async function startHand() {
+            if (!pkTableData || pkTableData.host !== username) return;
+            const activeSeats = Object.values(pkSeatsData).filter(s => s.stack > 0).sort((a, b) => a.seatIndex - b.seatIndex);
+            if (activeSeats.length < 2) { showToast('⚠️ Нужно минимум 2 игрока со стеком!'); return; }
+
+            const deck = dealCards();
+            const dealerPos = (pkTableData.dealerSeat + 1) % activeSeats.length;
+            const sbSeat = activeSeats[(dealerPos + 1) % activeSeats.length];
+            const bbSeat = activeSeats[(dealerPos + 2) % activeSeats.length];
+            const firstTurn = activeSeats[(dealerPos + 3) % activeSeats.length].seatIndex;
+
+            const batch = db.batch();
+            const tableRef = db.collection('poker_tables').doc(currentPokerTableId);
+            let pot = 0;
+
+            activeSeats.forEach(s => {
+                const c1 = deck.pop(), c2 = deck.pop();
+                let bet = 0, stack = s.stack, status = 'active';
+                if (s.seatIndex === sbSeat.seatIndex) { bet = Math.min(stack, pkTableData.sb); stack -= bet; pot += bet; }
+                if (s.seatIndex === bbSeat.seatIndex) { bet = Math.min(stack, pkTableData.bb); stack -= bet; pot += bet; }
+                if (stack === 0) status = 'all-in';
+                batch.update(tableRef.collection('seats').doc(String(s.seatIndex)), {
+                    cards: [c1, c2], bet, stack, status, hasActed: false
+                });
+            });
+
+            batch.update(tableRef, {
+                status: 'playing', stage: 'preflop', pot,
+                currentBet: pkTableData.bb, dealerSeat: activeSeats[dealerPos].seatIndex,
+                currentTurn: firstTurn, board: [], deck
+            });
+            await batch.commit();
+        }
+
+        async function playerAction(action) {
+            if (!pkTableData || pkTableData.currentTurn !== currentPokerSeat) return;
+            const me = pkSeatsData[currentPokerSeat];
+            if (!me) return;
+
+            const tableRef = db.collection('poker_tables').doc(currentPokerTableId);
+            const seatRef = tableRef.collection('seats').doc(String(currentPokerSeat));
+            const toCall = Math.max(0, pkTableData.currentBet - me.bet);
+
+            await db.runTransaction(async tx => {
+                const tSnap = await tx.get(tableRef);
+                const sSnap = await tx.get(seatRef);
+                const t = tSnap.data(), s = sSnap.data();
+                if (t.currentTurn !== currentPokerSeat) return;
+
+                let newBet = s.bet, newStack = s.stack, newStatus = s.status, addPot = 0, nextCurrentBet = t.currentBet;
+
+                if (action === 'fold') {
+                    newStatus = 'fold';
+                } else if (action === 'check') {
+                    if (toCall > 0) return;
+                } else if (action === 'call') {
+                    const pay = Math.min(newStack, toCall);
+                    newStack -= pay; newBet += pay; addPot = pay;
+                    if (newStack === 0) newStatus = 'all-in';
+                } else if (action === 'raise') {
+                    const target = parseInt(document.getElementById('pk-raise-slider').value) || (t.currentBet + t.bb);
+                    const pay = Math.min(newStack, Math.max(toCall + t.bb, target - s.bet));
+                    newStack -= pay; newBet += pay; addPot = pay;
+                    if (newBet > nextCurrentBet) nextCurrentBet = newBet;
+                    if (newStack === 0) newStatus = 'all-in';
+                } else if (action === 'allin') {
+                    addPot = newStack; newBet += newStack; newStack = 0; newStatus = 'all-in';
+                    if (newBet > nextCurrentBet) nextCurrentBet = newBet;
+                }
+
+                tx.update(seatRef, { bet: newBet, stack: newStack, status: newStatus, hasActed: true });
+                tx.update(tableRef, { pot: t.pot + addPot, currentBet: nextCurrentBet });
+                tx.set(tableRef.collection('actions').doc(), {
+                    nick: username, action, amount: addPot, createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+            });
+
+            await nextTurn();
+        }
+
+        async function nextTurn() {
+            if (!pkTableData) return;
+            const tableRef = db.collection('poker_tables').doc(currentPokerTableId);
+            const seats = Object.values(pkSeatsData).sort((a, b) => a.seatIndex - b.seatIndex);
+            const alive = seats.filter(s => s.status !== 'fold' && s.status !== 'waiting');
+
+            if (alive.length === 1) {
+                await showdown(alive[0]);
+                return;
+            }
+
+            const canAct = alive.filter(s => s.status === 'active');
+            const allMatched = canAct.every(s => s.hasActed && s.bet === pkTableData.currentBet);
+
+            if (canAct.length === 0 || allMatched) {
+                const stages = ['preflop', 'flop', 'turn', 'river', 'showdown'];
+                const nextStage = stages[stages.indexOf(pkTableData.stage) + 1];
+                if (nextStage === 'showdown') { await showdown(); return; }
+
+                const deck = [...(pkTableData.deck || [])];
+                const board = [...(pkTableData.board || [])];
+                if (nextStage === 'flop') board.push(deck.pop(), deck.pop(), deck.pop());
+                else board.push(deck.pop());
+
+                const batch = db.batch();
+                seats.forEach(s => {
+                    if (s.status !== 'fold') batch.update(tableRef.collection('seats').doc(String(s.seatIndex)), { bet: 0, hasActed: false });
+                });
+                batch.update(tableRef, {
+                    stage: nextStage, board, deck, currentBet: 0,
+                    currentTurn: canAct.length > 0 ? canAct[0].seatIndex : -1
+                });
+                await batch.commit();
+                return;
+            }
+
+            const idx = seats.findIndex(s => s.seatIndex === pkTableData.currentTurn);
+            for (let i = 1; i <= seats.length; i++) {
+                const cand = seats[(idx + i) % seats.length];
+                if (cand.status === 'active') {
+                    await tableRef.update({ currentTurn: cand.seatIndex });
+                    break;
+                }
+            }
+        }
+
+        async function showdown(forcedWinner = null) {
+            const tableRef = db.collection('poker_tables').doc(currentPokerTableId);
+            const seats = Object.values(pkSeatsData).filter(s => s.status !== 'fold' && s.status !== 'waiting');
+            let winner = forcedWinner;
+            let winComboName = 'Победа по фолдам';
+
+            if (!winner && seats.length > 0) {
+                let bestEval = null;
+                for (const s of seats) {
+                    const ev = evaluateHand([...(s.cards || []), ...(pkTableData.board || [])]);
+                    if (!bestEval || compareHands(ev, bestEval) > 0) {
+                        bestEval = ev; winner = s; winComboName = ev.name;
+                    }
+                }
+            }
+
+            if (winner) {
+                await db.runTransaction(async tx => {
+                    const wRef = tableRef.collection('seats').doc(String(winner.seatIndex));
+                    const wSnap = await tx.get(wRef);
+                    if (wSnap.exists) tx.update(wRef, { stack: (wSnap.data().stack || 0) + pkTableData.pot });
+                    tx.update(tableRef, { status: 'waiting', stage: 'waiting', pot: 0, currentTurn: -1 });
+                });
+                showToast(`🏆 Победил ${winner.nick} (${winComboName})! Банк: ${pkTableData.pot} ⭐`);
+            }
+        }
+
+        function evaluateHand(cards7) {
+            if (!cards7 || cards7.length < 5) return { rank: 0, tiebreakers: [0], name: 'Старшая карта' };
+            let best = null;
+            const n = cards7.length;
+            for (let a = 0; a < n - 4; a++)
+              for (let b = a + 1; b < n - 3; b++)
+                for (let c = b + 1; c < n - 2; c++)
+                  for (let d = c + 1; d < n - 1; d++)
+                    for (let e = d + 1; e < n; e++) {
+                        const ev = eval5([cards7[a], cards7[b], cards7[c], cards7[d], cards7[e]]);
+                        if (!best || compareHands(ev, best) > 0) best = ev;
+                    }
+            return best;
+        }
+
+        function eval5(cards) {
+            const ranks = cards.map(c => c.r).sort((a, b) => b - a);
+            const isFlush = cards.every(c => c.s === cards[0].s);
+            const counts = {};
+            ranks.forEach(r => counts[r] = (counts[r] || 0) + 1);
+            const groups = Object.entries(counts).map(([r, cnt]) => ({ r: Number(r), cnt }))
+                .sort((a, b) => b.cnt - a.cnt || b.r - a.r);
+
+            let isStraight = false, straightHigh = ranks[0];
+            const uniq = [...new Set(ranks)];
+            if (uniq.length === 5) {
+                if (uniq[0] - uniq[4] === 4) isStraight = true;
+                else if (uniq[0] === 14 && uniq[1] === 5 && uniq[4] === 2) { isStraight = true; straightHigh = 5; }
+            }
+
+            if (isFlush && isStraight) return { rank: 8, tiebreakers: [straightHigh], name: straightHigh === 14 ? 'Роял-флеш' : 'Стрит-флеш' };
+            if (groups[0].cnt === 4) return { rank: 7, tiebreakers: [groups[0].r, groups[1].r], name: 'Каре' };
+            if (groups[0].cnt === 3 && groups[1].cnt === 2) return { rank: 6, tiebreakers: [groups[0].r, groups[1].r], name: 'Фулл-хаус' };
+            if (isFlush) return { rank: 5, tiebreakers: ranks, name: 'Флеш' };
+            if (isStraight) return { rank: 4, tiebreakers: [straightHigh], name: 'Стрит' };
+            if (groups[0].cnt === 3) return { rank: 3, tiebreakers: groups.map(g => g.r), name: 'Сет' };
+            if (groups[0].cnt === 2 && groups[1].cnt === 2) return { rank: 2, tiebreakers: groups.map(g => g.r), name: 'Две пары' };
+            if (groups[0].cnt === 2) return { rank: 1, tiebreakers: groups.map(g => g.r), name: 'Пара' };
+            return { rank: 0, tiebreakers: ranks, name: 'Старшая карта' };
+        }
+
+        function compareHands(a, b) {
+            if (a.rank !== b.rank) return a.rank - b.rank;
+            for (let i = 0; i < Math.max(a.tiebreakers.length, b.tiebreakers.length); i++) {
+                const diff = (a.tiebreakers[i] || 0) - (b.tiebreakers[i] || 0);
+                if (diff !== 0) return diff;
+            }
+            return 0;
+        }
+
+        function formatCardHTML(c, hidden = false) {
+            if (hidden) return '<div class="pk-card back"></div>';
+            const map = { 11: 'J', 12: 'Q', 13: 'K', 14: 'A' };
+            const rTxt = map[c.r] || c.r;
+            const isRed = c.s === '♥' || c.s === '♦';
+            return `<div class="pk-card ${isRed ? 'red' : ''}"><span>${rTxt}</span><span>${c.s}</span></div>`;
+        }
+
+        function syncRaiseInput() {
+            document.getElementById('pk-raise-amt').textContent = document.getElementById('pk-raise-slider').value;
+        }
+
+        function renderTable() {
+            if (!pkTableData) return;
+            document.getElementById('pk-table-title').textContent = pkTableData.name;
+            document.getElementById('pk-table-meta').textContent = `Блайнды: ${pkTableData.sb}/${pkTableData.bb} ⭐`;
+            document.getElementById('pk-pot').textContent = Number(pkTableData.pot || 0).toFixed(2);
+            document.getElementById('pk-stage-badge').textContent = pkTableData.stage;
+            document.getElementById('pk-start-btn').style.display = (pkTableData.host === username && pkTableData.status === 'waiting') ? 'inline-block' : 'none';
+
+            document.getElementById('pk-board').innerHTML = (pkTableData.board || []).map(c => formatCardHTML(c)).join('');
+
+            const seatsEl = document.getElementById('pk-seats');
+            seatsEl.innerHTML = '';
+            for (let i = 0; i < pkTableData.maxPlayers; i++) {
+                const s = pkSeatsData[i];
+                if (!s) continue;
+                const isTurn = pkTableData.currentTurn === i;
+                seatsEl.innerHTML += `
+                    <div class="pk-seat pk-seat-pos-${i} ${isTurn ? 'active-turn' : ''} ${s.status === 'fold' ? 'folded' : ''}">
+                        ${pkTableData.dealerSeat === i ? '<div class="pk-dealer-chip">D</div>' : ''}
+                        <div style="font-weight:800; color:#fff;">${escapeHtml(s.nick)}</div>
+                        <div style="color:var(--vb-green); font-weight:700;">${s.stack.toFixed(0)} ⭐</div>
+                        <div style="font-size:0.65rem; color:var(--text-muted);">${s.status} ${s.bet > 0 ? '• ' + s.bet + '⭐' : ''}</div>
+                    </div>`;
+            }
+
+            const me = pkSeatsData[currentPokerSeat];
+            if (me) {
+                document.getElementById('pk-my-cards').innerHTML = (me.cards || []).map(c => formatCardHTML(c)).join('');
+                const myTurn = pkTableData.currentTurn === currentPokerSeat && pkTableData.status === 'playing';
+                document.querySelectorAll('#pk-action-btns .pk-btn').forEach(b => b.disabled = !myTurn);
+                const toCall = Math.max(0, pkTableData.currentBet - me.bet);
+                document.getElementById('pk-btn-check').disabled = !myTurn || toCall > 0;
+                document.getElementById('pk-call-amt').textContent = toCall > 0 ? toCall + ' ⭐' : '';
+                const slider = document.getElementById('pk-raise-slider');
+                slider.min = pkTableData.currentBet + pkTableData.bb;
+                slider.max = Math.max(slider.min, me.stack + me.bet);
+                slider.value = slider.min;
+                syncRaiseInput();
+
+                clearInterval(pkTurnTimer);
+                if (myTurn) {
+                    let sec = 30;
+                    const fill = document.getElementById('pk-timer-fill');
+                    fill.style.width = '100%';
+                    pkTurnTimer = setInterval(() => {
+                        sec--;
+                        fill.style.width = (sec / 30 * 100) + '%';
+                        if (sec <= 0) { clearInterval(pkTurnTimer); playerAction('fold'); }
+                    }, 1000);
+                }
+            }
+        }
     </script>
     <div class="bigwin-overlay" id="bigwin-overlay" onclick="this.classList.remove('active')">
         <div class="bigwin-title" id="bigwin-title">BIG WIN!</div>
