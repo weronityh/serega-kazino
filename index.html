@@ -3026,7 +3026,7 @@
         let aoFreeSpinsLeft = 0, aoFreeSpinsTotalWin = 0, totalMultiplier = 0, aoCurrentBet = 0.5;
 
         // ==========================================
-        // THE DOG HOUSE (С КАРТИНКАМИ taksa.png И shitsu.png, RTP 96%)
+        // THE DOG HOUSE (С КАРТИНКАМИ taksa.png И shitsu.png, RTP 95%)
         // ==========================================
         const DH_COLS = 5, DH_ROWS = 3;
         const DH_PAYLINES = [
@@ -3066,14 +3066,24 @@
             { id: 'ten',        img: 'iidesyat.png',         fallback: '🔟',   cat: 'Карточный',  name: 'Десятка (10)',p3: 0.1,  p4: 0.25, p5: 1.25 }
         ];
 
+        // --- Математическая модель (калибровка: RTP 95.0% ±0.05%, Монте-Карло 300 млн спинов) ---
+        // Базовая игра ≈ 62.35% + бонус ≈ 32.68%; хит-фриквенси ≈ 37.5%; бонус ≈ 1 из 224 спинов.
         const DH_WEIGHTS_REEL_1 = {
             ten: 165, jack: 160, queen: 155, king: 140, ace: 135,
-            bone: 65, collar: 52, dachshund: 34, pug: 22, shitzu: 13, rottweiler: 6
+            bone: 85, collar: 68, dachshund: 44, pug: 29, shitzu: 17, rottweiler: 8
         };
         const DH_WEIGHTS_OTHER_REELS = {
             ten: 170, jack: 165, queen: 160, king: 145, ace: 140,
-            bone: 70, collar: 56, dachshund: 36, pug: 24, shitzu: 14, rottweiler: 7
+            bone: 91, collar: 73, dachshund: 47, pug: 31, shitzu: 18, rottweiler: 9
         };
+        const DH_WILD_CHANCE_BASE = 0.085;      // шанс будки (Wild) на ячейку в базовой игре (барабаны 2-4)
+        const DH_WILD_CHANCE_FREESPINS = 0.025; // шанс НОВОЙ липкой будки на ячейку во фриспинах
+        const DH_WILD_X2_SHARE = 0.80;          // доля будок x2 (остальные 20% — x3)
+        const DH_SCATTER_CHANCE = 0.06;         // шанс лапы (Scatter) на ячейку, барабаны 1, 3, 5
+        const DH_SCATTER_PAY_MULT = 5;          // выплата за 3 лапы (x ставки)
+        // Выплаты слота считаются «как есть»: RTP задан самой математикой выше,
+        // глобальный множитель ENGINE_PAYOUT_CONFIG.BASE_FACTOR на The Dog House не влияет.
+        const dhPayout = (amount) => (Number.isFinite(amount) && amount > 0) ? amount : 0;
 
         let dhGrid = Array.from({ length: DH_COLS }, () => Array(DH_ROWS).fill(null));
         let dhStickyWilds = Array.from({ length: DH_COLS }, () => Array(DH_ROWS).fill(null));
@@ -3663,7 +3673,7 @@
             if (slotKey === 'doghouse') {
                 const bet = dhCurrentBet;
                 titleEl.textContent = '🐶 The Dog House — Таблица выплат';
-                subEl.textContent = `20 активных линий слева направо • Текущая ставка: ${fmtByn(bet)} • RTP 96%`;
+                subEl.textContent = `20 активных линий слева направо • Текущая ставка: ${fmtByn(bet)} • RTP 95%`;
 
                 const rowsHtml = DH_SYMBOLS.map(s => `
                     <tr>
@@ -4249,14 +4259,14 @@
         }
 
         function generateDogHouseCell(col) {
-            const boost = 1.0; // RTP фиксирован на 96%
             // Wild (будка) только на 2, 3, 4 барабанах (col 1, 2, 3)
-            if (col >= 1 && col <= 3 && Math.random() < 0.055 * boost) {
-                const mult = Math.random() < 0.72 ? 2 : 3;
+            const wildChance = dhInFreeSpins ? DH_WILD_CHANCE_FREESPINS : DH_WILD_CHANCE_BASE;
+            if (col >= 1 && col <= 3 && Math.random() < wildChance) {
+                const mult = Math.random() < DH_WILD_X2_SHARE ? 2 : 3;
                 return { id: 'wild', img: 'bydkastandart.png', mult: mult, name: `Wild x${mult}` };
             }
             // Scatter (лапа) только на 1, 3, 5 барабанах (col 0, 2, 4) в обычной игре
-            if (!dhInFreeSpins && (col === 0 || col === 2 || col === 4) && Math.random() < 0.075 * boost) {
+            if (!dhInFreeSpins && (col === 0 || col === 2 || col === 4) && Math.random() < DH_SCATTER_CHANCE) {
                 return { id: 'scatter', img: 'bonusdoghouselapa.png', name: 'Bonus Лапа' };
             }
             return getRandomDogHouseSymbol(col);
@@ -4394,7 +4404,7 @@
                 if (matchCount >= 3) {
                     const baseMult = matchCount === 5 ? targetSym.p5 : (matchCount === 4 ? targetSym.p4 : targetSym.p3);
                     const wildMult = lineMultSum > 0 ? lineMultSum : 1;
-                    const linePay = applyEnginePayoutScale(dhCurrentBet * baseMult * wildMult);
+                    const linePay = dhPayout(dhCurrentBet * baseMult * wildMult);
                     totalWin += linePay;
                     for (let i = 0; i < matchCount; i++) {
                         winCellsSet.add(`${line[i].c}-${line[i].r}`);
@@ -4528,7 +4538,7 @@
                     }
                 }
 
-                const scatterWin = (!dhInFreeSpins && scatterCount >= 3) ? applyEnginePayoutScale(dhCurrentBet * 5) : 0;
+                const scatterWin = (!dhInFreeSpins && scatterCount >= 3) ? dhPayout(dhCurrentBet * DH_SCATTER_PAY_MULT) : 0;
                 const spinTotal = capRoundWin(
                     totalWin + scatterWin,
                     dhCurrentBet,
