@@ -2579,7 +2579,7 @@
             backdrop-filter: none;
         }
         .hero-content::before {
-            content: 'СЛОТ-ПОРТАЛ • BYN';
+            content: 'СЛОТ-ПОРТАЛ • ⭐';
             color: #9cc6ff;
             background: rgba(47, 134, 255, 0.12);
             border: 1px solid rgba(47, 134, 255, 0.35);
@@ -3408,140 +3408,92 @@
         </div>
     </div>
 
-    <!-- МОДАЛЬНОЕ ОКНО ПОПОЛНЕНИЯ -->
+   <!-- МОДАЛЬНОЕ ОКНО ПОПОЛНЕНИЯ (ТОЛЬКО TELEGRAM STARS) -->
     <div class="modal-overlay" id="deposit-modal">
         <div class="deposit-modal">
             <button class="modal-close-btn" onclick="closeDepositModal()">✕</button>
-            <h2 style="margin: 0 0 4px; color: var(--accent-gold); text-transform: uppercase; font-family: 'Unbounded', sans-serif; font-size: 1.15rem;">💳 Касса: Пополнение</h2>
-            <p style="margin: 0; font-size: 0.82rem; color: var(--text-muted);">Выберите удобный способ оплаты • Мгновенная обработка</p>
+            <h2 style="margin: 0 0 4px; color: var(--accent-gold); text-transform: uppercase; font-family: 'Unbounded', sans-serif; font-size: 1.15rem;">⭐ Пополнение звёздами</h2>
+            <p style="margin: 0; font-size: 0.82rem; color: var(--text-muted);">Оплата через Telegram Stars • Минимум 100 ⭐</p>
 
-            <div class="cashier-methods-grid" id="dep-methods-grid">
-                <button class="cashier-method-btn active" data-method="usdt" onclick="selectDepositMethod('usdt')">
-                    <span style="font-size:1.2rem;">💎</span>
-                    <span>USDT TRC-20</span>
-                </button>
-                <button class="cashier-method-btn" data-method="card" onclick="selectDepositMethod('card')">
-                    <span style="font-size:1.2rem;">💳</span>
-                    <span>Карта BYN/РФ</span>
-                </button>
-                <button class="cashier-method-btn" data-method="ton" onclick="selectDepositMethod('ton')">
-                    <span style="font-size:1.2rem;">✈️</span>
-                    <span>TON / Wallet</span>
-                </button>
-                <button class="cashier-method-btn" data-method="erip" onclick="selectDepositMethod('erip')">
-                    <span style="font-size:1.2rem;">🏦</span>
-                    <span>ЕРИП / СБП</span>
-                </button>
-                <button class="cashier-method-btn" data-method="crypto_other" onclick="selectDepositMethod('crypto_other')">
-                    <span style="font-size:1.2rem;">₿</span>
-                    <span>BTC / LTC</span>
+            <div class="cashier-methods-grid" id="dep-methods-grid" style="grid-template-columns: 1fr;">
+                <button class="cashier-method-btn active" data-method="stars" onclick="selectDepositMethod('stars')">
+                    <span style="font-size:1.3rem;">⭐</span>
+                    <span>Telegram Stars (XTR)</span>
                 </button>
             </div>
 
             <div class="cashier-field-group">
                 <div class="cashier-field-label">
-                    <span>Сумма пополнения (BYN)</span>
-                    <span style="color:var(--accent-gold);" id="dep-converted-hint">≈ 15.38 USDT</span>
+                    <span>Сумма пополнения (мин. 100 ⭐)</span>
+                    <span style="color:var(--accent-gold);" id="dep-converted-hint">На баланс: 100 ⭐</span>
                 </div>
-                <input type="number" id="dep-amount-input" class="cashier-input" value="50" min="10" step="5" oninput="updateDepositCalc()">
+                <input type="number" id="dep-amount-input" class="cashier-input" value="100" min="100" step="1" oninput="updateDepositCalc()">
                 <div class="quick-amounts-row">
-                    <button class="quick-amt-chip" onclick="setDepositAmount(20)">20 BYN</button>
-                    <button class="quick-amt-chip" onclick="setDepositAmount(50)">50 BYN</button>
-                    <button class="quick-amt-chip" onclick="setDepositAmount(100)">100 BYN</button>
-                    <button class="quick-amt-chip" onclick="setDepositAmount(250)">250 BYN</button>
-                    <button class="quick-amt-chip" onclick="setDepositAmount(500)">500 BYN</button>
-                </div>
-            </div>
-
-            <div id="dep-details-panel" style="margin-top: 12px;">
-                <div style="font-size: 0.8rem; color: var(--accent-gold); font-weight: 700; text-align: center;" id="dep-network-label">
-                    Сеть: TRON (TRC-20) • Курс: 1 USDT = 3.25 BYN
-                </div>
-
-                <div class="wallet-address-box" id="crypto-wallet-address">
-                    TMVngRQdJ1XqC67GTLttnuWUZKYxtdMFWt
-                </div>
-
-                <button class="btn-back" style="width: 100%; background: var(--accent-gold-gradient); color:#ffffff; font-weight:900; margin-bottom:8px;" onclick="copyWalletAddress()">📋 СКОПИРОВАТЬ РЕКВИЗИТЫ</button>
-
-                <button class="btn-back" id="toggle-qr-btn" style="width: 100%; background: rgba(47, 134, 255, 0.10); border: 1px solid var(--accent-gold); color: var(--accent-gold); font-weight: 900; margin-bottom: 8px;" onclick="toggleDepositQR()">
-                    📷 ПОКАЗАТЬ QR-КОД
-                </button>
-
-                <div id="deposit-qr-container" style="display: none; text-align: center; margin: 10px 0 12px;">
-                    <img src="./QR.jpg" onerror="this.onerror=null; this.src='QR.jpg';" alt="QR код для пополнения" style="width: 195px; height: 195px; object-fit: contain; border-radius: 14px; border: 2px solid var(--accent-gold); background: #fff; padding: 6px; box-shadow: 0 0 25px rgba(47, 134, 255, 0.22);">
-                    <div style="font-size: 0.74rem; color: var(--text-muted); margin-top: 6px;">Отсканируйте QR-код в вашем приложении</div>
+                    <button class="quick-amt-chip" onclick="setDepositAmount(100)">100 ⭐</button>
+                    <button class="quick-amt-chip" onclick="setDepositAmount(250)">250 ⭐</button>
+                    <button class="quick-amt-chip" onclick="setDepositAmount(500)">500 ⭐</button>
+                    <button class="quick-amt-chip" onclick="setDepositAmount(1000)">1000 ⭐</button>
+                    <button class="quick-amt-chip" onclick="setDepositAmount(2500)">2500 ⭐</button>
                 </div>
             </div>
 
             <div class="deposit-steps" id="dep-instruction-text">
-                <b>Инструкция по зачислению:</b><br>
-                1. Переведите сумму по указанным реквизитам (минимум 15 BYN / 5 USDT).<br>
-                2. Нажмите «Я ОПЛАТИЛ — ОТПРАВИТЬ ЧЕК» и прикрепите скриншот перевода администратору (<b id="modal-player-nick" style="color:var(--accent-gold);">Player</b>).
+                <b>Как работает пополнение:</b><br>
+                1. Введите целое число звёзд (минимум <b>100 ⭐</b>).<br>
+                2. Нажмите «ОПЛАТИТЬ ЗВЁЗДАМИ» — откроется окно оплаты Telegram.<br>
+                3. После оплаты звёзды автоматически зачислятся на баланс (<b id="modal-player-nick" style="color:var(--accent-gold);">Player</b>).
             </div>
 
             <div style="display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap;">
                 <button class="btn-back" id="dep-submit-btn" style="flex: 1; background: var(--accent-gold-gradient); color: #ffffff; font-weight: 900; border: none; padding: 12px;" onclick="submitDepositRequest()">
-                    ✅ Я ОПЛАТИЛ (СОЗДАТЬ ЗАЯВКУ)
+                    ⭐ ОПЛАТИТЬ ЗВЁЗДАМИ
                 </button>
                 <a href="https://t.me/Seregablatnou" target="_blank" class="tg-boss-btn" style="justify-content: center; flex: 1;">
-                    ✈️ ЧАТ С КАССИРОМ TG
+                    ✈️ ПОДДЕРЖКА TG
                 </a>
             </div>
         </div>
     </div>
 
-    <!-- МОДАЛЬНОЕ ОКНО ВЫВОДА СРЕДСТВ -->
+    <!-- МОДАЛЬНОЕ ОКНО ВЫВОДА СРЕДСТВ (ТОЛЬКО TELEGRAM STARS) -->
     <div class="modal-overlay" id="withdraw-modal">
         <div class="deposit-modal" style="border-color: rgba(47, 134, 255, 0.35);">
             <button class="modal-close-btn" onclick="closeWithdrawModal()">✕</button>
-            <h2 style="margin: 0 0 4px; color: #ffffff; text-transform: uppercase; font-family: 'Unbounded', sans-serif; font-size: 1.15rem;">💸 Вывод выигрыша</h2>
-            <p style="margin: 0; font-size: 0.82rem; color: var(--text-muted);">Быстрые выплаты 24/7 • Доступно: <b id="wd-avail-balance" style="color:#fff;">0,00 BYN</b></p>
+            <h2 style="margin: 0 0 4px; color: #ffffff; text-transform: uppercase; font-family: 'Unbounded', sans-serif; font-size: 1.15rem;">⭐ Вывод звёздами</h2>
+            <p style="margin: 0; font-size: 0.82rem; color: var(--text-muted);">Выплата Telegram Stars • Доступно: <b id="wd-avail-balance" style="color:#fff;">0,00 ⭐</b></p>
 
-            <div class="cashier-methods-grid" id="wd-methods-grid">
-                <button class="cashier-method-btn withdraw-active" data-wd="card" onclick="selectWithdrawMethod('card')">
-                    <span style="font-size:1.2rem;">💳</span>
-                    <span>Банк. карта</span>
-                </button>
-                <button class="cashier-method-btn" data-wd="usdt" onclick="selectWithdrawMethod('usdt')">
-                    <span style="font-size:1.2rem;">💎</span>
-                    <span>USDT TRC-20</span>
-                </button>
-                <button class="cashier-method-btn" data-wd="erip" onclick="selectWithdrawMethod('erip')">
-                    <span style="font-size:1.2rem;">🏦</span>
-                    <span>ЕРИП / СБП</span>
-                </button>
-                <button class="cashier-method-btn" data-wd="yoomoney" onclick="selectWithdrawMethod('yoomoney')">
-                    <span style="font-size:1.2rem;">👛</span>
-                    <span>ЮMoney</span>
+            <div class="cashier-methods-grid" id="wd-methods-grid" style="grid-template-columns: 1fr;">
+                <button class="cashier-method-btn withdraw-active" data-wd="stars" onclick="selectWithdrawMethod('stars')">
+                    <span style="font-size:1.3rem;">⭐</span>
+                    <span>Telegram Stars</span>
                 </button>
             </div>
 
             <div class="cashier-field-group">
                 <div class="cashier-field-label">
-                    <span id="wd-requisite-label">Номер карты (VISA / Mastercard / Белкарт)</span>
+                    <span id="wd-requisite-label">Ваш @username в Telegram</span>
                 </div>
-                <input type="text" id="wd-requisite-input" class="cashier-input" placeholder="4276 0000 0000 0000">
+                <input type="text" id="wd-requisite-input" class="cashier-input" placeholder="@username">
             </div>
 
             <div class="cashier-field-group">
                 <div class="cashier-field-label">
-                    <span>Сумма вывода (мин. 20 BYN)</span>
+                    <span>Сумма вывода (мин. 50 ⭐)</span>
                     <span style="color:#8fc0ff; cursor:pointer; text-decoration:underline;" onclick="setMaxWithdraw()">Вывести всё</span>
                 </div>
-                <input type="number" id="wd-amount-input" class="cashier-input" value="50" min="20" step="1" oninput="updateWithdrawCalc()">
+                <input type="number" id="wd-amount-input" class="cashier-input" value="100" min="50" step="1" oninput="updateWithdrawCalc()">
                 <div class="quick-amounts-row">
-                    <button class="quick-amt-chip" onclick="setWithdrawAmount(20)">20 BYN</button>
-                    <button class="quick-amt-chip" onclick="setWithdrawAmount(50)">50 BYN</button>
-                    <button class="quick-amt-chip" onclick="setWithdrawAmount(100)">100 BYN</button>
-                    <button class="quick-amt-chip" onclick="setWithdrawAmount(300)">300 BYN</button>
+                    <button class="quick-amt-chip" onclick="setWithdrawAmount(50)">50 ⭐</button>
+                    <button class="quick-amt-chip" onclick="setWithdrawAmount(100)">100 ⭐</button>
+                    <button class="quick-amt-chip" onclick="setWithdrawAmount(250)">250 ⭐</button>
+                    <button class="quick-amt-chip" onclick="setWithdrawAmount(500)">500 ⭐</button>
                 </div>
             </div>
 
             <div class="withdraw-summary-box">
                 <div class="withdraw-summary-row">
-                    <span>Комиссия платёжного шлюза:</span>
-                    <b id="wd-fee-text" style="color:var(--text-muted);">2% (1,00 BYN)</b>
+                    <span>Комиссия вывода:</span>
+                    <b id="wd-fee-text" style="color:var(--text-muted);">0% (0,00 ⭐)</b>
                 </div>
                 <div class="withdraw-summary-row">
                     <span>Время зачисления:</span>
@@ -3549,12 +3501,12 @@
                 </div>
                 <div class="withdraw-summary-row" style="border-top:1px solid rgba(255,255,255,0.1); padding-top:6px; font-size:0.92rem;">
                     <span style="color:#fff; font-weight:700;">Итого к получению:</span>
-                    <b id="wd-net-text" style="color:#3ddc84;">49,00 BYN</b>
+                    <b id="wd-net-text" style="color:#3ddc84;">100 ⭐</b>
                 </div>
             </div>
 
             <button class="btn-back" id="wd-submit-btn" style="width: 100%; margin-top: 14px; background: var(--accent-gold-gradient); color: #ffffff; font-weight: 900; border: none; padding: 13px; font-size: 0.92rem;" onclick="submitWithdrawRequest()">
-                💸 ЗАКАЗАТЬ ВЫПЛАТУ
+                ⭐ ЗАКАЗАТЬ ВЫВОД ЗВЁЗДАМИ
             </button>
 
             <div class="tx-history-box">
@@ -3593,7 +3545,7 @@
                 <div class="dev-section-title">💵 Выдать / списать баланс</div>
                 <div class="dev-input-row">
                     <input type="text" id="dev-target-nick" class="dev-input" placeholder="Ник (пусто = себе)">
-                    <input type="number" id="dev-amount-input" class="dev-input" placeholder="Сумма BYN" value="100">
+                    <input type="number" id="dev-amount-input" class="dev-input" placeholder="Сумма ⭐" value="100">
                     <button class="dev-btn-add" onclick="devModifyBalance(1)">+ Выдать</button>
                     <button class="dev-btn-sub" onclick="devModifyBalance(-1)">− Списать</button>
                 </div>
@@ -3672,7 +3624,7 @@
                 <div class="wallet-capsule">
                     <div class="balance-center-box" role="button" tabindex="0" title="Открыть кассу"
                          onclick="openDepositModal()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openDepositModal();}">
-                        <span>💵</span><span id="balance">1000,00</span> <span style="font-size:0.75rem; color:var(--text-muted); font-weight:600;">BYN</span>
+                        <span>💵</span><span id="balance">1000,00</span> <span style="font-size:0.75rem; color:var(--text-muted); font-weight:600;">⭐</span>
                     </div>
                     <button class="btn-deposit-top" onclick="openDepositModal()">+ ПОПОЛНИТЬ</button>
                 </div>
@@ -3692,7 +3644,7 @@
                 <div class="hero-banner">
                     <div class="hero-content">
                         <h1 class="hero-title"><span class="hero-title-main">Серёга пушка — <span class="hl">месси игрушка.</span></span><span class="hero-title-sub">В собак залетай и баб забирай!</span></h1>
-                        <p class="hero-sub">Оригинальные слоты • Мгновенные выплаты в BYN • Касса 24/7</p>
+                        <p class="hero-sub">Оригинальные слоты • Мгновенные выплаты в ⭐ • Касса 24/7</p>
                         <button class="hero-cta-btn" onclick="openDogHouse()">🐶 Залететь в The Dog House</button>
                         <div class="hero-stats">
                             <div class="hero-stat">
@@ -3701,7 +3653,7 @@
                             </div>
                             <div class="hero-stat">
                                 <span class="hero-stat-value">24/7</span>
-                                <span class="hero-stat-label">Выплаты в BYN</span>
+                                <span class="hero-stat-label">Выплаты в ⭐</span>
                             </div>
                         </div>
                     </div>
@@ -3754,7 +3706,7 @@
                         </div>
                         <div class="slot-card-content">
                             <div class="slot-card-title">Sweet Bonanza</div>
-                            <div class="slot-card-desc">Фруктово-конфетный слот 6x5 в BYN с каскадами Tumble, фриспинами и бомбами до x100.</div>
+                            <div class="slot-card-desc">Фруктово-конфетный слот 6x5 в ⭐ с каскадами Tumble, фриспинами и бомбами до x100.</div>
                         </div>
                         <div class="slot-card-actions">
                             <button class="card-hover-play-btn" onclick="event.stopPropagation(); openSweetBonanza();">Играть</button>
@@ -3774,7 +3726,7 @@
                         <span>|</span>
                         <span>БОНУС ИКС: <b id="ao-fs-mult-sum">0x</b></span>
                         <span>|</span>
-                        <span>ВЫИГРЫШ: <b id="ao-fs-total-win">0,00</b> BYN</span>
+                        <span>ВЫИГРЫШ: <b id="ao-fs-total-win">0,00</b> ⭐</span>
                     </div>
                     <button class="btn-paytable-help" onclick="openSlotPaytable('olympus')">❓ Символы и выплаты</button>
                 </div>
@@ -3792,13 +3744,13 @@
                     <div class="ao-left-controls-zone">
                         <div class="ao-feature-card ao-buy-feature" onclick="buyOlympusBonus()">
                             <div style="font-size:0.75rem; font-weight:900; text-transform:uppercase; color:#fff;">КУПИТЬ БЕСПЛАТНЫЕ СПИНЫ</div>
-                            <div style="margin-top:6px; background:rgba(0,0,0,0.35); border-radius:10px; padding:6px; font-size:1.15rem; font-weight:900; color:#fef08a;" id="ao-buy-price">50,00 BYN</div>
+                            <div style="margin-top:6px; background:rgba(0,0,0,0.35); border-radius:10px; padding:6px; font-size:1.15rem; font-weight:900; color:#fef08a;" id="ao-buy-price">50,00 ⭐</div>
                             <div style="font-size:0.65rem; color:#fde68a; font-weight:700; margin-top:4px;">100x ОТ СТАВКИ</div>
                         </div>
 
                         <div class="ao-feature-card ao-ante-card" id="ao-ante-btn" onclick="toggleOlympusAnte()">
                             <div style="font-size: 0.72rem; font-weight: 900; color: #fff; text-transform: uppercase;">ОТ СУММЫ СТАВКИ</div>
-                            <div style="font-size: 1.1rem; font-weight: 900; color: #fde047; margin: 4px 0;" id="ao-ante-val">0,62 BYN</div>
+                            <div style="font-size: 1.1rem; font-weight: 900; color: #fde047; margin: 4px 0;" id="ao-ante-val">0,62 ⭐</div>
                             <div style="font-size: 0.7rem; font-weight: 800; color: #f3e8ff; line-height: 1.25; margin-bottom: 6px;">ДВОЙНОЙ ШАНС ВЫИГРЫША ФУНКЦИИ</div>
                             <div style="display:inline-flex; align-items:center; justify-content:space-between; width:84px; background:rgba(0,0,0,0.45); border-radius:999px; padding:3px 10px; font-size:0.7rem; font-weight:900; border:1px solid rgba(255,255,255,0.3);">
                                 <span id="ao-ante-status-txt">ВЫКЛ</span>
@@ -3823,12 +3775,12 @@
                 <div class="ao-pragmatic-hud">
                     <div class="ao-hud-left-group">
                         <button class="ao-icon-btn" id="ao-sound-btn" onclick="toggleSound()" title="Звук">🔊</button>
-                        <div class="ao-credits-box"><span>КРЕДИТ</span><span><span id="ao-hud-balance">1 000,00</span> BYN</span></div>
-                        <div class="ao-credits-box"><span>СТАВКА</span><span><span id="ao-hud-total-bet">0,50</span> BYN</span></div>
+                        <div class="ao-credits-box"><span>КРЕДИТ</span><span><span id="ao-hud-balance">1 000,00</span> ⭐</span></div>
+                        <div class="ao-credits-box"><span>СТАВКА</span><span><span id="ao-hud-total-bet">0,50</span> ⭐</span></div>
                     </div>
                     <div class="ao-hud-center-group">
                         <div class="ao-win-label" id="ao-win-lbl">ПОСЛЕДНИЙ ВЫИГРЫШ</div>
-                        <div class="ao-win-amount"><span id="ao-hud-win">0,00</span> BYN</div>
+                        <div class="ao-win-amount"><span id="ao-hud-win">0,00</span> ⭐</div>
                     </div>
                     <div class="ao-hud-right-group">
                         <button class="ao-bet-adjust-btn" onclick="changeOlympusBet(-0.5)">−</button>
@@ -3849,14 +3801,14 @@
                     <div class="dh-fs-banner" id="dh-fs-banner">
                         <span>🐶 ФРИСПИНЫ: <b id="dh-fs-left">10</b></span>
                         <span>|</span>
-                        <span>ВЫИГРЫШ БОНУСА: <b id="dh-fs-total-win">0,00</b> BYN</span>
+                        <span>ВЫИГРЫШ БОНУСА: <b id="dh-fs-total-win">0,00</b> ⭐</span>
                     </div>
                     <button class="btn-paytable-help" onclick="openSlotPaytable('doghouse')">❓ Символы и выплаты</button>
                 </div>
 
                 <div class="dh-stage">
                     <div class="dh-board-wrapper">
-                        <div class="dh-ticker">20 ЛИНИЙ • ВЫПЛАТЫ ОТ 3 В РЯД • СТАВКИ ОТ 0.5 ДО 50 BYN</div>
+                        <div class="dh-ticker">20 ЛИНИЙ • ВЫПЛАТЫ ОТ 3 В РЯД • СТАВКИ ОТ 0.5 ДО 50 ⭐</div>
                         <div class="dh-wooden-frame">
                             <div class="dh-grid-5x3" id="dh-grid"></div>
 
@@ -3873,12 +3825,12 @@
 
                 <div class="dh-pragmatic-hud">
                     <div class="dh-hud-left-group">
-                        <div class="dh-credits-box"><span>КРЕДИТ</span><span><span id="dh-hud-balance">1 000,00</span> BYN</span></div>
-                        <div class="dh-credits-box"><span>СТАВКА</span><span><span id="dh-hud-total-bet">0,50</span> BYN</span></div>
+                        <div class="dh-credits-box"><span>КРЕДИТ</span><span><span id="dh-hud-balance">1 000,00</span> ⭐</span></div>
+                        <div class="dh-credits-box"><span>СТАВКА</span><span><span id="dh-hud-total-bet">0,50</span> ⭐</span></div>
                     </div>
                     <div class="dh-hud-center-group">
                         <div class="dh-win-label" id="dh-win-lbl">ПОСЛЕДНИЙ ВЫИГРЫШ</div>
-                        <div class="dh-win-amount"><span id="dh-hud-win">0,00</span> BYN</div>
+                        <div class="dh-win-amount"><span id="dh-hud-win">0,00</span> ⭐</div>
                     </div>
                     <div class="dh-hud-right-group">
                         <button class="dh-bet-adjust-btn" onclick="changeDogHouseBet(-0.5)">−</button>
@@ -3901,7 +3853,7 @@
                     <div class="sb-fs-banner" id="sb-fs-banner">
                         <span>🍭 ФРИСПИНЫ: <b id="sb-fs-left">10</b></span>
                         <span>|</span>
-                        <span>ВЫИГРЫШ БОНУСА: <b id="sb-fs-total-win">0,00</b> BYN</span>
+                        <span>ВЫИГРЫШ БОНУСА: <b id="sb-fs-total-win">0,00</b> ⭐</span>
                     </div>
                     <button class="btn-paytable-help" onclick="openSlotPaytable('bonanza')">❓ Символы и выплаты</button>
                 </div>
@@ -3912,13 +3864,13 @@
 
                         <div class="sb-feature-card sb-buy-feature" onclick="buyBonanzaBonus()">
                             <div style="font-size:0.82rem; font-weight:900; text-transform:uppercase; color:#fff;">КУПИТЬ ФУНКЦИЮ</div>
-                            <div style="margin-top:6px; background:rgba(0,0,0,0.35); border-radius:10px; padding:6px; font-size:1.1rem; font-weight:900; color:#fef08a;" id="sb-buy-price">50,00 BYN</div>
+                            <div style="margin-top:6px; background:rgba(0,0,0,0.35); border-radius:10px; padding:6px; font-size:1.1rem; font-weight:900; color:#fef08a;" id="sb-buy-price">50,00 ⭐</div>
                             <div style="font-size: 0.65rem; color: #ffe4e6; font-weight: 700; margin-top: 4px;">100x ОТ СТАВКИ</div>
                         </div>
 
                         <div class="sb-feature-card sb-ante-card" id="sb-ante-btn" onclick="toggleBonanzaAnte()">
                             <div style="font-size: 0.72rem; font-weight: 900; color: #fff; text-transform: uppercase;">УДВОЕНИЕ ШАНСА ФУНКЦИИ</div>
-                            <div style="font-size: 1.05rem; font-weight: 900; color: #fde047; margin: 4px 0;" id="sb-ante-val">0,62 BYN</div>
+                            <div style="font-size: 1.05rem; font-weight: 900; color: #fde047; margin: 4px 0;" id="sb-ante-val">0,62 ⭐</div>
                             <div style="display:inline-flex; align-items:center; justify-content:space-between; width:90px; background:rgba(0,0,0,0.45); border-radius:999px; padding:3px 10px; font-size:0.72rem; font-weight:900; border:1px solid rgba(255,255,255,0.3);">
                                 <span id="sb-ante-status-txt">ВЫКЛ</span>
                                 <span id="sb-ante-dot">⚪</span>
@@ -3938,17 +3890,17 @@
                     <div class="sb-hud-left">
                         <div class="sb-stat-pill">
                             <div class="sb-stat-pill-lbl">Баланс</div>
-                            <div class="sb-stat-pill-val"><span id="sb-hud-balance">1 000,00</span> BYN</div>
+                            <div class="sb-stat-pill-val"><span id="sb-hud-balance">1 000,00</span> ⭐</div>
                         </div>
                         <div class="sb-stat-pill">
                             <div class="sb-stat-pill-lbl">Общая ставка</div>
-                            <div class="sb-stat-pill-val" style="color: #fde047;"><span id="sb-hud-total-bet">0,50</span> BYN</div>
+                            <div class="sb-stat-pill-val" style="color: #fde047;"><span id="sb-hud-total-bet">0,50</span> ⭐</div>
                         </div>
                     </div>
 
                     <div class="sb-hud-center">
                         <div class="sb-win-display-lbl" id="sb-win-lbl">ПОСЛЕДНИЙ ВЫИГРЫШ</div>
-                        <div class="sb-win-display-val"><span id="sb-hud-win">0,00</span> BYN</div>
+                        <div class="sb-win-display-val"><span id="sb-hud-win">0,00</span> ⭐</div>
                     </div>
 
                     <div class="sb-hud-right">
@@ -3956,7 +3908,7 @@
                             <button class="sb-bet-step-btn" onclick="changeBonanzaBet(-0.5)">−</button>
                             <div class="sb-bet-input-wrap">
                                 <span>Ставка</span>
-                                <input type="number" id="sb-base-bet" value="0.5" min="0.5" max="50" step="0.5" onchange="syncBonanzaBetUI()">
+                                <input type="number" id="sb-base-bet" value="0.5" min="0.5" max="50" step="0.5" oninput="syncBonanzaBetUI()">
                             </div>
                             <button class="sb-bet-step-btn" onclick="changeBonanzaBet(0.5)">+</button>
                         </div>
@@ -3990,22 +3942,22 @@
                     </div>
                     <div class="stat-card">
                         <div class="stat-card-label">Всего поставлено</div>
-                        <div class="stat-card-value" id="stat-wagered">0,00 BYN</div>
+                        <div class="stat-card-value" id="stat-wagered">0,00 ⭐</div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-card-label">Общий выигрыш</div>
-                        <div class="stat-card-value" id="stat-total-won" style="color: var(--accent-gold);">0,00 BYN</div>
+                        <div class="stat-card-value" id="stat-total-won" style="color: var(--accent-gold);">0,00 ⭐</div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-card-label">Крупнейший занос</div>
-                        <div class="stat-card-value" id="stat-biggest-win" style="color: #3ddc84;">0,00 BYN</div>
+                        <div class="stat-card-value" id="stat-biggest-win" style="color: #3ddc84;">0,00 ⭐</div>
                     </div>
                 </div>
             </div>
 
             <footer class="trust-footer">
                 <div>18+ • ИГРАЙТЕ ОТВЕТСТВЕННО</div>
-                <div>КАССА 24/7: КАРТЫ • ЕРИП • USDT (TRC-20) • TON</div>
+                <div>КАССА 24/7: TELEGRAM STARS (⭐)</div>
             </footer>
         </div>
     </main>
@@ -4246,14 +4198,19 @@
         ];
 
         let sbGrid = Array.from({ length: SB_COLS }, () => Array(SB_ROWS).fill(null));
-        let sbSpinning = false, sbAnteActive = false, sbAutoActive = false, sbFreeSpinsLeft = 0, sbInFreeSpins = false, sbFreeSpinsTotalWin = 0;
+        let sbSpinning = false, sbAnteActive = false, sbAutoActive = false, sbFreeSpinsLeft = 0, sbInFreeSpins = false, sbFreeSpinsTotalWin = 0, sbLockedBonusBet = null; 
 
         let balance = 1000;
         let username = '';
         let stats = { games: 0, wagered: 0, totalWon: 0, biggestWin: 0 };
         let withdrawHistory = [];
-        let selectedDepMethod = 'usdt';
-        let selectedWdMethod = 'card';
+        let selectedDepMethod = 'stars';
+        let selectedWdMethod = 'stars';
+        // Сюда потом вставите URL вашего бота-сервера (см. Шаг 6), например:
+        // const STARS_INVOICE_API_URL = 'https://ваш-домен.com/api/create-stars-invoice';
+        const STARS_INVOICE_API_URL = '';
+        // Сколько зачислять на баланс от оплаченных звёзд (1.0 = 100%, 0.85 = минус 15% комиссия)
+        const STARS_CREDIT_RATE = 1.0;
         let depositPending = false;
         let withdrawPending = false;
         let bonusPurchasePending = false;
@@ -4353,7 +4310,7 @@
             if (!inp) return;
             const code = inp.value.trim().toLowerCase();
             if (!code) return;
-            if (code === 'peregar') {
+            if (code === 'Peregar') {
                 localStorage.setItem('kazik_dev_unlocked', '1');
                 document.getElementById('dev-open-btn')?.classList.add('visible');
                 showToast('🛠 Режим создателя активирован!');
@@ -4382,7 +4339,7 @@
                 balance = normalizeMoney(balance + sign * amt);
                 saveState();
                 updateBalanceUI();
-                showToast(`✅ Ваш баланс изменён на ${(sign * amt).toFixed(2)} BYN`);
+                showToast(`✅ Ваш баланс изменён на ${(sign * amt).toFixed(2)} ⭐`);
             } else {
                 try {
                     const ref = db.collection('players').doc(targetNick);
@@ -4390,7 +4347,7 @@
                     const cur = snap.exists ? normalizeMoney(snap.data().balance, 0) : 0;
                     const next = normalizeMoney(cur + sign * amt, 0);
                     await ref.set({ nick: targetNick, balance: next, adminSyncId: Date.now() }, { merge: true });
-                    showToast(`✅ Баланс ${targetNick}: ${next.toFixed(2)} BYN`);
+                    showToast(`✅ Баланс ${targetNick}: ${next.toFixed(2)} ⭐`);
                     loadDevPlayers();
                 } catch (e) { showToast('⚠️ Ошибка обновления игрока'); }
             }
@@ -4435,7 +4392,7 @@
                     row.innerHTML = `
                         <div>
                             <b style="color:#fff;">${escapeHtml(nick)}</b>
-                            <span style="color:var(--accent-gold); font-size:0.8rem; margin-left:6px;">${bal} BYN</span>
+                            <span style="color:var(--accent-gold); font-size:0.8rem; margin-left:6px;">${bal} ⭐</span>
                             ${banned ? '<span style="color:#f87171; font-size:0.72rem; font-weight:800; margin-left:6px;">[БАН]</span>' : ''}
                         </div>
                         <div style="display:flex; gap:6px;">
@@ -4553,7 +4510,7 @@
             const sbBal = document.getElementById('sb-hud-balance'); if (sbBal) sbBal.textContent = formatted;
             const dhBal = document.getElementById('dh-hud-balance'); if (dhBal) dhBal.textContent = formatted;
             const aoBal = document.getElementById('ao-hud-balance'); if (aoBal) aoBal.textContent = formatted;
-            const wdAvail = document.getElementById('wd-avail-balance'); if (wdAvail) wdAvail.textContent = formatted + ' BYN';
+            const wdAvail = document.getElementById('wd-avail-balance'); if (wdAvail) wdAvail.textContent = formatted + ' ⭐';
         }
 
         function syncProfileUI() {
@@ -4563,9 +4520,9 @@
             const profNick = document.getElementById('profile-nick-display'); if (profNick) profNick.textContent = nick;
             const modalNick = document.getElementById('modal-player-nick'); if (modalNick) modalNick.textContent = nick;
             const sGames = document.getElementById('stat-games'); if (sGames) sGames.textContent = stats.games;
-            const sWagered = document.getElementById('stat-wagered'); if (sWagered) sWagered.textContent = stats.wagered.toFixed(2).replace('.', ',') + ' BYN';
-            const sWon = document.getElementById('stat-total-won'); if (sWon) sWon.textContent = stats.totalWon.toFixed(2).replace('.', ',') + ' BYN';
-            const sBig = document.getElementById('stat-biggest-win'); if (sBig) sBig.textContent = stats.biggestWin.toFixed(2).replace('.', ',') + ' BYN';
+            const sWagered = document.getElementById('stat-wagered'); if (sWagered) sWagered.textContent = stats.wagered.toFixed(2).replace('.', ',') + ' ⭐';
+            const sWon = document.getElementById('stat-total-won'); if (sWon) sWon.textContent = stats.totalWon.toFixed(2).replace('.', ',') + ' ⭐';
+            const sBig = document.getElementById('stat-biggest-win'); if (sBig) sBig.textContent = stats.biggestWin.toFixed(2).replace('.', ',') + ' ⭐';
         }
 
         function submitFirstNickname() {
@@ -4611,94 +4568,109 @@
             if (viewName === 'profile') syncProfileUI();
         }
 
+       // ==========================================
+        // КАССА: ПОПОЛНЕНИЕ И ВЫВОД ТОЛЬКО TELEGRAM STARS (⭐)
         // ==========================================
-        // КАССА: ПОПОЛНЕНИЕ И ВЫВОД СРЕДСТВ
-        // ==========================================
-        const DEP_METHODS_INFO = {
-            usdt: { net: 'Сеть: TRON (TRC-20) • Курс: 1 USDT = 3.25 BYN', addr: 'TMVngRQdJ1XqC67GTLttnuWUZKYxtdMFWt', rate: 3.25, unit: 'USDT' },
-            card: { net: 'Перевод на карту (Беларусбанк / Альфа / Сбер)', addr: 'Реквизиты выдаёт кассир в Telegram: @Seregablatnou', rate: 1, unit: 'BYN' },
-            ton:  { net: 'Сеть: TON (The Open Network) • Без тега/мемо', addr: 'UQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJKZ', rate: 17.5, unit: 'TON' },
-            erip: { net: 'Система ЕРИП (РБ) / СБП (РФ) • Мгновенно', addr: 'Запросите актуальный номер ЕРИП/СБП у @Seregablatnou', rate: 1, unit: 'BYN' },
-            crypto_other: { net: 'Сеть: Litecoin (LTC) / Bitcoin (BTC)', addr: 'Уточните адрес сети у администратора @Seregablatnou', rate: 280, unit: 'LTC' }
-        };
-
         function openDepositModal() {
-            document.getElementById('modal-player-nick').textContent = username || 'Player';
+            const modalNick = document.getElementById('modal-player-nick');
+            if (modalNick) modalNick.textContent = username || 'Player';
             updateDepositCalc();
-            document.getElementById('deposit-modal').classList.add('active');
+            document.getElementById('deposit-modal')?.classList.add('active');
         }
-        function closeDepositModal() { document.getElementById('deposit-modal').classList.remove('active'); }
+        function closeDepositModal() { document.getElementById('deposit-modal')?.classList.remove('active'); }
 
         function selectDepositMethod(method) {
-            selectedDepMethod = method;
+            selectedDepMethod = 'stars';
             document.querySelectorAll('#dep-methods-grid .cashier-method-btn').forEach(b => {
-                b.classList.toggle('active', b.dataset.method === method);
+                b.classList.toggle('active', b.dataset.method === 'stars');
             });
-            const info = DEP_METHODS_INFO[method] || DEP_METHODS_INFO.usdt;
-            document.getElementById('dep-network-label').textContent = info.net;
-            document.getElementById('crypto-wallet-address').textContent = info.addr;
             updateDepositCalc();
         }
 
         function setDepositAmount(val) {
-            document.getElementById('dep-amount-input').value = val;
+            const inp = document.getElementById('dep-amount-input');
+            if (inp) inp.value = val;
             updateDepositCalc();
         }
 
         function updateDepositCalc() {
-            const amt = parseFloat(document.getElementById('dep-amount-input').value) || 0;
-            const info = DEP_METHODS_INFO[selectedDepMethod] || DEP_METHODS_INFO.usdt;
+            const inp = document.getElementById('dep-amount-input');
             const hint = document.getElementById('dep-converted-hint');
-            if (info.unit === 'BYN') {
-                hint.textContent = `К оплате: ${amt.toFixed(2)} BYN`;
-            } else {
-                hint.textContent = `≈ ${(amt / info.rate).toFixed(2)} ${info.unit}`;
-            }
-        }
-
-        function copyWalletAddress() {
-            const txt = document.getElementById('crypto-wallet-address').textContent.trim();
-            navigator.clipboard?.writeText(txt);
-            showToast('📋 Реквизиты скопированы!');
-        }
-
-        function toggleDepositQR() {
-            const box = document.getElementById('deposit-qr-container');
-            const btn = document.getElementById('toggle-qr-btn');
-            const isHidden = box.style.display === 'none';
-            box.style.display = isHidden ? 'block' : 'none';
-            btn.textContent = isHidden ? '🙈 СКРЫТЬ QR-КОД' : '📷 ПОКАЗАТЬ QR-КОД';
+            if (!inp || !hint) return;
+            const raw = Math.floor(Number(inp.value) || 0);
+            const credited = Math.floor(raw * STARS_CREDIT_RATE);
+            hint.textContent = STARS_CREDIT_RATE < 1
+                ? `К зачислению: ${credited} ⭐ (комиссия ${Math.round((1 - STARS_CREDIT_RATE) * 100)}%)`
+                : `На баланс: ${credited} ⭐`;
         }
 
         async function submitDepositRequest() {
             if (depositPending) return;
             const input = document.getElementById('dep-amount-input');
             const amtRaw = Number(input && input.value);
-            if (!Number.isFinite(amtRaw) || amtRaw < 10) { showToast('⚠️ Минимальная сумма пополнения — 10 BYN'); return; }
-            if (amtRaw > 100000) { showToast('⚠️ Слишком большая сумма — свяжитесь с поддержкой'); return; }
-            const amt = Math.round(amtRaw * 100) / 100;
-            if (!isValidNickname(username)) { showToast('⚠️ Сначала укажите ник'); return; }
+            if (!Number.isInteger(amtRaw) || amtRaw < 100) {
+                showToast('⚠️ Минимальная сумма пополнения — 100 ⭐ (целое число)');
+                return;
+            }
+            if (amtRaw > 100000) {
+                showToast('⚠️ Слишком большая сумма — свяжитесь с поддержкой');
+                return;
+            }
+            if (!username) { showToast('⚠️ Сначала укажите ник'); return; }
 
             depositPending = true;
             const btn = document.getElementById('dep-submit-btn');
             const oldLabel = btn ? btn.innerHTML : '';
             if (btn) { btn.disabled = true; btn.style.opacity = '0.65'; }
+
             try {
-                const info = DEP_METHODS_INFO[selectedDepMethod] || DEP_METHODS_INFO.usdt;
+                // 1) Если настроен сервер бота и открыто в Telegram — открываем официальную оплату Stars
+                if (STARS_INVOICE_API_URL && window.Telegram && Telegram.WebApp && typeof Telegram.WebApp.openInvoice === 'function') {
+                    const resp = await fetch(STARS_INVOICE_API_URL, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            nick: username,
+                            amount: amtRaw,
+                            initData: Telegram.WebApp.initData || ''
+                        })
+                    });
+                    const data = await resp.json();
+                    if (!resp.ok || !data.invoiceLink) {
+                        throw new Error(data.error || 'Не удалось создать счёт на оплату');
+                    }
+
+                    Telegram.WebApp.openInvoice(data.invoiceLink, (status) => {
+                        if (status === 'paid') {
+                            showToast(`⭐ Оплата ${amtRaw} ⭐ прошла! Звёзды зачисляются на баланс...`);
+                            closeDepositModal();
+                        } else if (status === 'cancelled') {
+                            showToast('Оплата отменена');
+                        } else if (status === 'failed') {
+                            showToast('❌ Ошибка оплаты звёздами');
+                        } else {
+                            showToast('⏳ Платёж обрабатывается...');
+                        }
+                    });
+                    return;
+                }
+
+                // 2) Резервный вариант (если сервер бота ещё не подключён): создаём заявку в Firestore
+                const credited = Math.floor(amtRaw * STARS_CREDIT_RATE);
                 await db.collection('deposits').add({
                     nick: username,
-                    amount: amt,
-                    currency: 'BYN',
-                    method: String(selectedDepMethod || '').slice(0, 30),
-                    address: String(info.addr || '').slice(0, 200),
+                    amount: amtRaw,
+                    creditedAmount: credited,
+                    currency: '⭐',
+                    method: 'stars',
                     status: 'pending',
                     createdAt: firebase.firestore.FieldValue.serverTimestamp()
                 });
-                showToast(`✅ Заявка на ${amt.toFixed(2)} BYN создана! Отправьте чек в @Seregablatnou`);
-                if (input) input.value = '';
+                showToast(`✅ Заявка на ${amtRaw} ⭐ создана! Напишите в @Seregablatnou`);
+                if (input) input.value = '100';
                 updateDepositCalc();
             } catch (e) {
-                showToast('⚠️ Не удалось создать заявку. Напишите в @Seregablatnou');
+                showToast('⚠️ Ошибка: ' + (e.message || 'напишите в @Seregablatnou'));
             } finally {
                 depositPending = false;
                 if (btn) { btn.disabled = false; btn.style.opacity = ''; btn.innerHTML = oldLabel; }
@@ -4706,78 +4678,85 @@
         }
 
         function openWithdrawModal() {
+            // Автоподстановка @username из Telegram, если поле пустое
+            const reqInp = document.getElementById('wd-requisite-input');
+            const tgUser = window.Telegram && Telegram.WebApp && Telegram.WebApp.initDataUnsafe
+                ? Telegram.WebApp.initDataUnsafe.user : null;
+            if (reqInp && !reqInp.value && tgUser && tgUser.username) {
+                reqInp.value = '@' + tgUser.username;
+            }
             updateBalanceUI();
             updateWithdrawCalc();
             renderWithdrawHistory();
-            document.getElementById('withdraw-modal').classList.add('active');
+            loadWithdrawHistoryFromCloud();
+            document.getElementById('withdraw-modal')?.classList.add('active');
         }
-        function closeWithdrawModal() { document.getElementById('withdraw-modal').classList.remove('active'); }
+        function closeWithdrawModal() { document.getElementById('withdraw-modal')?.classList.remove('active'); }
 
         function selectWithdrawMethod(method) {
-            selectedWdMethod = method;
+            selectedWdMethod = 'stars';
             document.querySelectorAll('#wd-methods-grid .cashier-method-btn').forEach(b => {
-                b.classList.toggle('withdraw-active', b.dataset.wd === method);
+                b.classList.toggle('withdraw-active', b.dataset.wd === 'stars');
             });
-            const lbl = document.getElementById('wd-requisite-label');
-            const inp = document.getElementById('wd-requisite-input');
-            if (method === 'card') { lbl.textContent = 'Номер карты (VISA / Mastercard / Белкарт)'; inp.placeholder = '4276 0000 0000 0000'; }
-            else if (method === 'usdt') { lbl.textContent = 'Адрес кошелька USDT (TRC-20)'; inp.placeholder = 'T...'; }
-            else if (method === 'erip') { lbl.textContent = 'Номер телефона / счёта ЕРИП или СБП'; inp.placeholder = '+375 (29) 000-00-00'; }
-            else { lbl.textContent = 'Номер кошелька ЮMoney'; inp.placeholder = '410010000000000'; }
         }
 
         function setWithdrawAmount(val) {
-            document.getElementById('wd-amount-input').value = val;
+            const inp = document.getElementById('wd-amount-input');
+            if (inp) inp.value = val;
             updateWithdrawCalc();
         }
 
         function setMaxWithdraw() {
-            document.getElementById('wd-amount-input').value = Math.floor(balance * 100) / 100;
+            const inp = document.getElementById('wd-amount-input');
+            if (inp) inp.value = Math.floor(balance);
             updateWithdrawCalc();
         }
 
         function updateWithdrawCalc() {
-            const amt = parseFloat(document.getElementById('wd-amount-input').value) || 0;
-            const fee = Math.round(amt * 0.02 * 100) / 100;
-            const net = Math.max(0, Math.round((amt - fee) * 100) / 100);
-            document.getElementById('wd-fee-text').textContent = `2% (${fee.toFixed(2).replace('.', ',')} BYN)`;
-            document.getElementById('wd-net-text').textContent = `${net.toFixed(2).replace('.', ',')} BYN`;
+            const amt = Math.floor(Number(document.getElementById('wd-amount-input')?.value) || 0);
+            const feeEl = document.getElementById('wd-fee-text');
+            const netEl = document.getElementById('wd-net-text');
+            if (feeEl) feeEl.textContent = '0% (0,00 ⭐)';
+            if (netEl) netEl.textContent = `${Math.max(0, amt)} ⭐`;
         }
 
         async function submitWithdrawRequest() {
             if (withdrawPending) return;
-            const amtRaw = Number(document.getElementById('wd-amount-input').value);
-            const req = (document.getElementById('wd-requisite-input').value || '').trim();
-            if (!Number.isFinite(amtRaw) || amtRaw < 20) { showToast('⚠️ Минимальная сумма вывода — 20 BYN'); return; }
-            const amt = Math.round(amtRaw * 100) / 100;
-            if (amt > balance) { showToast('⚠️ Недостаточно средств на балансе!'); return; }
-            if (req.length < 5 || req.length > 120) { showToast('⚠️ Укажите корректные реквизиты для выплаты!'); return; }
-            if (!isValidNickname(username)) { showToast('⚠️ Сначала укажите ник'); return; }
+            const amtRaw = Number(document.getElementById('wd-amount-input')?.value);
+            const req = (document.getElementById('wd-requisite-input')?.value || '').trim();
+            if (!Number.isInteger(amtRaw) || amtRaw < 50) {
+                showToast('⚠️ Минимальный вывод — 50 ⭐ (целое число)');
+                return;
+            }
+            if (amtRaw > balance) { showToast('⚠️ Недостаточно звёзд на балансе!'); return; }
+            if (req.length < 3 || req.length > 120) { showToast('⚠️ Укажите корректный @username в Telegram!'); return; }
+            if (!username) { showToast('⚠️ Сначала укажите ник'); return; }
 
             withdrawPending = true;
             const btn = document.getElementById('wd-submit-btn');
             if (btn) { btn.disabled = true; btn.style.opacity = '0.65'; }
             try {
-                // Списание только после успешной записи заявки в базу.
+                const nextBalance = normalizeMoney(balance - amtRaw);
                 await db.collection('withdrawals').add({
                     nick: username,
-                    amount: amt,
-                    method: String(selectedWdMethod || '').slice(0, 30),
+                    amount: amtRaw,
+                    method: 'stars',
                     requisites: req.slice(0, 120),
                     status: 'В обработке',
-                    balanceAfter: normalizeMoney(balance - amt),
+                    balanceAfter: nextBalance,
                     statsSnapshot: sanitizeStats(stats),
                     createdAt: firebase.firestore.FieldValue.serverTimestamp()
                 });
 
-                balance = normalizeMoney(balance - amt);
+                balance = nextBalance;
                 saveState();
                 updateBalanceUI();
+                await pushWalletToCloud();
 
                 withdrawHistory.unshift({
                     id: 'WD-' + Math.floor(100000 + Math.random() * 900000),
-                    amount: amt,
-                    method: String(selectedWdMethod || '').toUpperCase(),
+                    amount: amtRaw,
+                    method: 'STARS ⭐',
                     req: req.slice(0, 120),
                     date: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
                     status: 'В обработке'
@@ -4785,16 +4764,43 @@
                 withdrawHistory = sanitizeWithdrawHistory(withdrawHistory).slice(0, 15);
                 localStorage.setItem('kazik_wd_history', JSON.stringify(withdrawHistory));
                 renderWithdrawHistory();
-                document.getElementById('wd-requisite-input').value = '';
-                document.getElementById('wd-amount-input').value = '';
+
+                const amtInp = document.getElementById('wd-amount-input');
+                if (amtInp) amtInp.value = '';
                 updateWithdrawCalc();
-                showToast(`💸 Заявка на вывод ${amt.toFixed(2)} BYN отправлена в обработку!`);
+                showToast(`⭐ Заявка на вывод ${amtRaw} ⭐ отправлена!`);
             } catch (e) {
                 showToast('⚠️ Не удалось отправить заявку. Напишите в @Seregablatnou');
             } finally {
                 withdrawPending = false;
                 if (btn) { btn.disabled = false; btn.style.opacity = ''; }
             }
+        }
+
+        async function loadWithdrawHistoryFromCloud() {
+            if (!username) return;
+            try {
+                const snap = await db.collection('withdrawals').where('nick', '==', username).limit(15).get();
+                if (snap.empty) return;
+                const cloudItems = [];
+                snap.forEach(doc => {
+                    const d = doc.data();
+                    const ts = d.createdAt && typeof d.createdAt.toDate === 'function' ? d.createdAt.toDate() : null;
+                    cloudItems.push({
+                        ts: ts ? ts.getTime() : 0,
+                        id: doc.id,
+                        amount: normalizeMoney(d.amount),
+                        method: 'STARS ⭐',
+                        req: String(d.requisites || ''),
+                        date: ts ? ts.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '',
+                        status: String(d.status || 'В обработке')
+                    });
+                });
+                cloudItems.sort((a, b) => b.ts - a.ts);
+                withdrawHistory = sanitizeWithdrawHistory(cloudItems);
+                localStorage.setItem('kazik_wd_history', JSON.stringify(withdrawHistory));
+                renderWithdrawHistory();
+            } catch (e) {}
         }
 
         function renderWithdrawHistory() {
@@ -4808,7 +4814,7 @@
             listEl.innerHTML = withdrawHistory.map(tx => `
                 <div class="tx-item-card">
                     <div>
-                        <b style="color:#fff;">${tx.amount.toFixed(2)} BYN</b> • <span style="color:#3ddc84;">${escapeHtml(tx.method)}</span><br>
+                        <b style="color:#fff;">${tx.amount.toFixed(0)} ⭐</b> • <span style="color:#3ddc84;">${escapeHtml(tx.method)}</span><br>
                         <span style="color:var(--text-muted); font-size:0.7rem;">${escapeHtml(tx.req)} • ${escapeHtml(tx.date)}</span>
                     </div>
                     <span style="background:rgba(47,134,255,0.14); color:#9cc6ff; border:1px solid rgba(47,134,255,0.4); padding:3px 8px; border-radius:6px; font-weight:800; font-size:0.7rem;">${escapeHtml(tx.status)}</span>
@@ -4826,7 +4832,7 @@
             const bodyEl = document.getElementById('pt-modal-body');
             if (!modal || !bodyEl) return;
 
-            const fmtByn = (val) => val.toFixed(2).replace('.', ',') + ' BYN';
+            const fmtByn = (val) => val.toFixed(2).replace('.', ',') + ' ⭐';
 
             if (slotKey === 'doghouse') {
                 const bet = dhCurrentBet;
@@ -5073,8 +5079,8 @@
             const anteEl = document.getElementById('ao-ante-val');
             const buyEl = document.getElementById('ao-buy-price');
             if (betEl) betEl.textContent = total.toFixed(2).replace('.', ',');
-            if (anteEl) anteEl.textContent = (aoCurrentBet * 1.25).toFixed(2).replace('.', ',') + ' BYN';
-            if (buyEl) buyEl.textContent = (aoCurrentBet * 100).toFixed(2).replace('.', ',') + ' BYN';
+            if (anteEl) anteEl.textContent = (aoCurrentBet * 1.25).toFixed(2).replace('.', ',') + ' ⭐';
+            if (buyEl) buyEl.textContent = (aoCurrentBet * 100).toFixed(2).replace('.', ',') + ' ⭐';
         }
 
         function changeOlympusBet(delta) {
@@ -5379,7 +5385,7 @@
                     aoInFreeSpins = false;
                     document.getElementById('view-olympus')?.classList.remove('freespins-mode');
                     document.getElementById('ao-fs-banner')?.classList.remove('active');
-                    showToast(`🏆 Бонус завершён! Итоговый выигрыш: ${aoFreeSpinsTotalWin.toFixed(2)} BYN`);
+                    showToast(`🏆 Бонус завершён! Итоговый выигрыш: ${aoFreeSpinsTotalWin.toFixed(2)} ⭐`);
                     if (aoAutoActive) { await sleep(700); spinGatesOfOlympus(); }
                 }
             } else if (aoAutoActive) {
@@ -5763,7 +5769,7 @@
                     dhInFreeSpins = false;
                     dhStickyWilds = Array.from({ length: DH_COLS }, () => Array(DH_ROWS).fill(null));
                     document.getElementById('dh-fs-banner')?.classList.remove('active');
-                    showToast(`🐶 Бонус завершён! Выигрыш: ${dhFreeSpinsTotalWin.toFixed(2)} BYN`);
+                    showToast(`🐶 Бонус завершён! Выигрыш: ${dhFreeSpinsTotalWin.toFixed(2)} ⭐`);
                     if (dhAutoActive) { await sleep(700); spinDogHouse(); }
                 }
             } else if (dhAutoActive) {
@@ -5878,6 +5884,7 @@
         }
 
         function getBonanzaBaseBet() {
+            if (sbInFreeSpins && sbLockedBonusBet !== null) return sbLockedBonusBet;
             const inp = document.getElementById('sb-base-bet');
             let val = inp ? parseFloat(inp.value) : 0.5;
             if (isNaN(val) || val < 0.5) val = 0.5;
@@ -5896,8 +5903,8 @@
             if (inp) inp.value = base;
             const total = getBonanzaTotalBet();
             document.getElementById('sb-hud-total-bet').textContent = total.toFixed(2).replace('.', ',');
-            document.getElementById('sb-ante-val').textContent = (base * 1.25).toFixed(2).replace('.', ',') + ' BYN';
-            document.getElementById('sb-buy-price').textContent = (base * 100).toFixed(2).replace('.', ',') + ' BYN';
+            document.getElementById('sb-ante-val').textContent = (base * 1.25).toFixed(2).replace('.', ',') + ' ⭐';
+            document.getElementById('sb-buy-price').textContent = (base * 100).toFixed(2).replace('.', ',') + ' ⭐';
         }
 
         function changeBonanzaBet(delta) {
@@ -5944,9 +5951,15 @@
         }
 
         async function startBonanzaBonusRound() {
+            sbLockedBonusBet = getBonanzaBaseBet();
             sbInFreeSpins = true;
             sbFreeSpinsLeft = 10;
             sbFreeSpinsTotalWin = 0;
+            const betInp = document.getElementById('sb-base-bet');
+            if (betInp) {
+                betInp.value = sbLockedBonusBet;
+                betInp.disabled = true;
+            }
             document.getElementById('view-bonanza')?.classList.add('freespins-mode');
             document.getElementById('sb-fs-banner')?.classList.add('active');
             document.getElementById('sb-fs-left').textContent = sbFreeSpinsLeft;
@@ -5985,8 +5998,11 @@
             }
 
             sbSpinning = true;
+            playSfx('spin');
             const spinBtn = document.getElementById('sb-spin-btn');
+            const betInp = document.getElementById('sb-base-bet');
             if (spinBtn) spinBtn.disabled = true;
+            if (betInp) betInp.disabled = true;
 
             const winLblEl = document.getElementById('sb-win-lbl');
             const hudWinEl = document.getElementById('sb-hud-win');
@@ -6157,7 +6173,8 @@
             } finally {
                 clearInterval(timer);
                 sbSpinning = false;
-                if (spinBtn) spinBtn.disabled = false;
+                if (spinBtn) spinBtn.disabled = sbInFreeSpins;
+                if (betInp && !sbInFreeSpins) betInp.disabled = false;
             }
 
             if (sbInFreeSpins) {
@@ -6166,23 +6183,23 @@
                     await spinSweetBonanza(false);
                 } else {
                     sbInFreeSpins = false;
+                    sbLockedBonusBet = null;
+                    if (spinBtn) spinBtn.disabled = false;
+                    if (betInp) betInp.disabled = false;
+                    saveState();
                     document.getElementById('view-bonanza')?.classList.remove('freespins-mode');
                     document.getElementById('sb-fs-banner')?.classList.remove('active');
-                    showToast(`🍭 Бонус завершён! Выигрыш: ${sbFreeSpinsTotalWin.toFixed(2)} BYN`);
+                    showToast(`🍭 Бонус завершён! Выигрыш: ${sbFreeSpinsTotalWin.toFixed(2)} ⭐`);
                     if (sbAutoActive) { await sleep(700); spinSweetBonanza(); }
                 }
-            } else if (sbAutoActive) {
-                await sleep(580);
-                spinSweetBonanza();
             }
-        }
 
         function checkAndShowBigWin(winAmount, betAmount) {
             if (!betAmount || winAmount < betAmount * 15) return;
             const mult = winAmount / betAmount;
             const title = mult >= 50 ? '👑 MEGA WIN!' : (mult >= 25 ? '🔥 SUPER WIN!' : '💰 BIG WIN!');
             document.getElementById('bigwin-title').textContent = title;
-            document.getElementById('bigwin-amount').textContent = winAmount.toFixed(2).replace('.', ',') + ' BYN';
+            document.getElementById('bigwin-amount').textContent = winAmount.toFixed(2).replace('.', ',') + ' ⭐';
             const ov = document.getElementById('bigwin-overlay');
             ov.classList.add('active');
             playSfx('win');
@@ -6240,7 +6257,7 @@
             }
         }
         async function recordRecentWin(slotName, amount) {
-            if (!username || amount < 5) return; // Записываем заносы от 5 BYN и выше
+            if (!username || amount < 5) return; // Записываем заносы от 5 ⭐ и выше
             try {
                 await db.collection('recent_wins').add({
                     nick: username,
@@ -6261,7 +6278,7 @@
                     bar.innerHTML += `<div class="recent-win-chip">
                         🏆 <b class="rw-nick">${escapeHtml(d.nick)}</b>
                         <span class="rw-slot">${escapeHtml(d.slot)}</span>
-                        <b class="rw-amount">+${Number(d.amount).toFixed(2)} BYN</b>
+                        <b class="rw-amount">+${Number(d.amount).toFixed(2)} ⭐</b>
                     </div>`;
                 });
             });
@@ -6280,7 +6297,7 @@
     </script>
     <div class="bigwin-overlay" id="bigwin-overlay" onclick="this.classList.remove('active')">
         <div class="bigwin-title" id="bigwin-title">BIG WIN!</div>
-        <div class="bigwin-amount" id="bigwin-amount">0,00 BYN</div>
+        <div class="bigwin-amount" id="bigwin-amount">0,00 ⭐</div>
         <div style="margin-top:14px; font-size:0.8rem; color:#94a3b8;">Нажмите на экран, чтобы продолжить</div>
     </div>
 <script>
