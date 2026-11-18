@@ -3700,6 +3700,43 @@
     font-weight: 800;
     cursor: pointer;
 }
+/* === РАССТОЯНИЕ И LIQUID GLASS В ЛЕВОМ МЕНЮ === */
+
+/* 1. Расстояние между всеми пунктами и слотами в левом меню */
+.left-sidebar .sidebar-menu {
+    gap: 14px !important; /* Было 8px. Если нужно ещё больше — поставьте 16px или 18px */
+}
+
+/* 2. Плавная анимация и прозрачная рамка по умолчанию (чтобы при наведении кнопка не «прыгала») */
+.left-sidebar .slot-nav-card {
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    border: 1px solid transparent !important;
+}
+
+/* 3. Эффект Liquid Glass при наведении мышкой */
+.left-sidebar .slot-nav-card:hover {
+    /* Полупрозрачный градиент: лёгкий белый блеск + синий оттенок */
+    background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.11) 0%,
+        rgba(47, 134, 255, 0.14) 100%
+    ) !important;
+
+    /* Тонкая стеклянная грань по краю */
+    border-color: rgba(255, 255, 255, 0.24) !important;
+
+    /* Само «жидкое стекло»: размытие фона под кнопкой и усиление насыщенности */
+    backdrop-filter: blur(16px) saturate(1.6) !important;
+    -webkit-backdrop-filter: blur(16px) saturate(1.6) !important;
+
+    /* Верхний белый блик (inset) + мягкое синее свечение снизу */
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.28),
+        0 8px 24px rgba(47, 134, 255, 0.25) !important;
+
+    /* Лёгкий подъём на 1 пиксель */
+    transform: translateY(-1px);
+}
     </style>
 </head>
 <body>
