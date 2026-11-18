@@ -6157,10 +6157,22 @@ body.sidebar-collapsed .left-sidebar {
             }
             introBox.classList.add('active');
 
+            // Выбираем итоговое количество фриспинов строго от 9 до 13
+            const targetSpins = 9 + Math.floor(Math.random() * 5);
+            const cellValues = Array(9).fill(1); // Минимум 1 в каждой из 9 ячеек (итого 9)
+            let extra = targetSpins - 9;         // Оставшиеся 0..4 спина раскидываем по ячейкам
+            while (extra > 0) {
+                const idx = Math.floor(Math.random() * 9);
+                if (cellValues[idx] < 3) {
+                    cellValues[idx]++;
+                    extra--;
+                }
+            }
+
             let totalSpins = 0;
             for (let i = 0; i < 9; i++) {
                 await sleep(160);
-                const val = 1 + Math.floor(Math.random() * 3);
+                const val = cellValues[i];
                 totalSpins += val;
                 cells[i].textContent = val;
                 if (sumText) sumText.textContent = `СУММА: ${totalSpins} ФРИСПИНОВ`;
@@ -6378,6 +6390,7 @@ body.sidebar-collapsed .left-sidebar {
 
                 if (!dhInFreeSpins && scatterCount >= 3) {
                     dhSpinning = false;
+                    await sleep(950); // Даём 0.95 сек, чтобы увидеть 3-ю лапу на 5-м барабане
                     await triggerDogHouseFreeSpinsIntro();
                     await spinDogHouse();
                     return;
