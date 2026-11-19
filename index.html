@@ -6755,9 +6755,6 @@ async function hashPassword(str) {
                     document.getElementById('view-olympus')?.classList.remove('freespins-mode');
                     document.getElementById('ao-fs-banner')?.classList.remove('active');
                     showToast(`🏆 Бонус завершён! Итоговый выигрыш: ${aoFreeSpinsTotalWin.toFixed(2)} ⭐`);
-                    if (aoFreeSpinsTotalWin > 2000) { notifyBotBigBonusWin('Gates of Olympus', aoFreeSpinsTotalWin); }
-                        notifyBotBigBonusWin('Gates of Olympus', aoFreeSpinsTotalWin);
-                    }
                     if (aoAutoActive) { await sleep(700); spinGatesOfOlympus(); }
                 }
             } else if (aoAutoActive) {
@@ -7159,9 +7156,6 @@ async function hashPassword(str) {
                     dhStickyWilds = Array.from({ length: DH_COLS }, () => Array(DH_ROWS).fill(null));
                     document.getElementById('dh-fs-banner')?.classList.remove('active');
                     showToast(`🐶 Бонус завершён! Выигрыш: ${dhFreeSpinsTotalWin.toFixed(2)} ⭐`);
-                    if (dhFreeSpinsTotalWin > 2000) { notifyBotBigBonusWin('The Dog House', dhFreeSpinsTotalWin); }
-                        notifyBotBigBonusWin('The Dog House', dhFreeSpinsTotalWin);
-                    }
                     if (dhAutoActive) { await sleep(700); spinDogHouse(); }
                 }
             } else if (dhAutoActive) {
@@ -7588,9 +7582,6 @@ async function hashPassword(str) {
                     document.getElementById('view-bonanza')?.classList.remove('freespins-mode');
                     document.getElementById('sb-fs-banner')?.classList.remove('active');
                     showToast(`🍭 Бонус завершён! Выигрыш: ${sbFreeSpinsTotalWin.toFixed(2)} ⭐`);
-                    if (sbFreeSpinsTotalWin > 2000) { notifyBotBigBonusWin('Sweet Bonanza', sbFreeSpinsTotalWin); }
-                        notifyBotBigBonusWin('Sweet Bonanza', sbFreeSpinsTotalWin);
-                    }
                     if (sbAutoActive) { await sleep(700); spinSweetBonanza(); }
                 }
             } else if (sbAutoActive) {
@@ -7857,27 +7848,6 @@ async function hashPassword(str) {
         }
 
         try { updateSoundButtons(); } catch (e) {}
-        async function notifyBotBigBonusWin(slotName, totalWin) {
-            if (!totalWin || totalWin <= 2000) return;
-
-            const tgUser = (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initDataUnsafe)
-                ? window.Telegram.WebApp.initDataUnsafe.user
-                : null;
-
-            try {
-                await db.collection('bot_bonus_alerts').add({
-                    nick: username || 'Player',
-                    tgId: tgUser ? tgUser.id : null,
-                    tgUsername: tgUser && tgUser.username ? tgUser.username : null,
-                    slot: slotName,
-                    amount: normalizeMoney(totalWin),
-                    processed: false,
-                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
-                });
-            } catch (e) {
-                console.error('Ошибка отправки заноса в бота:', e);
-            }
-        }
 
         async function recordRecentWin(slotName, amount) {
             if (!username || amount < 5) return; // Записываем заносы от 5 ⭐ и выше
