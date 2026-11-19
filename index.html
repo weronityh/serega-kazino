@@ -5151,6 +5151,16 @@ html, body {
                         <div class="stat-card-value" id="stat-biggest-win" style="color: #3ddc84;">0,00 ⭐</div>
                     </div>
                 </div>
+<!-- БОНУС ЗА ПОДПИСКУ НА КАНАЛ -->
+                <div style="margin-top:16px; background:linear-gradient(90deg, #10203d, #152b52); padding:16px; border-radius:16px; border:1px solid rgba(74,155,255,0.4); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+                    <div>
+                        <div style="font-weight:900; font-size:0.95rem; color:#fde047;">📢 Подпишись на наш Telegram-канал</div>
+                        <div style="font-size:0.78rem; color:#cbd5e1; margin-top:2px;">Раздачи промокодов и бонус <b style="color:#3ddc84;">+3,00 ⭐</b> за подписку!</div>
+                    </div>
+                    <button id="tg-sub-bonus-btn" class="btn-back" style="background:var(--accent-gold-gradient); color:#fff; border:none; padding:10px 16px; font-weight:900;" onclick="claimTgSubBonus()">
+                        ✈️ ПОДПИСАТЬСЯ (+3 ⭐)
+                    </button>
+                </div>
 
                 <!-- ПРОМОКОД ДЛЯ ТЕЛЕФОНА -->
                 <div style="margin-top:16px; background:var(--bg-card); padding:16px; border-radius:16px; border:1px solid var(--border-glass);">
@@ -8602,6 +8612,62 @@ function spinDailyWheel() {
 
 setInterval(updateWheelBannerText, 30000);
 window.addEventListener('DOMContentLoaded', updateWheelBannerText);
+</script>
+<script>
+// === 1. АВТО-АНОНС КРУПНЫХ ЗАНОСОВ В ОБЩИЙ ЧАТ ===
+const _origRecordRecentWin = recordRecentWin;
+recordRecentWin = async function(slotName, amount) {
+    await _origRecordRecentWin(slotName, amount);
+    if (username && amount >= 15) {
+        try {
+            await db.collection('global_chat').add({
+                nick: '🔥 ЗАНОС',
+                text: `Игрок ${username} только что поднял +${Number(amount).toFixed(2)} ⭐ в ${slotName}!`,
+                createdAt: firebase.firestore.FieldValue.serverTimestamp()
+            });
+        } catch (e) {}
+    }
+};
+
+// === 2. БОНУС +3 ⭐ ЗА ПОДПИСКУ НА TELEGRAM-КАНАЛ ===
+function syncTgSubBtn() {
+    const btn = document.getElementById('tg-sub-bonus-btn');
+    if (!btn) return;
+    if (localStorage.getItem('kazik_tg_sub_bonus') === '1') {
+        btn.disabled = true;
+        btn.textContent = '✅ БОНУС ПОЛУЧЕН';
+        btn.style.opacity = '0.6';
+    }
+}
+
+function claimTgSubBonus() {
+    if (localStorage.getItem('kazik_tg_sub_bonus') === '1') {
+        showToast('✅ Вы уже забирали этот бонус!');
+        return;
+    }
+    const url = 'https://t.me/LydkaHouse';
+    if (window.Telegram && Telegram.WebApp && Telegram.WebApp.openTelegramLink) {
+        Telegram.WebApp.openTelegramLink(url);
+    } else {
+        window.open(url, '_blank');
+    }
+
+    const btn = document.getElementById('tg-sub-bonus-btn');
+    if (btn) { btn.disabled = true; btn.textContent = '⏳ ПРОВЕРКА...'; }
+
+    setTimeout(() => {
+        if (localStorage.getItem('kazik_tg_sub_bonus') === '1') return;
+        localStorage.setItem('kazik_tg_sub_bonus', '1');
+        balance = normalizeMoney(balance + 3);
+        saveState();
+        updateBalanceUI();
+        playSfx('win');
+        syncTgSubBtn();
+        showToast('📢 Спасибо за подписку! Начислено +3,00 ⭐');
+    }, 4000);
+}
+
+window.addEventListener('DOMContentLoaded', syncTgSubBtn);
 </script>
 </body>
 </html>
