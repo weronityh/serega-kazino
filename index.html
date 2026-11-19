@@ -5151,6 +5151,16 @@ html, body {
                         <div class="stat-card-value" id="stat-biggest-win" style="color: #3ddc84;">0,00 ⭐</div>
                     </div>
                 </div>
+<!-- КЕШБЭК 10% -->
+                <div style="margin-top:16px; background:linear-gradient(90deg, #0b261d, #0f3629); padding:16px; border-radius:16px; border:1px solid rgba(61,220,132,0.4); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+                    <div>
+                        <div style="font-weight:900; font-size:0.95rem; color:#3ddc84;">💸 Кешбэк 10% от проигрыша</div>
+                        <div style="font-size:0.78rem; color:#cbd5e1; margin-top:2px;">Доступно к возврату: <b id="cashback-avail-val" style="color:#fff;">0,00 ⭐</b> (мин. 1,00 ⭐, раз в 24ч)</div>
+                    </div>
+                    <button id="cashback-claim-btn" class="btn-back" style="background:linear-gradient(135deg, #10b981, #059669); color:#fff; border:none; padding:10px 16px; font-weight:900;" onclick="claimCashback()">
+                        💸 ЗАБРАТЬ КЕШБЭК
+                    </button>
+                </div>
 <!-- БОНУС ЗА ПОДПИСКУ НА КАНАЛ -->
                 <div style="margin-top:16px; background:linear-gradient(90deg, #10203d, #152b52); padding:16px; border-radius:16px; border:1px solid rgba(74,155,255,0.4); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
                     <div>
@@ -6371,7 +6381,7 @@ async function hashPassword(str) {
             const boost = 1.0; // RTP фиксирован на 96%
             const scatterChance = (aoInFreeSpins ? RTP_CONFIG.AO_SCATTER_FS : (aoAnteActive ? RTP_CONFIG.AO_SCATTER_ANTE : RTP_CONFIG.AO_SCATTER_BASE)) * boost;
             if (Math.random() < scatterChance) return { ...AO_SCATTER };
-            const multChance = (aoInFreeSpins ? 0.038 : 0.015) * boost;
+            const multChance = (aoInFreeSpins ? 0.014 : 0.012) * boost;
             if (allowMultiplier && Math.random() < multChance) {
                 const val = getRandomOlympusMultiplier();
                 return { id: 'multiplier', emoji: '💣', val: val, name: `Множитель x${val}` };
@@ -8668,6 +8678,72 @@ function claimTgSubBonus() {
 }
 
 window.addEventListener('DOMContentLoaded', syncTgSubBtn);
+</script>
+<script>
+// === КЕШБЭК 10% ОТ ПРОИГРЫША ===
+function getPendingCashback() {
+    const netLoss = Math.max(0, (stats.wagered || 0) - (stats.totalWon || 0));
+    const claimedLoss = Number(localStorage.getItem('kazik_cb_claimed_loss') || 0);
+    const uncompensated = Math.max(0, netLoss - claimedLoss);
+    return Math.round(uncompensated * 0.10 * 100) / 100;
+}
+
+function getCashbackCooldownLeft() {
+    const last = Number(localStorage.getItem('kazik_last_cashback') || 0);
+    const diff = 24 * 60 * 60 * 1000 - (Date.now() - last);
+    return diff > 0 ? diff : 0;
+}
+
+function syncCashbackUI() {
+    const valEl = document.getElementById('cashback-avail-val');
+    const btn = document.getElementById('cashback-claim-btn');
+    if (!valEl || !btn) return;
+
+    const cb = getPendingCashback();
+    valEl.textContent = cb.toFixed(2).replace('.', ',') + ' ⭐';
+
+    const left = getCashbackCooldownLeft();
+    if (left > 0) {
+        const hrs = Math.floor(left / 3600000);
+        const mins = Math.floor((left % 3600000) / 60000);
+        btn.disabled = true;
+        btn.textContent = `⏳ ЧЕРЕЗ ${hrs}Ч ${mins}М`;
+        btn.style.opacity = '0.6';
+    } else if (cb < 1) {
+        btn.disabled = true;
+        btn.textContent = 'МИНИМУМ 1 ⭐';
+        btn.style.opacity = '0.6';
+    } else {
+        btn.disabled = false;
+        btn.textContent = `💸 ЗАБРАТЬ +${cb.toFixed(2).replace('.', ',')} ⭐`;
+        btn.style.opacity = '1';
+    }
+}
+
+function claimCashback() {
+    const cb = getPendingCashback();
+    if (getCashbackCooldownLeft() > 0) { showToast('⏳ Кешбэк можно забирать раз в 24 часа!'); return; }
+    if (cb < 1) { showToast('⚠️ Минимальный кешбэк для вывода на баланс — 1,00 ⭐'); return; }
+
+    const netLoss = Math.max(0, (stats.wagered || 0) - (stats.totalWon || 0));
+    localStorage.setItem('kazik_cb_claimed_loss', String(netLoss));
+    localStorage.setItem('kazik_last_cashback', String(Date.now()));
+
+    balance = normalizeMoney(balance + cb);
+    saveState();
+    updateBalanceUI();
+    syncCashbackUI();
+    playSfx('win');
+    showToast(`💸 Начислен кешбэк +${cb.toFixed(2)} ⭐!`);
+}
+
+// Обновляем сумму кешбэка при открытии профиля и после каждого спина
+const _origSyncProfileForCb = syncProfileUI;
+syncProfileUI = function() {
+    _origSyncProfileForCb();
+    syncCashbackUI();
+};
+window.addEventListener('DOMContentLoaded', syncCashbackUI);
 </script>
 </body>
 </html>
