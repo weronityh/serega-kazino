@@ -4077,6 +4077,94 @@ html, body {
         text-align: center;
     }
 }
+/* ==========================================================
+   GATES OF OLYMPUS — ДИЗАЙН КАК НА СКРИНШОТЕ + ОКНО 15 ФРИСПИНОВ
+   ========================================================== */
+.ao-fs-intro-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 99998;
+    background: rgba(8, 4, 20, 0.82);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    cursor: pointer;
+}
+.ao-fs-intro-overlay.active {
+    display: flex;
+    animation: bigWinPop 0.3s ease;
+}
+.ao-fs-intro-img {
+    max-width: 96vw;
+    max-height: 82vh;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 0 35px rgba(250, 204, 21, 0.55));
+}
+
+#view-olympus .ao-buy-feature {
+    background: linear-gradient(180deg, #1e3a8a 0%, #172554 100%) !important;
+    border: 2px solid #f59e0b !important;
+}
+#view-olympus .ao-ante-card {
+    background: linear-gradient(180deg, #fef3c7 0%, #fde68a 100%) !important;
+    border: 2px solid #d97706 !important;
+    color: #451a03 !important;
+}
+#view-olympus .ao-ante-card div {
+    color: #451a03 !important;
+}
+#view-olympus .ao-ante-card.active {
+    background: linear-gradient(180deg, #bbf7d0 0%, #4ade80 100%) !important;
+    border-color: #16a34a !important;
+}
+
+@media (max-width: 768px) {
+    #view-olympus {
+        border-width: 1px !important;
+        border-radius: 14px !important;
+    }
+    #view-olympus .ao-top-bar {
+        padding: 6px 8px !important;
+    }
+    #view-olympus .ao-win-banner-top {
+        font-size: 0.65rem !important;
+        padding: 4px 6px !important;
+    }
+    #view-olympus .ao-stage {
+        padding: 6px 4px !important;
+        gap: 6px !important;
+    }
+    #view-olympus .ao-gold-frame {
+        padding: 4px !important;
+        border-radius: 12px !important;
+        border-width: 2px !important;
+    }
+    #view-olympus .ao-grid-6x5 {
+        gap: 3px !important;
+        padding: 4px !important;
+    }
+    #view-olympus .ao-cell {
+        min-height: 46px !important;
+        border-radius: 7px !important;
+        background: rgba(30, 10, 55, 0.65) !important;
+        border: 1px solid rgba(250, 204, 21, 0.22) !important;
+    }
+    #view-olympus .ao-pragmatic-hud {
+        background: rgba(10, 5, 22, 0.92) !important;
+        padding: 8px 8px 10px !important;
+        gap: 6px !important;
+    }
+    #view-olympus .ao-spin-circle-btn {
+        width: 64px !important;
+        height: 64px !important;
+        border-width: 3px !important;
+    }
+}
     </style>
 </head>
 <body>
@@ -4510,7 +4598,10 @@ html, body {
                     </div>
                 </div>
             </div>
-
+<!-- ОКНО ПОЗДРАВЛЕНИЯ С 15 ФРИСПИНАМИ -->
+<div class="ao-fs-intro-overlay" id="ao-fs-intro-overlay" onclick="confirmStartOlympusFreeSpins()">
+    <img src="изображение-removebg-preview.png" alt="Поздравляем! 15 бесплатных вращений" class="ao-fs-intro-img">
+</div>
             <!-- THE DOG HOUSE -->
             <div id="view-doghouse" class="game-view">
                 <div class="dh-top-bar">
@@ -6008,24 +6099,32 @@ html, body {
         }
 
         async function startOlympusBonusRound() {
-            aoInFreeSpins = true;
-            aoFreeSpinsLeft = 15;
-            aoFreeSpinsTotalWin = 0;
-            totalMultiplier = 0;
-            updateOlympusMultiplierUI();
+         aoInFreeSpins = true;
+         aoFreeSpinsLeft = 15;
+         aoFreeSpinsTotalWin = 0;
+         totalMultiplier = 0;
+         updateOlympusMultiplierUI();
 
-            document.getElementById('view-olympus')?.classList.add('freespins-mode');
-            document.getElementById('ao-fs-banner')?.classList.add('active');
-            const leftEl = document.getElementById('ao-fs-left');
-            const winEl = document.getElementById('ao-fs-total-win');
-            if (leftEl) leftEl.textContent = aoFreeSpinsLeft;
-            if (winEl) winEl.textContent = '0,00';
+         document.getElementById('view-olympus')?.classList.add('freespins-mode');
+         document.getElementById('ao-fs-banner')?.classList.add('active');
+         const leftEl = document.getElementById('ao-fs-left');
+         const winEl = document.getElementById('ao-fs-total-win');
+         if (leftEl) leftEl.textContent = aoFreeSpinsLeft;
+         if (winEl) winEl.textContent = '0,00';
 
-            showToast('⚡ 4+ Scatter! Зевс дарует 15 бесплатных вращений!');
-            playSfx('bonus');
-            triggerZeusLighting();
-            await spinGatesOfOlympus(true);
-        }
+         showToast('⚡ 4+ Scatter! Нажмите на экран, чтобы начать 15 фриспинов!');
+         playSfx('bonus');
+         triggerZeusLighting();
+
+         document.getElementById('ao-fs-intro-overlay')?.classList.add('active');
+     }
+
+     async function confirmStartOlympusFreeSpins() {
+         const ov = document.getElementById('ao-fs-intro-overlay');
+         if (!ov || !ov.classList.contains('active')) return;
+         ov.classList.remove('active');
+         await spinGatesOfOlympus(false);
+     }
 
         async function spinGatesOfOlympus(isBonusForcedScatter = false) {
             if (isBanned) { showToast('🚫 Ваш аккаунт заблокирован!'); return; }
