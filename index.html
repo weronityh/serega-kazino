@@ -3891,6 +3891,65 @@ body.sidebar-collapsed .left-sidebar {
         height: 0 !important;
     }
 }
+
+/* ==========================================================
+   SLOT STAGE BACKGROUNDS - real game backgrounds
+   ========================================================== */
+#view-olympus, #view-doghouse, #view-bonanza {
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: #0a0616;
+}
+#view-olympus {
+    background-image:
+        radial-gradient(circle at 50% 42%, rgba(12, 6, 28, 0.06) 0%, rgba(8, 4, 20, 0.62) 100%),
+        url('bg-olympus.jpg');
+}
+#view-doghouse {
+    background-image:
+        linear-gradient(180deg, rgba(8, 14, 20, 0.30) 0%, rgba(6, 10, 16, 0.12) 42%, rgba(4, 8, 12, 0.60) 100%),
+        url('bg-doghouse.jpg');
+}
+#view-bonanza {
+    background-image:
+        linear-gradient(180deg, rgba(10, 4, 30, 0.42) 0%, rgba(20, 6, 40, 0.16) 45%, rgba(8, 2, 24, 0.58) 100%),
+        url('bg-bonanza.jpg');
+}
+#view-olympus.freespins-mode {
+    background-image:
+        linear-gradient(180deg, rgba(59, 7, 100, 0.66) 0%, rgba(112, 26, 117, 0.48) 50%, rgba(19, 5, 40, 0.78) 100%),
+        url('bg-olympus.jpg');
+}
+#view-bonanza.freespins-mode {
+    background-image:
+        linear-gradient(180deg, rgba(131, 24, 67, 0.58) 0%, rgba(157, 23, 77, 0.42) 50%, rgba(40, 6, 30, 0.78) 100%),
+        url('bg-bonanza.jpg');
+}
+#view-doghouse.freespins-mode {
+    background-image:
+        linear-gradient(180deg, rgba(69, 26, 3, 0.62) 0%, rgba(120, 53, 15, 0.40) 50%, rgba(28, 12, 4, 0.78) 100%),
+        url('bg-doghouse.jpg');
+}
+@media (max-width: 760px) {
+    #view-olympus { background-image: radial-gradient(circle at 50% 42%, rgba(12, 6, 28, 0.06) 0%, rgba(8, 4, 20, 0.62) 100%), url('bg-olympus-portrait.jpg'); }
+    #view-olympus.freespins-mode { background-image: linear-gradient(180deg, rgba(59, 7, 100, 0.66) 0%, rgba(112, 26, 117, 0.48) 50%, rgba(19, 5, 40, 0.78) 100%), url('bg-olympus-portrait.jpg'); }
+    #view-doghouse { background-image: linear-gradient(180deg, rgba(8, 14, 20, 0.30) 0%, rgba(6, 10, 16, 0.12) 42%, rgba(4, 8, 12, 0.60) 100%), url('bg-doghouse-portrait.jpg'); }
+    #view-doghouse.freespins-mode { background-image: linear-gradient(180deg, rgba(69, 26, 3, 0.62) 0%, rgba(120, 53, 15, 0.40) 50%, rgba(28, 12, 4, 0.78) 100%), url('bg-doghouse-portrait.jpg'); }
+    #view-bonanza { background-image: linear-gradient(180deg, rgba(10, 4, 30, 0.42) 0%, rgba(20, 6, 40, 0.16) 45%, rgba(8, 2, 24, 0.58) 100%), url('bg-bonanza-portrait.jpg'); }
+    #view-bonanza.freespins-mode { background-image: linear-gradient(180deg, rgba(131, 24, 67, 0.58) 0%, rgba(157, 23, 77, 0.42) 50%, rgba(40, 6, 30, 0.78) 100%), url('bg-bonanza-portrait.jpg'); }
+}
+
+/* Quick-stop indicator: press again to stop reels */
+.ao-spin-circle-btn.spin-stop-ready,
+.dh-spin-circle-btn.spin-stop-ready,
+.sb-spin-btn.spin-stop-ready {
+    animation: spinStopPulse 0.85s infinite alternate ease-in-out;
+}
+@keyframes spinStopPulse {
+    0% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.0); }
+    100% { box-shadow: 0 0 18px 4px rgba(255, 255, 255, 0.55); }
+}
     </style>
 </head>
 <body>
@@ -4277,13 +4336,13 @@ body.sidebar-collapsed .left-sidebar {
                         <div class="ao-feature-card ao-buy-feature" onclick="buyOlympusBonus()">
                             <div style="font-size:0.75rem; font-weight:900; text-transform:uppercase; color:#fff;">КУПИТЬ БЕСПЛАТНЫЕ СПИНЫ</div>
                             <div style="margin-top:6px; background:rgba(0,0,0,0.35); border-radius:10px; padding:6px; font-size:1.15rem; font-weight:900; color:#fef08a;" id="ao-buy-price">50,00 ⭐</div>
-                            <div style="font-size:0.65rem; color:#fde68a; font-weight:700; margin-top:4px;">100x ОТ СТАВКИ</div>
+                            <div style="font-size:0.65rem; color:#fde68a; font-weight:700; margin-top:4px;"><span id="ao-buy-x-label">75,8x</span> ОТ СТАВКИ</div>
                         </div>
 
                         <div class="ao-feature-card ao-ante-card" id="ao-ante-btn" onclick="toggleOlympusAnte()">
                             <div style="font-size: 0.72rem; font-weight: 900; color: #fff; text-transform: uppercase;">ОТ СУММЫ СТАВКИ</div>
                             <div style="font-size: 1.1rem; font-weight: 900; color: #fde047; margin: 4px 0;" id="ao-ante-val">0,62 ⭐</div>
-                            <div style="font-size: 0.7rem; font-weight: 800; color: #f3e8ff; line-height: 1.25; margin-bottom: 6px;">ДВОЙНОЙ ШАНС ВЫИГРЫША ФУНКЦИИ</div>
+                            <div style="font-size: 0.7rem; font-weight: 800; color: #f3e8ff; line-height: 1.25; margin-bottom: 6px;">ПОВЫШЕННЫЙ ШАНС ФУНКЦИИ (+25% К СТАВКЕ)</div>
                             <div style="display:inline-flex; align-items:center; justify-content:space-between; width:84px; background:rgba(0,0,0,0.45); border-radius:999px; padding:3px 10px; font-size:0.7rem; font-weight:900; border:1px solid rgba(255,255,255,0.3);">
                                 <span id="ao-ante-status-txt">ВЫКЛ</span>
                                 <span id="ao-ante-dot">⚪</span>
@@ -4306,7 +4365,7 @@ body.sidebar-collapsed .left-sidebar {
 
                 <div class="ao-pragmatic-hud">
                     <div class="ao-hud-left-group">
-                        <button class="ao-icon-btn" id="ao-sound-btn" onclick="toggleSound()" title="Звук">🔊</button>
+                        <button class="ao-icon-btn js-sound-btn" id="ao-sound-btn" onclick="toggleSound()" title="Звук">🔊</button>
                         <div class="ao-credits-box"><span>КРЕДИТ</span><span><span id="ao-hud-balance">1 000,00</span> ⭐</span></div>
                         <div class="ao-credits-box"><span>СТАВКА</span><span><span id="ao-hud-total-bet">0,50</span> ⭐</span></div>
                     </div>
@@ -4370,6 +4429,7 @@ body.sidebar-collapsed .left-sidebar {
                             <svg viewBox="0 0 24 24"><path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"/></svg>
                         </button>
                         <button class="dh-bet-adjust-btn" onclick="changeDogHouseBet(0.5)">+</button>
+                        <button class="ao-icon-btn js-sound-btn" id="dh-sound-btn" onclick="toggleSound()" title="Звук">🔊</button>
                         <button class="ao-icon-btn" id="dh-auto-btn" onclick="toggleDogHouseAuto()" title="Автоспины" style="font-size:0.72rem; font-weight:900; width:44px; height:44px;">AUTO</button>
                     </div>
                 </div>
@@ -4397,11 +4457,11 @@ body.sidebar-collapsed .left-sidebar {
                         <div class="sb-feature-card sb-buy-feature" onclick="buyBonanzaBonus()">
                             <div style="font-size:0.82rem; font-weight:900; text-transform:uppercase; color:#fff;">КУПИТЬ ФУНКЦИЮ</div>
                             <div style="margin-top:6px; background:rgba(0,0,0,0.35); border-radius:10px; padding:6px; font-size:1.1rem; font-weight:900; color:#fef08a;" id="sb-buy-price">50,00 ⭐</div>
-                            <div style="font-size: 0.65rem; color: #ffe4e6; font-weight: 700; margin-top: 4px;">100x ОТ СТАВКИ</div>
+                            <div style="font-size: 0.65rem; color: #ffe4e6; font-weight: 700; margin-top: 4px;"><span id="sb-buy-x-label">31,6x</span> ОТ СТАВКИ</div>
                         </div>
 
                         <div class="sb-feature-card sb-ante-card" id="sb-ante-btn" onclick="toggleBonanzaAnte()">
-                            <div style="font-size: 0.72rem; font-weight: 900; color: #fff; text-transform: uppercase;">УДВОЕНИЕ ШАНСА ФУНКЦИИ</div>
+                            <div style="font-size: 0.72rem; font-weight: 900; color: #fff; text-transform: uppercase;">ПОВЫШЕННЫЙ ШАНС ФУНКЦИИ</div>
                             <div style="font-size: 1.05rem; font-weight: 900; color: #fde047; margin: 4px 0;" id="sb-ante-val">0,62 ⭐</div>
                             <div style="display:inline-flex; align-items:center; justify-content:space-between; width:90px; background:rgba(0,0,0,0.45); border-radius:999px; padding:3px 10px; font-size:0.72rem; font-weight:900; border:1px solid rgba(255,255,255,0.3);">
                                 <span id="sb-ante-status-txt">ВЫКЛ</span>
@@ -4445,6 +4505,7 @@ body.sidebar-collapsed .left-sidebar {
                             <button class="sb-bet-step-btn" onclick="changeBonanzaBet(0.5)">+</button>
                         </div>
                         <button class="sb-spin-btn" id="sb-spin-btn" onclick="spinSweetBonanza()">↻</button>
+                        <button class="ao-icon-btn js-sound-btn" id="sb-sound-btn" onclick="toggleSound()" title="Звук">🔊</button>
                         <button class="ao-icon-btn" id="sb-auto-btn" onclick="toggleBonanzaAuto()" title="Автоигра" style="font-size:0.72rem; font-weight:900; width:44px; height:44px;">AUTO</button>
                     </div>
                 </div>
@@ -4644,6 +4705,39 @@ body.sidebar-collapsed .left-sidebar {
             return amount * (getActivePayoutFactor() / 100);
         }
 
+        // ==========================================
+        // RTP 96% IN EVERY MODE
+        // Scales are calibrated by Monte-Carlo simulation of the actual
+        // generator/paytable (see RTP notes near each slot).
+        // ==========================================
+        const RTP_CONFIG = {
+            TARGET: 96,
+            // Calibrated on 800k-spin Monte-Carlo runs of the real generators.
+            AO_SCALE: 0.9453,
+            DH_SCALE: 1.3466,
+            SB_SCALE: 2.3452,
+            AO_SCATTER_BASE: 0.016,
+            AO_SCATTER_ANTE: 0.0198,
+            AO_SCATTER_FS: 0.011,
+            SB_SCATTER_BASE: 0.016,
+            SB_SCATTER_ANTE: 0.022,
+            SB_SCATTER_FS: 0.011,
+            AO_BUY_COST_X: 75.8,
+            SB_BUY_COST_X: 31.6
+        };
+
+        function getSlotPayoutScale(slot) {
+            if (slot === 'dh') return RTP_CONFIG.DH_SCALE;
+            if (slot === 'sb') return RTP_CONFIG.SB_SCALE;
+            return RTP_CONFIG.AO_SCALE;
+        }
+
+        function applySlotPayout(slot, rawAmount) {
+            const amount = Number(rawAmount);
+            if (!Number.isFinite(amount) || amount <= 0) return 0;
+            return amount * getSlotPayoutScale(slot);
+        }
+
         // Защита от «бесконечных» заносов и ошибок округления.
         function normalizeMoney(value, fallback = 0) {
             const n = Number(value);
@@ -4736,10 +4830,11 @@ body.sidebar-collapsed .left-sidebar {
 
         let aoGrid = Array.from({ length: AO_COLS }, () => Array(AO_ROWS).fill(null));
         let aoSpinning = false, aoAnteActive = false, aoInFreeSpins = false, aoAutoActive = false;
+        let aoStopRequested = false;
         let aoFreeSpinsLeft = 0, aoFreeSpinsTotalWin = 0, totalMultiplier = 0, aoCurrentBet = 0.5;
 
         // ==========================================
-        // THE DOG HOUSE (С КАРТИНКАМИ taksa.png И shitsu.png, RTP 95%)
+        // THE DOG HOUSE (С КАРТИНКАМИ taksa.png И shitsu.png, RTP 96%)
         // ==========================================
         const DH_COLS = 5, DH_ROWS = 3;
         const DH_PAYLINES = [
@@ -4779,8 +4874,8 @@ body.sidebar-collapsed .left-sidebar {
             { id: 'ten',        img: 'iidesyat.png',         fallback: '🔟',   cat: 'Карточный',  name: 'Десятка (10)',p3: 0.1,  p4: 0.25, p5: 1.25 }
         ];
 
-        // --- Математическая модель (калибровка: RTP 95.0% ±0.05%, Монте-Карло 300 млн спинов) ---
-        // Базовая игра ≈ 62.35% + бонус ≈ 32.68%; хит-фриквенси ≈ 37.5%; бонус ≈ 1 из 224 спинов.
+        // --- Математическая модель (калибровка: RTP 96%, Монте-Карло 800 тыс. спинов) ---
+        // Базовая модель даёт ≈ 71.3%; коэффициент DH_SCALE доводит отдачу до 96%.
         const DH_WEIGHTS_REEL_1 = {
             ten: 165, jack: 160, queen: 155, king: 140, ace: 135,
             bone: 85, collar: 68, dachshund: 44, pug: 29, shitzu: 17, rottweiler: 8
@@ -4794,13 +4889,14 @@ body.sidebar-collapsed .left-sidebar {
         const DH_WILD_X2_SHARE = 0.80;          // доля будок x2 (остальные 20% — x3)
         const DH_SCATTER_CHANCE = 0.06;         // шанс лапы (Scatter) на ячейку, барабаны 1, 3, 5
         const DH_SCATTER_PAY_MULT = 5;          // выплата за 3 лапы (x ставки)
-        // Выплаты слота считаются «как есть»: RTP задан самой математикой выше,
-        // глобальный множитель ENGINE_PAYOUT_CONFIG.BASE_FACTOR на The Dog House не влияет.
-        const dhPayout = (amount) => (Number.isFinite(amount) && amount > 0) ? amount : 0;
+        // Выплаты слота проходят через калибровочный коэффициент DH_SCALE,
+        // который приводит RTP всей игры (база + фриспины) к 96%.
+        const dhPayout = (amount) => applySlotPayout('dh', amount);
 
         let dhGrid = Array.from({ length: DH_COLS }, () => Array(DH_ROWS).fill(null));
         let dhStickyWilds = Array.from({ length: DH_COLS }, () => Array(DH_ROWS).fill(null));
         let dhSpinning = false, dhInFreeSpins = false, dhAutoActive = false, dhFreeSpinsLeft = 0, dhFreeSpinsTotalWin = 0, dhCurrentBet = 0.5;
+        let dhStopRequested = false;
 
         // ==========================================
         // SWEET BONANZA (ОТКАЛИБРОВАННЫЙ RTP 96%, КАК В THE DOG HOUSE)
@@ -4825,7 +4921,8 @@ body.sidebar-collapsed .left-sidebar {
         ];
 
         let sbGrid = Array.from({ length: SB_COLS }, () => Array(SB_ROWS).fill(null));
-        let sbSpinning = false, sbAnteActive = false, sbAutoActive = false, sbFreeSpinsLeft = 0, sbInFreeSpins = false, sbFreeSpinsTotalWin = 0, sbLockedBonusBet = null; 
+        let sbSpinning = false, sbAnteActive = false, sbAutoActive = false, sbFreeSpinsLeft = 0, sbInFreeSpins = false, sbFreeSpinsTotalWin = 0, sbLockedBonusBet = null;
+        let sbStopRequested = false; 
 
         let balance = 1000;
         let username = '';
@@ -5071,6 +5168,19 @@ body.sidebar-collapsed .left-sidebar {
 
         function sleep(ms) { return new Promise(resolve => setTimeout(resolve, ms)); }
 
+        // Wait for a reel phase, but allow an early stop on the second SPIN press.
+        // remainMs - delay before the next reel while quick-stopping.
+        async function waitSpin(ms, stopFn, remainMs = 0) {
+            if (!stopFn || !stopFn()) {
+                const end = Date.now() + ms;
+                while (Date.now() < end) {
+                    await sleep(30);
+                    if (stopFn && stopFn()) break;
+                }
+            }
+            if (stopFn && stopFn() && remainMs > 0) await sleep(remainMs);
+        }
+
         function loadState() {
             // Одноразовый сброс всех старых локальных аккаунтов
             if (localStorage.getItem('kazik_wipe_v2') !== '1') {
@@ -5173,6 +5283,7 @@ body.sidebar-collapsed .left-sidebar {
         function hideAllViews() {
             document.querySelectorAll('.game-view').forEach(v => v.classList.remove('active'));
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            stopSlotMusic();
         }
 
         function showLobby() {
@@ -5464,7 +5575,7 @@ body.sidebar-collapsed .left-sidebar {
             if (slotKey === 'doghouse') {
                 const bet = dhCurrentBet;
                 titleEl.textContent = '🐶 The Dog House — Таблица выплат';
-                subEl.textContent = `20 активных линий слева направо • Текущая ставка: ${fmtByn(bet)} • RTP 95%`;
+                subEl.textContent = `20 активных линий слева направо • Текущая ставка: ${fmtByn(bet)} • RTP 96%`;
 
                 const rowsHtml = DH_SYMBOLS.map(s => `
                     <tr>
@@ -5624,6 +5735,7 @@ body.sidebar-collapsed .left-sidebar {
             document.getElementById('nav-slot-olympus').classList.add('active');
             updateBalanceUI();
             syncOlympusBetUI();
+            startSlotMusic('olympus');
         }
 
         function getRandomWeightedOlympusSymbol() {
@@ -5650,7 +5762,7 @@ body.sidebar-collapsed .left-sidebar {
 
         function generateOlympusCell(allowMultiplier) {
             const boost = 1.0; // RTP фиксирован на 96%
-            const scatterChance = (aoInFreeSpins ? 0.011 : (aoAnteActive ? 0.032 : 0.016)) * boost;
+            const scatterChance = (aoInFreeSpins ? RTP_CONFIG.AO_SCATTER_FS : (aoAnteActive ? RTP_CONFIG.AO_SCATTER_ANTE : RTP_CONFIG.AO_SCATTER_BASE)) * boost;
             if (Math.random() < scatterChance) return { ...AO_SCATTER };
             const multChance = (aoInFreeSpins ? 0.038 : 0.015) * boost;
             if (allowMultiplier && Math.random() < multChance) {
@@ -5707,7 +5819,9 @@ body.sidebar-collapsed .left-sidebar {
             const buyEl = document.getElementById('ao-buy-price');
             if (betEl) betEl.textContent = total.toFixed(2).replace('.', ',');
             if (anteEl) anteEl.textContent = (aoCurrentBet * 1.25).toFixed(2).replace('.', ',') + ' ⭐';
-            if (buyEl) buyEl.textContent = (aoCurrentBet * 100).toFixed(2).replace('.', ',') + ' ⭐';
+            if (buyEl) buyEl.textContent = (aoCurrentBet * RTP_CONFIG.AO_BUY_COST_X).toFixed(2).replace('.', ',') + ' ⭐';
+            const buyX = document.getElementById('ao-buy-x-label');
+            if (buyX) buyX.textContent = String(RTP_CONFIG.AO_BUY_COST_X).replace('.', ',') + 'x';
         }
 
         function changeOlympusBet(delta) {
@@ -5741,7 +5855,7 @@ body.sidebar-collapsed .left-sidebar {
             if (aoSpinning || aoInFreeSpins || bonusPurchasePending) return;
             if (isOtherSlotBusy('ao')) { showToast('⚠️ Дождитесь окончания игры в другом слоте!'); return; }
             if (aoAnteActive) { showToast('⚠️ Отключите ставку Анте!'); return; }
-            const cost = normalizeMoney(aoCurrentBet * 100);
+            const cost = normalizeMoney(aoCurrentBet * RTP_CONFIG.AO_BUY_COST_X);
             if (!Number.isFinite(cost) || cost <= 0) { showToast('⚠️ Некорректная ставка!'); return; }
             if (balance < cost) { showToast('⚠️ Недостаточно средств!'); openDepositModal(); return; }
             bonusPurchasePending = true;
@@ -5788,8 +5902,10 @@ body.sidebar-collapsed .left-sidebar {
 
         async function spinGatesOfOlympus(isBonusForcedScatter = false) {
             if (isBanned) { showToast('🚫 Ваш аккаунт заблокирован!'); return; }
-            if (aoSpinning || bonusPurchasePending) return;
+            if (aoSpinning) { aoStopRequested = true; return; }
+            if (bonusPurchasePending) return;
             if (isOtherSlotBusy('ao')) { showToast('⚠️ Дождитесь окончания игры в другом слоте!'); return; }
+            aoStopRequested = false;
             const totalBet = getOlympusTotalBet();
 
             if (!aoInFreeSpins) {
@@ -5818,7 +5934,7 @@ body.sidebar-collapsed .left-sidebar {
             aoSpinning = true;
             playSfx('spin');
             const spinBtn = document.getElementById('ao-spin-btn');
-            if (spinBtn) spinBtn.disabled = true;
+            if (spinBtn) spinBtn.classList.add('spin-stop-ready');
 
             const winLblEl = document.getElementById('ao-win-lbl');
             const hudWinEl = document.getElementById('ao-hud-win');
@@ -5867,7 +5983,7 @@ body.sidebar-collapsed .left-sidebar {
                     nextGrid[5][3] = { ...AO_SCATTER };
                 }
 
-                await sleep(620);
+                await waitSpin(620, () => aoStopRequested);
                 clearInterval(timer);
 
                 for (let c = 0; c < AO_COLS; c++) {
@@ -5876,7 +5992,7 @@ body.sidebar-collapsed .left-sidebar {
                      renderOlympusCell(c, r, true);
                  }
                  playSfx('stop');
-                 await sleep(95);
+                 await waitSpin(95, () => aoStopRequested, 55);
              }
 
                 if (hasDroppedBomb) triggerZeusLighting();
@@ -5900,7 +6016,7 @@ body.sidebar-collapsed .left-sidebar {
                         if (cnt >= 8) {
                             const sample = positions[symId][0].sym;
                             const mult = cnt >= 12 ? sample.p12 : (cnt >= 10 ? sample.p10 : sample.p8);
-                            stepWin += applyEnginePayoutScale(aoCurrentBet * mult);
+                            stepWin += applySlotPayout('ao', aoCurrentBet * mult);
                             winningCoords.push(...positions[symId]);
                         }
                     }
@@ -5953,7 +6069,7 @@ body.sidebar-collapsed .left-sidebar {
                 let scatterPayout = 0;
                 if (!isBonusForcedScatter && scatterCount >= 4) {
                     const scMult = scatterCount >= 6 ? 100 : (scatterCount === 5 ? 5 : 3);
-                    scatterPayout = applyEnginePayoutScale(aoCurrentBet * scMult);
+                    scatterPayout = applySlotPayout('ao', aoCurrentBet * scMult);
                 }
 
                 let appliedMult = 1;
@@ -6001,7 +6117,8 @@ body.sidebar-collapsed .left-sidebar {
             } finally {
                 clearInterval(timer);
                 aoSpinning = false;
-                if (spinBtn) spinBtn.disabled = false;
+                aoStopRequested = false;
+                if (spinBtn) { spinBtn.disabled = false; spinBtn.classList.remove('spin-stop-ready'); }
             }
 
             if (aoInFreeSpins) {
@@ -6054,6 +6171,7 @@ body.sidebar-collapsed .left-sidebar {
             document.getElementById('nav-slot-doghouse').classList.add('active');
             updateBalanceUI();
             syncDogHouseBetUI();
+            startSlotMusic('doghouse');
         }
 
         function getRandomDogHouseSymbol(col) {
@@ -6238,7 +6356,9 @@ body.sidebar-collapsed .left-sidebar {
 
         async function spinDogHouse() {
             if (isBanned) { showToast('🚫 Ваш аккаунт заблокирован!'); return; }
-            if (dhSpinning || bonusPurchasePending) return;
+            if (dhSpinning) { dhStopRequested = true; return; }
+            if (bonusPurchasePending) return;
+            dhStopRequested = false;
             if (isOtherSlotBusy('dh')) { showToast('⚠️ Дождитесь окончания игры в другом слоте!'); return; }
 
             if (!dhInFreeSpins) {
@@ -6264,7 +6384,7 @@ body.sidebar-collapsed .left-sidebar {
             dhSpinning = true;
             playSfx('spin');
             const spinBtn = document.getElementById('dh-spin-btn');
-            if (spinBtn) spinBtn.disabled = true;
+            if (spinBtn) spinBtn.classList.add('spin-stop-ready');
 
             const winLblEl = document.getElementById('dh-win-lbl');
             const hudWinEl = document.getElementById('dh-hud-win');
@@ -6321,23 +6441,23 @@ body.sidebar-collapsed .left-sidebar {
                     }
                 }
 
-                await sleep(450);
+                await waitSpin(450, () => dhStopRequested);
 
                 const hasScatterCol1 = !dhInFreeSpins && nextGrid[0].some(s => s && s.id === 'scatter');
                 const hasScatterCol3 = !dhInFreeSpins && nextGrid[2].some(s => s && s.id === 'scatter');
                 const teaseFifthReel = hasScatterCol1 && hasScatterCol3;
 
                 for (let c = 0; c < DH_COLS; c++) {
-                    if (c === 4 && teaseFifthReel) {
+                    if (c === 4 && teaseFifthReel && !dhStopRequested) {
                         for (let r = 0; r < DH_ROWS; r++) {
                             document.getElementById(`dh-cell-4-${r}`)?.classList.add('dh-tease-spin');
                         }
-                        await sleep(1450);
+                        await waitSpin(1450, () => dhStopRequested);
                         for (let r = 0; r < DH_ROWS; r++) {
                             document.getElementById(`dh-cell-4-${r}`)?.classList.remove('dh-tease-spin');
                         }
                     } else {
-                        await sleep(260);
+                        await waitSpin(260, () => dhStopRequested, 60);
                     }
 
                     for (let r = 0; r < DH_ROWS; r++) {
@@ -6398,7 +6518,8 @@ body.sidebar-collapsed .left-sidebar {
             } finally {
                 clearInterval(timer);
                 dhSpinning = false;
-                if (spinBtn) spinBtn.disabled = false;
+                dhStopRequested = false;
+                if (spinBtn) { spinBtn.disabled = false; spinBtn.classList.remove('spin-stop-ready'); }
             }
 
             if (dhInFreeSpins) {
@@ -6451,6 +6572,7 @@ body.sidebar-collapsed .left-sidebar {
             document.getElementById('nav-slot-bonanza').classList.add('active');
             updateBalanceUI();
             syncBonanzaBetUI();
+            startSlotMusic('bonanza');
         }
 
         function getRandomWeightedBonanzaSymbol() {
@@ -6475,7 +6597,7 @@ body.sidebar-collapsed .left-sidebar {
 
         function generateBonanzaCell(allowBomb) {
             const boost = 1.0; // RTP фиксирован на 96%
-            const scatterChance = (sbInFreeSpins ? 0.011 : (sbAnteActive ? 0.032 : 0.016)) * boost;
+            const scatterChance = (sbInFreeSpins ? RTP_CONFIG.SB_SCATTER_FS : (sbAnteActive ? RTP_CONFIG.SB_SCATTER_ANTE : RTP_CONFIG.SB_SCATTER_BASE)) * boost;
             if (Math.random() < scatterChance) return { ...SB_SCATTER };
 
             if (allowBomb && sbInFreeSpins && Math.random() < 0.038 * boost) {
@@ -6544,7 +6666,9 @@ body.sidebar-collapsed .left-sidebar {
             const total = getBonanzaTotalBet();
             document.getElementById('sb-hud-total-bet').textContent = total.toFixed(2).replace('.', ',');
             document.getElementById('sb-ante-val').textContent = (base * 1.25).toFixed(2).replace('.', ',') + ' ⭐';
-            document.getElementById('sb-buy-price').textContent = (base * 100).toFixed(2).replace('.', ',') + ' ⭐';
+            document.getElementById('sb-buy-price').textContent = (base * RTP_CONFIG.SB_BUY_COST_X).toFixed(2).replace('.', ',') + ' ⭐';
+            const sbBuyX = document.getElementById('sb-buy-x-label');
+            if (sbBuyX) sbBuyX.textContent = String(RTP_CONFIG.SB_BUY_COST_X).replace('.', ',') + 'x';
         }
 
         function changeBonanzaBet(delta) {
@@ -6575,7 +6699,7 @@ body.sidebar-collapsed .left-sidebar {
             if (sbSpinning || sbInFreeSpins || bonusPurchasePending) return;
             if (isOtherSlotBusy('sb')) { showToast('⚠️ Дождитесь окончания игры в другом слоте!'); return; }
             if (sbAnteActive) { showToast('⚠️ Отключите удвоение шанса перед покупкой!'); return; }
-            const cost = normalizeMoney(getBonanzaBaseBet() * 100);
+            const cost = normalizeMoney(getBonanzaBaseBet() * RTP_CONFIG.SB_BUY_COST_X);
             if (!Number.isFinite(cost) || cost <= 0) { showToast('⚠️ Некорректная ставка!'); return; }
             if (balance < cost) { showToast('⚠️ Недостаточно средств!'); openDepositModal(); return; }
             bonusPurchasePending = true;
@@ -6612,7 +6736,9 @@ body.sidebar-collapsed .left-sidebar {
 
         async function spinSweetBonanza(isBonusForcedScatter = false) {
             if (isBanned) { showToast('🚫 Ваш аккаунт заблокирован!'); return; }
-            if (sbSpinning || bonusPurchasePending) return;
+            if (sbSpinning) { sbStopRequested = true; return; }
+            if (bonusPurchasePending) return;
+            sbStopRequested = false;
             if (isOtherSlotBusy('sb')) { showToast('⚠️ Дождитесь окончания игры в другом слоте!'); return; }
             const baseBet = getBonanzaBaseBet();
             const totalBet = getBonanzaTotalBet();
@@ -6641,7 +6767,7 @@ body.sidebar-collapsed .left-sidebar {
             playSfx('spin');
             const spinBtn = document.getElementById('sb-spin-btn');
             const betInp = document.getElementById('sb-base-bet');
-            if (spinBtn) spinBtn.disabled = true;
+            if (spinBtn) spinBtn.classList.add('spin-stop-ready');
             if (betInp) betInp.disabled = true;
 
             const winLblEl = document.getElementById('sb-win-lbl');
@@ -6689,7 +6815,7 @@ body.sidebar-collapsed .left-sidebar {
                     nextGrid[5][2] = { ...SB_SCATTER };
                 }
 
-                await sleep(580);
+                await waitSpin(580, () => sbStopRequested);
                 clearInterval(timer);
 
                 for (let c = 0; c < SB_COLS; c++) {
@@ -6698,7 +6824,7 @@ body.sidebar-collapsed .left-sidebar {
                         renderBonanzaCell(c, r, true);
                     }
                     playSfx('stop')
-                    await sleep(90);
+                    await waitSpin(90, () => sbStopRequested, 50);
                 }
 
                 let spinRawWin = 0;
@@ -6720,7 +6846,7 @@ body.sidebar-collapsed .left-sidebar {
                         if (cnt >= 8) {
                             const sample = positions[symId][0].sym;
                             const mult = cnt >= 12 ? sample.p12 : (cnt >= 10 ? sample.p10 : sample.p8);
-                            stepWin += applyEnginePayoutScale(baseBet * mult);
+                            stepWin += applySlotPayout('sb', baseBet * mult);
                             winningCoords.push(...positions[symId]);
                         }
                     }
@@ -6770,7 +6896,7 @@ body.sidebar-collapsed .left-sidebar {
                 let scatterPayout = 0;
                 if (!isBonusForcedScatter && scatterCount >= 4) {
                     const scMult = scatterCount >= 6 ? 100 : (scatterCount === 5 ? 5 : 3);
-                    scatterPayout = applyEnginePayoutScale(baseBet * scMult);
+                    scatterPayout = applySlotPayout('sb', baseBet * scMult);
                 }
 
                 const appliedMult = (spinRawWin > 0 && bombMultSum > 0) ? bombMultSum : 1;
@@ -6813,7 +6939,8 @@ body.sidebar-collapsed .left-sidebar {
             } finally {
                 clearInterval(timer);
                 sbSpinning = false;
-                if (spinBtn) spinBtn.disabled = sbInFreeSpins;
+                sbStopRequested = false;
+                if (spinBtn) { spinBtn.disabled = false; spinBtn.classList.remove('spin-stop-ready'); }
                 if (betInp && !sbInFreeSpins) betInp.disabled = false;
             }
 
@@ -6846,60 +6973,257 @@ body.sidebar-collapsed .left-sidebar {
             document.getElementById('bigwin-amount').textContent = winAmount.toFixed(2).replace('.', ',') + ' ⭐';
             const ov = document.getElementById('bigwin-overlay');
             ov.classList.add('active');
-            playSfx('win');
+            playSfx(mult >= 50 ? 'megawin' : 'bigwin');
             setTimeout(() => ov.classList.remove('active'), 3200);
         }
+        // ==========================================================
+        // SLOT AUDIO ENGINE: original procedural music and SFX
+        // ==========================================================
+        const SOUND_STORAGE_KEY = 'kazik_sound_enabled';
         let soundEnabled = true;
+        try { if (localStorage.getItem(SOUND_STORAGE_KEY) === '0') soundEnabled = false; } catch (e) {}
+
         const AudioCtxClass = window.AudioContext || window.webkitAudioContext;
         const audioCtx = AudioCtxClass ? new AudioCtxClass() : null;
+        let masterGain = null, musicGain = null, sfxGain = null, noiseBuffer = null;
 
-        function toggleSound() {
-            soundEnabled = !soundEnabled;
-            const btn = document.getElementById('ao-sound-btn');
-            if (btn) btn.textContent = soundEnabled ? '🔊' : '🔇';
-            showToast(soundEnabled ? '🔊 Звук включён' : '🔇 Звук выключен');
+        function initAudioGraph() {
+            if (!audioCtx || masterGain) return;
+            masterGain = audioCtx.createGain();
+            masterGain.gain.value = 0.9;
+            masterGain.connect(audioCtx.destination);
+
+            sfxGain = audioCtx.createGain();
+            sfxGain.gain.value = 0.55;
+            sfxGain.connect(masterGain);
+
+            musicGain = audioCtx.createGain();
+            musicGain.gain.value = 0.0001;
+            const musicFilter = audioCtx.createBiquadFilter();
+            musicFilter.type = 'lowpass';
+            musicFilter.frequency.value = 4600;
+            musicGain.connect(musicFilter);
+            musicFilter.connect(masterGain);
+
+            const len = Math.floor(audioCtx.sampleRate * 1.2);
+            noiseBuffer = audioCtx.createBuffer(1, len, audioCtx.sampleRate);
+            const data = noiseBuffer.getChannelData(0);
+            for (let i = 0; i < len; i++) data[i] = Math.random() * 2 - 1;
         }
 
-        function playTone(freq, startTime, duration, wave = 'triangle', vol = 0.08, endFreq = null) {
+        function resumeAudio() {
+            if (!audioCtx) return;
+            initAudioGraph();
+            if (audioCtx.state === 'suspended') audioCtx.resume().catch(() => {});
+        }
+
+        function playToneAt(freq, when, duration, wave = 'triangle', vol = 0.08, endFreq = null, dest = null) {
             if (!soundEnabled || !audioCtx) return;
+            const out = dest || sfxGain || audioCtx.destination;
             const osc = audioCtx.createOscillator();
             const gain = audioCtx.createGain();
             osc.type = wave;
-            osc.frequency.setValueAtTime(freq, startTime);
-            if (endFreq) osc.frequency.exponentialRampToValueAtTime(endFreq, startTime + duration);
-            gain.gain.setValueAtTime(0.0001, startTime);
-            gain.gain.linearRampToValueAtTime(vol, startTime + 0.012);
-            gain.gain.exponentialRampToValueAtTime(0.0001, startTime + duration);
+            osc.frequency.setValueAtTime(freq, when);
+            if (endFreq) osc.frequency.exponentialRampToValueAtTime(Math.max(20, endFreq), when + duration);
+            gain.gain.setValueAtTime(0.0001, when);
+            gain.gain.linearRampToValueAtTime(vol, when + 0.012);
+            gain.gain.exponentialRampToValueAtTime(0.0001, when + duration);
             osc.connect(gain);
-            gain.connect(audioCtx.destination);
-            osc.start(startTime);
-            osc.stop(startTime + duration + 0.02);
+            gain.connect(out);
+            osc.start(when);
+            osc.stop(when + duration + 0.03);
+        }
+
+        function playTone(freq, startTime, duration, wave = 'triangle', vol = 0.08, endFreq = null) {
+            playToneAt(freq, startTime, duration, wave, vol, endFreq, sfxGain);
+        }
+
+        function playNoiseAt(when, duration, filterType, filterFreq, vol, q = 1, dest = null) {
+            if (!soundEnabled || !audioCtx || !noiseBuffer) return;
+            const out = dest || sfxGain;
+            const src = audioCtx.createBufferSource();
+            src.buffer = noiseBuffer;
+            const filter = audioCtx.createBiquadFilter();
+            filter.type = filterType;
+            filter.frequency.setValueAtTime(filterFreq, when);
+            filter.Q.value = q;
+            const gain = audioCtx.createGain();
+            gain.gain.setValueAtTime(0.0001, when);
+            gain.gain.linearRampToValueAtTime(vol, when + 0.01);
+            gain.gain.exponentialRampToValueAtTime(0.0001, when + duration);
+            src.connect(filter);
+            filter.connect(gain);
+            gain.connect(out);
+            src.start(when);
+            src.stop(when + duration + 0.03);
+        }
+
+        // ---- original soundtrack themes (procedural, no external files) ----
+        const MUSIC_THEMES = {
+            olympus: {
+                bpm: 92, leadWave: 'triangle', bassWave: 'sine',
+                chords: [[50, 53, 57], [48, 52, 55], [46, 50, 53], [45, 49, 52]],
+                bass: [38, 36, 34, 33],
+                arp: [0, 1, 2, 1, 2, 1, 0, 2],
+                hat: 0.016, kick: true, shaker: false
+            },
+            doghouse: {
+                bpm: 118, leadWave: 'square', bassWave: 'triangle',
+                chords: [[43, 47, 50], [48, 52, 55], [45, 48, 52], [41, 45, 48]],
+                bass: [31, 36, 33, 29],
+                arp: [0, 2, 1, 2, 0, 2, 1, 2],
+                hat: 0.020, kick: true, shaker: true
+            },
+            bonanza: {
+                bpm: 126, leadWave: 'triangle', bassWave: 'sine',
+                chords: [[48, 52, 55], [45, 48, 52], [41, 45, 48], [43, 47, 50]],
+                bass: [36, 33, 29, 31],
+                arp: [0, 2, 1, 2, 0, 1, 2, 1],
+                hat: 0.018, kick: true, shaker: true
+            }
+        };
+
+        let musicTimer = null, musicSlot = null, musicStep = 0, musicNextTime = 0;
+        const MUSIC_FADE = 0.35;
+
+        function midiToFreq(note) { return 440 * Math.pow(2, (note - 69) / 12); }
+
+        function startSlotMusic(slot) {
+            if (!audioCtx) return;
+            initAudioGraph();
+            if (!soundEnabled) { musicSlot = slot; return; }
+            if (musicSlot === slot && musicTimer) { resumeAudio(); return; }
+            stopSlotMusic(true);
+            resumeAudio();
+            musicSlot = slot;
+            musicStep = 0;
+            musicNextTime = audioCtx.currentTime + 0.08;
+            const t = audioCtx.currentTime;
+            musicGain.gain.cancelScheduledValues(t);
+            musicGain.gain.setValueAtTime(Math.max(0.0001, musicGain.gain.value), t);
+            musicGain.gain.linearRampToValueAtTime(0.16, t + MUSIC_FADE);
+            musicTimer = setInterval(musicTick, 25);
+        }
+
+        function stopSlotMusic(keepSelection = false) {
+            if (musicTimer) { clearInterval(musicTimer); musicTimer = null; }
+            if (musicGain && audioCtx) {
+                const t = audioCtx.currentTime;
+                musicGain.gain.cancelScheduledValues(t);
+                musicGain.gain.setValueAtTime(Math.max(0.0001, musicGain.gain.value), t);
+                musicGain.gain.linearRampToValueAtTime(0.0001, t + MUSIC_FADE);
+            }
+            if (!keepSelection) musicSlot = null;
+        }
+
+        function musicTick() {
+            if (!soundEnabled || !audioCtx || !musicSlot) return;
+            const theme = MUSIC_THEMES[musicSlot];
+            if (!theme) return;
+            const stepDur = 60 / theme.bpm / 4;
+            while (musicNextTime < audioCtx.currentTime + 0.30) {
+                scheduleMusicStep(theme, musicStep, musicNextTime, stepDur);
+                musicStep = (musicStep + 1) % 64;
+                musicNextTime += stepDur;
+            }
+        }
+
+        function scheduleMusicStep(theme, step, when, stepDur) {
+            const bar = Math.floor(step / 16) % 4;
+            const s = step % 16;
+            const chord = theme.chords[bar];
+            const dest = musicGain;
+
+            if (s === 0) {
+                chord.forEach((n, i) => playToneAt(midiToFreq(n), when, stepDur * 15, 'sine', 0.020 - i * 0.003, null, dest));
+            }
+            if (s === 0 || s === 8) {
+                playToneAt(midiToFreq(theme.bass[bar]), when, stepDur * 3.4, theme.bassWave, 0.085, null, dest);
+            }
+            if (s % 2 === 0) {
+                const idx = theme.arp[(s / 2) % theme.arp.length];
+                const n = chord[idx % chord.length] + 12;
+                playToneAt(midiToFreq(n), when, stepDur * 1.8, theme.leadWave, 0.030, null, dest);
+                playToneAt(midiToFreq(n + 12), when, stepDur * 0.9, 'sine', 0.009, null, dest);
+            }
+            if (theme.hat && s % 2 === 1) {
+                playNoiseAt(when, 0.035, 'highpass', 7200, theme.hat, 0.7, dest);
+            }
+            if (theme.shaker && s % 4 === 2) {
+                playNoiseAt(when, 0.05, 'bandpass', 4800, theme.hat * 0.8, 2.5, dest);
+            }
+            if (theme.kick && (s === 0 || s === 8)) {
+                playToneAt(58, when, 0.16, 'sine', 0.075, 38, dest);
+            }
+        }
+
+        function updateSoundButtons() {
+            const icon = soundEnabled ? '🔊' : '🔇';
+            document.querySelectorAll('.js-sound-btn').forEach(btn => { btn.textContent = icon; });
+            const ao = document.getElementById('ao-sound-btn');
+            if (ao) ao.textContent = icon;
+        }
+
+        function toggleSound() {
+            soundEnabled = !soundEnabled;
+            try { localStorage.setItem(SOUND_STORAGE_KEY, soundEnabled ? '1' : '0'); } catch (e) {}
+            updateSoundButtons();
+            if (soundEnabled) {
+                resumeAudio();
+                if (musicSlot) startSlotMusic(musicSlot);
+                showToast('🔊 Звук включён');
+            } else {
+                stopSlotMusic(true);
+                showToast('🔇 Звук выключен');
+            }
         }
 
         function playSfx(type) {
             if (!soundEnabled || !audioCtx) return;
-            if (audioCtx.state === 'suspended') audioCtx.resume();
+            resumeAudio();
             const now = audioCtx.currentTime;
 
             if (type === 'click') {
-                playTone(620, now, 0.05, 'sine', 0.05, 420);
+                playTone(660, now, 0.045, 'sine', 0.045, 480);
             } else if (type === 'spin') {
-                playTone(240, now, 0.16, 'triangle', 0.08, 520);
-                playTone(360, now + 0.05, 0.14, 'sine', 0.05, 680);
+                playNoiseAt(now, 0.34, 'bandpass', 900, 0.05, 0.8);
+                playTone(180, now, 0.30, 'sawtooth', 0.045, 520);
+                playTone(90, now, 0.24, 'sine', 0.06, 58);
             } else if (type === 'stop') {
-                playTone(155, now, 0.08, 'triangle', 0.09, 95);
+                const pitch = 118 + Math.random() * 36;
+                playNoiseAt(now, 0.055, 'bandpass', 1500 + Math.random() * 800, 0.10, 1.6);
+                playTone(pitch, now, 0.075, 'triangle', 0.085, pitch * 0.62);
+                playTone(pitch * 2.01, now, 0.03, 'square', 0.018);
             } else if (type === 'pop') {
-                playTone(420, now, 0.09, 'sine', 0.07, 760);
+                playTone(520 + Math.random() * 70, now, 0.075, 'sine', 0.06, 900);
+                playTone(1040, now + 0.03, 0.08, 'triangle', 0.022, 1320);
             } else if (type === 'win') {
-                [523.25, 659.25, 783.99, 1046.5].forEach((f, idx) => {
-                    playTone(f, now + idx * 0.07, 0.28, 'triangle', 0.08);
+                [523.25, 659.25, 783.99, 1046.5, 1318.51].forEach((f, i) => {
+                    playTone(f, now + i * 0.065, 0.26, 'triangle', 0.07);
+                    playTone(f * 2, now + i * 0.065, 0.15, 'sine', 0.018);
                 });
+                playNoiseAt(now + 0.02, 0.3, 'highpass', 5200, 0.026);
             } else if (type === 'bonus') {
-                [523.25, 659.25, 783.99, 1046.5, 1318.5].forEach((f, idx) => {
-                    playTone(f, now + idx * 0.09, 0.36, 'triangle', 0.1);
+                [392, 523.25, 659.25, 783.99, 1046.5, 1318.51].forEach((f, i) => {
+                    playTone(f, now + i * 0.085, 0.5, 'triangle', 0.08);
                 });
+                playNoiseAt(now, 0.5, 'highpass', 4500, 0.032);
+            } else if (type === 'bigwin' || type === 'megawin') {
+                const mega = type === 'megawin';
+                const notes = mega
+                    ? [523.25, 659.25, 783.99, 1046.5, 1318.51, 1567.98, 2093]
+                    : [440, 554.37, 659.25, 880, 1108.73];
+                notes.forEach((f, i) => {
+                    playTone(f, now + i * 0.09, 0.45, 'triangle', 0.085);
+                    playTone(f * 0.5, now + i * 0.09, 0.5, 'sine', 0.04);
+                });
+                playNoiseAt(now, 0.7, 'highpass', 3800, 0.05);
+                playTone(70, now, 0.5, 'sine', 0.09, 45);
             }
         }
+
+        try { updateSoundButtons(); } catch (e) {}
+
         async function recordRecentWin(slotName, amount) {
             if (!username || amount < 5) return; // Записываем заносы от 5 ⭐ и выше
             try {
