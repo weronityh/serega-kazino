@@ -4432,6 +4432,118 @@ html, body {
     color: #000;
     z-index: 4;
 }
+
+    /* ==========================================================
+       ФИНАЛЬНЫЙ МОБИЛЬНЫЙ СЛОЙ ДЛЯ ТЕЛЕФОНОВ И TELEGRAM MINI APP
+       Портретная ориентация, safe-area, компактные шапки слотов.
+       ========================================================== */
+    @media (max-width: 768px) {
+        body { min-height: 100dvh; }
+
+        .topbar {
+            padding-top: max(8px, env(safe-area-inset-top)) !important;
+            min-height: 50px !important;
+        }
+
+        .content-area {
+            padding-bottom: calc(88px + env(safe-area-inset-bottom)) !important;
+        }
+
+        .mobile-bottom-nav {
+            padding-bottom: calc(6px + env(safe-area-inset-bottom)) !important;
+            box-shadow: 0 -8px 28px rgba(0, 0, 0, 0.45);
+        }
+        .mob-nav-btn { padding: 7px 4px 6px; }
+        .mob-nav-btn:active { transform: scale(0.94); }
+
+        /* Компактные шапки слотов: кнопка выплат превращается в «?» */
+        .ao-top-bar, .dh-top-bar, .sb-top-bar {
+            padding: 6px 8px !important;
+            flex-wrap: nowrap !important;
+            gap: 6px !important;
+        }
+        .dh-logo-title { font-size: 0.95rem !important; }
+        .sb-logo-img { max-height: 30px !important; }
+        .btn-back {
+            padding: 6px 9px !important;
+            font-size: 0.7rem !important;
+            border-radius: 999px;
+            white-space: nowrap;
+        }
+        .btn-paytable-help {
+            width: 34px; height: 34px; min-width: 34px;
+            padding: 0 !important;
+            font-size: 0 !important;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+        }
+        .btn-paytable-help::before {
+            content: '?';
+            font-size: 0.95rem;
+            font-weight: 900;
+            line-height: 1;
+        }
+
+        /* В открытом слоте убираем длинный футер — больше места игре */
+        body.slot-open .trust-footer { display: none !important; }
+        body.slot-open .content-area {
+            padding-bottom: calc(80px + env(safe-area-inset-bottom)) !important;
+        }
+
+        /* Dog House: фон заполняет экран, сцена по центру */
+        #view-doghouse.active {
+            display: flex;
+            flex-direction: column;
+            min-height: calc(100dvh - 160px - env(safe-area-inset-bottom));
+        }
+        #view-doghouse .dh-stage { flex: 1 1 auto; }
+
+        /* Olympus и Bonanza: тематический фон заполняет экран до меню */
+        #view-olympus.active, #view-bonanza.active {
+            min-height: calc(100dvh - 160px - env(safe-area-inset-bottom));
+        }
+
+        .slot-open .ao-stage,
+        .slot-open .dh-stage,
+        .slot-open .sb-stage { padding-bottom: 4px !important; }
+
+        /* Тактильная отдача кнопок */
+        .ao-spin-circle-btn:active, .dh-spin-circle-btn:active, .sb-spin-btn:active { transform: scale(0.93); }
+        .ao-bet-adjust-btn:active, .dh-bet-adjust-btn:active { transform: scale(0.92); }
+        .hero-cta-btn:active { transform: scale(0.985); }
+        .recent-win-chip { flex: 0 0 auto; }
+
+        .toast { bottom: calc(84px + env(safe-area-inset-bottom)) !important; }
+        .chat-drawer { bottom: calc(80px + env(safe-area-inset-bottom)) !important; }
+    }
+
+    /* Telegram fullscreen: учитываем верхнюю панель Mini App */
+    body.tg-mini-app .topbar {
+        padding-top: max(8px, calc(var(--tg-content-top, 0px) + 6px)) !important;
+    }
+
+    /* Если телефон всё-таки повернули в ландшафт — просим вернуть портрет,
+       потому что слоты сверстаны под вертикальный экран. */
+    @media (orientation: landscape) and (max-height: 540px) {
+        body.slot-open::before {
+            content: "📱 Поверните телефон вертикально\A Так играть удобнее и всё помещается на экране";
+            white-space: pre-line;
+            position: fixed;
+            inset: 0;
+            z-index: 99998;
+            display: grid;
+            place-items: center;
+            text-align: center;
+            padding: 24px;
+            background: radial-gradient(circle at 50% 35%, #0d1a30 0%, #060a13 70%);
+            color: #fff;
+            font-family: 'Unbounded', sans-serif;
+            font-size: 1rem;
+            font-weight: 800;
+            line-height: 1.6;
+        }
+    }
     </style>
 </head>
 <body>
@@ -5900,6 +6012,7 @@ async function hashPassword(str) {
         function hideAllViews() {
             document.querySelectorAll('.game-view').forEach(v => v.classList.remove('active'));
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            document.body.classList.remove('slot-open');
             stopSlotMusic();
         }
 
@@ -6348,6 +6461,7 @@ async function hashPassword(str) {
             const gridEl = document.getElementById('ao-grid');
             if (gridEl && gridEl.children.length === 0) initOlympusDOM();
             hideAllViews();
+            document.body.classList.add('slot-open');
             document.getElementById('view-olympus').classList.add('active');
             document.getElementById('nav-slot-olympus').classList.add('active');
             updateBalanceUI();
@@ -6755,6 +6869,7 @@ async function hashPassword(str) {
                     document.getElementById('view-olympus')?.classList.remove('freespins-mode');
                     document.getElementById('ao-fs-banner')?.classList.remove('active');
                     showToast(`🏆 Бонус завершён! Итоговый выигрыш: ${aoFreeSpinsTotalWin.toFixed(2)} ⭐`);
+                    await reportBonusWin('Gates of Olympus', aoAnteActive ? 'Ante-фриспины' : 'Фриспины', aoFreeSpinsTotalWin, aoCurrentBet);
                     if (aoAutoActive) { await sleep(700); spinGatesOfOlympus(); }
                 }
             } else if (aoAutoActive) {
@@ -6792,6 +6907,7 @@ async function hashPassword(str) {
             const gridEl = document.getElementById('dh-grid');
             if (gridEl && gridEl.children.length === 0) initDogHouseDOM();
             hideAllViews();
+            document.body.classList.add('slot-open');
             document.getElementById('view-doghouse').classList.add('active');
             document.getElementById('nav-slot-doghouse').classList.add('active');
             updateBalanceUI();
@@ -7156,6 +7272,7 @@ async function hashPassword(str) {
                     dhStickyWilds = Array.from({ length: DH_COLS }, () => Array(DH_ROWS).fill(null));
                     document.getElementById('dh-fs-banner')?.classList.remove('active');
                     showToast(`🐶 Бонус завершён! Выигрыш: ${dhFreeSpinsTotalWin.toFixed(2)} ⭐`);
+                    await reportBonusWin('The Dog House', 'Фриспины с липкими будками', dhFreeSpinsTotalWin, dhCurrentBet);
                     if (dhAutoActive) { await sleep(700); spinDogHouse(); }
                 }
             } else if (dhAutoActive) {
@@ -7193,6 +7310,7 @@ async function hashPassword(str) {
             const gridEl = document.getElementById('sb-grid');
             if (gridEl && gridEl.children.length === 0) initBonanzaDOM();
             hideAllViews();
+            document.body.classList.add('slot-open');
             document.getElementById('view-bonanza').classList.add('active');
             document.getElementById('nav-slot-bonanza').classList.add('active');
             updateBalanceUI();
@@ -7582,6 +7700,7 @@ async function hashPassword(str) {
                     document.getElementById('view-bonanza')?.classList.remove('freespins-mode');
                     document.getElementById('sb-fs-banner')?.classList.remove('active');
                     showToast(`🍭 Бонус завершён! Выигрыш: ${sbFreeSpinsTotalWin.toFixed(2)} ⭐`);
+                    await reportBonusWin('Sweet Bonanza', sbAnteActive ? 'Ante-фриспины' : 'Фриспины', sbFreeSpinsTotalWin, getBonanzaBaseBet());
                     if (sbAutoActive) { await sleep(700); spinSweetBonanza(); }
                 }
             } else if (sbAutoActive) {
@@ -7803,7 +7922,49 @@ async function hashPassword(str) {
             }
         }
 
+        // ---- Telegram Mini App: полноэкранный режим, safe-area, вибрация ----
+        function initTelegramMiniApp() {
+            const tg = window.Telegram && window.Telegram.WebApp;
+            if (!tg) return;
+            document.body.classList.add('tg-mini-app');
+            try { tg.ready(); tg.expand(); } catch (e) {}
+            try { if (typeof tg.disableVerticalSwipes === 'function') tg.disableVerticalSwipes(); } catch (e) {}
+            try { if (typeof tg.setHeaderColor === 'function') tg.setHeaderColor('#060a13'); } catch (e) {}
+            try { if (typeof tg.setBackgroundColor === 'function') tg.setBackgroundColor('#060a13'); } catch (e) {}
+            try { if (typeof tg.setBottomBarColor === 'function') tg.setBottomBarColor('#060a13'); } catch (e) {}
+
+            const applyInsets = () => {
+                try {
+                    const top = Number(tg.contentSafeAreaInsetTop || 0);
+                    document.documentElement.style.setProperty('--tg-content-top', Math.max(0, top) + 'px');
+                } catch (e) {}
+            };
+            applyInsets();
+            try { tg.onEvent('viewportChanged', applyInsets); } catch (e) {}
+            try { tg.onEvent('safeAreaChanged', applyInsets); } catch (e) {}
+            try { tg.onEvent('contentSafeAreaChanged', applyInsets); } catch (e) {}
+        }
+
+        function tgHaptic(kind) {
+            try {
+                const h = window.Telegram && Telegram.WebApp && Telegram.WebApp.HapticFeedback;
+                if (!h) return;
+                if (kind === 'success' || kind === 'warning' || kind === 'error') {
+                    h.notificationOccurred(kind);
+                } else {
+                    h.impactOccurred(kind || 'light');
+                }
+            } catch (e) {}
+        }
+
+        function notifyHapticForSfx(type) {
+            if (type === 'stop') tgHaptic('rigid');
+            else if (type === 'win' || type === 'bonus' || type === 'bigwin' || type === 'megawin') tgHaptic('success');
+            else if (type === 'spin' || type === 'click' || type === 'pop') tgHaptic('light');
+        }
+
         function playSfx(type) {
+            notifyHapticForSfx(type);
             if (!soundEnabled || !audioCtx) return;
             resumeAudio();
             const now = audioCtx.currentTime;
@@ -7861,6 +8022,40 @@ async function hashPassword(str) {
             } catch (e) {}
         }
 
+        // ==========================================================
+        // ОТЧЁТ О КРУПНОМ ВЫИГРЫШЕ ЗА БОНУС (для Telegram-бота)
+        // Пишем только итог бонусной игры, а не отдельные спины.
+        // Бот @LydkaHouse_bot забирает такие записи и присылает
+        // игроку сообщение о выигрыше.
+        // ==========================================================
+        const BONUS_WIN_MIN_STARS = 700;
+
+        function getTelegramUserId() {
+            try {
+                const tg = window.Telegram && Telegram.WebApp;
+                const id = tg && tg.initDataUnsafe && tg.initDataUnsafe.user
+                    ? tg.initDataUnsafe.user.id : 0;
+                return Number.isFinite(Number(id)) ? Number(id) : 0;
+            } catch (e) { return 0; }
+        }
+
+        async function reportBonusWin(slotName, modeLabel, amount, bet) {
+            const total = Number(amount);
+            if (!username || !Number.isFinite(total) || total < BONUS_WIN_MIN_STARS) return;
+            try {
+                await db.collection('recent_wins').add({
+                    nick: username,
+                    slot: slotName,
+                    mode: String(modeLabel || 'Бонусная игра'),
+                    type: 'bonus',
+                    amount: normalizeMoney(total),
+                    bet: normalizeMoney(Number(bet) || 0),
+                    tgId: getTelegramUserId(),
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+            } catch (e) {}
+        }
+
         function listenRecentWins() {
             const bar = document.getElementById('recent-wins-bar');
             if (!bar) return;
@@ -7868,6 +8063,8 @@ async function hashPassword(str) {
                 bar.innerHTML = '';
                 snap.forEach(doc => {
                     const d = doc.data();
+                    // Служебные тестовые записи не показываем
+                    if (!d || d.type === 'probe' || d.nick === '__probe__') return;
                     bar.innerHTML += `<div class="recent-win-chip">
                         🏆 <b class="rw-nick">${escapeHtml(d.nick)}</b>
                         <span class="rw-slot">${escapeHtml(d.slot)}</span>
@@ -7877,10 +8074,7 @@ async function hashPassword(str) {
             });
         }
         window.addEventListener('DOMContentLoaded', () => {
-            if (window.Telegram && window.Telegram.WebApp) {
-    Telegram.WebApp.ready();
-    Telegram.WebApp.expand(); // Раскрыть на весь экран
-}
+            initTelegramMiniApp();
             loadState();
             initOlympusDOM();
             initDogHouseDOM();
@@ -8530,11 +8724,13 @@ function applyProfilePromoCode() {
     </button>
 </nav>
 <script>
-// === 1. АВТОПОВОРОТ ЭКРАНА В ИГРАХ ===
+// === 1. ОРИЕНТАЦИЯ: оставляем портрет (в Telegram Mini App он удобнее) ===
 async function enterLandscapeMode() {
+    // Принудительный ландшафт отключён: в портрете слоты помещаются
+    // на один экран телефона и не требуют прокрутки.
     try {
         if (screen.orientation && screen.orientation.lock) {
-            await screen.orientation.lock('landscape');
+            await screen.orientation.lock('portrait');
         }
     } catch (e) {}
 }
