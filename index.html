@@ -859,6 +859,10 @@
             filter: blur(0.9px) saturate(1.08);
             pointer-events: none;
         }
+        .slot-reel-strip.turbo {
+            animation-duration: 0.105s !important;
+            filter: blur(1.6px) saturate(1.15) !important;
+        }
         .slot-reel-strip-item {
             width: 100%;
             height: 25%;
@@ -4655,10 +4659,27 @@ html, body {
         }
         body.slot-open #view-doghouse #dh-auto-btn { grid-row: 4; }
 
+        body.slot-open #view-olympus #ao-turbo-btn,
+        body.slot-open #view-doghouse #dh-turbo-btn,
+        body.slot-open #view-bonanza #sb-turbo-btn {
+            grid-column: 3;
+            grid-row: 6;
+            justify-self: end;
+            margin-right: 8px;
+            width: 40px !important;
+            height: 40px !important;
+            min-width: 40px;
+            font-size: 1rem !important;
+        }
+        body.slot-open #view-doghouse #dh-turbo-btn { grid-row: 5; }
+
         /* Тактильная отдача кнопок управления */
         body.slot-open #ao-spin-btn:active,
         body.slot-open #dh-spin-btn:active,
         body.slot-open #sb-spin-btn:active { transform: scale(0.93); }
+        body.slot-open #ao-turbo-btn:active,
+        body.slot-open #dh-turbo-btn:active,
+        body.slot-open #sb-turbo-btn:active { transform: scale(0.9); }
     }
 
     /* Компактный вариант для невысоких экранов, чтобы всё влезало в 100dvh */
@@ -4702,6 +4723,21 @@ html, body {
         animation: none !important;
     }
 }
+        .floating-win {
+            position: absolute;
+            pointer-events: none;
+            font-family: 'Unbounded', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 900;
+            color: #3ddc84;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.8), 0 0 12px rgba(61,220,132,0.9);
+            transform: translate(-50%, -50%) translateY(0) scale(1);
+            opacity: 1;
+            transition: transform 0.9s cubic-bezier(0.16,1,0.3,1), opacity 0.9s ease-out;
+            z-index: 100;
+            white-space: nowrap;
+        }
+    }
     </style>
 </head>
 <body>
@@ -5155,13 +5191,14 @@ html, body {
                         <div class="ao-win-label" id="ao-win-lbl">ПОСЛЕДНИЙ ВЫИГРЫШ</div>
                         <div class="ao-win-amount"><span id="ao-hud-win">0,00</span> ⭐</div>
                     </div>
-                    <div class="ao-hud-right-group">
+<div class="ao-hud-right-group">
                         <button class="ao-bet-adjust-btn" onclick="changeOlympusBet(-0.5)">−</button>
                         <button class="ao-spin-circle-btn" id="ao-spin-btn" onclick="spinGatesOfOlympus()">
                             <svg viewBox="0 0 24 24"><path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"/></svg>
                         </button>
                         <button class="ao-bet-adjust-btn" onclick="changeOlympusBet(0.5)">+</button>
                         <button class="ao-icon-btn" id="ao-auto-btn" onclick="toggleOlympusAuto()" title="Автоспины" style="font-size:0.72rem; font-weight:900; width:44px; height:44px;">AUTO</button>
+                        <button class="ao-icon-btn" id="ao-turbo-btn" onclick="toggleOlympusTurbo()" title="Турбо-режим" style="font-size:1rem; font-weight:900; width:44px; height:44px;">⚡</button>
                     </div>
                 </div>
             </div>
@@ -5216,6 +5253,7 @@ html, body {
                         <button class="dh-bet-adjust-btn" onclick="changeDogHouseBet(0.5)">+</button>
                         <button class="ao-icon-btn js-sound-btn" id="dh-sound-btn" onclick="toggleSound()" title="Звук">🔊</button>
                         <button class="ao-icon-btn" id="dh-auto-btn" onclick="toggleDogHouseAuto()" title="Автоспины" style="font-size:0.72rem; font-weight:900; width:44px; height:44px;">AUTO</button>
+                        <button class="ao-icon-btn" id="dh-turbo-btn" onclick="toggleDogHouseTurbo()" title="Турбо-режим" style="font-size:1rem; font-weight:900; width:44px; height:44px;">⚡</button>
                     </div>
                 </div>
             </div>
@@ -5292,6 +5330,7 @@ html, body {
                         <button class="sb-spin-btn" id="sb-spin-btn" onclick="spinSweetBonanza()">↻</button>
                         <button class="ao-icon-btn js-sound-btn" id="sb-sound-btn" onclick="toggleSound()" title="Звук">🔊</button>
                         <button class="ao-icon-btn" id="sb-auto-btn" onclick="toggleBonanzaAuto()" title="Автоигра" style="font-size:0.72rem; font-weight:900; width:44px; height:44px;">AUTO</button>
+                        <button class="ao-icon-btn" id="sb-turbo-btn" onclick="toggleBonanzaTurbo()" title="Турбо-режим" style="font-size:1rem; font-weight:900; width:44px; height:44px;">⚡</button>
                     </div>
                 </div>
             </div>
@@ -5552,7 +5591,7 @@ html, body {
         ];
 
         let aoGrid = Array.from({ length: AO_COLS }, () => Array(AO_ROWS).fill(null));
-        let aoSpinning = false, aoAnteActive = false, aoInFreeSpins = false, aoAutoActive = false;
+        let aoSpinning = false, aoAnteActive = false, aoInFreeSpins = false, aoAutoActive = false, aoTurboActive = false;
         let aoStopRequested = false;
         let aoFreeSpinsLeft = 0, aoFreeSpinsTotalWin = 0, totalMultiplier = 0, aoCurrentBet = 0.5;
 
@@ -5618,7 +5657,7 @@ html, body {
 
         let dhGrid = Array.from({ length: DH_COLS }, () => Array(DH_ROWS).fill(null));
         let dhStickyWilds = Array.from({ length: DH_COLS }, () => Array(DH_ROWS).fill(null));
-        let dhSpinning = false, dhInFreeSpins = false, dhAutoActive = false, dhFreeSpinsLeft = 0, dhFreeSpinsTotalWin = 0, dhCurrentBet = 0.5;
+        let dhSpinning = false, dhInFreeSpins = false, dhAutoActive = false, dhTurboActive = false, dhFreeSpinsLeft = 0, dhFreeSpinsTotalWin = 0, dhCurrentBet = 0.5;
         let dhStopRequested = false;
 
         // ==========================================
@@ -5644,7 +5683,7 @@ html, body {
         ];
 
         let sbGrid = Array.from({ length: SB_COLS }, () => Array(SB_ROWS).fill(null));
-        let sbSpinning = false, sbAnteActive = false, sbAutoActive = false, sbFreeSpinsLeft = 0, sbInFreeSpins = false, sbFreeSpinsTotalWin = 0, sbLockedBonusBet = null;
+        let sbSpinning = false, sbAnteActive = false, sbAutoActive = false, sbTurboActive = false, sbFreeSpinsLeft = 0, sbInFreeSpins = false, sbFreeSpinsTotalWin = 0, sbLockedBonusBet = null;
         let sbStopRequested = false; 
 
         let balance = 1000;
@@ -5905,17 +5944,47 @@ html, body {
 
         // Wait for a reel phase, but allow an early stop on the second SPIN press.
         // remainMs - delay before the next reel while quick-stopping.
-        async function waitSpin(ms, stopFn, remainMs = 0) {
+        // turboActive - if true, speeds up by TURBO_SPEEDUP factor (2.2x)
+        const TURBO_SPEEDUP = 2.2;
+        async function waitSpin(ms, stopFn, remainMs = 0, turboActive = false) {
             if (!stopFn || !stopFn()) {
-                const end = Date.now() + ms;
+                const adjustedMs = turboActive ? Math.round(ms / TURBO_SPEEDUP) : ms;
+                const end = Date.now() + adjustedMs;
                 while (Date.now() < end) {
                     await sleep(30);
                     if (stopFn && stopFn()) break;
                 }
             }
-            if (stopFn && stopFn() && remainMs > 0) await sleep(remainMs);
+            if (stopFn && stopFn() && remainMs > 0) {
+                const adjustedRemain = turboActive ? Math.round(remainMs / TURBO_SPEEDUP) : remainMs;
+                await sleep(adjustedRemain);
+            }
         }
-function fillReelStrip(inner, pool, col, row, isDogHouse = false) {
+}
+        // Show floating win text over the game field (for cascades)
+        function showFloatingWin(viewId, amount) {
+            const view = document.getElementById(viewId);
+            if (!view) return;
+            const el = document.createElement('div');
+            el.className = 'floating-win';
+            el.textContent = '+' + amount.toFixed(2).replace('.', ',') + ' ⭐';
+            view.appendChild(el);
+            // Position randomly in the upper half of the game area
+            el.style.left = (20 + Math.random() * 60) + '%';
+            el.style.top = (15 + Math.random() * 40) + '%';
+            // Animate and remove
+            requestAnimationFrame(() => {
+                el.style.transform = 'translate(-50%, -50%) translateY(0) scale(1)';
+                el.style.opacity = '1';
+            });
+            setTimeout(() => {
+                el.style.transform = 'translate(-50%, -50%) translateY(-80px) scale(0.8)';
+                el.style.opacity = '0';
+            }, 50);
+            setTimeout(() => el.remove(), 1200);
+        }
+}
+function fillReelStrip(inner, pool, col, row, isDogHouse = false, turboActive = false) {
             if (!inner) return;
             const pick = () => pool[Math.floor(Math.random() * pool.length)];
             const a = pick();
@@ -5926,11 +5995,16 @@ function fillReelStrip(inner, pool, col, row, isDogHouse = false) {
             const cls = isDogHouse ? 'dh-sym-img' : 'ao-symbol-img';
             inner.className = inner.className.replace(/\bdrop-in\b/g, '').trim();
             inner.style.animationDelay = '';
-            inner.innerHTML = `
-                <div class="slot-reel-strip" style="animation-delay:${delay}ms;">
-                    ${items.map(src => `<div class="slot-reel-strip-item"><img src="${src}" alt="" class="${cls}" draggable="false"></div>`).join('')}
-                </div>
-            `;
+            const strip = document.createElement('div');
+            strip.className = 'slot-reel-strip' + (turboActive ? ' turbo' : '');
+            strip.style.animationDelay = `${delay}ms`;
+            strip.innerHTML = items.map(src => `<div class="slot-reel-strip-item"><img src="${src}" alt="" class="${cls}" draggable="false"></div>`).join('');
+            inner.innerHTML = '';
+            inner.appendChild(strip);
+            if (row === 0 && soundEnabled && audioCtx) {
+                playSfx('reelTick');
+            }
+        }
         }
 
         
@@ -6140,9 +6214,13 @@ async function hashPassword(str) {
         function showLobby() {
             if (isAnyGameBusy()) { showToast('⚠️ Дождитесь окончания раунда!'); return; }
             aoAutoActive = false; dhAutoActive = false; sbAutoActive = false;
+            aoTurboActive = false; dhTurboActive = false; sbTurboActive = false;
             document.getElementById('ao-auto-btn')?.classList.remove('auto-active-btn');
             document.getElementById('dh-auto-btn')?.classList.remove('auto-active-btn');
             document.getElementById('sb-auto-btn')?.classList.remove('auto-active-btn');
+            document.getElementById('ao-turbo-btn')?.classList.remove('auto-active-btn');
+            document.getElementById('dh-turbo-btn')?.classList.remove('auto-active-btn');
+            document.getElementById('sb-turbo-btn')?.classList.remove('auto-active-btn');
             hideAllViews();
             document.getElementById('view-lobby').classList.add('active');
             document.getElementById('nav-lobby').classList.add('active');
@@ -6709,6 +6787,13 @@ async function hashPassword(str) {
             if (aoAutoActive && !aoSpinning) spinGatesOfOlympus();
         }
 
+        function toggleOlympusTurbo() {
+            aoTurboActive = !aoTurboActive;
+            const btn = document.getElementById('ao-turbo-btn');
+            if (btn) btn.classList.toggle('auto-active-btn', aoTurboActive);
+            showToast(aoTurboActive ? '⚡ Турбо-режим ВКЛ' : '⚡ Турбо-режим ВЫКЛ');
+        }
+
         async function buyOlympusBonus() {
             if (aoSpinning || aoInFreeSpins || bonusPurchasePending) return;
             if (isOtherSlotBusy('ao')) { showToast('⚠️ Дождитесь окончания игры в другом слоте!'); return; }
@@ -6814,7 +6899,7 @@ async function hashPassword(str) {
                  if (cell) {
                      cell.classList.remove('ao-protrude-cell', 'win-pop');
                      cell.classList.add('cell-spinning');
-                     fillReelStrip(cell.querySelector('.ao-symbol-inner'), spinPool, c, r, false);
+                     fillReelStrip(cell.querySelector('.ao-symbol-inner'), spinPool, c, r, false, aoTurboActive);
                  }
              }
          }
@@ -6835,7 +6920,7 @@ async function hashPassword(str) {
                     nextGrid[5][3] = { ...AO_SCATTER };
                 }
 
-                await waitSpin(620, () => aoStopRequested);
+                await waitSpin(620, () => aoStopRequested, 0, aoTurboActive);
 
                 for (let c = 0; c < AO_COLS; c++) {
                  for (let r = 0; r < AO_ROWS; r++) {
@@ -6843,7 +6928,7 @@ async function hashPassword(str) {
                      renderOlympusCell(c, r, true);
                  }
                  playSfx('stop');
-                 await waitSpin(95, () => aoStopRequested, 55);
+                 await waitSpin(95, () => aoStopRequested, 55, aoTurboActive);
              }
 
                 if (hasDroppedBomb) triggerZeusLighting();
@@ -6893,6 +6978,7 @@ async function hashPassword(str) {
                         for (let r = 0; r < AO_ROWS; r++) { aoGrid[c][r] = rebuilt[r]; renderOlympusCell(c, r, true); }
                     }
                     if (cascadeHasBomb) triggerZeusLighting();
+                    if (stepWin > 0) showFloatingWin('view-olympus', stepWin);
                     await sleep(480);
                 }
 
@@ -7116,6 +7202,13 @@ async function hashPassword(str) {
             if (dhAutoActive && !dhSpinning) spinDogHouse();
         }
 
+        function toggleDogHouseTurbo() {
+            dhTurboActive = !dhTurboActive;
+            const btn = document.getElementById('dh-turbo-btn');
+            if (btn) btn.classList.toggle('auto-active-btn', dhTurboActive);
+            showToast(dhTurboActive ? '⚡ Турбо-режим ВКЛ' : '⚡ Турбо-режим ВЫКЛ');
+        }
+
         async function triggerDogHouseFreeSpinsIntro() {
             const introBox = document.getElementById('dh-fs-intro');
             const miniGrid = document.getElementById('dh-mini-grid');
@@ -7261,7 +7354,7 @@ async function hashPassword(str) {
                  if (cell) {
                      cell.classList.remove('win-pop', 'dh-protrude-cell');
                      cell.classList.add('spinning');
-                     fillReelStrip(cell.querySelector('.dh-symbol-inner'), dhSpinPool, c, r, true);
+                     fillReelStrip(cell.querySelector('.dh-symbol-inner'), dhSpinPool, c, r, true, dhTurboActive);
                  }
              }
          }
@@ -7284,7 +7377,7 @@ async function hashPassword(str) {
                     }
                 }
 
-                await waitSpin(450, () => dhStopRequested);
+                await waitSpin(450, () => dhStopRequested, 0, dhTurboActive);
 
                 const hasScatterCol1 = !dhInFreeSpins && nextGrid[0].some(s => s && s.id === 'scatter');
                 const hasScatterCol3 = !dhInFreeSpins && nextGrid[2].some(s => s && s.id === 'scatter');
@@ -7295,12 +7388,12 @@ async function hashPassword(str) {
                         for (let r = 0; r < DH_ROWS; r++) {
                             document.getElementById(`dh-cell-4-${r}`)?.classList.add('dh-tease-spin');
                         }
-                        await waitSpin(1450, () => dhStopRequested);
+                        await waitSpin(1450, () => dhStopRequested, 0, dhTurboActive);
                         for (let r = 0; r < DH_ROWS; r++) {
                             document.getElementById(`dh-cell-4-${r}`)?.classList.remove('dh-tease-spin');
                         }
                     } else {
-                        await waitSpin(260, () => dhStopRequested, 60);
+                        await waitSpin(260, () => dhStopRequested, 60, dhTurboActive);
                     }
 
                     for (let r = 0; r < DH_ROWS; r++) {
@@ -7544,6 +7637,13 @@ async function hashPassword(str) {
             if (sbAutoActive && !sbSpinning) spinSweetBonanza();
         }
 
+        function toggleBonanzaTurbo() {
+            sbTurboActive = !sbTurboActive;
+            const btn = document.getElementById('sb-turbo-btn');
+            if (btn) btn.classList.toggle('auto-active-btn', sbTurboActive);
+            showToast(sbTurboActive ? '⚡ Турбо-режим ВКЛ' : '⚡ Турбо-режим ВЫКЛ');
+        }
+
         async function buyBonanzaBonus() {
             if (sbSpinning || sbInFreeSpins || bonusPurchasePending) return;
             if (isOtherSlotBusy('sb')) { showToast('⚠️ Дождитесь окончания игры в другом слоте!'); return; }
@@ -7631,7 +7731,7 @@ async function hashPassword(str) {
                  if (cell) {
                      cell.classList.remove('sb-protrude-cell', 'win-pop');
                      cell.classList.add('cell-spinning');
-                     fillReelStrip(cell.querySelector('.sb-symbol-inner'), sbSpinPool, c, r, false);
+                     fillReelStrip(cell.querySelector('.sb-symbol-inner'), sbSpinPool, c, r, false, sbTurboActive);
                  }
              }
          }
@@ -7650,7 +7750,7 @@ async function hashPassword(str) {
                     nextGrid[5][2] = { ...SB_SCATTER };
                 }
 
-                await waitSpin(580, () => sbStopRequested);
+                await waitSpin(580, () => sbStopRequested, 0, sbTurboActive);
 
                 for (let c = 0; c < SB_COLS; c++) {
                     for (let r = 0; r < SB_ROWS; r++) {
@@ -7658,7 +7758,7 @@ async function hashPassword(str) {
                         renderBonanzaCell(c, r, true);
                     }
                     playSfx('stop')
-                    await waitSpin(90, () => sbStopRequested, 50);
+                    await waitSpin(90, () => sbStopRequested, 50, sbTurboActive);
                 }
 
                 let spinRawWin = 0;
@@ -7701,6 +7801,7 @@ async function hashPassword(str) {
                         const rebuilt = [...surviving, ...newTop].reverse();
                         for (let r = 0; r < SB_ROWS; r++) { sbGrid[c][r] = rebuilt[r]; renderBonanzaCell(c, r, true); }
                     }
+                    if (stepWin > 0) showFloatingWin('view-bonanza', stepWin);
                     await sleep(460);
                 }
 
@@ -8050,7 +8151,7 @@ async function hashPassword(str) {
         function notifyHapticForSfx(type) {
             if (type === 'stop') tgHaptic('rigid');
             else if (type === 'win' || type === 'bonus' || type === 'bigwin' || type === 'megawin') tgHaptic('success');
-            else if (type === 'spin' || type === 'click' || type === 'pop') tgHaptic('light');
+            else if (type === 'spin' || type === 'click' || type === 'pop' || type === 'reelTick') tgHaptic('light');
         }
 
         function playSfx(type) {
@@ -8095,6 +8196,10 @@ async function hashPassword(str) {
                 });
                 playNoiseAt(now, 0.7, 'highpass', 3800, 0.05);
                 playTone(70, now, 0.5, 'sine', 0.09, 45);
+            } else if (type === 'reelTick') {
+                // Short mechanical tick sound for reel spinning
+                playTone(880, now, 0.012, 'square', 0.025, 1200);
+                playNoiseAt(now, 0.018, 'highpass', 4000, 0.008);
             }
         }
 
