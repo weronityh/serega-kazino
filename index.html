@@ -4155,6 +4155,17 @@ html, body {
     transition: transform 4s cubic-bezier(0.15, 0.85, 0.2, 1);
     position: relative;
 }
+.wheel-lbl {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) rotate(var(--deg)) translateY(-82px);
+    font-size: 0.78rem;
+    font-weight: 900;
+    color: #fff;
+    text-shadow: 0 2px 4px #000;
+    pointer-events: none;
+}
 .wheel-center-dot {
     position: absolute;
     top: 50%; left: 50%;
@@ -4307,7 +4318,7 @@ html, body {
         body.slot-open #view-bonanza.active {
             position: fixed;
             inset: 0;
-            z-index: 8500;
+            z-index: 9000;
             display: grid;
             grid-template-columns: 1fr auto 1fr;
             grid-template-rows: minmax(0, 1fr) auto auto auto auto;
@@ -4659,19 +4670,27 @@ html, body {
         }
         body.slot-open #view-doghouse #dh-auto-btn { grid-row: 4; }
 
-        body.slot-open #view-olympus #ao-turbo-btn,
-        body.slot-open #view-doghouse #dh-turbo-btn,
-        body.slot-open #view-bonanza #sb-turbo-btn {
-            grid-column: 3;
-            grid-row: 6;
-            justify-self: end;
-            margin-right: 8px;
-            width: 40px !important;
-            height: 40px !important;
-            min-width: 40px;
-            font-size: 1rem !important;
-        }
-        body.slot-open #view-doghouse #dh-turbo-btn { grid-row: 5; }
+       body.slot-open #view-olympus #ao-turbo-btn,
+     body.slot-open #view-doghouse #dh-turbo-btn,
+     body.slot-open #view-bonanza #sb-turbo-btn {
+         position: absolute;
+         top: calc(env(safe-area-inset-top, 0px) + 8px);
+         right: 96px;
+         width: 34px !important;
+         height: 34px !important;
+         min-width: 34px;
+         margin: 0;
+         z-index: 75;
+         background: rgba(0, 0, 0, 0.38);
+         border: 1px solid rgba(255, 255, 255, 0.22);
+         -webkit-backdrop-filter: blur(10px);
+                 backdrop-filter: blur(10px);
+         font-size: 0.95rem !important;
+     }
+     .dh-fs-intro-box { padding: 8px !important; }
+     .dh-fs-intro-box img { width: 42px !important; height: 42px !important; margin-bottom: 2px !important; }
+     .dh-grid-3x3 { gap: 4px !important; margin: 6px 0 !important; }
+     .dh-mini-cell { width: 34px !important; height: 34px !important; font-size: 0.95rem !important; border-radius: 7px !important; }
 
         /* Тактильная отдача кнопок управления */
         body.slot-open #ao-spin-btn:active,
@@ -4737,10 +4756,106 @@ html, body {
             z-index: 100;
             white-space: nowrap;
         }
-    }
+/* ==========================================================
+   ЦЕЛЬНЫЕ ВЕРТИКАЛЬНЫЕ БАРАБАНЫ (ПОСТОЛБЦОВАЯ ПРОКРУТКА)
+   ========================================================== */
+.ao-grid-6x5,
+.dh-grid-5x3,
+.sb-grid-6x5 {
+    position: relative;
+}
+
+.reel-col-viewport {
+    position: absolute;
+    overflow: hidden;
+    z-index: 12;
+    pointer-events: none;
+    border-radius: 10px;
+}
+
+.reel-col-viewport.reel-tease-glow {
+    box-shadow: inset 0 0 18px rgba(250, 204, 21, 0.7), 0 0 22px rgba(250, 204, 21, 0.85);
+    border: 2px solid #fde047;
+    border-radius: 12px;
+}
+
+.reel-col-strip {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    will-change: transform;
+}
+
+.reel-col-item {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    overflow: hidden;
+}
+
+.reel-col-item .ao-symbol-img {
+    width: 88%;
+    height: 88%;
+    object-fit: contain;
+    display: block;
+}
+
+.reel-col-item .dh-sym-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+    display: block;
+}
+
+.reel-mult-mini,
+.reel-wild-mini {
+    position: relative;
+    width: 88%;
+    height: 88%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.reel-mult-mini img,
+.reel-wild-mini img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.reel-mult-mini .ao-sphere-val {
+    position: absolute;
+    font-size: 0.95rem;
+    font-weight: 900;
+    color: #fff;
+    text-shadow: 0 2px 4px #000;
+}
+
+.reel-wild-mini .reel-wild-x {
+    position: absolute;
+    bottom: 2px;
+    right: 2px;
+    background: linear-gradient(135deg, #ef4444, #991b1b);
+    border: 1.5px solid #fde047;
+    border-radius: 6px;
+    padding: 1px 5px;
+    font-size: 0.78rem;
+    font-weight: 900;
+    color: #fff;
+}
+
+.reel-spinning-hide .ao-symbol-inner,
+.reel-spinning-hide .dh-symbol-inner,
+.reel-spinning-hide .sb-symbol-inner {
+    opacity: 0 !important;
+}
     </style>
 </head>
-<body>
+<body ontouchstart="">
 <div id="nickname-overlay">
         <div class="nickname-box">
             <div style="font-size: 3.2rem; margin-bottom: 10px;">🔐👑</div>
@@ -4889,7 +5004,14 @@ html, body {
 
         <div class="wheel-wrap">
             <div class="wheel-pointer">🔻</div>
-            <div class="wheel-circle" id="wheel-circle"></div>
+            <div class="wheel-circle" id="wheel-circle">
+    <span class="wheel-lbl" style="--deg:30deg;">0.5⭐</span>
+    <span class="wheel-lbl" style="--deg:90deg;">1⭐</span>
+    <span class="wheel-lbl" style="--deg:150deg;">2⭐</span>
+    <span class="wheel-lbl" style="--deg:210deg;">5⭐</span>
+    <span class="wheel-lbl" style="--deg:270deg;">10⭐</span>
+    <span class="wheel-lbl" style="--deg:330deg;">15⭐</span>
+</div>
             <div class="wheel-center-dot">⭐</div>
         </div>
 
@@ -5323,7 +5445,7 @@ html, body {
                             <button class="sb-bet-step-btn" onclick="changeBonanzaBet(-0.5)">−</button>
                             <div class="sb-bet-input-wrap">
                                 <span>Ставка</span>
-                                <input type="number" id="sb-base-bet" value="0.5" min="0.5" max="50" step="0.5" oninput="syncBonanzaBetUI()">
+                                <input type="number" id="sb-base-bet" value="0.5" min="0.5" max="50" step="0.5" onchange="syncBonanzaBetUI()">
                             </div>
                             <button class="sb-bet-step-btn" onclick="changeBonanzaBet(0.5)">+</button>
                         </div>
@@ -5378,16 +5500,6 @@ html, body {
                     </div>
                     <button id="cashback-claim-btn" class="btn-back" style="background:linear-gradient(135deg, #10b981, #059669); color:#fff; border:none; padding:10px 16px; font-weight:900;" onclick="claimCashback()">
                         💸 ЗАБРАТЬ КЕШБЭК
-                    </button>
-                </div>
-<!-- БОНУС ЗА ПОДПИСКУ НА КАНАЛ -->
-                <div style="margin-top:16px; background:linear-gradient(90deg, #10203d, #152b52); padding:16px; border-radius:16px; border:1px solid rgba(74,155,255,0.4); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
-                    <div>
-                        <div style="font-weight:900; font-size:0.95rem; color:#fde047;">📢 Подпишись на наш Telegram-канал</div>
-                        <div style="font-size:0.78rem; color:#cbd5e1; margin-top:2px;">Раздачи промокодов и бонус <b style="color:#3ddc84;">+3,00 ⭐</b> за подписку!</div>
-                    </div>
-                    <button id="tg-sub-bonus-btn" class="btn-back" style="background:var(--accent-gold-gradient); color:#fff; border:none; padding:10px 16px; font-weight:900;" onclick="claimTgSubBonus()">
-                        ✈️ ПОДПИСАТЬСЯ (+3 ⭐)
                     </button>
                 </div>
 
@@ -5753,8 +5865,7 @@ html, body {
                     if (typeof d.lastWheel === 'number') localStorage.setItem('kazik_last_wheel', String(d.lastWheel));
                     if (typeof d.lastCashback === 'number') localStorage.setItem('kazik_last_cashback', String(d.lastCashback));
                     if (typeof d.cbClaimedLoss === 'number') localStorage.setItem('kazik_cb_claimed_loss', String(d.cbClaimedLoss));
-                    if (d.tgSubBonus === true) localStorage.setItem('kazik_tg_sub_bonus', '1');
-
+                    
                     if (freshWallet) {
                         const remoteBalance = normalizeMoney(d.balance, -1);
                         if (remoteBalance > balance) {
@@ -5791,8 +5902,7 @@ html, body {
                     // Таймеры и флаги бонусов (синхронизируются с localStorage)
                     lastWheel: Number(localStorage.getItem('kazik_last_wheel') || 0),
                     lastCashback: Number(localStorage.getItem('kazik_last_cashback') || 0),
-                    cbClaimedLoss: Number(localStorage.getItem('kazik_cb_claimed_loss') || 0),
-                    tgSubBonus: localStorage.getItem('kazik_tg_sub_bonus') === '1'
+                    cbClaimedLoss: Number(localStorage.getItem('kazik_cb_claimed_loss') || 0)
                 };
                 await db.collection('players').doc(username).set(docData, { merge: true });
                 walletDirty = false;
@@ -5960,7 +6070,6 @@ html, body {
                 await sleep(adjustedRemain);
             }
         }
-}
         // Show floating win text over the game field (for cascades)
         function showFloatingWin(viewId, amount) {
             const view = document.getElementById(viewId);
@@ -5983,28 +6092,181 @@ html, body {
             }, 50);
             setTimeout(() => el.remove(), 1200);
         }
-}
-function fillReelStrip(inner, pool, col, row, isDogHouse = false, turboActive = false) {
-            if (!inner) return;
-            const pick = () => pool[Math.floor(Math.random() * pool.length)];
-            const a = pick();
-            const b = pick();
-            const c = pick();
-            const items = [a, b, c, a];
-            const delay = -((col * 45 + row * 35) % 230);
-            const cls = isDogHouse ? 'dh-sym-img' : 'ao-symbol-img';
-            inner.className = inner.className.replace(/\bdrop-in\b/g, '').trim();
-            inner.style.animationDelay = '';
-            const strip = document.createElement('div');
-            strip.className = 'slot-reel-strip' + (turboActive ? ' turbo' : '');
-            strip.style.animationDelay = `${delay}ms`;
-            strip.innerHTML = items.map(src => `<div class="slot-reel-strip-item"><img src="${src}" alt="" class="${cls}" draggable="false"></div>`).join('');
-            inner.innerHTML = '';
-            inner.appendChild(strip);
-            if (row === 0 && soundEnabled && audioCtx) {
-                playSfx('reelTick');
+function buildReelItemHTML(slotType, sym) {
+            if (!sym) return '';
+            if (slotType === 'dh') {
+                if (sym.id === 'wild') {
+                    return `<div class="reel-wild-mini"><img src="${sym.img}" alt="Wild" draggable="false"><span class="reel-wild-x">x${sym.mult}</span></div>`;
+                }
+                if (sym.id === 'scatter') {
+                    return `<img src="${sym.img}" alt="Scatter" style="width:86%;height:86%;object-fit:contain;" draggable="false">`;
+                }
+                return sym.img
+                    ? `<img src="${sym.img}" alt="${sym.name || ''}" class="dh-sym-img" draggable="false">`
+                    : `<span style="font-size:2rem;">${sym.fallback || '🐾'}</span>`;
+            }
+            if (slotType === 'ao') {
+                if (sym.id === 'multiplier') {
+                    return `<div class="reel-mult-mini"><img src="${getOlympusMultiplierImg(sym.val)}" alt="" draggable="false"><span class="ao-sphere-val">${sym.val}X</span></div>`;
+                }
+                if (sym.id === 'scatter') {
+                    return `<img src="${sym.img}" alt="Scatter" class="ao-symbol-img" draggable="false">`;
+                }
+                return sym.img
+                    ? `<img src="${sym.img}" alt="${sym.name || ''}" class="ao-symbol-img" draggable="false">`
+                    : `<span style="font-size:2rem;">${sym.emoji || '⚡'}</span>`;
+            }
+            if (sym.id === 'bomb') {
+                return `<div class="reel-mult-mini"><span style="font-size:2rem;">💣</span><span class="sb-bomb-val" style="position:static;margin-left:-10px;">${sym.mult}x</span></div>`;
+            }
+            if (sym.id === 'scatter') {
+                return `<img src="${sym.img}" alt="Scatter" class="ao-symbol-img" draggable="false">`;
+            }
+            return sym.img
+                ? `<img src="${sym.img}" alt="${sym.name || ''}" class="ao-symbol-img" draggable="false">`
+                : `<span style="font-size:2rem;">🍬</span>`;
+        }
+
+        function cleanupReelOverlays(gridId, prefix, cols, rows) {
+            const gridEl = document.getElementById(gridId);
+            if (gridEl) {
+                gridEl.querySelectorAll('.reel-col-viewport').forEach(el => el.remove());
+            }
+            for (let c = 0; c < cols; c++) {
+                for (let r = 0; r < rows; r++) {
+                    document.getElementById(`${prefix}-cell-${c}-${r}`)?.classList.remove('reel-spinning-hide');
+                }
             }
         }
+
+        async function spinFullReels({
+            slotType,
+            gridId,
+            prefix,
+            cols,
+            rows,
+            oldGrid,
+            nextGrid,
+            getFillerSymbol,
+            onColumnStop,
+            stopFn,
+            turbo = false,
+            teaseCol = -1
+        }) {
+            const gridEl = document.getElementById(gridId);
+            if (!gridEl) return;
+
+            cleanupReelOverlays(gridId, prefix, cols, rows);
+
+            const gridRect = gridEl.getBoundingClientRect();
+            const anims = [];
+            const colPromises = [];
+
+            const tickTimer = setInterval(() => {
+                if (soundEnabled && audioCtx) playSfx('reelTick');
+            }, turbo ? 70 : 105);
+
+            for (let c = 0; c < cols; c++) {
+                const topCell = document.getElementById(`${prefix}-cell-${c}-0`);
+                const row1Cell = document.getElementById(`${prefix}-cell-${c}-1`);
+                const botCell = document.getElementById(`${prefix}-cell-${c}-${rows - 1}`);
+                if (!topCell || !row1Cell || !botCell) continue;
+
+                const topRect = topCell.getBoundingClientRect();
+                const row1Rect = row1Cell.getBoundingClientRect();
+                const botRect = botCell.getBoundingClientRect();
+
+                const left = topRect.left - gridRect.left - gridEl.clientLeft;
+                const top = topRect.top - gridRect.top - gridEl.clientTop;
+                const width = topRect.width;
+                const height = botRect.bottom - topRect.top;
+                const cellH = topRect.height;
+                const step = row1Rect.top - topRect.top;
+                const gap = Math.max(0, step - cellH);
+
+                // Прячем содержимое клеток столбца на время прокрута (кроме липких вайлдов!)
+                for (let r = 0; r < rows; r++) {
+                    const cell = document.getElementById(`${prefix}-cell-${c}-${r}`);
+                    if (!cell) continue;
+                    cell.classList.remove('win-pop', 'ao-protrude-cell', 'dh-protrude-cell', 'sb-protrude-cell', 'cell-spinning', 'spinning');
+                    if (!cell.classList.contains('sticky-wild')) {
+                        cell.classList.add('reel-spinning-hide');
+                    }
+                }
+
+                const viewport = document.createElement('div');
+                viewport.className = 'reel-col-viewport' + (teaseCol === c ? ' reel-tease-glow' : '');
+                viewport.style.left = `${left}px`;
+                viewport.style.top = `${top}px`;
+                viewport.style.width = `${width}px`;
+                viewport.style.height = `${height}px`;
+
+                const strip = document.createElement('div');
+                strip.className = 'reel-col-strip';
+                strip.style.gap = `${gap}px`;
+
+                const extraCount = (turbo ? 6 : 12) + c * (turbo ? 2 : 4) + (teaseCol === c ? (turbo ? 8 : 20) : 0);
+
+                // Порядок ленты сверху вниз:
+                // [новые символы nextGrid] -> [промежуточные] -> [текущие символы oldGrid]
+                const sequence = [];
+                for (let r = 0; r < rows; r++) sequence.push(nextGrid[c][r]);
+                for (let i = 0; i < extraCount; i++) sequence.push(getFillerSymbol(c));
+                for (let r = 0; r < rows; r++) sequence.push((oldGrid[c] && oldGrid[c][r]) || getFillerSymbol(c));
+
+                strip.innerHTML = sequence.map(sym =>
+                    `<div class="reel-col-item" style="height:${cellH}px;">${buildReelItemHTML(slotType, sym)}</div>`
+                ).join('');
+
+                viewport.appendChild(strip);
+                gridEl.appendChild(viewport);
+
+                const startY = -((rows + extraCount) * step);
+                const baseDur = turbo ? 380 : 780;
+                const colStagger = turbo ? 65 : 135;
+                const teaseDur = teaseCol === c ? (turbo ? 420 : 1200) : 0;
+                const duration = baseDur + c * colStagger + teaseDur;
+                const easing = teaseCol === c
+                    ? 'cubic-bezier(0.12, 0.85, 0.25, 1.015)'
+                    : 'cubic-bezier(0.18, 0.90, 0.28, 1.02)';
+
+                const anim = strip.animate(
+                    [
+                        { transform: `translate3d(0, ${startY}px, 0)` },
+                        { transform: 'translate3d(0, 0px, 0)' }
+                    ],
+                    { duration, easing, fill: 'forwards' }
+                );
+                anims.push(anim);
+
+                colPromises.push(anim.finished.catch(() => {}).then(() => {
+                    for (let r = 0; r < rows; r++) {
+                        document.getElementById(`${prefix}-cell-${c}-${r}`)?.classList.remove('reel-spinning-hide');
+                    }
+                    viewport.remove();
+                    if (typeof onColumnStop === 'function') onColumnStop(c);
+                    playSfx('stop');
+                }));
+            }
+
+            // Быстрая остановка при повторном нажатии на SPIN
+            let spedUp = false;
+            const stopWatcher = setInterval(() => {
+                if (!spedUp && stopFn && stopFn()) {
+                    spedUp = true;
+                    anims.forEach(a => {
+                        try { if (a.playState === 'running') a.playbackRate = 5.5; } catch (e) {}
+                    });
+                }
+            }, 30);
+
+            try {
+                await Promise.all(colPromises);
+            } finally {
+                clearInterval(stopWatcher);
+                clearInterval(tickTimer);
+                cleanupReelOverlays(gridId, prefix, cols, rows);
+            }
         }
 
         
@@ -6054,7 +6316,7 @@ async function hashPassword(str) {
             let candidateNick = '';
 
             if (tgUser) {
-                const rawTgNick = tgUser.username || [tgUser.first_name, tgUser.last_name].filter(Boolean).join('_') || ('tg_' + tgUser.id);
+               const rawTgNick = tgUser.username || ('tg_' + tgUser.id);
                 candidateNick = String(rawTgNick).replace(/[\/\\.#$\[\]]/g, '_').slice(0, 25);
                 if (nickInp) {
                     nickInp.value = candidateNick;
@@ -6098,7 +6360,7 @@ async function hashPassword(str) {
                         if (typeof d.lastWheel === 'number') localStorage.setItem('kazik_last_wheel', String(d.lastWheel));
                         if (typeof d.lastCashback === 'number') localStorage.setItem('kazik_last_cashback', String(d.lastCashback));
                         if (typeof d.cbClaimedLoss === 'number') localStorage.setItem('kazik_cb_claimed_loss', String(d.cbClaimedLoss));
-                        if (d.tgSubBonus === true) localStorage.setItem('kazik_tg_sub_bonus', '1');
+
                     }
                 } catch (e) {}
                 initFirebaseRealtimeSync();
@@ -6132,13 +6394,21 @@ async function hashPassword(str) {
                 const snap = await ref.get();
 
                 if (snap.exists && snap.data().passwordHash) {
-                    if (snap.data().passwordHash !== passHash) {
-                        showToast('❌ Неверный пароль для этого ника!');
-                        return;
-                    }
-                    balance = normalizeMoney(snap.data().balance, balance);
-                    showToast(`🔓 С возвращением, ${val}!`);
-                } else {
+                 const d = snap.data();
+                 if (d.passwordHash !== passHash) {
+                     showToast('❌ Неверный пароль для этого ника!');
+                     return;
+                 }
+                 balance = normalizeMoney(d.balance, balance);
+                 if (d.stats) stats = sanitizeStats(d.stats);
+                 if (typeof d.lastWheel === 'number') localStorage.setItem('kazik_last_wheel', String(d.lastWheel));
+                 if (typeof d.lastCashback === 'number') localStorage.setItem('kazik_last_cashback', String(d.lastCashback));
+                 if (typeof d.cbClaimedLoss === 'number') localStorage.setItem('kazik_cb_claimed_loss', String(d.cbClaimedLoss));
+
+                 if (typeof syncCashbackUI === 'function') syncCashbackUI();
+                 if (typeof updateWheelBannerText === 'function') updateWheelBannerText();
+                 showToast(`🔓 С возвращением, ${val}!`);
+             } else {
                     await ref.set({
                         nick: val,
                         passwordHash: passHash,
@@ -6147,7 +6417,6 @@ async function hashPassword(str) {
                         lastWheel: 0,
                         lastCashback: 0,
                         cbClaimedLoss: 0,
-                        tgSubBonus: false
                     }, { merge: true });
                     showToast(`✅ Аккаунт ${val} защищён паролем!`);
                 }
@@ -6204,36 +6473,40 @@ async function hashPassword(str) {
             setTimeout(() => t.classList.remove('show'), 3200);
         }
 
-        function hideAllViews() {
-            document.querySelectorAll('.game-view').forEach(v => v.classList.remove('active'));
-            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-            document.body.classList.remove('slot-open');
-            stopSlotMusic();
-        }
 
-        function showLobby() {
-            if (isAnyGameBusy()) { showToast('⚠️ Дождитесь окончания раунда!'); return; }
-            aoAutoActive = false; dhAutoActive = false; sbAutoActive = false;
-            aoTurboActive = false; dhTurboActive = false; sbTurboActive = false;
-            document.getElementById('ao-auto-btn')?.classList.remove('auto-active-btn');
-            document.getElementById('dh-auto-btn')?.classList.remove('auto-active-btn');
-            document.getElementById('sb-auto-btn')?.classList.remove('auto-active-btn');
-            document.getElementById('ao-turbo-btn')?.classList.remove('auto-active-btn');
-            document.getElementById('dh-turbo-btn')?.classList.remove('auto-active-btn');
-            document.getElementById('sb-turbo-btn')?.classList.remove('auto-active-btn');
-            hideAllViews();
-            document.getElementById('view-lobby').classList.add('active');
-            document.getElementById('nav-lobby').classList.add('active');
-        }
+       function hideAllViews() {
+         document.querySelectorAll('.game-view').forEach(v => v.classList.remove('active'));
+         document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+         document.querySelectorAll('.mob-nav-btn').forEach(b => b.classList.remove('active'));
+         document.body.classList.remove('slot-open');
+         stopSlotMusic();
+     }
 
-        function switchView(viewName) {
-            if (isAnyGameBusy()) { showToast('⚠️ Дождитесь окончания раунда!'); return; }
-            hideAllViews();
-            document.getElementById('view-' + viewName).classList.add('active');
-            const nav = document.getElementById('nav-' + viewName);
-            if (nav) nav.classList.add('active');
-            if (viewName === 'profile') syncProfileUI();
-        }
+     function showLobby() {
+         if (isAnyGameBusy()) { showToast('⚠️ Дождитесь окончания раунда!'); return; }
+         aoAutoActive = false; dhAutoActive = false; sbAutoActive = false;
+         aoTurboActive = false; dhTurboActive = false; sbTurboActive = false;
+         document.getElementById('ao-auto-btn')?.classList.remove('auto-active-btn');
+         document.getElementById('dh-auto-btn')?.classList.remove('auto-active-btn');
+         document.getElementById('sb-auto-btn')?.classList.remove('auto-active-btn');
+         document.getElementById('ao-turbo-btn')?.classList.remove('auto-active-btn');
+         document.getElementById('dh-turbo-btn')?.classList.remove('auto-active-btn');
+         document.getElementById('sb-turbo-btn')?.classList.remove('auto-active-btn');
+         hideAllViews();
+         document.getElementById('view-lobby').classList.add('active');
+         document.getElementById('nav-lobby').classList.add('active');
+         document.getElementById('mob-nav-lobby')?.classList.add('active');
+     }
+
+     function switchView(viewName) {
+         if (isAnyGameBusy()) { showToast('⚠️ Дождитесь окончания раунда!'); return; }
+         hideAllViews();
+         document.getElementById('view-' + viewName).classList.add('active');
+         const nav = document.getElementById('nav-' + viewName);
+         if (nav) nav.classList.add('active');
+         document.getElementById('mob-nav-' + viewName)?.classList.add('active');
+         if (viewName === 'profile') syncProfileUI();
+     }
 
        // ==========================================
         // КАССА: ПОПОЛНЕНИЕ И ВЫВОД ТОЛЬКО TELEGRAM STARS (⭐)
@@ -6892,44 +7165,40 @@ async function hashPassword(str) {
             if (winLblEl) winLblEl.textContent = aoInFreeSpins ? 'ВЫИГРЫШ В БОНУСЕ' : 'ПОСЛЕДНИЙ ВЫИГРЫШ';
             if (hudWinEl) hudWinEl.textContent = '0,00';
 
-           const spinPool = [...AO_SYMBOLS.map(s => s.img), AO_SCATTER.img, getOlympusMultiplierImg(10)];
-         for (let c = 0; c < AO_COLS; c++) {
-             for (let r = 0; r < AO_ROWS; r++) {
-                 const cell = document.getElementById(`ao-cell-${c}-${r}`);
-                 if (cell) {
-                     cell.classList.remove('ao-protrude-cell', 'win-pop');
-                     cell.classList.add('cell-spinning');
-                     fillReelStrip(cell.querySelector('.ao-symbol-inner'), spinPool, c, r, false, aoTurboActive);
-                 }
-             }
-         }
-
-            try {
-                const nextGrid = Array.from({ length: AO_COLS }, () => Array(AO_ROWS).fill(null));
-                let hasDroppedBomb = false;
-                for (let c = 0; c < AO_COLS; c++) {
-                    for (let r = 0; r < AO_ROWS; r++) {
-                        nextGrid[c][r] = generateOlympusCell(true);
-                        if (nextGrid[c][r].id === 'multiplier') hasDroppedBomb = true;
-                    }
-                }
-                if (isBonusForcedScatter) {
-                    nextGrid[0][1] = { ...AO_SCATTER };
-                    nextGrid[2][2] = { ...AO_SCATTER };
-                    nextGrid[3][1] = { ...AO_SCATTER };
-                    nextGrid[5][3] = { ...AO_SCATTER };
-                }
-
-                await waitSpin(620, () => aoStopRequested, 0, aoTurboActive);
-
-                for (let c = 0; c < AO_COLS; c++) {
+           try {
+             const nextGrid = Array.from({ length: AO_COLS }, () => Array(AO_ROWS).fill(null));
+             let hasDroppedBomb = false;
+             for (let c = 0; c < AO_COLS; c++) {
                  for (let r = 0; r < AO_ROWS; r++) {
-                     aoGrid[c][r] = nextGrid[c][r];
-                     renderOlympusCell(c, r, true);
+                     nextGrid[c][r] = generateOlympusCell(true);
+                     if (nextGrid[c][r].id === 'multiplier') hasDroppedBomb = true;
                  }
-                 playSfx('stop');
-                 await waitSpin(95, () => aoStopRequested, 55, aoTurboActive);
              }
+             if (isBonusForcedScatter) {
+                 nextGrid[0][1] = { ...AO_SCATTER };
+                 nextGrid[2][2] = { ...AO_SCATTER };
+                 nextGrid[3][1] = { ...AO_SCATTER };
+                 nextGrid[5][3] = { ...AO_SCATTER };
+             }
+
+             await spinFullReels({
+                 slotType: 'ao',
+                 gridId: 'ao-grid',
+                 prefix: 'ao',
+                 cols: AO_COLS,
+                 rows: AO_ROWS,
+                 oldGrid: aoGrid,
+                 nextGrid,
+                 getFillerSymbol: () => getRandomWeightedOlympusSymbol(),
+                 onColumnStop: (c) => {
+                     for (let r = 0; r < AO_ROWS; r++) {
+                         aoGrid[c][r] = nextGrid[c][r];
+                         renderOlympusCell(c, r, false);
+                     }
+                 },
+                 stopFn: () => aoStopRequested,
+                 turbo: aoTurboActive
+             });
 
                 if (hasDroppedBomb) triggerZeusLighting();
 
@@ -7342,69 +7611,50 @@ async function hashPassword(str) {
             if (winLblEl) winLblEl.textContent = dhInFreeSpins ? 'ВЫИГРЫШ В БОНУСЕ' : 'ПОСЛЕДНИЙ ВЫИГРЫШ';
             if (!dhInFreeSpins && hudWinEl) hudWinEl.textContent = '0,00';
 
-            const dhSpinPool = [
-             ...DH_SYMBOLS.map(s => s.img),
-             'bydkastandart.png',
-             'bonusdoghouselapa.png'
-         ];
-         for (let c = 0; c < DH_COLS; c++) {
-             for (let r = 0; r < DH_ROWS; r++) {
-                 if (dhInFreeSpins && dhStickyWilds[c][r]) continue;
-                 const cell = document.getElementById(`dh-cell-${c}-${r}`);
-                 if (cell) {
-                     cell.classList.remove('win-pop', 'dh-protrude-cell');
-                     cell.classList.add('spinning');
-                     fillReelStrip(cell.querySelector('.dh-symbol-inner'), dhSpinPool, c, r, true, dhTurboActive);
+            try {
+             const nextGrid = Array.from({ length: DH_COLS }, () => Array(DH_ROWS).fill(null));
+             for (let c = 0; c < DH_COLS; c++) {
+                 let hasScatterInCol = false;
+                 for (let r = 0; r < DH_ROWS; r++) {
+                     if (dhInFreeSpins && dhStickyWilds[c][r]) {
+                         nextGrid[c][r] = dhStickyWilds[c][r];
+                         continue;
+                     }
+                     let sym = generateDogHouseCell(c);
+                     if (sym.id === 'scatter') {
+                         if (hasScatterInCol) sym = getRandomDogHouseSymbol(c);
+                         else hasScatterInCol = true;
+                     }
+                     nextGrid[c][r] = sym;
                  }
              }
-         }
 
-            try {
-                const nextGrid = Array.from({ length: DH_COLS }, () => Array(DH_ROWS).fill(null));
-                for (let c = 0; c < DH_COLS; c++) {
-                    let hasScatterInCol = false;
-                    for (let r = 0; r < DH_ROWS; r++) {
-                        if (dhInFreeSpins && dhStickyWilds[c][r]) {
-                            nextGrid[c][r] = dhStickyWilds[c][r];
-                            continue;
-                        }
-                        let sym = generateDogHouseCell(c);
-                        if (sym.id === 'scatter') {
-                            if (hasScatterInCol) sym = getRandomDogHouseSymbol(c);
-                            else hasScatterInCol = true;
-                        }
-                        nextGrid[c][r] = sym;
-                    }
-                }
+             const hasScatterCol1 = !dhInFreeSpins && nextGrid[0].some(s => s && s.id === 'scatter');
+             const hasScatterCol3 = !dhInFreeSpins && nextGrid[2].some(s => s && s.id === 'scatter');
+             const teaseFifthReel = hasScatterCol1 && hasScatterCol3;
 
-                await waitSpin(450, () => dhStopRequested, 0, dhTurboActive);
-
-                const hasScatterCol1 = !dhInFreeSpins && nextGrid[0].some(s => s && s.id === 'scatter');
-                const hasScatterCol3 = !dhInFreeSpins && nextGrid[2].some(s => s && s.id === 'scatter');
-                const teaseFifthReel = hasScatterCol1 && hasScatterCol3;
-
-                for (let c = 0; c < DH_COLS; c++) {
-                    if (c === 4 && teaseFifthReel && !dhStopRequested) {
-                        for (let r = 0; r < DH_ROWS; r++) {
-                            document.getElementById(`dh-cell-4-${r}`)?.classList.add('dh-tease-spin');
-                        }
-                        await waitSpin(1450, () => dhStopRequested, 0, dhTurboActive);
-                        for (let r = 0; r < DH_ROWS; r++) {
-                            document.getElementById(`dh-cell-4-${r}`)?.classList.remove('dh-tease-spin');
-                        }
-                    } else {
-                        await waitSpin(260, () => dhStopRequested, 60, dhTurboActive);
-                    }
-
-                    for (let r = 0; r < DH_ROWS; r++) {
-                        dhGrid[c][r] = nextGrid[c][r];
-                        if (dhInFreeSpins && nextGrid[c][r].id === 'wild' && !dhStickyWilds[c][r]) {
-                            dhStickyWilds[c][r] = { ...nextGrid[c][r] };
-                        }
-                        renderDogHouseCell(c, r, !(dhInFreeSpins && dhStickyWilds[c][r]));
-                    }
-                    playSfx('stop');
-                }
+             await spinFullReels({
+                 slotType: 'dh',
+                 gridId: 'dh-grid',
+                 prefix: 'dh',
+                 cols: DH_COLS,
+                 rows: DH_ROWS,
+                 oldGrid: dhGrid,
+                 nextGrid,
+                 getFillerSymbol: (col) => getRandomDogHouseSymbol(col),
+                 onColumnStop: (c) => {
+                     for (let r = 0; r < DH_ROWS; r++) {
+                         dhGrid[c][r] = nextGrid[c][r];
+                         if (dhInFreeSpins && nextGrid[c][r].id === 'wild' && !dhStickyWilds[c][r]) {
+                             dhStickyWilds[c][r] = { ...nextGrid[c][r] };
+                         }
+                         renderDogHouseCell(c, r, false);
+                     }
+                 },
+                 stopFn: () => dhStopRequested,
+                 turbo: dhTurboActive,
+                 teaseCol: teaseFifthReel ? 4 : -1
+             });
 
                 const { totalWin, winCells } = evaluateDogHousePaylines();
                 let scatterCount = 0;
@@ -7444,12 +7694,13 @@ async function hashPassword(str) {
                 }
 
                 if (!dhInFreeSpins && scatterCount >= 3) {
-                    dhSpinning = false;
-                    await sleep(950); // Даём 0.95 сек, чтобы увидеть 3-ю лапу на 5-м барабане
-                    await triggerDogHouseFreeSpinsIntro();
-                    await spinDogHouse();
-                    return;
-                }
+                 dhInFreeSpins = true;
+                 await sleep(950); // Даём 0.95 сек, чтобы увидеть 3-ю лапу на 5-м барабане
+                 await triggerDogHouseFreeSpinsIntro();
+                 dhSpinning = false;
+                 await spinDogHouse();
+                 return;
+             }
             } finally {
                 dhSpinning = false;
                 dhStopRequested = false;
@@ -7678,10 +7929,9 @@ async function hashPassword(str) {
             document.getElementById('sb-fs-left').textContent = sbFreeSpinsLeft;
             document.getElementById('sb-fs-total-win').textContent = '0,00';
             showToast('🍭 4+ Чупа-чупса! Запущено 10 фриспинов с бомбами до x100!');
-            playSfx('bonus');
-            playSfx('spin');
-            await spinSweetBonanza(true);
-        }
+         playSfx('bonus');
+         await spinSweetBonanza(false);
+     }
 
         async function spinSweetBonanza(isBonusForcedScatter = false) {
             if (isBanned) { showToast('🚫 Ваш аккаунт заблокирован!'); return; }
@@ -7724,42 +7974,38 @@ async function hashPassword(str) {
             if (winLblEl) winLblEl.textContent = sbInFreeSpins ? 'ВЫИГРЫШ В БОНУСЕ' : 'ПОСЛЕДНИЙ ВЫИГРЫШ';
             if (hudWinEl) hudWinEl.textContent = '0,00';
 
-            const sbSpinPool = [...SB_SYMBOLS.map(s => s.img), SB_SCATTER.img];
-         for (let c = 0; c < SB_COLS; c++) {
-             for (let r = 0; r < SB_ROWS; r++) {
-                 const cell = document.getElementById(`sb-cell-${c}-${r}`);
-                 if (cell) {
-                     cell.classList.remove('sb-protrude-cell', 'win-pop');
-                     cell.classList.add('cell-spinning');
-                     fillReelStrip(cell.querySelector('.sb-symbol-inner'), sbSpinPool, c, r, false, sbTurboActive);
+            try {
+             const nextGrid = Array.from({ length: SB_COLS }, () => Array(SB_ROWS).fill(null));
+             for (let c = 0; c < SB_COLS; c++) {
+                 for (let r = 0; r < SB_ROWS; r++) {
+                     nextGrid[c][r] = generateBonanzaCell(true);
                  }
              }
-         }
+             if (isBonusForcedScatter) {
+                 nextGrid[0][1] = { ...SB_SCATTER };
+                 nextGrid[2][3] = { ...SB_SCATTER };
+                 nextGrid[3][1] = { ...SB_SCATTER };
+                 nextGrid[5][2] = { ...SB_SCATTER };
+             }
 
-            try {
-                const nextGrid = Array.from({ length: SB_COLS }, () => Array(SB_ROWS).fill(null));
-                for (let c = 0; c < SB_COLS; c++) {
-                    for (let r = 0; r < SB_ROWS; r++) {
-                        nextGrid[c][r] = generateBonanzaCell(true);
-                    }
-                }
-                if (isBonusForcedScatter) {
-                    nextGrid[0][1] = { ...SB_SCATTER };
-                    nextGrid[2][3] = { ...SB_SCATTER };
-                    nextGrid[3][1] = { ...SB_SCATTER };
-                    nextGrid[5][2] = { ...SB_SCATTER };
-                }
-
-                await waitSpin(580, () => sbStopRequested, 0, sbTurboActive);
-
-                for (let c = 0; c < SB_COLS; c++) {
-                    for (let r = 0; r < SB_ROWS; r++) {
-                        sbGrid[c][r] = nextGrid[c][r];
-                        renderBonanzaCell(c, r, true);
-                    }
-                    playSfx('stop')
-                    await waitSpin(90, () => sbStopRequested, 50, sbTurboActive);
-                }
+             await spinFullReels({
+                 slotType: 'sb',
+                 gridId: 'sb-grid',
+                 prefix: 'sb',
+                 cols: SB_COLS,
+                 rows: SB_ROWS,
+                 oldGrid: sbGrid,
+                 nextGrid,
+                 getFillerSymbol: () => getRandomWeightedBonanzaSymbol(),
+                 onColumnStop: (c) => {
+                     for (let r = 0; r < SB_ROWS; r++) {
+                         sbGrid[c][r] = nextGrid[c][r];
+                         renderBonanzaCell(c, r, false);
+                     }
+                 },
+                 stopFn: () => sbStopRequested,
+                 turbo: sbTurboActive
+             });
 
                 let spinRawWin = 0;
                 while (true) {
@@ -7900,17 +8146,19 @@ async function hashPassword(str) {
             }
         }
 
-        function checkAndShowBigWin(winAmount, betAmount) {
-            if (!betAmount || winAmount < betAmount * 15) return;
-            const mult = winAmount / betAmount;
-            const title = mult >= 50 ? '👑 MEGA WIN!' : (mult >= 25 ? '🔥 SUPER WIN!' : '💰 BIG WIN!');
-            document.getElementById('bigwin-title').textContent = title;
-            document.getElementById('bigwin-amount').textContent = winAmount.toFixed(2).replace('.', ',') + ' ⭐';
-            const ov = document.getElementById('bigwin-overlay');
-            ov.classList.add('active');
-            playSfx(mult >= 50 ? 'megawin' : 'bigwin');
-            setTimeout(() => ov.classList.remove('active'), 3200);
-        }
+        let bigWinTimer = null;
+     function checkAndShowBigWin(winAmount, betAmount) {
+         if (!betAmount || winAmount < betAmount * 15) return;
+         const mult = winAmount / betAmount;
+         const title = mult >= 50 ? '👑 MEGA WIN!' : (mult >= 25 ? '🔥 SUPER WIN!' : '💰 BIG WIN!');
+         document.getElementById('bigwin-title').textContent = title;
+         document.getElementById('bigwin-amount').textContent = winAmount.toFixed(2).replace('.', ',') + ' ⭐';
+         const ov = document.getElementById('bigwin-overlay');
+         ov.classList.add('active');
+         playSfx(mult >= 50 ? 'megawin' : 'bigwin');
+         clearTimeout(bigWinTimer);
+         bigWinTimer = setTimeout(() => ov.classList.remove('active'), 3200);
+     }
         // ==========================================================
         // SLOT AUDIO ENGINE: original procedural music and SFX
         // ==========================================================
@@ -8318,7 +8566,7 @@ function applyProfilePromoCode() {
     </script>
 <!-- НИЖНЕЕ МЕНЮ ДЛЯ ТЕЛЕФОНА -->
 <nav class="mobile-bottom-nav" id="mobile-bottom-nav">
-    <button class="mob-nav-btn active" onclick="showLobby()">
+    <button class="mob-nav-btn active" id="mob-nav-lobby" onclick="showLobby()">
         <span>🎰</span>
         <span>Зал</span>
     </button>
@@ -8326,12 +8574,11 @@ function applyProfilePromoCode() {
         <span>💳</span>
         <span>Касса</span>
     </button>
-        <button class="mob-nav-btn" onclick="switchView('profile')">
+    <button class="mob-nav-btn" id="mob-nav-profile" onclick="switchView('profile')">
         <span>👤</span>
         <span>Профиль</span>
     </button>
-</nav>
-<script>
+</nav><script>
 // === 1. ОРИЕНТАЦИЯ: оставляем портрет (в Telegram Mini App он удобнее) ===
 async function enterLandscapeMode() {
     // Принудительный ландшафт отключён: в портрете слоты помещаются
@@ -8440,49 +8687,6 @@ function spinDailyWheel() {
 
 setInterval(updateWheelBannerText, 30000);
 window.addEventListener('DOMContentLoaded', updateWheelBannerText);
-</script>
-<script>
-
-// === 2. БОНУС +3 ⭐ ЗА ПОДПИСКУ НА TELEGRAM-КАНАЛ ===
-function syncTgSubBtn() {
-    const btn = document.getElementById('tg-sub-bonus-btn');
-    if (!btn) return;
-    if (localStorage.getItem('kazik_tg_sub_bonus') === '1') {
-        btn.disabled = true;
-        btn.textContent = '✅ БОНУС ПОЛУЧЕН';
-        btn.style.opacity = '0.6';
-    }
-}
-
-function claimTgSubBonus() {
-    if (localStorage.getItem('kazik_tg_sub_bonus') === '1') {
-        showToast('✅ Вы уже забирали этот бонус!');
-        return;
-    }
-    const url = 'https://t.me/LydkaHouse';
-    if (window.Telegram && Telegram.WebApp && Telegram.WebApp.openTelegramLink) {
-        Telegram.WebApp.openTelegramLink(url);
-    } else {
-        window.open(url, '_blank');
-    }
-
-    const btn = document.getElementById('tg-sub-bonus-btn');
-    if (btn) { btn.disabled = true; btn.textContent = '⏳ ПРОВЕРКА...'; }
-
-    setTimeout(() => {
-        if (localStorage.getItem('kazik_tg_sub_bonus') === '1') return;
-        localStorage.setItem('kazik_tg_sub_bonus', '1');
-        balance = normalizeMoney(balance + 3);
-        saveState();
-        updateBalanceUI();
-        playSfx('win');
-        syncTgSubBtn();
-        showToast('📢 Спасибо за подписку! Начислено +3,00 ⭐');
-        pushWalletToCloud(); // Синхронизация с Firestore
-    }, 4000);
-}
-
-window.addEventListener('DOMContentLoaded', syncTgSubBtn);
 </script>
 <script>
 // === КЕШБЭК 10% ОТ ПРОИГРЫША ===
