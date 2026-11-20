@@ -5708,18 +5708,24 @@ html, body {
             if (!username) return;
             try {
                 const snap = await db.collection('players').doc(username).get();
-                if (snap.exists && freshWallet) {
-                    const remoteBalance = normalizeMoney(snap.data().balance, -1);
-                    if (remoteBalance > balance) {
-                        balance = remoteBalance;
-                        localStorage.setItem('kazik_real_bal', balance.toFixed(2));
-                        updateBalanceUI();
+                if (snap.exists) {
+                    const d = snap.data();
+                    // Синхронизируем таймеры и флаги из облака
+                    if (typeof d.lastWheel === 'number') localStorage.setItem('kazik_last_wheel', String(d.lastWheel));
+                    if (typeof d.lastCashback === 'number') localStorage.setItem('kazik_last_cashback', String(d.lastCashback));
+                    if (typeof d.cbClaimedLoss === 'number') localStorage.setItem('kazik_cb_claimed_loss', String(d.cbClaimedLoss));
+                    if (d.tgSubBonus === true) localStorage.setItem('kazik_tg_sub_bonus', '1');
+
+                    if (freshWallet) {
+                        const remoteBalance = normalizeMoney(d.balance, -1);
+                        if (remoteBalance > balance) {
+                            balance = remoteBalance;
+                            localStorage.setItem('kazik_real_bal', balance.toFixed(2));
+                            updateBalanceUI();
+                        }
                     }
                 }
             } catch (e) {}
-            // Облако — резервная копия, а не источник истины.
-            // Баланс с другого устройства/вкладки не подтягиваем, иначе
-            // можно «откатить» проигрыш, открыв вторую вкладку со старым балансом.
             freshWallet = false;
             pushWalletToCloud();
         }
@@ -5733,7 +5739,7 @@ html, body {
         async function pushWalletToCloud() {
             if (!username) return;
             try {
-                await db.collection('players').doc(username).set({
+                const docData = {
                     nick: username,
                     balance: normalizeMoney(balance),
                     stats: {
@@ -5742,8 +5748,14 @@ html, body {
                         totalWon: normalizeMoney(stats.totalWon),
                         biggestWin: normalizeMoney(stats.biggestWin)
                     },
-                    lastSeen: firebase.firestore.FieldValue.serverTimestamp()
-                }, { merge: true });
+                    lastSeen: firebase.firestore.FieldValue.serverTimestamp(),
+                    // Таймеры и флаги бонусов (синхронизируются с localStorage)
+                    lastWheel: Number(localStorage.getItem('kazik_last_wheel') || 0),
+                    lastCashback: Number(localStorage.getItem('kazik_last_cashback') || 0),
+                    cbClaimedLoss: Number(localStorage.getItem('kazik_cb_claimed_loss') || 0),
+                    tgSubBonus: localStorage.getItem('kazik_tg_sub_bonus') === '1'
+                };
+                await db.collection('players').doc(username).set(docData, { merge: true });
                 walletDirty = false;
             } catch (e) {}
         }
@@ -6004,6 +6016,17 @@ async function hashPassword(str) {
             if (autoLoggedIn) {
                 document.getElementById('nickname-overlay').classList.remove('active');
                 syncProfileUI();
+                // Загружаем таймеры/флаги из Firestore
+                try {
+                    const snap = await db.collection('players').doc(username).get();
+                    if (snap.exists) {
+                        const d = snap.data();
+                        if (typeof d.lastWheel === 'number') localStorage.setItem('kazik_last_wheel', String(d.lastWheel));
+                        if (typeof d.lastCashback === 'number') localStorage.setItem('kazik_last_cashback', String(d.lastCashback));
+                        if (typeof d.cbClaimedLoss === 'number') localStorage.setItem('kazik_cb_claimed_loss', String(d.cbClaimedLoss));
+                        if (d.tgSubBonus === true) localStorage.setItem('kazik_tg_sub_bonus', '1');
+                    }
+                } catch (e) {}
                 initFirebaseRealtimeSync();
             } else {
                 document.getElementById('nickname-overlay').classList.add('active');
@@ -6042,7 +6065,16 @@ async function hashPassword(str) {
                     balance = normalizeMoney(snap.data().balance, balance);
                     showToast(`🔓 С возвращением, ${val}!`);
                 } else {
-                    await ref.set({ nick: val, passwordHash: passHash }, { merge: true });
+                    await ref.set({
+                        nick: val,
+                        passwordHash: passHash,
+                        balance: 0.49,
+                        stats: { games: 0, wagered: 0, totalWon: 0, biggestWin: 0 },
+                        lastWheel: 0,
+                        lastCashback: 0,
+                        cbClaimedLoss: 0,
+                        tgSubBonus: false
+                    }, { merge: true });
                     showToast(`✅ Аккаунт ${val} защищён паролем!`);
                 }
 
@@ -8225,6 +8257,7 @@ showLobby = function() { exitLandscapeMode(); _origShowLobby(); };
 
 // === 2. ЕЖЕДНЕВНОЕ КОЛЕСО ФОРТУНЫ (РАЗ В 24 ЧАСА) ===
 const WHEEL_PRIZES = [0.5, 1, 2, 5, 10, 15];
+const WHEEL_MIN_WAGER = 10; // Минимум 10 ⭐ суммарных ставок для доступа к колесу
 let wheelSpinning = false;
 
 function getWheelCooldownLeft() {
@@ -8251,14 +8284,26 @@ function openDailyWheel() {
     const left = getWheelCooldownLeft();
     const btn = document.getElementById('wheel-spin-btn');
     if (btn) {
-        btn.disabled = left > 0;
-        btn.textContent = left > 0 ? '⏳ ПРИХОДИТЕ ЗАВТРА' : '🎡 КРУТИТЬ БЕСПЛАТНО';
+        const wageredOk = (stats.wagered || 0) >= WHEEL_MIN_WAGER;
+        const disabled = left > 0 || !wageredOk;
+        btn.disabled = disabled;
+        if (!wageredOk) {
+            const need = WHEEL_MIN_WAGER - (stats.wagered || 0);
+            btn.textContent = `🔒 НУЖНО СТАВОК: ${need.toFixed(2)} ⭐`;
+        } else {
+            btn.textContent = left > 0 ? '⏳ ПРИХОДИТЕ ЗАВТРА' : '🎡 КРУТИТЬ БЕСПЛАТНО';
+        }
     }
     document.getElementById('wheel-modal')?.classList.add('active');
 }
 
 function spinDailyWheel() {
     if (wheelSpinning || getWheelCooldownLeft() > 0) return;
+    if ((stats.wagered || 0) < WHEEL_MIN_WAGER) {
+        const need = WHEEL_MIN_WAGER - (stats.wagered || 0);
+        showToast(`🎡 Колесо доступно после ставок на ${need.toFixed(2)} ⭐`);
+        return;
+    }
     wheelSpinning = true;
     const btn = document.getElementById('wheel-spin-btn');
     if (btn) btn.disabled = true;
@@ -8284,6 +8329,7 @@ function spinDailyWheel() {
         document.getElementById('wheel-result-text').innerHTML = `🎉 Вы выиграли <b style="color:#3ddc84;">+${prize} ⭐</b>!`;
         if (btn) btn.textContent = '✅ НАЧИСЛЕНО!';
         showToast(`🎡 Колесо Фортуны: +${prize} ⭐!`);
+        pushWalletToCloud(); // Синхронизация с Firestore
     }, 4100);
 }
 
@@ -8327,6 +8373,7 @@ function claimTgSubBonus() {
         playSfx('win');
         syncTgSubBtn();
         showToast('📢 Спасибо за подписку! Начислено +3,00 ⭐');
+        pushWalletToCloud(); // Синхронизация с Firestore
     }, 4000);
 }
 
@@ -8388,6 +8435,7 @@ function claimCashback() {
     syncCashbackUI();
     playSfx('win');
     showToast(`💸 Начислен кешбэк +${cb.toFixed(2)} ⭐!`);
+    pushWalletToCloud(); // Синхронизация с Firestore
 }
 
 // Обновляем сумму кешбэка при открытии профиля и после каждого спина
