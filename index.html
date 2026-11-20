@@ -3876,6 +3876,7 @@ html, body {
     touch-action: manipulation;
     -webkit-tap-highlight-color: transparent;
     isolation: isolate;
+    z-index: 9999;
 }
 
 @media (max-width: 980px) {
@@ -3950,7 +3951,7 @@ html, body {
         left: 0;
         right: 0;
         bottom: 0;
-        z-index: 8900;
+        z-index: 9999;
         background: rgba(8, 13, 24, 0.94);
         backdrop-filter: blur(18px);
         -webkit-backdrop-filter: blur(18px);
@@ -5338,7 +5339,7 @@ html, body {
         </button>
 
         <button class="nav-item slot-nav-card" id="nav-slot-zeushades" onclick="openZeusHades()">
-            <img src="zeushades-emblem.png" alt="Zeus vs Hades" class="slot-nav-img" onerror="this.src='zh-emblem.png';">
+            <img src="zeushades-emblem.png" alt="Zeus vs Hades" class="slot-nav-img">
             <span class="slot-nav-label">Zeus vs Hades</span>
         </button>
     </nav>
@@ -5467,7 +5468,7 @@ html, body {
 
                     <div class="slot-lobby-card zeushades-featured" onclick="openZeusHades()">
                         <div class="slot-card-thumb">
-                            <img src="zeushades-emblem.png" alt="Zeus vs Hades" onerror="this.src='zh-emblem.png';">
+                            <img src="zeushades-emblem.png" alt="Zeus vs Hades">
                             <span class="slot-card-badge">5×5</span>
                         </div>
                         <div class="slot-card-content">
@@ -5836,7 +5837,9 @@ html, body {
             if (!firebase.apps.length) {
                 firebase.initializeApp(firebaseConfig);
             }
-        } catch (e) {}
+        } catch (e) {
+            console.error('Firebase init error:', e);
+        }
         const db = firebase.firestore();
 
         // ==========================================
@@ -6240,7 +6243,9 @@ html, body {
                         }
                     }
                 }
-            } catch (e) {}
+            } catch (e) {
+                console.warn('Wallet cloud sync failed:', e);
+            }
             freshWallet = false;
             pushWalletToCloud();
         }
@@ -6344,7 +6349,9 @@ html, body {
             try {
                 await db.collection('settings').doc('slots').set(closedSlots, { merge: true });
                 showToast(closedSlots[slotKey] ? `🔒 Слот ${slotKey} временно закрыт` : `🔓 Слот ${slotKey} открыт`);
-            } catch (e) {}
+            } catch (e) {
+                console.warn('Dev toggle slot failed:', e);
+            }
         }
 
         async function loadDevPlayers() {
@@ -6385,7 +6392,9 @@ html, body {
                 await db.collection('players').doc(nick).set({ banned: banState }, { merge: true });
                 showToast(banState ? `🚫 Игрок ${nick} забанен` : `✅ Игрок ${nick} разбанен`);
                 loadDevPlayers();
-            } catch (e) {}
+            } catch (e) {
+                console.warn('Dev toggle ban failed:', e);
+            }
         }
 
         function sanitizeStats(raw) {
@@ -6397,7 +6406,9 @@ html, body {
                 safe.wagered = normalizeMoney(parsed.wagered);
                 safe.totalWon = normalizeMoney(parsed.totalWon);
                 safe.biggestWin = normalizeMoney(parsed.biggestWin);
-            } catch (e) {}
+            } catch (e) {
+                console.warn('Sanitize stats failed:', e);
+            }
             return safe;
         }
 
@@ -6414,7 +6425,10 @@ html, body {
                     date: String(tx && tx.date || '').slice(0, 40),
                     status: String(tx && tx.status || '').slice(0, 30)
                 })).filter(tx => tx.amount > 0);
-            } catch (e) { return []; }
+            } catch (e) {
+                console.warn('Sanitize withdraw history failed:', e);
+                return [];
+            }
         }
 
         function sleep(ms) { return new Promise(resolve => setTimeout(resolve, ms)); }
@@ -6472,7 +6486,7 @@ function buildReelItemHTML(slotType, sym) {
                     ? `<img src="${sym.img}" alt="${sym.name || ''}" class="dh-sym-img" draggable="false" style="width:100%;height:100%;object-fit:cover;border-radius:11px;filter:drop-shadow(0 3px 6px rgba(0,0,0,0.55));">`
                     : `<span style="font-size:2.9rem;">${sym.fallback || '🐾'}</span>`;
             }
-if (slotType === 'zh') {
+            if (slotType === 'zh') {
                 if (sym.id === 'wild') {
                     return `<div class="reel-wild-mini" style="width:130%;height:130%;transform:scale(1.15);"><img src="${sym.img}" alt="Wild" draggable="false" style="width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 8px 18px rgba(0,0,0,0.9)) drop-shadow(0 0 14px #38bdf8);" onerror="this.outerHTML='<span style=\\'font-size:2.4rem;\\'>🌪️</span>';">${sym.mult ? `<span class="reel-wild-x" style="position:absolute;bottom:2px;right:4px;background:linear-gradient(135deg,#0ea5e9,#0284c7);border:2px solid #fde047;border-radius:9px;padding:2px 8px;font-family:Unbounded,sans-serif;font-size:0.9rem;font-weight:900;color:#fff;text-shadow:0 2px 4px #000;box-shadow:0 4px 12px rgba(0,0,0,0.85);">x${sym.mult}</span>` : ''}</div>`;
                 }
@@ -6494,15 +6508,18 @@ if (slotType === 'zh') {
                     ? `<img src="${sym.img}" alt="${sym.name || ''}" class="ao-symbol-img" draggable="false" style="width:100%;height:100%;object-fit:contain;transform:scale(1.04);filter:drop-shadow(0 3px 6px rgba(0,0,0,0.6));">`
                     : `<span style="font-size:2.3rem;">${sym.emoji || '⚡'}</span>`;
             }
-            if (sym.id === 'bomb') {
-                return `<div class="reel-mult-mini" style="width:150%;height:150%;transform:scale(1.25);display:flex;align-items:center;justify-content:center;"><span style="font-size:2.4rem;">💣</span><span class="sb-bomb-val" style="position:absolute;bottom:4px;right:6px;background:linear-gradient(135deg,#f43f5e,#be185d);border:2px solid #fbcfe8;border-radius:8px;padding:1px 7px;font-family:Unbounded,sans-serif;font-size:0.95rem;font-weight:900;color:#fff;text-shadow:0 2px 4px #000;box-shadow:0 4px 12px rgba(0,0,0,0.85);">${sym.mult}x</span></div>`;
+            if (slotType === 'sb') {
+                if (sym.id === 'bomb') {
+                    return `<div class="reel-mult-mini" style="width:150%;height:150%;transform:scale(1.25);display:flex;align-items:center;justify-content:center;"><span style="font-size:2.4rem;">💣</span><span class="sb-bomb-val" style="position:absolute;bottom:4px;right:6px;background:linear-gradient(135deg,#f43f5e,#be185d);border:2px solid #fbcfe8;border-radius:8px;padding:1px 7px;font-family:Unbounded,sans-serif;font-size:0.95rem;font-weight:900;color:#fff;text-shadow:0 2px 4px #000;box-shadow:0 4px 12px rgba(0,0,0,0.85);">${sym.mult}x</span></div>`;
+                }
+                if (sym.id === 'scatter') {
+                    return `<img src="${sym.img}" alt="Scatter" class="sb-sym-img" draggable="false" style="width:130%;height:130%;object-fit:contain;transform:scale(1.2);filter:drop-shadow(0 6px 14px rgba(244,63,94,0.9)) drop-shadow(0 0 12px #f472b6);animation:sbScatterProtrude 1.1s infinite alternate ease-in-out;">`;
+                }
+                return sym.img
+                    ? `<img src="${sym.img}" alt="${sym.name || ''}" class="sb-sym-img" draggable="false" style="width:118%;height:118%;max-width:96px;max-height:96px;object-fit:contain;transform:scale(1.14);filter:drop-shadow(0 5px 12px rgba(0,0,0,0.7));">`
+                    : `<span style="font-size:2.8rem;">🍬</span>`;
             }
-            if (sym.id === 'scatter') {
-                return `<img src="${sym.img}" alt="Scatter" class="ao-symbol-img" draggable="false" style="width:130%;height:130%;object-fit:contain;transform:scale(1.2);filter:drop-shadow(0 6px 14px rgba(244,63,94,0.9)) drop-shadow(0 0 12px #f472b6);animation:sbScatterProtrude 1.1s infinite alternate ease-in-out;">`;
-            }
-            return sym.img
-                ? `<img src="${sym.img}" alt="${sym.name || ''}" class="ao-symbol-img" draggable="false" style="width:118%;height:118%;max-width:96px;max-height:96px;object-fit:contain;transform:scale(1.14);filter:drop-shadow(0 5px 12px rgba(0,0,0,0.7));">`
-                : `<span style="font-size:2.8rem;">🍬</span>`;
+            return '';
         }
 
         function cleanupReelOverlays(gridId, prefix, cols, rows) {
@@ -9266,7 +9283,9 @@ else if (slotKey === 'zeushades') {
                     amount: normalizeMoney(amount),
                     createdAt: firebase.firestore.FieldValue.serverTimestamp()
                 });
-            } catch (e) {}
+            } catch (e) {
+                console.warn('Record recent win failed:', e);
+            }
         }
 
         // ==========================================================
@@ -9300,7 +9319,9 @@ else if (slotKey === 'zeushades') {
                     tgId: getTelegramUserId(),
                     createdAt: firebase.firestore.FieldValue.serverTimestamp()
                 });
-            } catch (e) {}
+            } catch (e) {
+                console.warn('Report bonus win failed:', e);
+            }
         }
 
         function listenRecentWins() {
@@ -9375,10 +9396,6 @@ function applyProfilePromoCode() {
         <span>🎰</span>
         <span>Зал</span>
     </button>
-    <button class="mob-nav-btn" onclick="openZeusHades()">
-        <span>⚔️</span>
-        <span>Zeus vs Hades</span>
-    </button>
     <button class="mob-nav-btn" onclick="openDepositModal()">
         <span>💳</span>
         <span>Касса</span>
@@ -9423,70 +9440,30 @@ showLobby = function() { exitLandscapeMode(); _origShowLobby(); };
     const nav = document.getElementById('mobile-bottom-nav');
     if (!nav) return;
     
-    // Prevent Telegram WebApp from intercepting touches on bottom nav
-    nav.addEventListener('touchstart', function(e) {
-        e.stopPropagation();
-    }, { passive: true });
-    
-    nav.addEventListener('touchend', function(e) {
-        e.stopPropagation();
-    }, { passive: true });
-    
-    // Ensure buttons respond to touch
+    // Ensure buttons respond to touch immediately
     document.querySelectorAll('.mob-nav-btn').forEach(btn => {
-        btn.addEventListener('touchstart', function(e) {
+        btn.addEventListener('touchstart', function() {
             this.style.background = 'rgba(47, 134, 255, 0.10)';
         }, { passive: true });
         
-        btn.addEventListener('touchend', function(e) {
+        btn.addEventListener('touchend', function() {
             this.style.background = '';
-            // Trigger click for reliability
-            const onclick = this.getAttribute('onclick');
-            if (onclick) {
-                // Safely execute the onclick handler
-                try {
-                    const fn = new Function(onclick);
-                    fn.call(this);
-                } catch (err) {
-                    console.error('Nav button onclick error:', err);
-                }
-            }
+            const id = this.id;
+            if (id === 'mob-nav-lobby') showLobby();
+            else if (id === 'mob-nav-profile') switchView('profile');
+            else if (this.onclick) this.onclick();
         }, { passive: true });
         
-        btn.addEventListener('touchcancel', function(e) {
+        btn.addEventListener('touchcancel', function() {
             this.style.background = '';
         }, { passive: true });
     });
     
-    // Ensure nav stays on top - observe for z-index changes
-    const observer = new MutationObserver(() => {
-        if (nav.style.zIndex !== '9999') {
-            nav.style.zIndex = '9999';
-        }
-        // Also check if any parent has transform/opacity that creates stacking context
-        let parent = nav.parentElement;
-        while (parent) {
-            const style = getComputedStyle(parent);
-            if (style.transform !== 'none' || style.opacity < 1 || style.filter !== 'none' || style.isolation === 'isolate') {
-                // Parent creates stacking context - ensure nav is direct child of body
-                if (parent !== document.body) {
-                    document.body.appendChild(nav);
-                }
-                break;
-            }
-            parent = parent.parentElement;
-        }
-    });
-    observer.observe(nav, { attributes: true, attributeFilter: ['style', 'class'] });
-    observer.observe(document.body, { attributes: true, attributeFilter: ['class'], subtree: true });
-    
-    // Force nav to be direct child of body for proper stacking
+    // Ensure nav stays on top - simple and fast
+    nav.style.zIndex = '9999';
     if (nav.parentElement !== document.body) {
         document.body.appendChild(nav);
     }
-    
-    // Initial z-index
-    nav.style.zIndex = '9999';
 })();
 
 // === 2. ЕЖЕДНЕВНОЕ КОЛЕСО ФОРТУНЫ (РАЗ В 24 ЧАСА) ===
@@ -9646,7 +9623,8 @@ window.addEventListener('DOMContentLoaded', syncCashbackUI);
     const SLOT_BANNERS = {
         olympus:  { view: 'view-olympus',  banner: 'ao-fs-banner', status: '.ao-hud-center-group' },
         doghouse: { view: 'view-doghouse', banner: 'dh-fs-banner', status: '.dh-hud-center-group' },
-        bonanza:  { view: 'view-bonanza',  banner: 'sb-fs-banner', status: '.sb-hud-center' }
+        bonanza:  { view: 'view-bonanza',  banner: 'sb-fs-banner', status: '.sb-hud-center' },
+        zeushades: { view: 'view-zeushades', banner: 'zh-fs-banner', status: '.zh-hud-center-group' }
     };
 
     function isPhoneLayout() {
@@ -9694,6 +9672,7 @@ window.addEventListener('DOMContentLoaded', syncCashbackUI);
     wrapOpen('openGatesOfOlympus', 'olympus');
     wrapOpen('openDogHouse', 'doghouse');
     wrapOpen('openSweetBonanza', 'bonanza');
+    wrapOpen('openZeusHades', 'zeushades');
 
     const originalShowLobby = window.showLobby;
     if (typeof originalShowLobby === 'function') {
