@@ -40,14 +40,17 @@
     z-index: 8;
 }
 
+/* Wild в ленте: постоянный крупный размер (соответствует 0% ключевому кадру анимации статичного Wild), без анимации — чтобы не было скачка при остановке */
 .reel-col-item.dh-reel-item-big .reel-wild-mini {
     width: 138% !important;
     height: 138% !important;
     flex-shrink: 0;
-    transform: scale(1.18);
-    animation: dhWildProtrude 1.15s infinite alternate ease-in-out;
+    transform: scale(1.15);
+    transform-origin: center center;
+    filter: drop-shadow(0 10px 22px rgba(0, 0, 0, 0.92)) drop-shadow(0 0 18px rgba(253, 224, 71, 0.95));
 }
 
+/* Scatter в ленте: постоянный крупный размер (соответствует 0% ключевому кадру анимации статичного Scatter), без анимации */
 .reel-col-item.dh-reel-item-big .dh-reel-scatter-img {
     width: 146% !important;
     height: 146% !important;
@@ -55,9 +58,9 @@
     max-height: none !important;
     flex-shrink: 0;
     object-fit: contain;
-    transform: scale(1.22);
+    transform: scale(1.18);
+    transform-origin: center center;
     filter: drop-shadow(0 10px 22px rgba(0, 0, 0, 0.9)) drop-shadow(0 0 18px #f59e0b) drop-shadow(0 0 28px #fde047);
-    animation: dhScatterProtrude 1.05s infinite alternate ease-in-out;
 }
         :root {
             --bg-main: #0b0d10;
@@ -1203,7 +1206,9 @@
             max-width: none;
             max-height: none;
             object-fit: contain;
-            transform: scale(1.22);
+            transform: scale(1.18);
+            transform-origin: center center;
+            flex-shrink: 0;
             filter: drop-shadow(0 10px 22px rgba(0, 0, 0, 0.9)) drop-shadow(0 0 18px #f59e0b) drop-shadow(0 0 28px #fde047);
             animation: dhScatterProtrude 1.05s infinite alternate ease-in-out;
             position: relative;
@@ -1239,7 +1244,9 @@
         #view-doghouse .dh-wild-badge {
             width: 138%;
             height: 138%;
-            transform: scale(1.18);
+            transform: scale(1.15);
+            transform-origin: center center;
+            flex-shrink: 0;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -6464,7 +6471,7 @@ html, body {
                         <button class="hero-cta-btn" onclick="openDogHouse()">🐶 Залететь в The Dog House</button>
                         <div class="hero-stats">
                             <div class="hero-stat">
-                                <span class="hero-stat-value">3</span>
+                                <span class="hero-stat-value">4</span>
                                 <span class="hero-stat-label">Оригинальных слота</span>
                             </div>
                             <div class="hero-stat">
