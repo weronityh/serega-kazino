@@ -1156,7 +1156,7 @@
             max-width: none;
             max-height: none;
             object-fit: cover;
-            border-radius: 11px;
+            border-radius: inherit;
             display: block;
             filter: drop-shadow(0 3px 6px rgba(0,0,0,0.55));
         }
@@ -4927,13 +4927,14 @@ html, body {
 
 @media (max-width: 980px) {
     .mobile-bottom-nav {
-        touch-action: auto;
+        touch-action: manipulation;
     }
     .mob-nav-btn {
-        touch-action: auto;
+        min-height: 48px;
+        justify-content: center;
+        touch-action: manipulation;
     }
 }
-
 @media (max-width: 980px) {
     .left-sidebar,
     .sidebar-toggle-btn {
@@ -6080,6 +6081,13 @@ html, body {
 .reel-spinning-hide .dh-symbol-inner,
 .reel-spinning-hide .sb-symbol-inner {
     opacity: 0 !important;
+}
+@media (max-width: 768px) {
+    #view-doghouse .dh-wild-mult {
+        font-size: 0.78rem !important;
+        padding: 1px 6px !important;
+        border-radius: 7px !important;
+    }
 }
     </style>
 </head>
@@ -10460,27 +10468,6 @@ showLobby = function() { exitLandscapeMode(); _origShowLobby(); };
 (function initMobileBottomNavTouch() {
     const nav = document.getElementById('mobile-bottom-nav');
     if (!nav) return;
-    
-    // Ensure buttons respond to touch immediately
-    document.querySelectorAll('.mob-nav-btn').forEach(btn => {
-        btn.addEventListener('touchstart', function() {
-            this.style.background = 'rgba(47, 134, 255, 0.10)';
-        }, { passive: true });
-        
-        btn.addEventListener('touchend', function() {
-            this.style.background = '';
-            const id = this.id;
-            if (id === 'mob-nav-lobby') showLobby();
-            else if (id === 'mob-nav-profile') switchView('profile');
-            else if (this.onclick) this.onclick();
-        }, { passive: true });
-        
-        btn.addEventListener('touchcancel', function() {
-            this.style.background = '';
-        }, { passive: true });
-    });
-    
-    // Ensure nav stays on top - simple and fast
     nav.style.zIndex = '9999';
     if (nav.parentElement !== document.body) {
         document.body.appendChild(nav);
