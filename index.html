@@ -17,8 +17,8 @@
    но обрезаем верх и низ ровно по рамке барабана */
 .reel-col-viewport.dh-reel-viewport {
     overflow: visible;
-    clip-path: inset(0px -64px 0px -64px);
-    -webkit-clip-path: inset(0px -64px 0px -64px);
+    clip-path: inset(-28px -64px -28px -64px);
+    -webkit-clip-path: inset(-28px -64px -28px -64px);
 }
 
 /* Обычные символы в ленте — чуть компактнее, чтобы будки и лапы выделялись */
@@ -45,6 +45,7 @@
     height: 138% !important;
     flex-shrink: 0;
     transform: scale(1.18);
+    animation: dhWildProtrude 1.15s infinite alternate ease-in-out;
 }
 
 .reel-col-item.dh-reel-item-big .dh-reel-scatter-img {
@@ -430,6 +431,10 @@
             cursor: pointer;
         }
 
+/* ============================================================
+           ОСНОВНАЯ ОБЛАСТЬ КОНТЕНТА (ЗАЛ, ПРОФИЛЬ, СЛОТЫ)
+           ============================================================ */
+
         .content-area {
             padding: 20px 24px 34px;
             max-width: 1320px;
@@ -440,6 +445,9 @@
             flex-direction: column;
         }
 
+        /* ============================================================
+           HERO-БЛОК (ГЛАВНЫЙ БАННЕР НА ГЛАВНОЙ)
+           ============================================================ */
         /* HERO-БЛОК */
         .hero-banner {
             border-radius: 20px;
@@ -517,6 +525,9 @@
             100% { transform: translateY(-10px) scale(1.03); }
         }
 
+        /* ============================================================
+           КАТАЛОГ СЛОТОВ (СЕТКА КАРТОЧЕК НА ГЛАВНОЙ)
+           ============================================================ */
         /* КАТАЛОГ СЛОТОВ */
         .slots-catalog-grid {
             display: grid;
@@ -607,6 +618,10 @@
             border-top: 1px solid var(--border-glass);
         }
 
+/* ============================================================
+           БАЗОВЫЙ КОНТЕЙНЕР ИГРЫ (ОБЩИЙ ДЛЯ ВСЕХ СЛОТОВ)
+           ============================================================ */
+
         .game-view {
             display: none;
             background: var(--bg-card);
@@ -665,6 +680,9 @@
             box-shadow: 0 0 15px rgba(34, 197, 94, 0.7);
         }
 
+        /* ============================================================
+           GATES OF OLYMPUS — СЛОТ #1 (ЗЕВС, МНОЖИТЕЛИ, ФРИСПИНЫ)
+           ============================================================ */
         /* ========================================== */
         /* GATES OF OLYMPUS */
         /* ========================================== */
@@ -1109,6 +1127,9 @@
         .ao-spin-circle-btn svg { width: 38px; height: 38px; fill: #fff; }
         .ao-spin-circle-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
+        /* ============================================================
+           THE DOG HOUSE — СЛОТ #2 (СОБАКИ, ВАЙЛДЫ С МНОЖИТЕЛЯМИ, СТИКИ)
+           ============================================================ */
         /* ========================================== */
         /* THE DOG HOUSE */
         /* ========================================== */
@@ -1292,6 +1313,9 @@
         .dh-spin-circle-btn svg { width: 38px; height: 38px; fill: #fff; }
         .dh-spin-circle-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
+        /* ============================================================
+           SWEET BONANZA — СЛОТ #3 (КАСКАДНЫЕ БАРАБАНЫ, БОМБЫ-МНОЖИТЕЛИ)
+           ============================================================ */
         /* ========================================== */
         /* SWEET BONANZA */
         /* ========================================== */
@@ -1470,6 +1494,9 @@
         }
         .sb-spin-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
+        /* ============================================================
+           ZEUS VS HADES — СЛОТ #4 (ДУЭЛЬ ОЛИМП/ХАДЕС, РАСШИРЯЮЩИЕСЯ ВАЙЛДЫ)
+           ============================================================ */
         /* ==========================================
            ZEUS VS HADES — GODS OF WAR (premium scene)
            ========================================== */
@@ -2636,6 +2663,9 @@
 
 
 
+        /* ============================================================
+           МОДАЛЬНЫЕ ОКНА (ДЕПОЗИТ, ВЫВОД, ТАБЛИЦЫ ВЫПЛАТ, КОЛЕСО, ДЕВ-ПАНЕЛЬ)
+           ============================================================ */
         /* МОДАЛЬНЫЕ ОКНА */
         .modal-overlay {
             display: none; position: fixed; inset: 0; background: rgba(4, 7, 11, 0.88);
@@ -6103,6 +6133,10 @@ html, body {
     </style>
 </head>
 <body ontouchstart="">
+
+<!-- ============================================================
+     HTML СТРУКТУРА: МОДАЛЬНЫЕ ОКНА (ОВЕРЛЕИ)
+     ============================================================ -->
 <div id="nickname-overlay">
         <div class="nickname-box">
             <div style="font-size: 3.2rem; margin-bottom: 10px;">🔐👑</div>
@@ -6309,6 +6343,9 @@ html, body {
             </div>
         </div>
     </div>
+    <!-- ============================================================
+     HTML СТРУКТУРА: ЛЕВЫЙ САЙДБАР (НАВИГАЦИЯ)
+     ============================================================ -->
     <aside class="left-sidebar">
     <div class="brand-logo" onclick="showLobby()">
         <div class="brand-crown">К</div>
@@ -6390,7 +6427,9 @@ html, body {
     </a>
 </aside>
 
-    <!-- ОСНОВНАЯ ОБЛАСТЬ -->
+<!-- ============================================================
+     HTML СТРУКТУРА: ОСНОВНОЙ КОНТЕНТ (ТОПБАР + ЗАЛ/СЛОТЫ/ПРОФИЛЬ)
+     ============================================================ -->
     <main class="main-wrapper">
         <header class="topbar">
             <button class="sidebar-toggle-btn" id="sidebar-toggle-btn" onclick="toggleSidebar()" title="Скрыть / показать меню">☰</button>
@@ -6413,6 +6452,9 @@ html, body {
             </div>
         </header>
 
+<!-- ============================================================
+     HTML: ЗАЛ (ЛОББИ) — ГЕРОЙ + КАТАЛОГ СЛОТОВ
+     ============================================================ -->
         <div class="content-area">
             <div id="view-lobby" class="game-view active">
                 <div class="hero-banner">
@@ -6515,6 +6557,9 @@ html, body {
                 </div>
             </div>
 
+            <!-- ============================================================
+     HTML: GATES OF OLYMPUS — ИГРОВОЕ ПОЛЕ + HUD
+     ============================================================ -->
             <!-- GATES OF OLYMPUS -->
             <div id="view-olympus" class="game-view">
                 <div class="ao-top-bar">
@@ -6596,6 +6641,9 @@ html, body {
 <div class="ao-fs-intro-overlay" id="ao-fs-intro-overlay" onclick="confirmStartOlympusFreeSpins()">
     <img src="изображение-removebg-preview.png" alt="Поздравляем! 15 бесплатных вращений" class="ao-fs-intro-img">
 </div>
+            <!-- ============================================================
+     HTML: THE DOG HOUSE — ИГРОВОЕ ПОЛЕ + HUD
+     ============================================================ -->
             <!-- THE DOG HOUSE -->
             <div id="view-doghouse" class="game-view">
                 <div class="dh-top-bar">
@@ -6648,6 +6696,9 @@ html, body {
                 </div>
             </div>
 
+            <!-- ============================================================
+     HTML: SWEET BONANZA — ИГРОВОЕ ПОЛЕ + HUD
+     ============================================================ -->
             <!-- SWEET BONANZA -->
             <div id="view-bonanza" class="game-view">
                 <div class="sb-top-bar">
@@ -6725,6 +6776,9 @@ html, body {
                 </div>
 </div>
 
+            <!-- ============================================================
+     HTML: ZEUS VS HADES — ИГРОВОЕ ПОЛЕ + HUD (ДУЭЛЬ РЕЖИМОВ)
+     ============================================================ -->
             <!-- ZEUS VS HADES – GODS OF WAR -->
             <div id="view-zeushades" class="game-view">
                 <div class="zh-top-bar">
@@ -6789,8 +6843,11 @@ html, body {
                 </div>
             </div>
 
+<!-- ============================================================
+     HTML: ПРОФИЛЬ / ЛИЧНЫЙ КАБИНЕТ
+     ============================================================ -->
                                 <!-- ПРОФИЛЬ -->
-         <div id="view-profile" class="game-view">
+          <div id="view-profile" class="game-view">
                 <div class="game-header">
                     <h2>👤 Личный кабинет</h2>
                     <button class="btn-back" onclick="showLobby()">← В зал</button>
@@ -6854,6 +6911,10 @@ html, body {
 
     <div class="toast" id="toast"></div>
 
+<!-- ============================================================
+     JAVASCRIPT: ОСНОВНАЯ ЛОГИКА ПРИЛОЖЕНИЯ
+     (Firebase, Telegram WebApp, авторизация, слоты, касса, UI)
+     ============================================================ -->
     <script>
         const firebaseConfig = {
             apiKey: "AIzaSyCVcGcQ-CO2PKkbvyhu-OmczTZC8lLSGPA",
@@ -10430,6 +10491,9 @@ function applyProfilePromoCode() {
     applyPromoCode();
 }
     </script>
+<!-- ============================================================
+     HTML: НИЖНЕЕ МОБИЛЬНОЕ МЕНЮ (TELEGRAM MINI APP)
+     ============================================================ -->
 <!-- НИЖНЕЕ МЕНЮ ДЛЯ ТЕЛЕФОНА -->
 <nav class="mobile-bottom-nav" id="mobile-bottom-nav">
     <button class="mob-nav-btn active" id="mob-nav-lobby" onclick="showLobby()">
