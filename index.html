@@ -7667,13 +7667,10 @@ function buildReelItemHTML(slotType, sym) {
             }
         }
 
-        // Mobile detection for animation fallback
+// Mobile detection
         const isMobile = /Mobi|Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i.test(navigator.userAgent) || 
                          (navigator.maxTouchPoints && navigator.maxTouchPoints > 2) ||
                          window.innerWidth <= 768;
-
-        // Use CSS animations instead of Web Animations API on mobile (more stable in Telegram WebView)
-        const useCssAnimations = isMobile && typeof document.createElement('div').animate !== 'function';
 
         async function spinFullReels({
             slotType,
@@ -7731,7 +7728,7 @@ function buildReelItemHTML(slotType, sym) {
                 }
 
                 const viewport = document.createElement('div');
-viewport.className = 'reel-col-viewport'
+                viewport.className = 'reel-col-viewport'
     + (slotType === 'dh' ? ' dh-reel-viewport' : '')
     + (teaseCol === c ? ' reel-tease-glow' : '');
                 viewport.style.left = `${left}px`;
@@ -7743,7 +7740,11 @@ viewport.className = 'reel-col-viewport'
                 strip.className = 'reel-col-strip';
                 strip.style.gap = `${gap}px`;
 
-                const extraCount = (turbo ? 6 : 12) + c * (turbo ? 2 : 4) + (teaseCol === c ? (turbo ? 8 : 20) : 0);
+                // На мобильных уменьшаем extraCount чтобы не перегружать GPU в Telegram WebView
+                const isMobileDevice = isMobile;
+                const extraCount = isMobileDevice
+                    ? (turbo ? 4 : 7) + c * (turbo ? 1 : 2) + (teaseCol === c ? (turbo ? 4 : 8) : 0)
+                    : (turbo ? 6 : 12) + c * (turbo ? 2 : 4) + (teaseCol === c ? (turbo ? 8 : 20) : 0);
 
                 // Порядок ленты сверху вниз:
                 // [новые символы nextGrid] -> [промежуточные] -> [текущие символы oldGrid]
@@ -7770,48 +7771,46 @@ viewport.className = 'reel-col-viewport'
                 const colStagger = turbo ? 65 : 135;
                 const teaseDur = teaseCol === c ? (turbo ? 420 : 1200) : 0;
                 const duration = baseDur + c * colStagger + teaseDur;
+                // cubic-bezier без значений > 1 (1.015 и 1.02 заменены на 1)
                 const easing = teaseCol === c
-                    ? 'cubic-bezier(0.12, 0.85, 0.25, 1.015)'
-                    : 'cubic-bezier(0.18, 0.90, 0.28, 1.02)';
+                    ? 'cubic-bezier(0.12, 0.85, 0.25, 1)'
+                    : 'cubic-bezier(0.18, 0.90, 0.28, 1)';
 
-                const animKeyframes = `reelSpin-${Date.now()}-${c}`;
-                const animStyle = document.createElement('style');
-                animStyle.textContent = `
-                    @keyframes ${animKeyframes} {
-                        0% { transform: translate3d(0, ${startY}px, 0); }
-                        100% { transform: translate3d(0, 0px, 0); }
-                    }
-                `;
-                document.head.appendChild(animStyle);
-                
-                strip.style.animation = `${animKeyframes} ${duration}ms ${easing} forwards`;
-                
+                // Начальная позиция ДО добавления в DOM / до анимации
+                strip.style.transform = `translate3d(0, ${startY}px, 0)`;
+                strip.style.willChange = 'transform';
+
+                // Ждём 2 кадра, затем запускаем transition
                 const animPromise = new Promise(resolve => {
-                    const onAnimEnd = () => {
-                        strip.removeEventListener('animationend', onAnimEnd);
-                        strip.removeEventListener('animationcancel', onAnimEnd);
+                    let settled = false;
+                    const finish = () => {
+                        if (settled) return;
+                        settled = true;
+                        strip.removeEventListener('transitionend', onTransEnd);
+                        clearTimeout(fallbackTimer);
                         resolve();
                     };
-                    strip.addEventListener('animationend', onAnimEnd);
-                    strip.addEventListener('animationcancel', onAnimEnd);
-                    // Fallback timeout
-                    setTimeout(resolve, duration + 100);
+                    const onTransEnd = (e) => {
+                        if (e.propertyName === 'transform') finish();
+                    };
+                    strip.addEventListener('transitionend', onTransEnd);
+                    const fallbackTimer = setTimeout(finish, duration + 220);
+
+                    // 2 requestAnimationFrame чтобы браузер применил начальное transform
+                    requestAnimationFrame(() => requestAnimationFrame(() => {
+                        if (settled) return;
+                        strip.style.transition = `transform ${duration}ms ${easing}`;
+                        strip.style.transform = 'translate3d(0, 0px, 0)';
+                    }));
                 });
 
-                anims.push({ 
-                    playState: 'running',
-                    finished: animPromise,
-                    styleEl: animStyle,
-                    keyframes: animKeyframes,
-                    duration: duration
-                });
+                anims.push({ strip, viewport, duration, settled: false });
 
                 colPromises.push(animPromise.then(() => {
                     for (let r = 0; r < rows; r++) {
                         document.getElementById(`${prefix}-cell-${c}-${r}`)?.classList.remove('reel-spinning-hide');
                     }
                     viewport.remove();
-                    if (animStyle.parentNode) animStyle.remove();
                     if (typeof onColumnStop === 'function') onColumnStop(c);
                     playSfx('stop');
                 }));
@@ -7823,12 +7822,11 @@ viewport.className = 'reel-col-viewport'
                 if (!spedUp && stopFn && stopFn()) {
                     spedUp = true;
                     anims.forEach(a => {
-                        try { 
-                            if (a.playState === 'running') {
-                                // For CSS animations, we can't easily speed up, so just let them finish
-                                a.playState = 'finished';
-                            }
-                        } catch (e) {} 
+                        if (!a.settled) {
+                            a.strip.style.transition = 'transform 140ms ease-out';
+                            a.strip.style.transform = 'translate3d(0, 0px, 0)';
+                            setTimeout(() => { a.settled = true; }, 160);
+                        }
                     });
                 }
             }, 30);
@@ -7843,10 +7841,6 @@ viewport.className = 'reel-col-viewport'
             } finally {
                 clearInterval(stopWatcher);
                 clearInterval(tickTimer);
-                // Clean up animation style elements
-                anims.forEach(a => {
-                    if (a.styleEl && a.styleEl.parentNode) a.styleEl.remove();
-                });
                 cleanupReelOverlays(gridId, prefix, cols, rows);
             }
         }
@@ -9265,7 +9259,7 @@ else if (slotKey === 'zeushades') {
                  rows: DH_ROWS,
                  oldGrid: dhGrid,
                  nextGrid,
-                 getFillerSymbol: (col) => generateDogHouseCell(col),
+                 getFillerSymbol: (col) => getRandomDogHouseSymbol(col),
                  onColumnStop: (c) => {
                      for (let r = 0; r < DH_ROWS; r++) {
                          dhGrid[c][r] = nextGrid[c][r];
