@@ -16,9 +16,9 @@
 /* Разрешаем крупным символам выходить за границы колонки по горизонтали,
    но обрезаем верх и низ ровно по рамке барабана */
 .reel-col-viewport.dh-reel-viewport {
-    overflow: visible;
-    clip-path: inset(0px -64px 0px -64px);
-    -webkit-clip-path: inset(0px -64px 0px -64px);
+    overflow: hidden;
+    clip-path: inset(0);
+    -webkit-clip-path: inset(0);
 }
 
 /* Обычные символы в ленте — чуть компактнее, чтобы будки и лапы выделялись */
@@ -42,25 +42,25 @@
 
 /* Wild в ленте: постоянный крупный размер (соответствует 0% ключевому кадру анимации статичного Wild), без анимации — чтобы не было скачка при остановке */
 .reel-col-item.dh-reel-item-big .reel-wild-mini {
-    width: 138% !important;
-    height: 138% !important;
+    width: 120% !important;
+    height: 120% !important;
     flex-shrink: 0;
-    transform: scale(1.15);
+    transform: scale(1.05);
     transform-origin: center center;
-    filter: drop-shadow(0 10px 22px rgba(0, 0, 0, 0.92)) drop-shadow(0 0 18px rgba(253, 224, 71, 0.95));
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.6));
 }
 
 /* Scatter в ленте: постоянный крупный размер (соответствует 0% ключевому кадру анимации статичного Scatter), без анимации */
 .reel-col-item.dh-reel-item-big .dh-reel-scatter-img {
-    width: 146% !important;
-    height: 146% !important;
+    width: 125% !important;
+    height: 125% !important;
     max-width: none !important;
     max-height: none !important;
     flex-shrink: 0;
     object-fit: contain;
-    transform: scale(1.18);
+    transform: scale(1.08);
     transform-origin: center center;
-    filter: drop-shadow(0 10px 22px rgba(0, 0, 0, 0.9)) drop-shadow(0 0 18px #f59e0b) drop-shadow(0 0 28px #fde047);
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.6));
 }
         :root {
             --bg-main: #0b0d10;
@@ -1193,7 +1193,7 @@
             object-fit: cover;
             border-radius: inherit;
             display: block;
-            filter: drop-shadow(0 3px 6px rgba(0,0,0,0.55));
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));
         }
         
         #view-doghouse .dh-cell.dh-protrude-cell {
@@ -1201,23 +1201,23 @@
             overflow: visible !important;
         }
         #view-doghouse .dh-scatter-img {
-            width: 146%;
-            height: 146%;
+            width: 125%;
+            height: 125%;
             max-width: none;
             max-height: none;
             object-fit: contain;
-            transform: scale(1.18);
+            transform: scale(1.08);
             transform-origin: center center;
             flex-shrink: 0;
-            filter: drop-shadow(0 10px 22px rgba(0, 0, 0, 0.9)) drop-shadow(0 0 18px #f59e0b) drop-shadow(0 0 28px #fde047);
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5));
             animation: dhScatterProtrude 1.05s infinite alternate ease-in-out;
             position: relative;
             z-index: 28;
             pointer-events: none;
         }
         @keyframes dhScatterProtrude {
-            0% { transform: scale(1.18) rotate(-5deg); }
-            100% { transform: scale(1.34) rotate(5deg); }
+            0% { transform: scale(1.08) rotate(-3deg); }
+            100% { transform: scale(1.15) rotate(3deg); }
         }
 
 
@@ -1242,9 +1242,9 @@
         }
         
         #view-doghouse .dh-wild-badge {
-            width: 138%;
-            height: 138%;
-            transform: scale(1.15);
+            width: 120%;
+            height: 120%;
+            transform: scale(1.05);
             transform-origin: center center;
             flex-shrink: 0;
             display: flex;
@@ -1257,14 +1257,14 @@
             animation: dhWildProtrude 1.15s infinite alternate ease-in-out;
         }
         @keyframes dhWildProtrude {
-            0% { transform: scale(1.15) translateY(-1px); }
-            100% { transform: scale(1.26) translateY(-4px); }
+            0% { transform: scale(1.05) translateY(-1px); }
+            100% { transform: scale(1.12) translateY(-3px); }
         }
         #view-doghouse .dh-wild-img {
             width: 100%;
             height: 100%;
             object-fit: contain;
-            filter: drop-shadow(0 10px 22px rgba(0, 0, 0, 0.92)) drop-shadow(0 0 18px rgba(253, 224, 71, 0.95));
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5));
         }
         #view-doghouse .dh-wild-mult {
             position: absolute;
@@ -6136,6 +6136,44 @@ html, body {
         padding: 1px 6px !important;
         border-radius: 7px !important;
     }
+    
+    /* Mobile optimizations: reduce GPU-heavy effects during reel spin */
+    .reel-col-viewport .reel-col-item .reel-wild-mini,
+    .reel-col-viewport .reel-col-item .dh-reel-scatter-img,
+    .reel-col-viewport .reel-col-item .ao-multiplier-sphere,
+    .reel-col-viewport .reel-col-item .ao-scatter-img,
+    .reel-col-viewport .reel-col-item .sb-bomb-wrap,
+    .reel-col-viewport .reel-col-item .sb-scatter-img,
+    .reel-col-viewport .reel-col-item .zh-wild-column,
+    .reel-col-viewport .reel-col-item .zh-scatter-img {
+        filter: none !important;
+        transform: none !important;
+        width: 100% !important;
+        height: 100% !important;
+    }
+    
+    .reel-col-viewport.dh-reel-viewport {
+        overflow: hidden !important;
+        clip-path: none !important;
+        -webkit-clip-path: none !important;
+    }
+    
+    .reel-col-item.dh-reel-item-big {
+        overflow: hidden !important;
+    }
+    
+    /* Disable complex animations on mobile during spin */
+    .reel-col-strip {
+        animation: none !important;
+    }
+    
+    /* Reduce drop-shadow on static symbols too */
+    .dh-sym-img,
+    .ao-symbol-img,
+    .sb-sym-img,
+    .zh-sym-img {
+        filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4)) !important;
+    }
 }
     </style>
 </head>
@@ -6471,7 +6509,7 @@ html, body {
                         <button class="hero-cta-btn" onclick="openDogHouse()">🐶 Залететь в The Dog House</button>
                         <div class="hero-stats">
                             <div class="hero-stat">
-                                <span class="hero-stat-value">4</span>
+                                <span class="hero-stat-value">3</span>
                                 <span class="hero-stat-label">Оригинальных слота</span>
                             </div>
                             <div class="hero-stat">
@@ -7577,13 +7615,13 @@ function buildReelItemHTML(slotType, sym) {
             if (!sym) return '';
             if (slotType === 'dh') {
                 if (sym.id === 'wild') {
-                    return `<div class="reel-wild-mini"><img src="${sym.img}" alt="Wild" draggable="false" style="width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 10px 22px rgba(0,0,0,0.92)) drop-shadow(0 0 18px rgba(253,224,71,0.95));"><span class="reel-wild-x" style="position:absolute;bottom:2px;right:4px;background:linear-gradient(135deg,#ef4444,#991b1b);border:2px solid #fde047;border-radius:9px;padding:2px 8px;font-family:Unbounded,sans-serif;font-size:0.9rem;font-weight:900;color:#fff;text-shadow:0 2px 4px #000;box-shadow:0 4px 12px rgba(0,0,0,0.85);">x${sym.mult}</span></div>`;
+                    return `<div class="reel-wild-mini"><img src="${sym.img}" alt="Wild" draggable="false" style="width:100%;height:100%;object-fit:contain;"><span class="reel-wild-x" style="position:absolute;bottom:2px;right:4px;background:linear-gradient(135deg,#ef4444,#991b1b);border:2px solid #fde047;border-radius:9px;padding:2px 8px;font-family:Unbounded,sans-serif;font-size:0.9rem;font-weight:900;color:#fff;text-shadow:0 2px 4px #000;box-shadow:0 4px 12px rgba(0,0,0,0.85);">x${sym.mult}</span></div>`;
                 }
                 if (sym.id === 'scatter') {
-                    return `<img src="${sym.img}" alt="Scatter" class="dh-reel-scatter-img" draggable="false">`;
+                    return `<img src="${sym.img}" alt="Scatter" class="dh-reel-scatter-img" draggable="false" style="width:100%;height:100%;object-fit:contain;">`;
                 }
                 return sym.img
-                    ? `<img src="${sym.img}" alt="${sym.name || ''}" class="dh-sym-img" draggable="false" style="filter:drop-shadow(0 3px 6px rgba(0,0,0,0.55));">`
+                    ? `<img src="${sym.img}" alt="${sym.name || ''}" class="dh-sym-img" draggable="false" style="width:100%;height:100%;object-fit:cover;border-radius:10px;">`
                     : `<span style="font-size:2.9rem;">${sym.fallback || '🐾'}</span>`;
             }
             if (slotType === 'zh') {
@@ -7633,6 +7671,14 @@ function buildReelItemHTML(slotType, sym) {
                 }
             }
         }
+
+        // Mobile detection for animation fallback
+        const isMobile = /Mobi|Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i.test(navigator.userAgent) || 
+                         (navigator.maxTouchPoints && navigator.maxTouchPoints > 2) ||
+                         window.innerWidth <= 768;
+
+        // Use CSS animations instead of Web Animations API on mobile (more stable in Telegram WebView)
+        const useCssAnimations = isMobile && typeof document.createElement('div').animate !== 'function';
 
         async function spinFullReels({
             slotType,
@@ -7733,20 +7779,44 @@ viewport.className = 'reel-col-viewport'
                     ? 'cubic-bezier(0.12, 0.85, 0.25, 1.015)'
                     : 'cubic-bezier(0.18, 0.90, 0.28, 1.02)';
 
-                const anim = strip.animate(
-                    [
-                        { transform: `translate3d(0, ${startY}px, 0)` },
-                        { transform: 'translate3d(0, 0px, 0)' }
-                    ],
-                    { duration, easing, fill: 'forwards' }
-                );
-                anims.push(anim);
+                const animKeyframes = `reelSpin-${Date.now()}-${c}`;
+                const animStyle = document.createElement('style');
+                animStyle.textContent = `
+                    @keyframes ${animKeyframes} {
+                        0% { transform: translate3d(0, ${startY}px, 0); }
+                        100% { transform: translate3d(0, 0px, 0); }
+                    }
+                `;
+                document.head.appendChild(animStyle);
+                
+                strip.style.animation = `${animKeyframes} ${duration}ms ${easing} forwards`;
+                
+                const animPromise = new Promise(resolve => {
+                    const onAnimEnd = () => {
+                        strip.removeEventListener('animationend', onAnimEnd);
+                        strip.removeEventListener('animationcancel', onAnimEnd);
+                        resolve();
+                    };
+                    strip.addEventListener('animationend', onAnimEnd);
+                    strip.addEventListener('animationcancel', onAnimEnd);
+                    // Fallback timeout
+                    setTimeout(resolve, duration + 100);
+                });
 
-                colPromises.push(anim.finished.catch(() => {}).then(() => {
+                anims.push({ 
+                    playState: 'running',
+                    finished: animPromise,
+                    styleEl: animStyle,
+                    keyframes: animKeyframes,
+                    duration: duration
+                });
+
+                colPromises.push(animPromise.then(() => {
                     for (let r = 0; r < rows; r++) {
                         document.getElementById(`${prefix}-cell-${c}-${r}`)?.classList.remove('reel-spinning-hide');
                     }
                     viewport.remove();
+                    if (animStyle.parentNode) animStyle.remove();
                     if (typeof onColumnStop === 'function') onColumnStop(c);
                     playSfx('stop');
                 }));
@@ -7758,16 +7828,30 @@ viewport.className = 'reel-col-viewport'
                 if (!spedUp && stopFn && stopFn()) {
                     spedUp = true;
                     anims.forEach(a => {
-                        try { if (a.playState === 'running') a.playbackRate = 5.5; } catch (e) {}
+                        try { 
+                            if (a.playState === 'running') {
+                                // For CSS animations, we can't easily speed up, so just let them finish
+                                a.playState = 'finished';
+                            }
+                        } catch (e) {} 
                     });
                 }
             }, 30);
 
+            const maxDur = Math.max(...anims.map(a => a.duration || 0));
+
             try {
-                await Promise.all(colPromises);
+                await Promise.race([
+                    Promise.all(colPromises),
+                    new Promise(resolve => setTimeout(resolve, maxDur + 150))
+                ]);
             } finally {
                 clearInterval(stopWatcher);
                 clearInterval(tickTimer);
+                // Clean up animation style elements
+                anims.forEach(a => {
+                    if (a.styleEl && a.styleEl.parentNode) a.styleEl.remove();
+                });
                 cleanupReelOverlays(gridId, prefix, cols, rows);
             }
         }
@@ -9081,7 +9165,7 @@ else if (slotKey === 'zeushades') {
 
             for (const line of DH_PAYLINES) {
                 const lineSyms = line.map(pt => (dhInFreeSpins && dhStickyWilds[pt.c][pt.r]) || dhGrid[pt.c][pt.r]);
-                if (lineSyms[0].id === 'scatter') continue;
+                if (!lineSyms[0] || lineSyms[0].id === 'scatter') continue;
 
                 let targetSym = null;
                 for (let i = 0; i < 5; i++) {
