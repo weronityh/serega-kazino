@@ -7417,9 +7417,13 @@ html, body {
         let withdrawHistory = [];
         let selectedDepMethod = 'stars';
         let selectedWdMethod = 'stars';
-        // Сюда потом вставите URL вашего бота-сервера (см. Шаг 6), например:
-        // const STARS_INVOICE_API_URL = 'https://ваш-домен.com/api/create-stars-invoice';
-        const STARS_INVOICE_API_URL = 'https://kazik-server-xxx.vercel.app/api/deposit/stars';
+        // ==========================================
+        // BACKEND CONFIG — ЗАМЕНИ НА СВОЙ ВЕРЦЕЛЬ ДОМЕН ПОСЛЕ ДЕПЛОЯ
+        // ==========================================
+        const BACKEND_URL = 'https://kazik-server-xxx.vercel.app';  // ← ТВОЙ ВЕРЦЕЛЬ ДОМЕН
+        const STARS_INVOICE_API_URL = BACKEND_URL + '/api/deposit/stars';
+        const AUTH_API_URL = BACKEND_URL + '/api/auth/telegram';
+        const ME_API_URL = BACKEND_URL + '/api/me';
         // Сколько зачислять на баланс от оплаченных звёзд (1.0 = 100%, 0.85 = минус 15% комиссия)
         const STARS_CREDIT_RATE = 1.0;
         let depositPending = false;
@@ -7447,6 +7451,9 @@ html, body {
                 }
             });
 
+            // === ЗАКОММЕНТИРОВАНО: onSnapshot игрока тратит бесплатные Firestore reads ===
+            // Баланс обновляется только после действий (депозит, спин, вывод) через refreshBalanceFromServer()
+            /*
             db.collection('players').doc(username).onSnapshot(snap => {
                 if (!snap.exists) return;
                 const d = snap.data();
@@ -7460,12 +7467,50 @@ html, body {
                     showToast('💵 Ваш баланс обновлён администратором!');
                 }
             });
+            */
 
             setInterval(() => { if (!isAnyGameBusy()) pushWalletToCloud(); }, 15000);
             window.addEventListener('online', () => pushWalletToCloud());
             document.addEventListener('visibilitychange', () => {
                 if (document.visibilityState === 'hidden') pushWalletToCloud();
             });
+        }
+
+        // === АВТОРИЗАЦИЯ В БЭКЕНДЕ (JWT) ===
+        async function authWithBackend() {
+            if (!username) return null;
+            
+            const initData = window.Telegram?.WebApp?.initData || '';
+            
+            try {
+                const resp = await fetch(AUTH_API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ initData })
+                });
+                const data = await resp.json();
+                if (data.token) {
+                    localStorage.setItem('kazik_jwt_token', data.token);
+                    return data.token;
+                }
+            } catch (e) {
+                console.warn('Backend auth failed:', e);
+            }
+            return null;
+        }
+
+        // === РУЧНОЕ ОБНОВЛЕНИЕ БАЛАНСА С СЕРВЕРА ===
+        async function refreshBalanceFromServer() {
+            const token = localStorage.getItem('kazik_jwt_token');
+            if (!token) return;
+            try {
+                const resp = await fetch(ME_API_URL, { headers: { 'Authorization': `Bearer ${token}` } });
+                const data = await resp.json();
+                if (data.balance !== undefined) {
+                    balance = normalizeMoney(data.balance);
+                    updateBalanceUI();
+                }
+            } catch (e) { console.warn('Balance refresh failed:', e); }
         }
 
         async function refreshWalletFromCloud() {
@@ -8135,6 +8180,8 @@ async function hashPassword(str) {
                 syncProfileUI();
                 document.getElementById('nickname-overlay').classList.remove('active');
                 initFirebaseRealtimeSync();
+                // === АВТОРИЗАЦИЯ В БЭКЕНДЕ (JWT) ===
+                await authWithBackend();
             } catch (e) {
                 showToast('⚠️ Ошибка подключения к базе. Попробуйте ещё раз.');
             } finally {
@@ -8262,10 +8309,7 @@ const zhBal = document.getElementById('zh-hud-balance'); if (zhBal) zhBal.textCo
                 showToast('⚠️ Минимальная сумма пополнения — 100 ⭐ (целое число)');
                 return;
             }
-            if (amtRaw > 100000) {
-                showToast('⚠️ Слишком большая сумма — свяжитесь с поддержкой');
-                return;
-            }
+            if (amtRaw > 100000) { showToast('⚠️ Слишком большая сумма'); return; }
             if (!username) { showToast('⚠️ Сначала укажите ник'); return; }
 
             depositPending = true;
@@ -8274,26 +8318,42 @@ const zhBal = document.getElementById('zh-hud-balance'); if (zhBal) zhBal.textCo
             if (btn) { btn.disabled = true; btn.style.opacity = '0.65'; }
 
             try {
-                // 1) Если настроен сервер бота и открыто в Telegram — открываем официальную оплату Stars
-                if (STARS_INVOICE_API_URL && window.Telegram && Telegram.WebApp && typeof Telegram.WebApp.openInvoice === 'function') {
-                    const resp = await fetch(STARS_INVOICE_API_URL, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            nick: username,
-                            amount: amtRaw,
-                            initData: Telegram.WebApp.initData || ''
-                        })
-                    });
-                    const data = await resp.json();
-                    if (!resp.ok || !data.invoiceLink) {
-                        throw new Error(data.error || 'Не удалось создать счёт на оплату');
-                    }
+                // 1. Получаем/обновляем JWT токен
+                let token = localStorage.getItem('kazik_jwt_token');
+                if (!token) {
+                    token = await authWithBackend();
+                }
+                if (!token) throw new Error('Не авторизован в бэкенде. Перезайдите в приложение.');
 
+                // 2. Создаём инвойс через бэкенд
+                const resp = await fetch(STARS_INVOICE_API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ amount: amtRaw })
+                });
+                const data = await resp.json();
+                
+                // 3. Обработка ошибок авторизации
+                if (resp.status === 401) {
+                    localStorage.removeItem('kazik_jwt_token');
+                    token = await authWithBackend();
+                    if (token) return submitDepositRequest(); // рекурсивный повтор
+                }
+                if (!resp.ok || !data.invoiceLink) {
+                    throw new Error(data.error || 'Не удалось создать счёт');
+                }
+
+                // 4. Открываем инвойс в Telegram
+                if (window.Telegram?.WebApp?.openInvoice) {
                     Telegram.WebApp.openInvoice(data.invoiceLink, (status) => {
                         if (status === 'paid') {
-                            showToast(`⭐ Оплата ${amtRaw} ⭐ прошла! Звёзды зачисляются на баланс...`);
+                            showToast(`⭐ Оплата ${amtRaw} ⭐ прошла! Баланс обновляется...`);
                             closeDepositModal();
+                            // Баланс обновится через pushWalletToCloud или реалтайм
+                            setTimeout(() => pushWalletToCloud(), 1500);
                         } else if (status === 'cancelled') {
                             showToast('Оплата отменена');
                         } else if (status === 'failed') {
@@ -8302,25 +8362,14 @@ const zhBal = document.getElementById('zh-hud-balance'); if (zhBal) zhBal.textCo
                             showToast('⏳ Платёж обрабатывается...');
                         }
                     });
-                    return;
+                } else {
+                    // Вне Telegram (тест в браузере)
+                    window.open(data.invoiceLink, '_blank');
+                    showToast('Открыто в новой вкладке (тест вне Telegram)');
                 }
 
-                // 2) Резервный вариант (если сервер бота ещё не подключён): создаём заявку в Firestore
-                const credited = Math.floor(amtRaw * STARS_CREDIT_RATE);
-                await db.collection('deposits').add({
-                    nick: username,
-                    amount: amtRaw,
-                    creditedAmount: credited,
-                    currency: '⭐',
-                    method: 'stars',
-                    status: 'pending',
-                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
-                });
-                showToast(`✅ Заявка на ${amtRaw} ⭐ создана! Напишите в @Seregablatnou`);
-                if (input) input.value = '100';
-                updateDepositCalc();
             } catch (e) {
-                showToast('⚠️ Ошибка: ' + (e.message || 'напишите в @Seregablatnou'));
+                showToast('⚠️ Ошибка: ' + (e.message || 'попробуйте позже'));
             } finally {
                 depositPending = false;
                 if (btn) { btn.disabled = false; btn.style.opacity = ''; btn.innerHTML = oldLabel; }
