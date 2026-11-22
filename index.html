@@ -7698,7 +7698,7 @@ html, body {
         }
 
         function sanitizeStats(raw) {
-            const safe = { games: 0, wagered: 0, totalWon: 0, biggestWin: 0 };
+            const safe = { games: 0, wagered: 0, totalWon: 0, biggestWin: 0, dailyWagered: [] };
             if (!raw) return safe;
             try {
                 const parsed = typeof raw === 'string' ? JSON.parse(raw) : raw;
@@ -7706,6 +7706,18 @@ html, body {
                 safe.wagered = normalizeMoney(parsed.wagered);
                 safe.totalWon = normalizeMoney(parsed.totalWon);
                 safe.biggestWin = normalizeMoney(parsed.biggestWin);
+                const cutoff = Date.now() - 24 * 60 * 60 * 1000;
+                if (Array.isArray(parsed.dailyWagered)) {
+                    safe.dailyWagered = parsed.dailyWagered
+                        .filter(e => {
+                            if (!e) return false;
+                            const ts = Number(e.ts);
+                            const amount = Number(e.amount);
+                            return Number.isFinite(ts) && ts > cutoff &&
+                                   Number.isFinite(amount) && amount > 0;
+                        })
+                        .map(e => ({ ts: Number(e.ts), amount: normalizeMoney(Number(e.amount)) }));
+                }
             } catch (e) {
                 console.warn('Sanitize stats failed:', e);
             }
@@ -10818,6 +10830,7 @@ const WHEEL_MIN_WAGER = 50; // Минимум 50 ⭐ ставок за посл�
 let wheelSpinning = false;
 
 function addWagered(amount) {
+    if (!Array.isArray(stats.dailyWagered)) stats.dailyWagered = [];
     const now = Date.now();
     stats.dailyWagered.push({ ts: now, amount: amount });
     // Удаляем записи старше 24 часов
@@ -10826,6 +10839,7 @@ function addWagered(amount) {
 }
 
 function getDailyWagered() {
+    if (!Array.isArray(stats.dailyWagered)) stats.dailyWagered = [];
     const now = Date.now();
     const cutoff = now - 24 * 60 * 60 * 1000;
     return stats.dailyWagered
