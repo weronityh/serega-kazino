@@ -6810,7 +6810,7 @@ html, body {
                         </table>
                     </div>
                     <div class="table-footer">
-                        <button class="admin-btn admin-btn-secondary" onclick="loadAdminPlayers()">
+                        <button class="admin-btn admin-btn-secondary" onclick="loadAdminPlayers(true)">
                             <span class="btn-loader" style="display:none;"></span>
                             <span class="btn-text">🔄 Обновить список</span>
                         </button>
@@ -7839,13 +7839,13 @@ html, body {
                     updateBalanceUI();
                     showToast('💵 Ваш баланс обновлён администратором!');
                 }
-                if (isBanned && !window.banOverlayShown) {
-                    window.banOverlayShown = true;
-                    showToast('🚫 Ваш аккаунт заблокирован');
-                }
-            });
+if (isBanned && !window.banOverlayShown) {
+                window.banOverlayShown = true;
+                showToast('🚫 Ваш аккаунт заблокирован');
+            }
+        });
 
-            setInterval(() => { if (!isAnyGameBusy()) pushWalletToCloud(); }, 15000);
+            // Push on online/visibility change (catch up after background)
             window.addEventListener('online', () => pushWalletToCloud());
             document.addEventListener('visibilitychange', () => {
                 if (document.visibilityState === 'hidden') pushWalletToCloud();
@@ -7900,7 +7900,7 @@ html, body {
                         totalWon: normalizeMoney(stats.totalWon),
                         biggestWin: normalizeMoney(stats.biggestWin)
                     },
-                    lastSeen: firebase.firestore.FieldValue.serverTimestamp(),
+                    // lastSeen убран для экономии writes (serverTimestamp = доп. операция)
                     // Таймеры и флаги бонусов (синхронизируются с localStorage)
                     lastWheel: Number(localStorage.getItem('kazik_last_wheel') || 0),
                     lastCashback: Number(localStorage.getItem('kazik_last_cashback') || 0),
@@ -7946,10 +7946,38 @@ html, body {
         let adminBalanceLogCache = [];
         let adminLogsCache = [];
 
+        // Admin log batching (WriteBatch) to reduce Firestore writes
+        let adminLogBuffer = [];
+        const ADMIN_LOG_FLUSH_INTERVAL = 5000; // 5 seconds
+        const ADMIN_LOG_BATCH_SIZE = 50;
+
+        function queueAdminLog(entry) {
+            adminLogBuffer.push({ ...entry, ts: firebase.firestore.FieldValue.serverTimestamp() });
+            if (adminLogBuffer.length >= ADMIN_LOG_BATCH_SIZE) flushAdminLogs();
+        }
+
+        async function flushAdminLogs() {
+            if (!adminLogBuffer.length) return;
+            const batch = db.batch();
+            const toFlush = adminLogBuffer.splice(0, ADMIN_LOG_BATCH_SIZE);
+            toFlush.forEach(entry => {
+                batch.set(db.collection('admin_logs').doc(), entry);
+            });
+            try { await batch.commit(); } catch (e) { console.warn('Admin log batch commit failed:', e); }
+        }
+
+        setInterval(flushAdminLogs, ADMIN_LOG_FLUSH_INTERVAL);
+        window.addEventListener('beforeunload', flushAdminLogs);
+
+        // Admin panel cache (30 sec TTL)
+        let adminStatsCache = { data: null, ts: 0 };
+        let adminPlayersCacheData = { data: null, ts: 0 };
+        const ADMIN_CACHE_TTL = 30000; // 30 seconds
+
         async function initAdminPanel() {
             switchAdminTab('balance');
-            await loadAdminStats();
-            await loadAdminPlayers();
+            await loadAdminStats(true);
+            await loadAdminPlayers(true);
             await renderAdminSlots();
             loadAdminBalanceLog();
             loadAdminLogs();
@@ -7966,7 +7994,15 @@ html, body {
         }
 
         // --- Stats ---
-        async function loadAdminStats() {
+        async function loadAdminStats(force = false) {
+            // Use cache if not forced and cache is valid
+            if (!force && adminStatsCache.data && Date.now() - adminStatsCache.ts < ADMIN_CACHE_TTL) {
+                const cached = adminStatsCache.data;
+                document.getElementById('stat-total-players').textContent = cached.playerCount;
+                document.getElementById('stat-total-balance').textContent = cached.totalBalance.toFixed(2) + ' ⭐';
+                document.getElementById('stat-banned').textContent = cached.bannedCount;
+                return;
+            }
             try {
                 const snap = await db.collection('players').get();
                 let totalBalance = 0, bannedCount = 0, playerCount = 0;
@@ -7976,6 +8012,7 @@ html, body {
                     totalBalance += Number(p.balance || 0);
                     if (p.banned) bannedCount++;
                 });
+                adminStatsCache = { data: { playerCount, totalBalance, bannedCount }, ts: Date.now() };
                 document.getElementById('stat-total-players').textContent = playerCount;
                 document.getElementById('stat-total-balance').textContent = totalBalance.toFixed(2) + ' ⭐';
                 document.getElementById('stat-banned').textContent = bannedCount;
@@ -8023,15 +8060,14 @@ html, body {
                     });
                 });
 
-                // Log admin action
-                await db.collection('admin_logs').add({
+                // Log admin action (batched)
+                queueAdminLog({
                     admin: username,
                     target: targetNick,
                     action: action,
                     amount: amt,
                     delta: delta,
-                    newBalance: newBalance,
-                    ts: firebase.firestore.FieldValue.serverTimestamp()
+                    newBalance: newBalance
                 });
 
                 if (targetNick === username) {
@@ -8044,8 +8080,8 @@ html, body {
                 } else {
                     showToast(`✅ ${sign > 0 ? 'Выдано' : 'Списано'} ${amt.toFixed(2)} ⭐ для ${targetNick} (баланс: ${newBalance.toFixed(2)} ⭐)`);
                 }
-                loadAdminStats();
-                loadAdminPlayers();
+                loadAdminStats(true);
+                loadAdminPlayers(true);
                 loadAdminBalanceLog();
             } catch (e) {
                 showToast('⚠️ ' + (e.message || 'Ошибка операции'));
@@ -8093,15 +8129,22 @@ html, body {
         }
 
         // --- Players Tab ---
-        async function loadAdminPlayers() {
+        async function loadAdminPlayers(force = false) {
             const tbody = document.getElementById('admin-players-list');
             tbody.innerHTML = '<tr><td colspan="4" class="empty-state">Загрузка...</td></tr>';
             try {
-                const snap = await db.collection('players').orderBy('balance', 'desc').get();
-                const players = [];
-                snap.forEach(doc => {
-                    players.push({ nick: doc.id, ...doc.data() });
-                });
+                // Use cache if not forced and cache is valid
+                let players;
+                if (!force && adminPlayersCacheData.data && Date.now() - adminPlayersCacheData.ts < ADMIN_CACHE_TTL) {
+                    players = adminPlayersCacheData.data;
+                } else {
+                    const snap = await db.collection('players').orderBy('balance', 'desc').get();
+                    players = [];
+                    snap.forEach(doc => {
+                        players.push({ nick: doc.id, ...doc.data() });
+                    });
+                    adminPlayersCacheData = { data: players, ts: Date.now() };
+                }
                 adminPlayersCache = players;
                 renderAdminPlayersList(players);
                 document.getElementById('player-count').textContent = players.length + ' игроков';
@@ -8184,15 +8227,14 @@ html, body {
                     });
                 });
 
-                // Log admin action
-                await db.collection('admin_logs').add({
+                // Log admin action (batched)
+                queueAdminLog({
                     admin: username,
                     target: nick,
                     action: action,
                     amount: amt,
                     delta: delta,
-                    newBalance: newBalance,
-                    ts: firebase.firestore.FieldValue.serverTimestamp()
+                    newBalance: newBalance
                 });
 
                 if (nick === username) {
@@ -8204,8 +8246,8 @@ html, body {
                 } else {
                     showToast(`✅ ${delta > 0 ? 'Выдано' : 'Списано'} ${amt} ⭐ для ${nick} (баланс: ${newBalance.toFixed(2)} ⭐)`);
                 }
-                loadAdminStats();
-                loadAdminPlayers();
+                loadAdminStats(true);
+                loadAdminPlayers(true);
                 loadAdminBalanceLog();
             } catch (e) {
                 showToast('⚠️ ' + e.message);
@@ -8218,20 +8260,19 @@ html, body {
                     banned: banState
                 });
                 
-                // Log admin action
-                await db.collection('admin_logs').add({
+                // Log admin action (batched)
+                queueAdminLog({
                     admin: username,
                     target: nick,
                     action: banState ? 'ban' : 'unban',
                     amount: 0,
                     delta: 0,
-                    newBalance: 0,
-                    ts: firebase.firestore.FieldValue.serverTimestamp()
+                    newBalance: 0
                 });
 
                 showToast(banState ? `🚫 Игрок ${nick} забанен` : `✅ Игрок ${nick} разбанен`);
-                loadAdminStats();
-                loadAdminPlayers();
+                loadAdminStats(true);
+                loadAdminPlayers(true);
             } catch (e) {
                 showToast('⚠️ ' + e.message);
             }
@@ -8268,6 +8309,19 @@ html, body {
             renderAdminSlots();
             try {
                 await db.collection('settings').doc('slots').set(closedSlots, { merge: true });
+                
+                // Log admin action (batched)
+                queueAdminLog({
+                    admin: username,
+                    target: slotKey,
+                    action: 'slot-toggle',
+                    amount: 0,
+                    delta: 0,
+                    newBalance: 0,
+                    slot: slotKey,
+                    closed: newClosed
+                });
+
                 showToast(newClosed ? `🔒 Слот ${slotKey} закрыт` : `🔓 Слот ${slotKey} открыт`);
             } catch (e) {
                 showToast('⚠️ Ошибка переключения слота');
@@ -9762,6 +9816,9 @@ else if (slotKey === 'zeushades') {
                 if (spinBtn) { spinBtn.disabled = false; spinBtn.classList.remove('spin-stop-ready'); }
             }
 
+            // Push to Firestore after spin ends (balance updated)
+            await pushWalletToCloud();
+
             if (aoInFreeSpins) {
                 if (aoFreeSpinsLeft > 0) {
                     await sleep(650);
@@ -10153,6 +10210,9 @@ registerSpinForRetention();
                 dhStopRequested = false;
                 if (spinBtn) { spinBtn.disabled = false; spinBtn.classList.remove('spin-stop-ready'); }
             }
+
+            // Push to Firestore after spin ends (balance updated)
+            await pushWalletToCloud();
 
             if (dhInFreeSpins) {
                 if (dhFreeSpinsLeft > 0) {
@@ -10573,6 +10633,9 @@ registerSpinForRetention();
                 if (betInp && !sbInFreeSpins) betInp.disabled = false;
             }
 
+            // Push to Firestore after spin ends (balance updated)
+            await pushWalletToCloud();
+
             if (sbInFreeSpins) {
                 if (sbFreeSpinsLeft > 0) {
                     await sleep(620);
@@ -10954,6 +11017,9 @@ registerSpinForRetention();
                 zhStopRequested = false;
                 if (spinBtn) { spinBtn.disabled = false; spinBtn.classList.remove('spin-stop-ready'); }
             }
+
+            // Push to Firestore after spin ends (balance updated)
+            await pushWalletToCloud();
 
             if (zhInFreeSpins) {
                 if (zhFreeSpinsLeft > 0) {
