@@ -7795,14 +7795,13 @@ html, body {
         let selectedDepMethod = 'stars';
         let selectedWdMethod = 'stars';
         // ==========================================
-        // BACKEND CONFIG — ЗАМЕНИ НА СВОЙ ВЕРЦЕЛЬ ДОМЕН ПОСЛЕ ДЕПЛОЯ
+        // FIREBASE DIRECT CONFIG — РАБОТА ЧЕРЕЗ FIRESTORE БЕЗ БЭКЕНДА
         // ==========================================
-        const BACKEND_URL = 'https://kazik-server-xxx.vercel.app';  // ← ТВОЙ ВЕРЦЕЛЬ ДОМЕН
-        const STARS_INVOICE_API_URL = BACKEND_URL + '/api/deposit/stars';
-        const AUTH_API_URL = BACKEND_URL + '/api/auth/telegram';
-        const ME_API_URL = BACKEND_URL + '/api/me';
         // Сколько зачислять на баланс от оплаченных звёзд (1.0 = 100%, 0.85 = минус 15% комиссия)
         const STARS_CREDIT_RATE = 1.0;
+        // Stars invoice creation endpoint (configure your Firebase Functions URL here)
+        // Example: 'https://us-central1-your-project.cloudfunctions.net/createStarsInvoice'
+        const STARS_INVOICE_API_URL = ''; // Set this to your backend endpoint for Stars invoices
         let depositPending = false;
         let withdrawPending = false;
         let bonusPurchasePending = false;
@@ -7853,42 +7852,8 @@ html, body {
             });
         }
 
-        // === АВТОРИЗАЦИЯ В БЭКЕНДЕ (JWT) ===
-        async function authWithBackend() {
-            if (!username) return null;
-            
-            const initData = window.Telegram?.WebApp?.initData || '';
-            
-            try {
-                const resp = await fetch(AUTH_API_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ initData })
-                });
-                const data = await resp.json();
-                if (data.token) {
-                    localStorage.setItem('kazik_jwt_token', data.token);
-                    return data.token;
-                }
-            } catch (e) {
-                console.warn('Backend auth failed:', e);
-            }
-            return null;
-        }
-
-        // === РУЧНОЕ ОБНОВЛЕНИЕ БАЛАНСА С СЕРВЕРА ===
-        async function refreshBalanceFromServer() {
-            const token = localStorage.getItem('kazik_jwt_token');
-            if (!token) return;
-            try {
-                const resp = await fetch(ME_API_URL, { headers: { 'Authorization': `Bearer ${token}` } });
-                const data = await resp.json();
-                if (data.balance !== undefined) {
-                    balance = normalizeMoney(data.balance);
-                    updateBalanceUI();
-                }
-            } catch (e) { console.warn('Balance refresh failed:', e); }
-        }
+        // === FIREBASE DIRECT: No backend auth needed - using Firestore directly ===
+        // JWT token is no longer used; admin operations work directly via Firestore
 
         async function refreshWalletFromCloud() {
             if (!username) return;
@@ -7946,7 +7911,7 @@ html, body {
             } catch (e) {}
         }
 
-        let closedSlots = { olympus: false, doghouse: false, bonanza: false };
+        let closedSlots = { olympus: false, doghouse: false, bonanza: false, zh: false };
         let isBanned = false;
         let lastAdminSyncId = Number(localStorage.getItem('kazik_admin_sync_id') || 0);
 
@@ -8003,19 +7968,15 @@ html, body {
         // --- Stats ---
         async function loadAdminStats() {
             try {
-                const token = localStorage.getItem('kazik_jwt_token');
-                if (!token) return;
-                const resp = await fetch('/api/admin/players', {
-                    headers: { 'Authorization': 'Bearer ' + token }
-                });
-                if (!resp.ok) return;
-                const players = await resp.json();
-                let totalBalance = 0, bannedCount = 0;
-                players.forEach(p => {
+                const snap = await db.collection('players').get();
+                let totalBalance = 0, bannedCount = 0, playerCount = 0;
+                snap.forEach(doc => {
+                    const p = doc.data();
+                    playerCount++;
                     totalBalance += Number(p.balance || 0);
                     if (p.banned) bannedCount++;
                 });
-                document.getElementById('stat-total-players').textContent = players.length;
+                document.getElementById('stat-total-players').textContent = playerCount;
                 document.getElementById('stat-total-balance').textContent = totalBalance.toFixed(2) + ' ⭐';
                 document.getElementById('stat-banned').textContent = bannedCount;
             } catch (e) {
@@ -8040,23 +8001,49 @@ html, body {
             const btnText = btn.querySelector('.btn-text');
             btn.disabled = true; loader.style.display = 'block'; btnText.textContent = sign > 0 ? 'Выдача...' : 'Списание...';
 
+            const delta = sign * amt;
+            const adminSyncId = Date.now();
+            const action = sign > 0 ? 'give' : 'deduct';
+
             try {
-                const token = localStorage.getItem('kazik_jwt_token');
-                const delta = sign * amt;
-                const resp = await fetch('/api/admin/balance', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
-                    body: JSON.stringify({ nick: targetNick, delta })
+                let newBalance = 0;
+                await db.runTransaction(async (transaction) => {
+                    const playerRef = db.collection('players').doc(targetNick);
+                    const snap = await transaction.get(playerRef);
+                    if (!snap.exists) {
+                        throw new Error(`Игрок ${targetNick} не найден`);
+                    }
+                    const currentData = snap.data();
+                    const currentBalance = normalizeMoney(currentData.balance || 0, 0);
+                    newBalance = normalizeMoney(currentBalance + delta, 0);
+                    if (newBalance < 0) newBalance = 0;
+                    transaction.update(playerRef, {
+                        balance: newBalance,
+                        adminSyncId: adminSyncId
+                    });
                 });
-                const data = await resp.json();
-                if (!resp.ok) throw new Error(data.error || 'Ошибка сервера');
+
+                // Log admin action
+                await db.collection('admin_logs').add({
+                    admin: username,
+                    target: targetNick,
+                    action: action,
+                    amount: amt,
+                    delta: delta,
+                    newBalance: newBalance,
+                    ts: firebase.firestore.FieldValue.serverTimestamp()
+                });
 
                 if (targetNick === username) {
-                    balance = normalizeMoney(balance + delta);
+                    lastAdminSyncId = adminSyncId;
+                    localStorage.setItem('kazik_admin_sync_id', String(lastAdminSyncId));
+                    balance = newBalance;
                     saveState();
                     updateBalanceUI();
+                    // Don't show duplicate toast since realtime listener will fire
+                } else {
+                    showToast(`✅ ${sign > 0 ? 'Выдано' : 'Списано'} ${amt.toFixed(2)} ⭐ для ${targetNick} (баланс: ${newBalance.toFixed(2)} ⭐)`);
                 }
-                showToast(`✅ ${sign > 0 ? 'Выдано' : 'Списано'} ${amt.toFixed(2)} ⭐ для ${targetNick} (баланс: ${data.balance.toFixed(2)} ⭐)`);
                 loadAdminStats();
                 loadAdminPlayers();
                 loadAdminBalanceLog();
@@ -8068,9 +8055,41 @@ html, body {
         }
 
         async function loadAdminBalanceLog() {
-            // В будущем можно добавить отдельную коллекцию логов в Firestore
             const tbody = document.getElementById('balance-log-body');
-            tbody.innerHTML = '<tr><td colspan="6" class="empty-state">История операций будет здесь после подключения коллекции логов</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="6" class="empty-state">Загрузка...</td></tr>';
+            try {
+                const snap = await db.collection('admin_logs')
+                    .where('action', 'in', ['give', 'deduct'])
+                    .orderBy('ts', 'desc')
+                    .limit(50)
+                    .get();
+                
+                if (snap.empty) {
+                    tbody.innerHTML = '<tr><td colspan="6" class="empty-state">История операций пуста</td></tr>';
+                    return;
+                }
+
+                tbody.innerHTML = snap.docs.map(doc => {
+                    const d = doc.data();
+                    const ts = d.ts?.toDate ? d.ts.toDate() : new Date();
+                    const timeStr = ts.toLocaleString('ru-RU', { hour: '2-digit', minute: '2-digit', second: '2-digit', day: '2-digit', month: '2-digit' });
+                    const action = d.action === 'give' ? '➕ Выдача' : '➖ Списание';
+                    const amountColor = d.action === 'give' ? '#4ade80' : '#f87171';
+                    return `
+                        <tr>
+                            <td>${timeStr}</td>
+                            <td>${escapeHtml(d.admin || '—')}</td>
+                            <td>${escapeHtml(d.target || '—')}</td>
+                            <td>${action}</td>
+                            <td style="color: ${amountColor}; font-weight: 700;">${d.action === 'give' ? '+' : ''}${Number(d.amount || 0).toFixed(2)} ⭐</td>
+                            <td><span class="status-badge ${d.action === 'give' ? 'active' : 'banned'}">${d.newBalance !== undefined ? Number(d.newBalance).toFixed(2) + ' ⭐' : '—'}</span></td>
+                        </tr>
+                    `;
+                }).join('');
+            } catch (e) {
+                console.warn('Admin balance log failed:', e);
+                tbody.innerHTML = '<tr><td colspan="6" class="empty-state">Ошибка загрузки логов</td></tr>';
+            }
         }
 
         // --- Players Tab ---
@@ -8078,12 +8097,11 @@ html, body {
             const tbody = document.getElementById('admin-players-list');
             tbody.innerHTML = '<tr><td colspan="4" class="empty-state">Загрузка...</td></tr>';
             try {
-                const token = localStorage.getItem('kazik_jwt_token');
-                const resp = await fetch('/api/admin/players', {
-                    headers: { 'Authorization': 'Bearer ' + token }
+                const snap = await db.collection('players').orderBy('balance', 'desc').get();
+                const players = [];
+                snap.forEach(doc => {
+                    players.push({ nick: doc.id, ...doc.data() });
                 });
-                if (!resp.ok) throw new Error('Ошибка загрузки');
-                const players = await resp.json();
                 adminPlayersCache = players;
                 renderAdminPlayersList(players);
                 document.getElementById('player-count').textContent = players.length + ' игроков';
@@ -8144,18 +8162,51 @@ html, body {
         }
 
         async function adminQuickBalance(nick, delta) {
+            const amt = Math.abs(delta);
+            const adminSyncId = Date.now();
+            const action = delta > 0 ? 'give' : 'deduct';
+
             try {
-                const token = localStorage.getItem('kazik_jwt_token');
-                const resp = await fetch('/api/admin/balance', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
-                    body: JSON.stringify({ nick, delta })
+                let newBalance = 0;
+                await db.runTransaction(async (transaction) => {
+                    const playerRef = db.collection('players').doc(nick);
+                    const snap = await transaction.get(playerRef);
+                    if (!snap.exists) {
+                        throw new Error(`Игрок ${nick} не найден`);
+                    }
+                    const currentData = snap.data();
+                    const currentBalance = normalizeMoney(currentData.balance || 0, 0);
+                    newBalance = normalizeMoney(currentBalance + delta, 0);
+                    if (newBalance < 0) newBalance = 0;
+                    transaction.update(playerRef, {
+                        balance: newBalance,
+                        adminSyncId: adminSyncId
+                    });
                 });
-                const data = await resp.json();
-                if (!resp.ok) throw new Error(data.error || 'Ошибка');
-                showToast(`✅ ${delta > 0 ? 'Выдано' : 'Списано'} ${Math.abs(delta)} ⭐ для ${nick}`);
+
+                // Log admin action
+                await db.collection('admin_logs').add({
+                    admin: username,
+                    target: nick,
+                    action: action,
+                    amount: amt,
+                    delta: delta,
+                    newBalance: newBalance,
+                    ts: firebase.firestore.FieldValue.serverTimestamp()
+                });
+
+                if (nick === username) {
+                    lastAdminSyncId = adminSyncId;
+                    localStorage.setItem('kazik_admin_sync_id', String(lastAdminSyncId));
+                    balance = newBalance;
+                    saveState();
+                    updateBalanceUI();
+                } else {
+                    showToast(`✅ ${delta > 0 ? 'Выдано' : 'Списано'} ${amt} ⭐ для ${nick} (баланс: ${newBalance.toFixed(2)} ⭐)`);
+                }
                 loadAdminStats();
                 loadAdminPlayers();
+                loadAdminBalanceLog();
             } catch (e) {
                 showToast('⚠️ ' + e.message);
             }
@@ -8163,13 +8214,21 @@ html, body {
 
         async function adminToggleBan(nick, banState) {
             try {
-                const token = localStorage.getItem('kazik_jwt_token');
-                const resp = await fetch('/api/admin/ban', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
-                    body: JSON.stringify({ nick, banned: banState })
+                await db.collection('players').doc(nick).update({
+                    banned: banState
                 });
-                if (!resp.ok) throw new Error('Ошибка бана');
+                
+                // Log admin action
+                await db.collection('admin_logs').add({
+                    admin: username,
+                    target: nick,
+                    action: banState ? 'ban' : 'unban',
+                    amount: 0,
+                    delta: 0,
+                    newBalance: 0,
+                    ts: firebase.firestore.FieldValue.serverTimestamp()
+                });
+
                 showToast(banState ? `🚫 Игрок ${nick} забанен` : `✅ Игрок ${nick} разбанен`);
                 loadAdminStats();
                 loadAdminPlayers();
@@ -8208,12 +8267,7 @@ html, body {
             closedSlots[slotKey] = newClosed;
             renderAdminSlots();
             try {
-                const token = localStorage.getItem('kazik_jwt_token');
-                await fetch('/api/admin/slot-toggle', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
-                    body: JSON.stringify({ slot: slotKey, closed: newClosed })
-                });
+                await db.collection('settings').doc('slots').set(closedSlots, { merge: true });
                 showToast(newClosed ? `🔒 Слот ${slotKey} закрыт` : `🔓 Слот ${slotKey} открыт`);
             } catch (e) {
                 showToast('⚠️ Ошибка переключения слота');
@@ -8234,31 +8288,62 @@ html, body {
         // --- Logs Tab ---
         async function loadAdminLogs() {
             const tbody = document.getElementById('admin-logs-body');
-            tbody.innerHTML = '<tr><td colspan="4" class="empty-state">Коллекция логов админ-действий пока не подключена</td></tr>';
-        }
+            tbody.innerHTML = '<tr><td colspan="4" class="empty-state">Загрузка...</td></tr>';
+            try {
+                const snap = await db.collection('admin_logs')
+                    .orderBy('ts', 'desc')
+                    .limit(100)
+                    .get();
+                
+                if (snap.empty) {
+                    tbody.innerHTML = '<tr><td colspan="4" class="empty-state">Логи админ-действий пусты</td></tr>';
+                    return;
+                }
 
-        // --- Enable real-time balance sync for players ---
-        let playerRealtimeListener = null;
-        function enablePlayerRealtimeSync() {
-            if (!username || playerRealtimeListener) return;
-            playerRealtimeListener = db.collection('players').doc(username).onSnapshot(snap => {
-                if (!snap.exists) return;
-                const d = snap.data();
-                isBanned = !!d.banned;
-                if (d.adminSyncId && d.adminSyncId > lastAdminSyncId) {
-                    lastAdminSyncId = d.adminSyncId;
-                    localStorage.setItem('kazik_admin_sync_id', String(lastAdminSyncId));
-                    balance = normalizeMoney(d.balance, balance);
-                    saveState();
-                    updateBalanceUI();
-                    showToast('💵 Ваш баланс обновлён администратором!');
-                }
-                if (isBanned && !window.banOverlayShown) {
-                    window.banOverlayShown = true;
-                    showToast('🚫 Ваш аккаунт заблокирован');
-                    // Можно добавить редирект или оверлей
-                }
-            });
+                tbody.innerHTML = snap.docs.map(doc => {
+                    const d = doc.data();
+                    const ts = d.ts?.toDate ? d.ts.toDate() : new Date();
+                    const timeStr = ts.toLocaleString('ru-RU', { hour: '2-digit', minute: '2-digit', second: '2-digit', day: '2-digit', month: '2-digit' });
+                    let actionLabel = '';
+                    let details = '';
+                    switch (d.action) {
+                        case 'give':
+                            actionLabel = '➕ Выдача баланса';
+                            details = `+${Number(d.amount || 0).toFixed(2)} ⭐ → ${Number(d.newBalance || 0).toFixed(2)} ⭐`;
+                            break;
+                        case 'deduct':
+                            actionLabel = '➖ Списание баланса';
+                            details = `-${Number(d.amount || 0).toFixed(2)} ⭐ → ${Number(d.newBalance || 0).toFixed(2)} ⭐`;
+                            break;
+                        case 'ban':
+                            actionLabel = '🚫 Бан игрока';
+                            details = `Игрок забанен`;
+                            break;
+                        case 'unban':
+                            actionLabel = '🔓 Разбан игрока';
+                            details = `Игрок разбанен`;
+                            break;
+                        case 'slot-toggle':
+                            actionLabel = '🎰 Переключение слота';
+                            details = `Слот ${d.slot || '—'} ${d.closed ? 'закрыт' : 'открыт'}`;
+                            break;
+                        default:
+                            actionLabel = d.action;
+                            details = JSON.stringify(d);
+                    }
+                    return `
+                        <tr>
+                            <td>${timeStr}</td>
+                            <td>${escapeHtml(d.admin || '—')}</td>
+                            <td>${actionLabel}</td>
+                            <td>${escapeHtml(details)}</td>
+                        </tr>
+                    `;
+                }).join('');
+            } catch (e) {
+                console.warn('Admin logs failed:', e);
+                tbody.innerHTML = '<tr><td colspan="4" class="empty-state">Ошибка загрузки логов</td></tr>';
+            }
         }
 
         function sanitizeStats(raw) {
@@ -8754,11 +8839,6 @@ async function hashPassword(str) {
                 syncProfileUI();
                 document.getElementById('nickname-overlay').classList.remove('active');
                 initFirebaseRealtimeSync();
-                // === АВТОРИЗАЦИЯ В БЭКЕНДЕ (JWT) ===
-                const token = await authWithBackend();
-                if (token) {
-                    enablePlayerRealtimeSync();
-                }
             } catch (e) {
                 showToast('⚠️ Ошибка подключения к базе. Попробуйте ещё раз.');
             } finally {
@@ -8895,42 +8975,28 @@ const zhBal = document.getElementById('zh-hud-balance'); if (zhBal) zhBal.textCo
             if (btn) { btn.disabled = true; btn.style.opacity = '0.65'; }
 
             try {
-                // 1. Получаем/обновляем JWT токен
-                let token = localStorage.getItem('kazik_jwt_token');
-                if (!token) {
-                    token = await authWithBackend();
-                    if (token) enablePlayerRealtimeSync();
+                if (!STARS_INVOICE_API_URL) {
+                    throw new Error('Пополнение через Stars требует настроенный бэкенд. Укажите STARS_INVOICE_API_URL в коде (Firebase Functions endpoint).');
                 }
-                if (!token) throw new Error('Не авторизован в бэкенде. Перезайдите в приложение.');
 
-                // 2. Создаём инвойс через бэкенд
+                // 1. Создаём инвойс через бэкенд (JWT токен больше не нужен, админ-панель работает через Firestore)
                 const resp = await fetch(STARS_INVOICE_API_URL, {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${token}`
-                    },
-                    body: JSON.stringify({ amount: amtRaw })
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ amount: amtRaw, nick: username })
                 });
                 const data = await resp.json();
-                
-                // 3. Обработка ошибок авторизации
-                if (resp.status === 401) {
-                    localStorage.removeItem('kazik_jwt_token');
-                    token = await authWithBackend();
-                    if (token) return submitDepositRequest(); // рекурсивный повтор
-                }
+
                 if (!resp.ok || !data.invoiceLink) {
                     throw new Error(data.error || 'Не удалось создать счёт');
                 }
 
-                // 4. Открываем инвойс в Telegram
+                // 2. Открываем инвойс в Telegram
                 if (window.Telegram?.WebApp?.openInvoice) {
                     Telegram.WebApp.openInvoice(data.invoiceLink, (status) => {
                         if (status === 'paid') {
                             showToast(`⭐ Оплата ${amtRaw} ⭐ прошла! Баланс обновляется...`);
                             closeDepositModal();
-                            // Баланс обновится через pushWalletToCloud или реалтайм
                             setTimeout(() => pushWalletToCloud(), 1500);
                         } else if (status === 'cancelled') {
                             showToast('Оплата отменена');
@@ -8941,7 +9007,6 @@ const zhBal = document.getElementById('zh-hud-balance'); if (zhBal) zhBal.textCo
                         }
                     });
                 } else {
-                    // Вне Telegram (тест в браузере)
                     window.open(data.invoiceLink, '_blank');
                     showToast('Открыто в новой вкладке (тест вне Telegram)');
                 }
@@ -10558,7 +10623,7 @@ registerSpinForRetention();
         function openZeusHades() {
             if (isAnyGameBusy()) { showToast('⚠️ Дождитесь окончания раунда!'); return; }
             if (isBanned) { showToast('🚫 Ваш аккаунт заблокирован!'); return; }
-            if (closedSlots.zeushades) { showToast('🔒 Zeus vs Hades временно закрыт!'); return; }
+            if (closedSlots.zh) { showToast('🔒 Zeus vs Hades временно закрыт!'); return; }
             const gridEl = document.getElementById('zh-grid');
             if (gridEl && gridEl.children.length === 0) initZeusHadesDOM();
             hideAllViews();
@@ -11400,10 +11465,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
-
-// Enable real-time balance sync for players when logged in
-// This is called after successful authentication
-window.enablePlayerRealtimeSync = enablePlayerRealtimeSync;
     </script>
 <!-- ============================================================
      HTML: НИЖНЕЕ МОБИЛЬНОЕ МЕНЮ (TELEGRAM MINI APP)
