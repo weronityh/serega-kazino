@@ -2880,6 +2880,191 @@
         .player-status-dot.online { background: #22c55e; box-shadow: 0 0 8px #22c55e; }
         .player-status-dot.offline { background: #64748b; }
 
+        /* ============================================================
+           ADMIN PANEL — BEAUTIFUL STYLES
+           ============================================================ */
+        .modal-overlay {
+            position: fixed; inset: 0; background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+            display: none; align-items: center; justify-content: center;
+            padding: 20px; z-index: 10000; animation: modalFadeIn 0.25s ease;
+        }
+        .modal-overlay.active { display: flex; }
+        @keyframes modalFadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        .admin-panel {
+            width: 100%; max-width: 900px; max-height: 90vh;
+            background: linear-gradient(180deg, #0f141a 0%, #0a0d11 100%);
+            border: 1px solid #1e293b; border-radius: 20px;
+            overflow: hidden; display: flex; flex-direction: column;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(0, 231, 1, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.03);
+            animation: panelSlideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        @keyframes panelSlideUp {
+            from { opacity: 0; transform: translateY(20px) scale(0.98); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .modal-close-btn {
+            position: absolute; top: 16px; right: 16px; z-index: 10;
+            width: 40px; height: 40px; border-radius: 12px;
+            background: rgba(15, 20, 26, 0.9); border: 1px solid #1e293b;
+            color: #94a3b8; font-size: 1.2rem; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.2s ease; backdrop-filter: blur(10px);
+        }
+        .modal-close-btn:hover { background: #dc2626; border-color: #dc2626; color: #fff; transform: scale(1.05) rotate(90deg); }
+
+        .admin-header {
+            padding: 24px 24px 16px; border-bottom: 1px solid #1e293b;
+            background: linear-gradient(180deg, rgba(0, 231, 1, 0.06) 0%, transparent 100%);
+            position: relative;
+        }
+        .admin-header::after {
+            content: ''; position: absolute; bottom: -1px; left: 24px; right: 24px;
+            height: 1px; background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+        }
+
+        .admin-title-group { display: flex; align-items: center; gap: 14px; }
+        .admin-icon { font-size: 2.2rem; filter: drop-shadow(0 0 16px rgba(0, 231, 1, 0.6)); animation: iconPulse 2.5s ease-in-out infinite; }
+        @keyframes iconPulse { 0%, 100% { transform: scale(1); filter: drop-shadow(0 0 16px rgba(0, 231, 1, 0.6)); } 50% { transform: scale(1.05); filter: drop-shadow(0 0 24px rgba(0, 231, 1, 0.9)); } }
+        .admin-title { margin: 0; font-family: 'Unbounded', sans-serif; font-size: 1.4rem; font-weight: 900; color: #fff; letter-spacing: 0.5px; }
+        .admin-subtitle { margin: 4px 0 0; font-size: 0.85rem; color: #94a3b8; font-weight: 500; }
+
+        .admin-stats { display: flex; gap: 12px; margin-top: 16px; flex-wrap: wrap; }
+        .admin-stat { flex: 1; min-width: 90px; background: rgba(15, 20, 26, 0.8); border: 1px solid #1e293b; border-radius: 14px; padding: 14px 16px; text-align: center; transition: all 0.2s ease; }
+        .admin-stat:hover { border-color: var(--accent-gold); box-shadow: 0 0 20px rgba(0, 231, 1, 0.15); }
+        .admin-stat-value { display: block; font-family: 'Unbounded', sans-serif; font-size: 1.6rem; font-weight: 900; color: var(--accent-gold); line-height: 1.2; text-shadow: 0 0 12px rgba(0, 231, 1, 0.4); }
+        .admin-stat-label { display: block; font-size: 0.68rem; text-transform: uppercase; color: #64748b; font-weight: 700; letter-spacing: 0.5px; margin-top: 4px; }
+
+        .admin-tabs { display: flex; gap: 4px; padding: 12px 16px 8px; background: rgba(10, 13, 17, 0.6); border-bottom: 1px solid #1e293b; overflow-x: auto; }
+        .admin-tab { display: flex; align-items: center; gap: 8px; padding: 10px 18px; background: transparent; border: 1px solid transparent; border-radius: 12px; color: #64748b; font-size: 0.85rem; font-weight: 700; cursor: pointer; transition: all 0.2s ease; white-space: nowrap; }
+        .admin-tab:hover { background: rgba(255, 255, 255, 0.04); color: #e2e8f0; }
+        .admin-tab.active { background: linear-gradient(135deg, rgba(0, 231, 1, 0.15) 0%, rgba(0, 231, 1, 0.03) 100%); border-color: rgba(0, 231, 1, 0.3); color: var(--accent-gold); box-shadow: 0 0 20px rgba(0, 231, 1, 0.1), inset 0 1px 0 rgba(0, 231, 1, 0.1); }
+        .tab-icon { font-size: 1.1rem; }
+
+        .admin-tab-panel { display: none; flex: 1; overflow-y: auto; padding: 20px 24px 24px; }
+        .admin-tab-panel.active { display: block; animation: tabFadeIn 0.25s ease; }
+        @keyframes tabFadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+        .admin-card { background: rgba(15, 20, 26, 0.7); border: 1px solid #1e293b; border-radius: 16px; padding: 20px; margin-bottom: 16px; backdrop-filter: blur(10px); }
+        .admin-card:last-child { margin-bottom: 0; }
+        .card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; flex-wrap: wrap; gap: 12px; }
+        .admin-card-title { margin: 0; display: flex; align-items: center; gap: 10px; font-family: 'Unbounded', sans-serif; font-size: 1.05rem; font-weight: 800; color: #fff; }
+        .card-icon { font-size: 1.3rem; }
+
+        /* Balance Form */
+        .balance-form { display: flex; flex-direction: column; gap: 16px; }
+        .form-row { display: flex; flex-direction: column; gap: 8px; }
+        .form-label { font-size: 0.75rem; text-transform: uppercase; color: #64748b; font-weight: 800; letter-spacing: 0.5px; }
+        .form-input { background: #070a0e; border: 1px solid #1e293b; border-radius: 12px; padding: 14px 16px; color: #fff; font-size: 1rem; font-weight: 600; outline: none; transition: all 0.2s ease; }
+        .form-input:focus { border-color: var(--accent-gold); box-shadow: 0 0 0 3px rgba(0, 231, 1, 0.15), 0 0 20px rgba(0, 231, 1, 0.1); }
+        .form-input::placeholder { color: #475569; }
+
+        .quick-amounts { margin-top: 4px; }
+        .quick-amount-btns { display: flex; gap: 8px; flex-wrap: wrap; }
+        .quick-amount-btn { background: #070a0e; border: 1px solid #1e293b; border-radius: 10px; padding: 8px 16px; color: #94a3b8; font-size: 0.8rem; font-weight: 700; cursor: pointer; transition: all 0.2s ease; }
+        .quick-amount-btn:hover { border-color: var(--accent-gold); color: var(--accent-gold); background: rgba(0, 231, 1, 0.08); }
+        .quick-amount-btn.active { background: var(--accent-gold); border-color: var(--accent-gold); color: #051005; }
+
+        .form-actions { display: flex; gap: 12px; margin-top: 4px; }
+        .admin-btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 14px 24px; border-radius: 12px; font-weight: 900; font-size: 0.9rem; cursor: pointer; transition: all 0.2s ease; border: none; position: relative; min-width: 180px; }
+        .admin-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+        .admin-btn-primary { background: linear-gradient(135deg, #00e701 0%, #00bf01 100%); color: #051005; box-shadow: 0 4px 20px rgba(0, 231, 1, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.2); }
+        .admin-btn-primary:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0, 231, 1, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.25); }
+        .admin-btn-danger { background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%); color: #fff; box-shadow: 0 4px 20px rgba(220, 38, 38, 0.35); }
+        .admin-btn-danger:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(220, 38, 38, 0.5); }
+        .admin-btn-secondary { background: rgba(255, 255, 255, 0.05); border: 1px solid #1e293b; color: #e2e8f0; }
+        .admin-btn-secondary:hover:not(:disabled) { background: rgba(255, 255, 255, 0.1); border-color: var(--accent-gold); color: var(--accent-gold); }
+        .btn-loader { width: 18px; height: 18px; border: 2px solid transparent; border-top-color: currentColor; border-radius: 50%; animation: spin 0.8s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .form-hint { font-size: 0.75rem; color: #64748b; text-align: center; padding-top: 8px; border-top: 1px solid #1e293b; margin-top: 8px; }
+
+        /* Admin Table */
+        .admin-table-container { overflow-x: auto; border-radius: 12px; border: 1px solid #1e293b; }
+        .admin-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+        .admin-table thead { background: rgba(10, 13, 17, 0.8); }
+        .admin-table th { padding: 12px 16px; text-align: left; font-size: 0.7rem; text-transform: uppercase; color: #64748b; font-weight: 800; letter-spacing: 0.5px; border-bottom: 1px solid #1e293b; white-space: nowrap; }
+        .admin-table td { padding: 14px 16px; border-bottom: 1px solid #0f172a; color: #e2e8f0; vertical-align: middle; }
+        .admin-table tbody tr { transition: background 0.15s ease; }
+        .admin-table tbody tr:hover { background: rgba(255, 255, 255, 0.02); }
+        .admin-table tbody tr:last-child td { border-bottom: none; }
+        .empty-state { text-align: center; color: #64748b; padding: 40px 20px !important; font-style: italic; }
+
+        .player-nick { font-weight: 700; color: #fff; }
+        .player-id { font-size: 0.7rem; color: var(--accent-gold); margin-top: 2px; }
+        .balance-cell { font-family: 'Unbounded', sans-serif; font-weight: 800; font-size: 1rem; color: var(--accent-gold); }
+        .balance-cell.negative { color: #f87171; }
+
+        .status-badge { display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px; border-radius: 999px; font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.3px; }
+        .status-badge.active { background: rgba(34, 197, 94, 0.15); color: #22c55e; border: 1px solid rgba(34, 197, 94, 0.3); }
+        .status-badge.banned { background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); }
+
+        .action-btns { display: flex; gap: 6px; }
+        .action-btn { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 10px; font-size: 0.85rem; cursor: pointer; transition: all 0.2s ease; border: 1px solid transparent; }
+        .action-btn.give { background: rgba(0, 231, 1, 0.15); color: var(--accent-gold); border-color: rgba(0, 231, 1, 0.3); }
+        .action-btn.give:hover { background: var(--accent-gold); color: #051005; }
+        .action-btn.deduct { background: rgba(239, 68, 68, 0.15); color: #f87171; border-color: rgba(239, 68, 68, 0.3); }
+        .action-btn.deduct:hover { background: #dc2626; color: #fff; }
+        .action-btn.ban { background: rgba(239, 68, 68, 0.15); color: #f87171; border-color: rgba(239, 68, 68, 0.3); }
+        .action-btn.ban:hover { background: #dc2626; color: #fff; }
+        .action-btn.unban { background: rgba(34, 197, 94, 0.15); color: #22c55e; border-color: rgba(34, 197, 94, 0.3); }
+        .action-btn.unban:hover { background: #16a34a; color: #fff; }
+        .action-btn.select { background: rgba(100, 116, 139, 0.15); color: #94a3b8; border-color: rgba(100, 116, 139, 0.3); }
+        .action-btn.select:hover { background: #64748b; color: #fff; }
+
+        .table-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 16px; padding-top: 16px; border-top: 1px solid #1e293b; flex-wrap: wrap; gap: 12px; }
+        .player-count { font-size: 0.8rem; color: #64748b; font-weight: 600; }
+
+        /* Search & Filter */
+        .player-search { display: flex; gap: 12px; flex-wrap: wrap; }
+        .search-input { flex: 1; min-width: 200px; }
+        .filter-select { min-width: 140px; background: #070a0e; border: 1px solid #1e293b; border-radius: 12px; padding: 12px 14px; color: #fff; font-size: 0.85rem; font-weight: 600; outline: none; cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; padding-right: 40px; }
+
+        /* Slots Grid */
+        .slots-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+        .slot-card-admin { background: rgba(10, 13, 17, 0.6); border: 2px solid #1e293b; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; transition: all 0.25s ease; position: relative; overflow: hidden; }
+        .slot-card-admin::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--slot-color); opacity: 0; transition: opacity 0.25s ease; }
+        .slot-card-admin:hover { border-color: var(--slot-color); transform: translateY(-4px); box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4), 0 0 20px var(--slot-glow); }
+        .slot-card-admin:hover::before { opacity: 1; }
+        .slot-card-admin.closed { opacity: 0.6; }
+        .slot-card-admin.closed::before { opacity: 1; background: #dc2626; }
+        .slot-icon { font-size: 2.5rem; filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.5)); }
+        .slot-name { font-family: 'Unbounded', sans-serif; font-size: 1rem; font-weight: 800; color: #fff; }
+        .slot-status { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; border-radius: 999px; font-size: 0.7rem; font-weight: 800; text-transform: uppercase; }
+        .slot-status.open { background: rgba(34, 197, 94, 0.15); color: #22c55e; border: 1px solid rgba(34, 197, 94, 0.3); }
+        .slot-status.closed { background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); }
+        .slot-toggle { width: 100%; padding: 10px; border-radius: 10px; font-weight: 800; font-size: 0.85rem; cursor: pointer; transition: all 0.2s ease; border: none; }
+        .slot-toggle.open { background: linear-gradient(135deg, #dc2626, #991b1b); color: #fff; }
+        .slot-toggle.open:hover { filter: brightness(1.1); }
+        .slot-toggle.closed { background: linear-gradient(135deg, #16a34a, #15803d); color: #fff; }
+        .slot-toggle.closed:hover { filter: brightness(1.1); }
+
+        /* Settings Grid */
+        .settings-grid { display: flex; flex-direction: column; gap: 16px; }
+        .setting-item { display: flex; align-items: center; justify-content: space-between; padding: 16px; background: rgba(10, 13, 17, 0.6); border: 1px solid #1e293b; border-radius: 12px; }
+        .setting-info { display: flex; flex-direction: column; gap: 4px; }
+        .setting-name { font-weight: 700; color: #fff; font-size: 0.95rem; }
+        .setting-desc { font-size: 0.75rem; color: #64748b; }
+
+        .toggle-switch { position: relative; display: inline-block; width: 56px; height: 30px; flex-shrink: 0; }
+        .toggle-switch input { opacity: 0; width: 0; height: 0; }
+        .toggle-slider { position: absolute; cursor: pointer; inset: 0; background: #1e293b; border: 1px solid #334155; border-radius: 30px; transition: all 0.3s ease; }
+        .toggle-slider::before { position: absolute; content: ''; height: 22px; width: 22px; left: 3px; bottom: 2.5px; background: #fff; border-radius: 50%; transition: all 0.3s ease; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3); }
+        .toggle-switch input:checked + .toggle-slider { background: linear-gradient(135deg, #00e701, #00bf01); border-color: var(--accent-gold); box-shadow: 0 0 15px rgba(0, 231, 1, 0.4); }
+        .toggle-switch input:checked + .toggle-slider::before { transform: translateX(26px); }
+        .toggle-switch input:focus-visible + .toggle-slider { outline: 2px solid var(--accent-gold); outline-offset: 2px; }
+
+        /* Logs */
+        .log-action { font-family: 'Unbounded', sans-serif; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; padding: 3px 8px; border-radius: 6px; }
+        .log-action.balance { background: rgba(0, 231, 1, 0.15); color: var(--accent-gold); }
+        .log-action.ban { background: rgba(239, 68, 68, 0.15); color: #f87171; }
+        .log-action.slot { background: rgba(245, 158, 11, 0.15); color: #f59e0b; }
+        .log-detail { font-size: 0.8rem; color: #94a3b8; font-family: monospace; }
+
+        /* Toast updates for admin */
+        .toast.admin-toast { background: linear-gradient(135deg, #0f141a, #0a0d11); border-color: var(--accent-gold); box-shadow: 0 8px 30px rgba(0, 231, 1, 0.2); }
+
         .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; margin-top: 16px; }
         .stat-card { background: var(--bg-card); backdrop-filter: blur(12px); border: 1px solid var(--border-glass); border-radius: 16px; padding: 18px; text-align: center; }
         .stat-card-label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700; }
@@ -6478,39 +6663,231 @@ html, body {
     </div>
 </div>
 
-    <!-- ПАНЕЛЬ СОЗДАТЕЛЯ -->
+    <!-- ПАНЕЛЬ СОЗДАТЕЛЯ (ADMIN PANEL) -->
     <div class="modal-overlay" id="dev-modal">
-        <div class="deposit-modal" style="max-width: 640px;">
-            <button class="modal-close-btn" onclick="closeDevModal()">✕</button>
-            <h2 style="margin: 0 0 6px; color: #f87171; text-transform: uppercase; font-family: 'Unbounded', sans-serif; font-size: 1.15rem;">🛠 Панель создателя</h2>
-            <p style="margin: 0; font-size: 0.8rem; color: var(--text-muted);">Управление балансами, слотами и банами</p>
-
-            <div class="dev-section">
-                <div class="dev-section-title">💵 Выдать / списать баланс</div>
-                <div class="dev-input-row">
-                    <input type="text" id="dev-target-nick" class="dev-input" placeholder="Ник (пусто = себе)">
-                    <input type="number" id="dev-amount-input" class="dev-input" placeholder="Сумма ⭐" value="100">
-                    <button class="dev-btn-add" onclick="devModifyBalance(1)">+ Выдать</button>
-                    <button class="dev-btn-sub" onclick="devModifyBalance(-1)">− Списать</button>
+        <div class="admin-panel">
+            <button class="modal-close-btn" onclick="closeDevModal()" aria-label="Закрыть">✕</button>
+            
+            <div class="admin-header">
+                <div class="admin-title-group">
+                    <div class="admin-icon">🛠</div>
+                    <div>
+                        <h2 class="admin-title">Панель создателя</h2>
+                        <p class="admin-subtitle">Управление игроками, балансами, слотами и банами</p>
+                    </div>
+                </div>
+                <div class="admin-stats" id="admin-stats">
+                    <div class="admin-stat">
+                        <span class="admin-stat-value" id="stat-total-players">—</span>
+                        <span class="admin-stat-label">Игроков</span>
+                    </div>
+                    <div class="admin-stat">
+                        <span class="admin-stat-value" id="stat-total-balance">—</span>
+                        <span class="admin-stat-label">Σ Баланс</span>
+                    </div>
+                    <div class="admin-stat">
+                        <span class="admin-stat-value" id="stat-banned">—</span>
+                        <span class="admin-stat-label">В бане</span>
+                    </div>
                 </div>
             </div>
 
-            <div class="dev-section">
-                <div class="dev-section-title">🎰 Управление слотами (закрыть / открыть)</div>
-                <div style="display:flex; gap:8px; flex-wrap:wrap;">
-                    <button class="btn-back" id="dev-slot-olympus" onclick="devToggleSlot('olympus')">⚡ Olympus: ОТКРЫТ</button>
-                    <button class="btn-back" id="dev-slot-doghouse" onclick="devToggleSlot('doghouse')">🐶 Dog House: ОТКРЫТ</button>
-                    <button class="btn-back" id="dev-slot-bonanza" onclick="devToggleSlot('bonanza')">🍭 Bonanza: ОТКРЫТ</button>
+            <div class="admin-tabs" role="tablist">
+                <button class="admin-tab active" role="tab" data-tab="balance" onclick="switchAdminTab('balance')">
+                    <span class="tab-icon">💰</span>
+                    <span>Баланс</span>
+                </button>
+                <button class="admin-tab" role="tab" data-tab="players" onclick="switchAdminTab('players')">
+                    <span class="tab-icon">👥</span>
+                    <span>Игроки</span>
+                </button>
+                <button class="admin-tab" role="tab" data-tab="slots" onclick="switchAdminTab('slots')">
+                    <span class="tab-icon">🎰</span>
+                    <span>Слоты</span>
+                </button>
+                <button class="admin-tab" role="tab" data-tab="logs" onclick="switchAdminTab('logs')">
+                    <span class="tab-icon">📋</span>
+                    <span>Логи</span>
+                </button>
+            </div>
+
+            <!-- ВКЛАДКА: БАЛАНС -->
+            <div class="admin-tab-panel active" id="tab-balance" role="tabpanel">
+                <div class="admin-card">
+                    <h3 class="admin-card-title">
+                        <span class="card-icon">➕</span>
+                        Выдать / Списать баланс
+                    </h3>
+                    <div class="balance-form">
+                        <div class="form-row">
+                            <label class="form-label">Ник игрока</label>
+                            <input type="text" id="admin-target-nick" class="form-input" placeholder="Введите ник (пусто = себе)" autocomplete="off">
+                        </div>
+                        <div class="form-row">
+                            <label class="form-label">Сумма (⭐)</label>
+                            <input type="number" id="admin-amount-input" class="form-input" placeholder="100" value="100" min="0.01" step="0.01">
+                        </div>
+                        <div class="form-row quick-amounts">
+                            <label class="form-label">Быстрые суммы</label>
+                            <div class="quick-amount-btns">
+                                <button class="quick-amount-btn" data-amt="10">10</button>
+                                <button class="quick-amount-btn" data-amt="50">50</button>
+                                <button class="quick-amount-btn" data-amt="100">100</button>
+                                <button class="quick-amount-btn" data-amt="500">500</button>
+                                <button class="quick-amount-btn" data-amt="1000">1K</button>
+                                <button class="quick-amount-btn" data-amt="5000">5K</button>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button class="admin-btn admin-btn-primary" onclick="adminModifyBalance(1)" id="btn-give-balance">
+                                <span class="btn-loader" style="display:none;"></span>
+                                <span class="btn-text">+ Выдать баланс</span>
+                            </button>
+                            <button class="admin-btn admin-btn-danger" onclick="adminModifyBalance(-1)" id="btn-deduct-balance">
+                                <span class="btn-loader" style="display:none;"></span>
+                                <span class="btn-text">− Списать баланс</span>
+                            </button>
+                        </div>
+                        <div class="form-hint">Используйте серверный API — баланс приходит мгновенно</div>
+                    </div>
+                </div>
+
+                <div class="admin-card">
+                    <h3 class="admin-card-title">
+                        <span class="card-icon">📊</span>
+                        История операций
+                    </h3>
+                    <div class="admin-table-container">
+                        <table class="admin-table" id="admin-balance-log">
+                            <thead>
+                                <tr>
+                                    <th>Время</th>
+                                    <th>Админ</th>
+                                    <th>Цель</th>
+                                    <th>Действие</th>
+                                    <th>Сумма</th>
+                                    <th>Статус</th>
+                                </tr>
+                            </thead>
+                            <tbody id="balance-log-body">
+                                <tr><td colspan="6" class="empty-state">Загрузка...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
 
-            <div class="dev-section">
-                <div class="dev-section-title" style="display:flex; justify-content:space-between; align-items:center;">
-                    <span>👥 Игроки и баны</span>
-                    <button class="btn-back" style="padding:4px 10px; font-size:0.72rem;" onclick="loadDevPlayers()">🔄 Обновить</button>
+            <!-- ВКЛАДКА: ИГРОКИ -->
+            <div class="admin-tab-panel" id="tab-players" role="tabpanel">
+                <div class="admin-card">
+                    <div class="card-header">
+                        <h3 class="admin-card-title">
+                            <span class="card-icon">👥</span>
+                            Список игроков
+                        </h3>
+                        <div class="player-search">
+                            <input type="text" id="player-search-input" class="form-input search-input" placeholder="🔍 Поиск по нику..." autocomplete="off">
+                            <select id="player-filter-ban" class="form-input filter-select">
+                                <option value="">Все</option>
+                                <option value="banned">Забаненные</option>
+                                <option value="active">Активные</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="admin-table-container">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Ник / ID</th>
+                                    <th>Баланс</th>
+                                    <th>Статус</th>
+                                    <th>Действия</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-players-list">
+                                <tr><td colspan="4" class="empty-state">Нажмите «Обновить» для загрузки</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="table-footer">
+                        <button class="admin-btn admin-btn-secondary" onclick="loadAdminPlayers()">
+                            <span class="btn-loader" style="display:none;"></span>
+                            <span class="btn-text">🔄 Обновить список</span>
+                        </button>
+                        <span class="player-count" id="player-count">0 игроков</span>
+                    </div>
                 </div>
-                <div class="players-list" id="dev-players-list">
-                    <div style="font-size:0.8rem; color:var(--text-muted);">Нажмите «Обновить» для загрузки списка</div>
+            </div>
+
+            <!-- ВКЛАДКА: СЛОТЫ -->
+            <div class="admin-tab-panel" id="tab-slots" role="tabpanel">
+                <div class="admin-card">
+                    <h3 class="admin-card-title">
+                        <span class="card-icon">🎰</span>
+                        Управление слотами
+                    </h3>
+                    <div class="slots-grid" id="admin-slots-grid">
+                        <!-- Заполняется JS -->
+                    </div>
+                </div>
+
+                <div class="admin-card">
+                    <h3 class="admin-card-title">
+                        <span class="card-icon">⚙️</span>
+                        Глобальные настройки
+                    </h3>
+                    <div class="settings-grid">
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <span class="setting-name">Режим обслуживания</span>
+                                <span class="setting-desc">Закрыть казино для всех игроков</span>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="maintenance-toggle" onchange="toggleMaintenance(this.checked)">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <span class="setting-name">Регистрация</span>
+                                <span class="setting-desc">Разрешить новые аккаунты</span>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="registration-toggle" checked onchange="toggleRegistration(this.checked)">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ВКЛАДКА: ЛОГИ -->
+            <div class="admin-tab-panel" id="tab-logs" role="tabpanel">
+                <div class="admin-card">
+                    <div class="card-header">
+                        <h3 class="admin-card-title">
+                            <span class="card-icon">📋</span>
+                            Логи админ-действий
+                        </h3>
+                        <button class="admin-btn admin-btn-secondary" onclick="loadAdminLogs()">
+                            <span class="btn-text">🔄 Обновить</span>
+                        </button>
+                    </div>
+                    <div class="admin-table-container">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Время</th>
+                                    <th>Админ</th>
+                                    <th>Действие</th>
+                                    <th>Детали</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-logs-body">
+                                <tr><td colspan="4" class="empty-state">Нажмите «Обновить» для загрузки логов</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
@@ -7446,14 +7823,11 @@ html, body {
 
             db.collection('settings').doc('slots').onSnapshot(snap => {
                 if (snap.exists) {
-                    closedSlots = { olympus: false, doghouse: false, bonanza: false, ...snap.data() };
-                    syncDevSlotsUI();
+                    closedSlots = { olympus: false, doghouse: false, bonanza: false, zh: false, ...snap.data() };
                 }
             });
 
-            // === ЗАКОММЕНТИРОВАНО: onSnapshot игрока тратит бесплатные Firestore reads ===
-            // Баланс обновляется только после действий (депозит, спин, вывод) через refreshBalanceFromServer()
-            /*
+            // === РЕАЛЬНОЕ ВРЕМЯ: слушаем изменения баланса игроков (включая админ-выдачу) ===
             db.collection('players').doc(username).onSnapshot(snap => {
                 if (!snap.exists) return;
                 const d = snap.data();
@@ -7466,8 +7840,11 @@ html, body {
                     updateBalanceUI();
                     showToast('💵 Ваш баланс обновлён администратором!');
                 }
+                if (isBanned && !window.banOverlayShown) {
+                    window.banOverlayShown = true;
+                    showToast('🚫 Ваш аккаунт заблокирован');
+                }
             });
-            */
 
             setInterval(() => { if (!isAnyGameBusy()) pushWalletToCloud(); }, 15000);
             window.addEventListener('online', () => pushWalletToCloud());
@@ -7592,99 +7969,296 @@ html, body {
 
         function openDevModal() {
             document.getElementById('dev-modal').classList.add('active');
-            syncDevSlotsUI();
-            loadDevPlayers();
+            initAdminPanel();
         }
         function closeDevModal() { document.getElementById('dev-modal').classList.remove('active'); }
 
-        async function devModifyBalance(sign) {
-            const nickInput = (document.getElementById('dev-target-nick').value || '').trim();
+        // ==========================================
+        // ADMIN PANEL — NEW BEAUTIFUL IMPLEMENTATION
+        // ==========================================
+        let adminCurrentTab = 'balance';
+        let adminPlayersCache = [];
+        let adminBalanceLogCache = [];
+        let adminLogsCache = [];
+
+        async function initAdminPanel() {
+            switchAdminTab('balance');
+            await loadAdminStats();
+            await loadAdminPlayers();
+            await renderAdminSlots();
+            loadAdminBalanceLog();
+            loadAdminLogs();
+        }
+
+        function switchAdminTab(tabName) {
+            adminCurrentTab = tabName;
+            document.querySelectorAll('.admin-tab').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.tab === tabName);
+            });
+            document.querySelectorAll('.admin-tab-panel').forEach(panel => {
+                panel.classList.toggle('active', panel.id === 'tab-' + tabName);
+            });
+        }
+
+        // --- Stats ---
+        async function loadAdminStats() {
+            try {
+                const token = localStorage.getItem('kazik_jwt_token');
+                if (!token) return;
+                const resp = await fetch('/api/admin/players', {
+                    headers: { 'Authorization': 'Bearer ' + token }
+                });
+                if (!resp.ok) return;
+                const players = await resp.json();
+                let totalBalance = 0, bannedCount = 0;
+                players.forEach(p => {
+                    totalBalance += Number(p.balance || 0);
+                    if (p.banned) bannedCount++;
+                });
+                document.getElementById('stat-total-players').textContent = players.length;
+                document.getElementById('stat-total-balance').textContent = totalBalance.toFixed(2) + ' ⭐';
+                document.getElementById('stat-banned').textContent = bannedCount;
+            } catch (e) {
+                console.warn('Admin stats failed:', e);
+            }
+        }
+
+        // --- Balance Tab ---
+        function setQuickAmount(amt) {
+            document.getElementById('admin-amount-input').value = amt;
+            document.querySelectorAll('.quick-amount-btn').forEach(b => b.classList.toggle('active', Number(b.dataset.amt) === amt));
+        }
+
+        async function adminModifyBalance(sign) {
+            const nickInput = (document.getElementById('admin-target-nick').value || '').trim();
             const targetNick = nickInput || username;
-            const amt = Math.abs(parseFloat(document.getElementById('dev-amount-input').value) || 0);
+            const amt = Math.abs(parseFloat(document.getElementById('admin-amount-input').value) || 0);
             if (!targetNick || amt <= 0) { showToast('⚠️ Укажите ник и сумму!'); return; }
 
-            if (targetNick === username) {
-                balance = normalizeMoney(balance + sign * amt);
-                saveState();
-                updateBalanceUI();
-                showToast(`✅ Ваш баланс изменён на ${(sign * amt).toFixed(2)} ⭐`);
-            } else {
-                try {
-                    const ref = db.collection('players').doc(targetNick);
-                    const snap = await ref.get();
-                    const cur = snap.exists ? normalizeMoney(snap.data().balance, 0) : 0;
-                    const next = normalizeMoney(cur + sign * amt, 0);
-                    await ref.set({ nick: targetNick, balance: next, adminSyncId: Date.now() }, { merge: true });
-                    showToast(`✅ Баланс ${targetNick}: ${next.toFixed(2)} ⭐`);
-                    loadDevPlayers();
-                } catch (e) { showToast('⚠️ Ошибка обновления игрока'); }
-            }
-        }
+            const btn = sign > 0 ? document.getElementById('btn-give-balance') : document.getElementById('btn-deduct-balance');
+            const loader = btn.querySelector('.btn-loader');
+            const btnText = btn.querySelector('.btn-text');
+            btn.disabled = true; loader.style.display = 'block'; btnText.textContent = sign > 0 ? 'Выдача...' : 'Списание...';
 
-        function syncDevSlotsUI() {
-            const map = { olympus: '⚡ Olympus', doghouse: '🐶 Dog House', bonanza: '🍭 Bonanza' };
-            for (const k of Object.keys(map)) {
-                const btn = document.getElementById('dev-slot-' + k);
-                if (!btn) continue;
-                const closed = !!closedSlots[k];
-                btn.textContent = `${map[k]}: ${closed ? 'ЗАКРЫТ' : 'ОТКРЫТ'}`;
-                btn.style.borderColor = closed ? '#ef4444' : '#22c55e';
-                btn.style.color = closed ? '#fca5a5' : '#86efac';
-            }
-        }
-
-        async function devToggleSlot(slotKey) {
-            closedSlots[slotKey] = !closedSlots[slotKey];
-            syncDevSlotsUI();
             try {
-                await db.collection('settings').doc('slots').set(closedSlots, { merge: true });
-                showToast(closedSlots[slotKey] ? `🔒 Слот ${slotKey} временно закрыт` : `🔓 Слот ${slotKey} открыт`);
-            } catch (e) {
-                console.warn('Dev toggle slot failed:', e);
-            }
-        }
-
-        async function loadDevPlayers() {
-            const list = document.getElementById('dev-players-list');
-            if (!list) return;
-            list.innerHTML = '<div style="font-size:0.8rem; color:var(--text-muted);">Загрузка...</div>';
-            try {
-                const snap = await db.collection('players').limit(50).get();
-                if (snap.empty) { list.innerHTML = '<div style="font-size:0.8rem; color:var(--text-muted);">Игроков нет</div>'; return; }
-                list.innerHTML = '';
-                snap.forEach(doc => {
-                    const d = doc.data();
-                    const nick = d.nick || doc.id;
-                    const tgId = d.tgId || (d.tgUserId || '—');
-                    const bal = normalizeMoney(d.balance, 0).toFixed(2);
-                    const banned = !!d.banned;
-                    const row = document.createElement('div');
-                    row.className = 'player-row-card';
-                    row.innerHTML = `
-                        <div>
-                            <b style="color:#fff;">${escapeHtml(nick)}</b>
-                            <span style="color:var(--accent-gold); font-size:0.7rem; margin-left:6px;">ID: ${escapeHtml(tgId)}</span>
-                            <span style="color:var(--accent-gold); font-size:0.8rem; margin-left:6px;">${bal} ⭐</span>
-                            ${banned ? '<span style="color:#f87171; font-size:0.72rem; font-weight:800; margin-left:6px;">[БАН]</span>' : ''}
-                        </div>
-                        <div style="display:flex; gap:6px;">
-                            <button class="dev-btn-add" style="padding:5px 10px; font-size:0.75rem;" onclick="document.getElementById('dev-target-nick').value='${escapeHtml(nick)}'">Выбрать</button>
-                            <button class="${banned ? 'dev-btn-add' : 'dev-btn-sub'}" style="padding:5px 10px; font-size:0.75rem;" onclick="devToggleBan('${escapeHtml(nick)}', ${!banned})">${banned ? 'Разбан' : 'Бан'}</button>
-                        </div>
-                    `;
-                    list.appendChild(row);
+                const token = localStorage.getItem('kazik_jwt_token');
+                const delta = sign * amt;
+                const resp = await fetch('/api/admin/balance', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+                    body: JSON.stringify({ nick: targetNick, delta })
                 });
-            } catch (e) { list.innerHTML = `<div style="font-size:0.8rem; color:#f87171;">Ошибка: ${escapeHtml(e.message || e)}</div>`; }
+                const data = await resp.json();
+                if (!resp.ok) throw new Error(data.error || 'Ошибка сервера');
+
+                if (targetNick === username) {
+                    balance = normalizeMoney(balance + delta);
+                    saveState();
+                    updateBalanceUI();
+                }
+                showToast(`✅ ${sign > 0 ? 'Выдано' : 'Списано'} ${amt.toFixed(2)} ⭐ для ${targetNick} (баланс: ${data.balance.toFixed(2)} ⭐)`);
+                loadAdminStats();
+                loadAdminPlayers();
+                loadAdminBalanceLog();
+            } catch (e) {
+                showToast('⚠️ ' + (e.message || 'Ошибка операции'));
+            } finally {
+                btn.disabled = false; loader.style.display = 'none'; btnText.textContent = sign > 0 ? '+ Выдать баланс' : '− Списать баланс';
+            }
         }
 
-        async function devToggleBan(nick, banState) {
+        async function loadAdminBalanceLog() {
+            // В будущем можно добавить отдельную коллекцию логов в Firestore
+            const tbody = document.getElementById('balance-log-body');
+            tbody.innerHTML = '<tr><td colspan="6" class="empty-state">История операций будет здесь после подключения коллекции логов</td></tr>';
+        }
+
+        // --- Players Tab ---
+        async function loadAdminPlayers() {
+            const tbody = document.getElementById('admin-players-list');
+            tbody.innerHTML = '<tr><td colspan="4" class="empty-state">Загрузка...</td></tr>';
             try {
-                await db.collection('players').doc(nick).set({ banned: banState }, { merge: true });
-                showToast(banState ? `🚫 Игрок ${nick} забанен` : `✅ Игрок ${nick} разбанен`);
-                loadDevPlayers();
+                const token = localStorage.getItem('kazik_jwt_token');
+                const resp = await fetch('/api/admin/players', {
+                    headers: { 'Authorization': 'Bearer ' + token }
+                });
+                if (!resp.ok) throw new Error('Ошибка загрузки');
+                const players = await resp.json();
+                adminPlayersCache = players;
+                renderAdminPlayersList(players);
+                document.getElementById('player-count').textContent = players.length + ' игроков';
             } catch (e) {
-                console.warn('Dev toggle ban failed:', e);
+                tbody.innerHTML = `<tr><td colspan="4" class="empty-state" style="color:#f87171;">Ошибка: ${escapeHtml(e.message)}</td></tr>`;
             }
+        }
+
+        function renderAdminPlayersList(players) {
+            const tbody = document.getElementById('admin-players-list');
+            const search = (document.getElementById('player-search-input').value || '').toLowerCase();
+            const filter = document.getElementById('player-filter-ban').value;
+
+            let filtered = players;
+            if (search) filtered = filtered.filter(p => (p.nick || '').toLowerCase().includes(search));
+            if (filter === 'banned') filtered = filtered.filter(p => p.banned);
+            if (filter === 'active') filtered = filtered.filter(p => !p.banned);
+
+            if (filtered.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="4" class="empty-state">Игроки не найдены</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = filtered.map(p => {
+                const nick = p.nick || '—';
+                const bal = normalizeMoney(p.balance, 0).toFixed(2);
+                const banned = !!p.banned;
+                return `
+                    <tr>
+                        <td>
+                            <div class="player-nick">${escapeHtml(nick)}</div>
+                            <div class="player-id">ID: ${escapeHtml(nick)}</div>
+                        </td>
+                        <td class="balance-cell ${Number(bal) < 0 ? 'negative' : ''}">${bal} ⭐</td>
+                        <td><span class="status-badge ${banned ? 'banned' : 'active'}">${banned ? '🚫 В бане' : '✅ Активен'}</span></td>
+                        <td>
+                            <div class="action-btns">
+                                <button class="action-btn select" onclick="document.getElementById('admin-target-nick').value='${escapeHtml(nick)}'; switchAdminTab('balance');" title="Выбрать для выдачи/списания">✎</button>
+                                <button class="action-btn give" onclick="quickGiveBalance('${escapeHtml(nick)}')" title="Быстро выдать 100 ⭐">+100</button>
+                                <button class="action-btn deduct" onclick="quickDeductBalance('${escapeHtml(nick)}')" title="Быстро списать 100 ⭐">−100</button>
+                                <button class="action-btn ${banned ? 'unban' : 'ban'}" onclick="adminToggleBan('${escapeHtml(nick)}', ${!banned})" title="${banned ? 'Разбанить' : 'Забанить'}">${banned ? '🔓' : '🔒'}</button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function filterAdminPlayers() {
+            renderAdminPlayersList(adminPlayersCache);
+        }
+
+        async function quickGiveBalance(nick) {
+            await adminQuickBalance(nick, 100);
+        }
+        async function quickDeductBalance(nick) {
+            await adminQuickBalance(nick, -100);
+        }
+
+        async function adminQuickBalance(nick, delta) {
+            try {
+                const token = localStorage.getItem('kazik_jwt_token');
+                const resp = await fetch('/api/admin/balance', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+                    body: JSON.stringify({ nick, delta })
+                });
+                const data = await resp.json();
+                if (!resp.ok) throw new Error(data.error || 'Ошибка');
+                showToast(`✅ ${delta > 0 ? 'Выдано' : 'Списано'} ${Math.abs(delta)} ⭐ для ${nick}`);
+                loadAdminStats();
+                loadAdminPlayers();
+            } catch (e) {
+                showToast('⚠️ ' + e.message);
+            }
+        }
+
+        async function adminToggleBan(nick, banState) {
+            try {
+                const token = localStorage.getItem('kazik_jwt_token');
+                const resp = await fetch('/api/admin/ban', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+                    body: JSON.stringify({ nick, banned: banState })
+                });
+                if (!resp.ok) throw new Error('Ошибка бана');
+                showToast(banState ? `🚫 Игрок ${nick} забанен` : `✅ Игрок ${nick} разбанен`);
+                loadAdminStats();
+                loadAdminPlayers();
+            } catch (e) {
+                showToast('⚠️ ' + e.message);
+            }
+        }
+
+        // --- Slots Tab ---
+        async function renderAdminSlots() {
+            const container = document.getElementById('admin-slots-grid');
+            const slotConfigs = [
+                { key: 'olympus', name: 'Gates of Olympus', icon: '⚡', color: '#f59e0b', glow: 'rgba(245, 158, 11, 0.4)' },
+                { key: 'doghouse', name: 'The Dog House', icon: '🐶', color: '#f59e0b', glow: 'rgba(245, 158, 11, 0.4)' },
+                { key: 'bonanza', name: 'Sweet Bonanza', icon: '🍭', color: '#f43f5e', glow: 'rgba(244, 63, 94, 0.4)' },
+                { key: 'zh', name: 'Zeus vs Hades', icon: '⚔️', color: '#a855f7', glow: 'rgba(168, 85, 247, 0.4)' }
+            ];
+
+            container.innerHTML = slotConfigs.map(s => {
+                const closed = !!closedSlots[s.key];
+                return `
+                    <div class="slot-card-admin ${closed ? 'closed' : ''}" style="--slot-color: ${s.color}; --slot-glow: ${s.glow};">
+                        <div class="slot-icon">${s.icon}</div>
+                        <div class="slot-name">${s.name}</div>
+                        <span class="slot-status ${closed ? 'closed' : 'open'}">${closed ? 'ЗАКРЫТ' : 'ОТКРЫТ'}</span>
+                        <button class="slot-toggle ${closed ? 'closed' : 'open'}" onclick="adminToggleSlot('${s.key}')">
+                            ${closed ? '🔓 Открыть слот' : '🔒 Закрыть слот'}
+                        </button>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        async function adminToggleSlot(slotKey) {
+            const newClosed = !closedSlots[slotKey];
+            closedSlots[slotKey] = newClosed;
+            renderAdminSlots();
+            try {
+                const token = localStorage.getItem('kazik_jwt_token');
+                await fetch('/api/admin/slot-toggle', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+                    body: JSON.stringify({ slot: slotKey, closed: newClosed })
+                });
+                showToast(newClosed ? `🔒 Слот ${slotKey} закрыт` : `🔓 Слот ${slotKey} открыт`);
+            } catch (e) {
+                showToast('⚠️ Ошибка переключения слота');
+                closedSlots[slotKey] = !newClosed;
+                renderAdminSlots();
+            }
+        }
+
+        function toggleMaintenance(enabled) {
+            // TODO: реализовать через settings в Firestore
+            showToast(enabled ? '🛠 Режим обслуживания включен' : '✅ Режим обслуживания выключен');
+        }
+        function toggleRegistration(enabled) {
+            // TODO: реализовать через settings в Firestore
+            showToast(enabled ? '✅ Регистрация открыта' : '🔒 Регистрация закрыта');
+        }
+
+        // --- Logs Tab ---
+        async function loadAdminLogs() {
+            const tbody = document.getElementById('admin-logs-body');
+            tbody.innerHTML = '<tr><td colspan="4" class="empty-state">Коллекция логов админ-действий пока не подключена</td></tr>';
+        }
+
+        // --- Enable real-time balance sync for players ---
+        let playerRealtimeListener = null;
+        function enablePlayerRealtimeSync() {
+            if (!username || playerRealtimeListener) return;
+            playerRealtimeListener = db.collection('players').doc(username).onSnapshot(snap => {
+                if (!snap.exists) return;
+                const d = snap.data();
+                isBanned = !!d.banned;
+                if (d.adminSyncId && d.adminSyncId > lastAdminSyncId) {
+                    lastAdminSyncId = d.adminSyncId;
+                    localStorage.setItem('kazik_admin_sync_id', String(lastAdminSyncId));
+                    balance = normalizeMoney(d.balance, balance);
+                    saveState();
+                    updateBalanceUI();
+                    showToast('💵 Ваш баланс обновлён администратором!');
+                }
+                if (isBanned && !window.banOverlayShown) {
+                    window.banOverlayShown = true;
+                    showToast('🚫 Ваш аккаунт заблокирован');
+                    // Можно добавить редирект или оверлей
+                }
+            });
         }
 
         function sanitizeStats(raw) {
@@ -8181,7 +8755,10 @@ async function hashPassword(str) {
                 document.getElementById('nickname-overlay').classList.remove('active');
                 initFirebaseRealtimeSync();
                 // === АВТОРИЗАЦИЯ В БЭКЕНДЕ (JWT) ===
-                await authWithBackend();
+                const token = await authWithBackend();
+                if (token) {
+                    enablePlayerRealtimeSync();
+                }
             } catch (e) {
                 showToast('⚠️ Ошибка подключения к базе. Попробуйте ещё раз.');
             } finally {
@@ -8322,6 +8899,7 @@ const zhBal = document.getElementById('zh-hud-balance'); if (zhBal) zhBal.textCo
                 let token = localStorage.getItem('kazik_jwt_token');
                 if (!token) {
                     token = await authWithBackend();
+                    if (token) enablePlayerRealtimeSync();
                 }
                 if (!token) throw new Error('Не авторизован в бэкенде. Перезайдите в приложение.');
 
@@ -10759,6 +11337,73 @@ function applyProfilePromoCode() {
     profInp.value = '';
     applyPromoCode();
 }
+
+// === ADMIN PANEL EVENT LISTENERS ===
+document.addEventListener('DOMContentLoaded', () => {
+    // Quick amount buttons
+    document.querySelectorAll('.quick-amount-btn').forEach(btn => {
+        btn.addEventListener('click', () => setQuickAmount(Number(btn.dataset.amt)));
+    });
+
+    // Player search input
+    const searchInput = document.getElementById('player-search-input');
+    if (searchInput) {
+        searchInput.addEventListener('input', filterAdminPlayers);
+    }
+
+    // Player filter select
+    const filterSelect = document.getElementById('player-filter-ban');
+    if (filterSelect) {
+        filterSelect.addEventListener('change', filterAdminPlayers);
+    }
+
+    // Enter key in admin target nick input to switch to balance tab
+    const adminNickInput = document.getElementById('admin-target-nick');
+    if (adminNickInput) {
+        adminNickInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                switchAdminTab('balance');
+                document.getElementById('admin-amount-input')?.focus();
+            }
+        });
+    }
+
+    // Enter key in admin amount input to submit
+    const adminAmountInput = document.getElementById('admin-amount-input');
+    if (adminAmountInput) {
+        adminAmountInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                adminModifyBalance(1); // Default to give balance
+            }
+        });
+    }
+
+    // Close modal on Escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            const modal = document.getElementById('dev-modal');
+            if (modal && modal.classList.contains('active')) {
+                closeDevModal();
+            }
+        }
+    });
+
+    // Click outside modal to close
+    const modalOverlay = document.getElementById('dev-modal');
+    if (modalOverlay) {
+        modalOverlay.addEventListener('click', (e) => {
+            if (e.target === modalOverlay) {
+                closeDevModal();
+            }
+        });
+    }
+});
+
+// Enable real-time balance sync for players when logged in
+// This is called after successful authentication
+window.enablePlayerRealtimeSync = enablePlayerRealtimeSync;
     </script>
 <!-- ============================================================
      HTML: НИЖНЕЕ МОБИЛЬНОЕ МЕНЮ (TELEGRAM MINI APP)
