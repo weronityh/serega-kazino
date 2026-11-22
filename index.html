@@ -1956,6 +1956,38 @@
         .zh-cell.sticky-wild { overflow: visible !important; z-index: 24; background: radial-gradient(circle, rgba(255, 140, 60, 0.32), rgba(80, 10, 4, 0.4)); border-color: rgba(255, 180, 120, 0.5); }
         .zh-cell.zh-wild-cell { overflow: hidden !important; }
         .zh-cell.zh-wild-cell .zh-symbol-inner { opacity: 0; }
+        /* compatibility sprites for the current Zeus vs Hades markup */
+        #view-zeushades .zh-wild-badge {
+            width: 120%;
+            height: 120%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            pointer-events: none;
+        }
+        #view-zeushades .zh-wild-img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 8px 14px rgba(0, 0, 0, 0.75)) drop-shadow(0 0 14px rgba(56, 189, 248, 0.65));
+        }
+        #view-zeushades .zh-wild-mult {
+            position: absolute;
+            bottom: 2px;
+            right: 4px;
+            background: linear-gradient(135deg, #0ea5e9, #0369a1);
+            border: 2px solid #fde047;
+            border-radius: 9px;
+            padding: 2px 8px;
+            font-family: 'Unbounded', sans-serif;
+            font-size: 1rem;
+            font-weight: 900;
+            color: #fff;
+            text-shadow: 0 2px 4px #000;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.85);
+            z-index: 30;
+        }
 
         /* ---------- expanding wild column ---------- */
         .zh-wild-column {
@@ -5976,6 +6008,162 @@ html, body {
         body.slot-open #ao-turbo-btn:active,
         body.slot-open #dh-turbo-btn:active,
         body.slot-open #sb-turbo-btn:active { transform: scale(0.9); }
+
+        /* ==========================================================
+           THE DOG HOUSE — мобильный редизайн (только телефон)
+           Деревянная будка, вывеска, стеклянные кнопки Pragmatic Play
+           ========================================================== */
+
+        /* 1. Вывеска THE DOG HOUSE над барабанами (используем .dh-ticker) */
+        body.slot-open #view-doghouse .dh-ticker {
+            display: flex !important;
+            align-items: center;
+            justify-content: center;
+            width: min(82%, 330px) !important;
+            min-width: 0 !important;
+            height: 38px;
+            margin: 0 auto 5px !important;
+            padding: 0 18px !important;
+            font-size: 0 !important;
+            line-height: 0 !important;
+            color: transparent !important;
+            border: 2px solid #fde047 !important;
+            border-radius: 13px !important;
+            background-color: #7c3f12 !important;
+            background-image:
+                radial-gradient(circle at 7% 50%, rgba(255, 244, 204, 0.95) 0 2.5px, rgba(80, 40, 10, 0.9) 2.6px 3.6px, transparent 3.7px),
+                radial-gradient(circle at 93% 50%, rgba(255, 244, 204, 0.95) 0 2.5px, rgba(80, 40, 10, 0.9) 2.6px 3.6px, transparent 3.7px),
+                repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.08) 0 2px, transparent 2px 18px),
+                linear-gradient(180deg, #b06a22 0%, #8a4a12 45%, #5c2c06 100%) !important;
+            box-shadow:
+                0 6px 16px rgba(0, 0, 0, 0.55),
+                inset 0 2px 0 rgba(255, 226, 170, 0.5),
+                inset 0 -3px 8px rgba(0, 0, 0, 0.45) !important;
+            position: relative;
+            overflow: hidden;
+            transform: rotate(-0.8deg);
+        }
+        body.slot-open #view-doghouse .dh-ticker::before {
+            content: 'THE DOG HOUSE';
+            font-family: 'Unbounded', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 900;
+            line-height: 1;
+            letter-spacing: 0.05em;
+            white-space: nowrap;
+            background: linear-gradient(180deg, #fffbeb 0%, #fde047 55%, #f59e0b 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            -webkit-text-stroke: 1.5px rgba(69, 26, 3, 0.55);
+            paint-order: stroke fill;
+            filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.55));
+            transform: rotate(0.8deg);
+        }
+        body.slot-open #view-doghouse .dh-ticker::after {
+            content: '';
+            position: absolute;
+            inset: 4px;
+            border-radius: 9px;
+            border: 1px solid rgba(255, 236, 170, 0.35);
+            pointer-events: none;
+        }
+
+        /* 2. Тёплая деревянная рамка будки вокруг сетки 5×3 */
+        body.slot-open #view-doghouse .dh-wooden-frame {
+            width: 100% !important;
+            max-width: 100% !important;
+            margin: 0 !important;
+            padding: 8px 8px 10px !important;
+            border: 3px solid #fde047 !important;
+            border-radius: 18px !important;
+            background:
+                radial-gradient(120% 60% at 50% 0%, rgba(255, 214, 140, 0.22), transparent 60%),
+                linear-gradient(180deg, #a8621b 0%, #92400e 28%, #713f12 62%, #451a03 100%) !important;
+            box-shadow:
+                0 10px 24px rgba(0, 0, 0, 0.55),
+                inset 0 0 0 2px #78350f,
+                inset 0 2px 0 rgba(255, 224, 160, 0.45),
+                inset 0 -6px 14px rgba(0, 0, 0, 0.5) !important;
+            position: relative;
+            overflow: visible;
+        }
+        body.slot-open #view-doghouse .dh-wooden-frame::before {
+            content: '';
+            position: absolute;
+            left: 12%;
+            right: 12%;
+            top: -7px;
+            height: 10px;
+            border-radius: 8px 8px 3px 3px;
+            background: linear-gradient(180deg, #b4741f, #6b3410 70%, #451a03);
+            border: 2px solid #fde047;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.45);
+            pointer-events: none;
+        }
+        body.slot-open #view-doghouse .dh-grid-5x3 {
+            width: 100% !important;
+            gap: 3px !important;
+            padding: 5px !important;
+            border-radius: 11px !important;
+            background: radial-gradient(circle at 50% 42%, rgba(92, 44, 12, 0.95) 0%, rgba(26, 10, 3, 0.98) 100%) !important;
+            box-shadow:
+                inset 0 4px 14px rgba(0, 0, 0, 0.75),
+                inset 0 0 0 1px rgba(255, 220, 160, 0.18) !important;
+        }
+        body.slot-open #view-doghouse .dh-cell {
+            min-height: 0 !important;
+            border-radius: 7px !important;
+            border: 1px solid rgba(254, 240, 138, 0.22) !important;
+            box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.45);
+        }
+        body.slot-open #view-doghouse .dh-sym-img { width: 96%; height: 96%; }
+
+        /* 3. Кнопки SPIN и − / + в стиле Pragmatic Play (тёмное стекло) */
+        body.slot-open #view-doghouse #dh-spin-btn {
+            width: 78px !important;
+            height: 78px !important;
+            border: 2px solid rgba(255, 255, 255, 0.65) !important;
+            background:
+                radial-gradient(circle at 50% 46%, rgba(90, 90, 90, 0.55), rgba(0, 0, 0, 0.62) 70%, rgba(0, 0, 0, 0.72) 100%) !important;
+            box-shadow:
+                0 10px 26px rgba(0, 0, 0, 0.55),
+                inset 0 0 22px rgba(255, 255, 255, 0.10),
+                inset 0 1px 0 rgba(255, 255, 255, 0.25) !important;
+            -webkit-backdrop-filter: blur(6px);
+            backdrop-filter: blur(6px);
+            position: relative;
+        }
+        body.slot-open #view-doghouse #dh-spin-btn::after {
+            content: '';
+            position: absolute;
+            inset: -7px;
+            border-radius: 50%;
+            border: 1px dashed rgba(255, 255, 255, 0.28);
+            pointer-events: none;
+        }
+        body.slot-open #view-doghouse #dh-spin-btn svg {
+            width: 40px !important;
+            height: 40px !important;
+            fill: #ffffff !important;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.6));
+        }
+        body.slot-open #view-doghouse .dh-bet-adjust-btn {
+            width: 42px !important;
+            height: 42px !important;
+            background: rgba(0, 0, 0, 0.55) !important;
+            border: 2px solid rgba(255, 255, 255, 0.65) !important;
+            color: #ffffff !important;
+            font-size: 1.15rem !important;
+            -webkit-backdrop-filter: blur(6px);
+            backdrop-filter: blur(6px);
+            box-shadow:
+                0 6px 16px rgba(0, 0, 0, 0.45),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+        }
+        body.slot-open #view-doghouse .dh-bet-adjust-btn:active {
+            transform: scale(0.92);
+        }
     }
 
     /* Компактный вариант для невысоких экранов, чтобы всё влезало в 100dvh */
@@ -6368,7 +6556,6 @@ html, body {
                     <button class="btn-back" id="dev-slot-olympus" onclick="devToggleSlot('olympus')">⚡ Olympus: ОТКРЫТ</button>
                     <button class="btn-back" id="dev-slot-doghouse" onclick="devToggleSlot('doghouse')">🐶 Dog House: ОТКРЫТ</button>
                     <button class="btn-back" id="dev-slot-bonanza" onclick="devToggleSlot('bonanza')">🍭 Bonanza: ОТКРЫТ</button>
-                    <button class="btn-back" id="dev-slot-zeushades" onclick="devToggleSlot('zeushades')">⚔️ Zeus vs Hades: ОТКРЫТ</button>
                 </div>
             </div>
 
@@ -6445,11 +6632,6 @@ html, body {
         <button class="nav-item slot-nav-card" id="nav-slot-bonanza" onclick="openSweetBonanza()">
             <img src="sweetbananzaok.jpg" alt="Sweet Bonanza" class="slot-nav-img">
             <span class="slot-nav-label">Sweet Bonanza</span>
-        </button>
-
-        <button class="nav-item slot-nav-card" id="nav-slot-zeushades" onclick="openZeusHades()">
-            <img src="zeushades-emblem.png" alt="Zeus vs Hades" class="slot-nav-img">
-            <span class="slot-nav-label">Zeus vs Hades</span>
         </button>
     </nav>
 
@@ -6578,21 +6760,6 @@ html, body {
                             <button class="card-hover-play-btn" onclick="event.stopPropagation(); openSweetBonanza();">Играть</button>
                         </div>
                         <div class="slot-card-meta"><span>Кластеры 8+</span><span>Бомбы до x100</span></div>
-                    </div>
-
-                    <div class="slot-lobby-card zeushades-featured" onclick="openZeusHades()">
-                        <div class="slot-card-thumb">
-                            <img src="zeushades-emblem.png" alt="Zeus vs Hades">
-                            <span class="slot-card-badge">5×5</span>
-                        </div>
-                        <div class="slot-card-content">
-                            <div class="slot-card-title">Zeus vs Hades</div>
-                            <div class="slot-card-desc">Эпическая битва богов 5x5 с расширяющимися Wild x2–x20, двумя режимами фриспинов (Olympus/Hades) и липкими Wild!</div>
-                        </div>
-                        <div class="slot-card-actions">
-                            <button class="card-hover-play-btn" onclick="event.stopPropagation(); openZeusHades();">Играть</button>
-                        </div>
-                        <div class="slot-card-meta"><span>20 линий</span><span>Расширяющиеся Wild</span></div>
                     </div>
                 </div>
             </div>
@@ -6924,7 +7091,7 @@ html, body {
 <!-- КЕШБЭК 10% -->
                 <div style="margin-top:16px; background:linear-gradient(90deg, #0b261d, #0f3629); padding:16px; border-radius:16px; border:1px solid rgba(61,220,132,0.4); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
                     <div>
-                        <div style="font-weight:900; font-size:0.95rem; color:#3ddc84;">💸 Кешбэк 10% от проигрыша</div>
+                        <div style="font-weight:900; font-size:0.95rem; color:#3ddc84;">💸 Кешбэк 5% от проигрыша</div>
                         <div style="font-size:0.78rem; color:#cbd5e1; margin-top:2px;">Доступно к возврату: <b id="cashback-avail-val" style="color:#fff;">0,00 ⭐</b> (мин. 1,00 ⭐, раз в 24ч)</div>
                     </div>
                     <button id="cashback-claim-btn" class="btn-back" style="background:linear-gradient(135deg, #10b981, #059669); color:#fff; border:none; padding:10px 16px; font-weight:900;" onclick="claimCashback()">
@@ -7022,9 +7189,9 @@ html, body {
             // - DH_WILD_CHANCE_FREESPINS: 0.025->0.042 (+68% FS wilds)
             // - AO multChance in FS: 0.014->0.028 (+100% FS multipliers)
             // - DH FS range: 9-13 -> 9-21 (avg 11->15)
-            AO_SCALE: 0.8740,
-            DH_SCALE: 1.2460,
-            SB_SCALE: 2.1690,
+            AO_SCALE: 0.8827,
+            DH_SCALE: 2.63,
+            SB_SCALE: 1.94,
             ZH_SCALE: 0.8920,
             AO_SCATTER_BASE: 0.016,
             AO_SCATTER_ANTE: 0.0198,
@@ -7032,8 +7199,8 @@ html, body {
             SB_SCATTER_BASE: 0.016,
             SB_SCATTER_ANTE: 0.022,
             SB_SCATTER_FS: 0.011,
-            AO_BUY_COST_X: 81.5,
-            SB_BUY_COST_X: 34.0
+            AO_BUY_COST_X: 100.0,
+            SB_BUY_COST_X: 100.0
         };
 
         function getSlotPayoutScale(slot) {
@@ -7186,21 +7353,21 @@ html, body {
             { id: 'ten',        img: 'iidesyat.png',         fallback: '🔟',   cat: 'Карточный',  name: 'Десятка (10)',p3: 0.1,  p4: 0.25, p5: 1.25 }
         ];
 
-        // --- Математическая модель (калибровка: RTP 93.5%, Монте-Карло 800 тыс. спинов) ---
-        // Базовая модель даёт ≈ 71.3%; коэффициент DH_SCALE доводит отдачу до 96%.
+        // --- Математическая модель (калибровка: RTP 93.1%, Монте-Карло 2M спинов) ---
+        // RTP 93.1%, Hit Rate 26.4%, Bonus Freq 1/195, Avg Bonus 110x
         const DH_WEIGHTS_REEL_1 = {
-            ten: 165, jack: 160, queen: 155, king: 140, ace: 135,
-            bone: 85, collar: 68, dachshund: 44, pug: 29, shitzu: 17, rottweiler: 8
+            ten: 90, jack: 85, queen: 80, king: 75, ace: 70,
+            bone: 52, collar: 47, dachshund: 34, pug: 22, shitzu: 19, rottweiler: 11
         };
         const DH_WEIGHTS_OTHER_REELS = {
-            ten: 170, jack: 165, queen: 160, king: 145, ace: 140,
-            bone: 91, collar: 73, dachshund: 47, pug: 31, shitzu: 18, rottweiler: 9
+            ten: 100, jack: 95, queen: 90, king: 85, ace: 80,
+            bone: 58, collar: 52, dachshund: 38, pug: 25, shitzu: 21, rottweiler: 12
         };
-        const DH_WILD_CHANCE_BASE = 0.085;      // шанс будки (Wild) на ячейку в базовой игре (барабаны 2-4)
-        const DH_WILD_CHANCE_FREESPINS = 0.042; // шанс НОВОЙ липкой будки на ячейку во фриспинах
-        const DH_WILD_X2_SHARE = 0.80;          // доля будок x2 (остальные 20% — x3)
-        const DH_SCATTER_CHANCE = 0.06;         // шанс лапы (Scatter) на ячейку, барабаны 1, 3, 5
-        const DH_SCATTER_PAY_MULT = 5;          // выплата за 3 лапы (x ставки)
+        const DH_WILD_CHANCE_BASE = 0.044000;       // шанс будки (Wild) на ячейку в базовой игре (барабаны 2-4)
+        const DH_WILD_CHANCE_FREESPINS = 0.09;   // шанс НОВОЙ липкой будки на ячейку во фриспинах
+        const DH_WILD_X2_SHARE = 0.800000;           // доля будок x2 (остальные 20% — x3)
+        const DH_SCATTER_CHANCE = 0.062000;         // шанс лапы (Scatter) на ячейку, барабаны 1, 3, 5
+        const DH_SCATTER_PAY_MULT = 5;           // выплата за 3 лапы (x ставки)
         // Выплаты слота проходят через калибровочный коэффициент DH_SCALE,
         // который приводит RTP всей игры (база + фриспины) к 96%.
         const dhPayout = (amount) => applySlotPayout('dh', amount);
@@ -7301,7 +7468,7 @@ html, body {
 
         let balance = 1000;
         let username = '';
-        let stats = { games: 0, wagered: 0, totalWon: 0, biggestWin: 0 };
+        let stats = { games: 0, wagered: 0, totalWon: 0, biggestWin: 0, dailyWagered: [] };
         let withdrawHistory = [];
         let selectedDepMethod = 'stars';
         let selectedWdMethod = 'stars';
@@ -7330,7 +7497,7 @@ html, body {
 
             db.collection('settings').doc('slots').onSnapshot(snap => {
                 if (snap.exists) {
-                    closedSlots = { olympus: false, doghouse: false, bonanza: false, zeushades: false, ...snap.data() };
+                    closedSlots = { olympus: false, doghouse: false, bonanza: false, ...snap.data() };
                     syncDevSlotsUI();
                 }
             });
@@ -7412,7 +7579,7 @@ html, body {
             } catch (e) {}
         }
 
-        let closedSlots = { olympus: false, doghouse: false, bonanza: false, zeushades: false };
+        let closedSlots = { olympus: false, doghouse: false, bonanza: false };
         let isBanned = false;
         let lastAdminSyncId = Number(localStorage.getItem('kazik_admin_sync_id') || 0);
 
@@ -7465,7 +7632,7 @@ html, body {
         }
 
         function syncDevSlotsUI() {
-            const map = { olympus: '⚡ Olympus', doghouse: '🐶 Dog House', bonanza: '🍭 Bonanza', zeushades: '⚔️ Zeus vs Hades' };
+            const map = { olympus: '⚡ Olympus', doghouse: '🐶 Dog House', bonanza: '🍭 Bonanza' };
             for (const k of Object.keys(map)) {
                 const btn = document.getElementById('dev-slot-' + k);
                 if (!btn) continue;
@@ -8585,7 +8752,7 @@ else if (slotKey === 'zeushades') {
             const boost = 1.0; // RTP фиксирован на 96%
             const scatterChance = (aoInFreeSpins ? RTP_CONFIG.AO_SCATTER_FS : (aoAnteActive ? RTP_CONFIG.AO_SCATTER_ANTE : RTP_CONFIG.AO_SCATTER_BASE)) * boost;
             if (Math.random() < scatterChance) return { ...AO_SCATTER };
-            const multChance = (aoInFreeSpins ? 0.028 : 0.012) * boost;
+            const multChance = (aoInFreeSpins ? 0.042 : 0.012) * boost;
             if (allowMultiplier && Math.random() < multChance) {
                 const val = getRandomOlympusMultiplier();
                 return { id: 'multiplier', emoji: '💣', val: val, name: `Множитель x${val}` };
@@ -8696,6 +8863,7 @@ else if (slotKey === 'zeushades') {
             try {
                 balance = normalizeMoney(balance - cost);
                 stats.wagered = normalizeMoney(stats.wagered + cost);
+                addWagered(cost);
                 updateBalanceUI();
                 saveState();
             } finally {
@@ -8763,6 +8931,7 @@ else if (slotKey === 'zeushades') {
                 balance = normalizeMoney(balance - totalBet);
                 stats.games += 1;
                 stats.wagered = normalizeMoney(stats.wagered + totalBet);
+                addWagered(totalBet);
                 registerSpinForRetention();
                 updateBalanceUI();
                 saveState();
@@ -9113,10 +9282,20 @@ else if (slotKey === 'zeushades') {
             }
             introBox.classList.add('active');
 
-            // Выбираем итоговое количество фриспинов строго от 9 до 21
-            const targetSpins = 9 + Math.floor(Math.random() * 13);
-            const cellValues = Array(9).fill(1); // Минимум 1 в каждой из 9 ячеек (итого 9)
-            let extra = targetSpins - 9;         // Оставшиеся 0..12 спинов раскидываем по ячейкам
+            // Взвешенное распределение итоговых спинов: 9-15 (65%), 16-18 (27%), 19-21 (8%)
+            const weights = [65, 27, 8];
+            const ranges = [[9, 15], [16, 18], [19, 21]];
+            const r = Math.random() * 100;
+            let sum = 0;
+            let chosenRange = 0;
+            for (let i = 0; i < 3; i++) {
+                sum += weights[i];
+                if (r <= sum) { chosenRange = i; break; }
+            }
+            const [minSpins, maxSpins] = ranges[chosenRange];
+            const targetSpinsWeighted = minSpins + Math.floor(Math.random() * (maxSpins - minSpins + 1));
+            const cellValues = Array(9).fill(1);
+            let extra = targetSpinsWeighted - 9;
             while (extra > 0) {
                 const idx = Math.floor(Math.random() * 9);
                 if (cellValues[idx] < 3) {
@@ -9207,10 +9386,11 @@ else if (slotKey === 'zeushades') {
                     openDepositModal();
                     return;
                 }
-                balance = normalizeMoney(balance - dhCurrentBet);
-                stats.games += 1;
-                stats.wagered = normalizeMoney(stats.wagered + dhCurrentBet);
-                registerSpinForRetention();
+balance = normalizeMoney(balance - dhCurrentBet);
+stats.games += 1;
+stats.wagered = normalizeMoney(stats.wagered + dhCurrentBet);
+addWagered(dhCurrentBet);
+registerSpinForRetention();
                 updateBalanceUI();
                 saveState();
             } else {
@@ -9405,7 +9585,7 @@ else if (slotKey === 'zeushades') {
             const scatterChance = (sbInFreeSpins ? RTP_CONFIG.SB_SCATTER_FS : (sbAnteActive ? RTP_CONFIG.SB_SCATTER_ANTE : RTP_CONFIG.SB_SCATTER_BASE)) * boost;
             if (Math.random() < scatterChance) return { ...SB_SCATTER };
 
-            if (allowBomb && sbInFreeSpins && Math.random() < 0.038 * boost) {
+            if (allowBomb && sbInFreeSpins && Math.random() < 0.105 * boost) {
                 const mult = getRandomBonanzaBomb();
                 return { id: 'bomb', mult: mult, name: `Бомба x${mult}` };
             }
@@ -9524,6 +9704,7 @@ else if (slotKey === 'zeushades') {
             try {
                 balance = normalizeMoney(balance - cost);
                 stats.wagered = normalizeMoney(stats.wagered + cost);
+                addWagered(cost);
                 updateBalanceUI();
                 saveState();
             } finally {
@@ -9568,10 +9749,11 @@ else if (slotKey === 'zeushades') {
                     openDepositModal();
                     return;
                 }
-                balance = normalizeMoney(balance - totalBet);
-                stats.games += 1;
-                stats.wagered = normalizeMoney(stats.wagered + totalBet);
-                registerSpinForRetention();
+balance = normalizeMoney(balance - totalBet);
+stats.games += 1;
+stats.wagered = normalizeMoney(stats.wagered + totalBet);
+addWagered(totalBet);
+registerSpinForRetention();
                 updateBalanceUI();
                 saveState();
             } else {
@@ -9994,10 +10176,11 @@ else if (slotKey === 'zeushades') {
                     openDepositModal();
                     return;
                 }
-                balance = normalizeMoney(balance - zhCurrentBet);
-                stats.games += 1;
-                stats.wagered = normalizeMoney(stats.wagered + zhCurrentBet);
-                registerSpinForRetention();
+balance = normalizeMoney(balance - zhCurrentBet);
+stats.games += 1;
+stats.wagered = normalizeMoney(stats.wagered + zhCurrentBet);
+addWagered(zhCurrentBet);
+registerSpinForRetention();
                 updateBalanceUI();
                 saveState();
             } else {
@@ -10631,8 +10814,24 @@ showLobby = function() { exitLandscapeMode(); _origShowLobby(); };
 
 // === 2. ЕЖЕДНЕВНОЕ КОЛЕСО ФОРТУНЫ (РАЗ В 24 ЧАСА) ===
 const WHEEL_PRIZES = [0.5, 1, 2, 5, 10, 15];
-const WHEEL_MIN_WAGER = 10; // Минимум 10 ⭐ суммарных ставок для доступа к колесу
+const WHEEL_MIN_WAGER = 50; // Минимум 50 ⭐ ставок за последние 24ч для доступа к колесу
 let wheelSpinning = false;
+
+function addWagered(amount) {
+    const now = Date.now();
+    stats.dailyWagered.push({ ts: now, amount: amount });
+    // Удаляем записи старше 24 часов
+    const cutoff = now - 24 * 60 * 60 * 1000;
+    stats.dailyWagered = stats.dailyWagered.filter(e => e.ts > cutoff);
+}
+
+function getDailyWagered() {
+    const now = Date.now();
+    const cutoff = now - 24 * 60 * 60 * 1000;
+    return stats.dailyWagered
+        .filter(e => e.ts > cutoff)
+        .reduce((sum, e) => sum + e.amount, 0);
+}
 
 function getWheelCooldownLeft() {
     const last = Number(localStorage.getItem('kazik_last_wheel') || 0);
@@ -10658,12 +10857,12 @@ function openDailyWheel() {
     const left = getWheelCooldownLeft();
     const btn = document.getElementById('wheel-spin-btn');
     if (btn) {
-        const wageredOk = (stats.wagered || 0) >= WHEEL_MIN_WAGER;
+        const wageredOk = getDailyWagered() >= WHEEL_MIN_WAGER;
         const disabled = left > 0 || !wageredOk;
         btn.disabled = disabled;
         if (!wageredOk) {
-            const need = WHEEL_MIN_WAGER - (stats.wagered || 0);
-            btn.textContent = `🔒 НУЖНО СТАВОК: ${need.toFixed(2)} ⭐`;
+            const need = WHEEL_MIN_WAGER - getDailyWagered();
+            btn.textContent = `🔒 НУЖНО СТАВОК: ${need.toFixed(2)} ⭐ за 24ч`;
         } else {
             btn.textContent = left > 0 ? '⏳ ПРИХОДИТЕ ЗАВТРА' : '🎡 КРУТИТЬ БЕСПЛАТНО';
         }
@@ -10673,9 +10872,9 @@ function openDailyWheel() {
 
 function spinDailyWheel() {
     if (wheelSpinning || getWheelCooldownLeft() > 0) return;
-    if ((stats.wagered || 0) < WHEEL_MIN_WAGER) {
-        const need = WHEEL_MIN_WAGER - (stats.wagered || 0);
-        showToast(`🎡 Колесо доступно после ставок на ${need.toFixed(2)} ⭐`);
+    if (getDailyWagered() < WHEEL_MIN_WAGER) {
+        const need = WHEEL_MIN_WAGER - getDailyWagered();
+        showToast(`🎡 Колесо доступно после ставок на ${need.toFixed(2)} ⭐ за 24ч`);
         return;
     }
     wheelSpinning = true;
@@ -10716,7 +10915,7 @@ function getPendingCashback() {
     const netLoss = Math.max(0, (stats.wagered || 0) - (stats.totalWon || 0));
     const claimedLoss = Number(localStorage.getItem('kazik_cb_claimed_loss') || 0);
     const uncompensated = Math.max(0, netLoss - claimedLoss);
-    return Math.round(uncompensated * 0.10 * 100) / 100;
+    return Math.round(uncompensated * 0.05 * 100) / 100;
 }
 
 function getCashbackCooldownLeft() {
